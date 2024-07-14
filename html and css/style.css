@@ -1,0 +1,95 @@
+/* css is used for styling */
+/* css boiler plate*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body{
+    width: 100%;
+    height: 100%;
+}
+
+/* write any tag or id or class to target writing way in css */
+/* to target baigani id*/
+#csshai{
+    /* units : use % for broader direction; use px (pixel) for little variation*/
+    width: 100%;
+    height: 100px;
+    background-color: aqua;
+    /*margin is space between 2 elements*/
+    margin: 10px 12px 13px 19px; /* margin-top; margin-right; margin-bottom; margin-left , if only one given then margin in all direction, if two given then first for top bottom and other for left right*/
+    /*padding is space inside an element*/
+    padding-left: 15px;
+    padding-left: 15px;
+    padding-top: 20px;
+}
+
+#image2{
+    width: 100%;
+    height: 100%;
+    background-image: url(https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-position: center; /*which part pf image to show, example: top, bottom, center, or %*/
+    background-size: cover; /*image cover the element */
+}
+
+
+#box1{
+    width: 100px;
+    height: 150px;
+    background-color: red;
+}
+#box2{
+    position: absolute; /*become hovering and the next element comes up and under it, now we can move it*/
+    left: 50%;
+    width: 200px;
+    height: 50px;
+    background-color: violet;
+}
+#box3{
+    width: 300px;
+    height: 150px;
+    background-color: aquamarine;
+}
+
+#dabba1{
+    position: relative; /*the absolute div inside this will now position according to this only like 10% top of this height*/
+    width: 300px;
+    height: 150px;
+    background-color: blue;
+}
+
+#dabba2{
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 100px;
+    height: 50px;
+    background-color: brown;
+}
+
+/*flex box creates two imaginary axis as width: justified-content, height: aligned-items*/
+#baxa1{
+    display: flex;
+    justify-content: center; /*(width) example: space-between, start, end, space-around, etc*/
+    align-items: center; /*(height)*/
+    width: 300px;
+    height: 300px;
+    background-color: gray;
+}
+#baxa2{
+    width: 30px;
+    height: 30px;
+    background-color: green;
+}
+#baxa3{
+    width: 35px;
+    height: 30px;
+    background-color: yellow;
+}
+#baxa4{
+    width: 50px;
+    height: 45px;
+    background-color: skyblue;
+}
