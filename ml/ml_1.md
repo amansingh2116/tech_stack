@@ -54,4 +54,8 @@ The first part of any data science project is preparing your data, which means m
 
 ```py
 df1 = pd.read_csv("data/mexico-real-estate-1.csv") # # Load CSV files into DataFrames
+print("df1 type:", type(df1)) # df1 type: <class 'pandas.core.frame.DataFrame'>
+print("df1 shape:", df1.shape) # df1 shape: (700, 6)
+# Get output of df1 head
+df1.head()
 ```
