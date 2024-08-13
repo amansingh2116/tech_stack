@@ -107,7 +107,8 @@ df.set_index("lat").sort_index().head() # sort the DataFrame by it's index.
 ```py
 df3["price_m2"] = df3["price_usd"] / df3["area_m2"] # create a new column
 df["price_cop"] = df["price_cop"] / 1e6 # scales the values in the price_cop column of the DataFrame df by dividing them by 10^6
-df2 = df.drop("department", axis="columns") # drop a column
+df2 = df.drop("department", axis="columns") # new dataframe after dropping a column
+df2.drop(columns="price_mxn", inplace = True) # drop a column in a dataframe
 df2 = df.drop(2, axis="index") # drop a row
 df.dropna(inplace=True) #  drop rows with empty cells from the dataset to avoid radical skewness of the results of our analysis. By default (inplace = False), pandas will keep the original DataFrame, and will create a copy that reflects the changes we just made.
 df.rename(columns={"property_type": "type_property"}) # renames the column property_type to type_property in the DataFrame df.
@@ -127,6 +128,7 @@ newdf = df.astype("str") # creates a new DataFrame newdf where all the columns i
 df["area_m2"] = df.area_m2.astype(int) # converts the values in the area_m2 column of the DataFrame df from their current data type to integers and updates the column with these integer values.
 df["department"].str[0:5:2] # slices each string in the department column starting from index 0 to index 5 (not inclusive) with a step of 2.
 df["property_type"] = df["property_type"].str.replace("house", "single_family") # replaces all occurrences of the substring "house" with "single_family" in the property_type column of the DataFrame df.
+# replace with "" to delete a character
 ```
 
 ## Working with series and dataframe
@@ -141,6 +143,10 @@ dept_group = df1.groupby("department") # groups the rows of the DataFrame df1 ba
 dept_group2 = df1.groupby(["department", "property_type"]) # make groups based on more than one category
 dept_group.first() # provides the first occurrence of each unique department value in the original DataFrame.
 dept_group1.get_group("Santander") # retrieves all the rows from the DataFrame df1 that belong to the group where the department is "Santander."
+# Declare variable `df_morelos` by subsetting `df`
+df_morelos = df.groupby("state").get_group("Morelos")
+# OR
+df_morelos = df[df["state"] == "Morelos"]
 dept_group = df1.groupby("department")["area_m2"].mean() # calculates the mean (average) value of the area_m2 column for each unique department in the DataFrame df1. The result is a Series where the index is the unique department values and the values are the mean area_m2 for each department.
 # To subset a DataFrame by column names, either define a list of columns to include or define a list of columns to exclude.
 mexico_city3_subsetted = mexico_city3[keep_cols] # creates a new DataFrame containing columns specified in the keep_cols list or array
@@ -242,7 +248,7 @@ Correlations tell us about the relationship between two sets of data. When we ca
 ```py
 area_m2 = df2["area_m2"]
 price_cop = df2["price_cop"]
-correlation = area_m2.corr(price_cop)
+correlation = area_m2.corr(price_cop) # order doesn't matter, so same as price_cop.corr(area_m2)
 print(correlation)
 
 

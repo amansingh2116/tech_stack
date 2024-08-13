@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 df = pd.read_csv("data/colombia-real-estate-1.csv", usecols=["area_m2"])
-plt.boxplot(df["area_m2"])
+plt.boxplot(df["area_m2"] '''vert=False to create horizontal boxplot''') 
 plt.ylabel("Area [sq. meters]")
 plt.title("Area in Square Meters")
 ```
@@ -71,7 +71,7 @@ A scatter plot is a graph that uses dots to represent values for two different n
 
 ```py
 df1 = pd.read_csv("data/colombia-real-estate-3.csv", usecols=["area_m2", "price_usd"])
-plt.scatter(df1["area_m2"], df1["price_usd"], color="r")
+plt.scatter(df1["area_m2"], df1["price_usd"], color="r") # order matters, changing the order that is price then area will change the plot
 plt.xlabel("Property Area")
 plt.ylabel("Price in US Dollars")
 plt.title("Property Area vs Price in US Dollars")
