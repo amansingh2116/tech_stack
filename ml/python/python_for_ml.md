@@ -181,13 +181,13 @@ clf.fit(X, y)
 ```
 
 #### Saving model to a path
-​
+
 ```py
 dump(clf, "data/trained_model.pkl")
 ```
 
 #### Load data from a path and make predictions again
-​
+
 ```py
 model = load("data/trained_model.pkl", mmap_mode="r")
 model.predict(X)

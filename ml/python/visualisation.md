@@ -29,6 +29,7 @@ plt.title("Area in Square Meters")
 ![Boxplot](\images\boxplot.png)
 
 ### Histograms
+
 A histogram is a graph that shows the frequency distribution of numerical data. In addition to helping us understand frequency, histograms are also useful for detecting outliers.
 
 ```py
@@ -48,6 +49,7 @@ You might also have noticed that there are ten bars. In a histogram, we call the
 Depending on the story you want your histogram to tell, it might be more important for a trend to be smooth, or it might be more important to show smaller levels of variation. Here, we can still see that the properties in Colombia tend to be small, but the size of the properties are not evenly distributed. This histogram doesn't tell us anything about why this might be true, but it does suggest that there might be something more interesting going on in the background.
 
 ### Bar Charts
+
 A bar chart is a graph that shows all the values of a categorical variable in a dataset. They consist of an axis and a series of labeled horizontal or vertical bars. The bars depict frequencies of different values of a variable or simply the different values themselves. The numbers on the y-axis of a vertical bar chart or the x-axis of a horizontal bar chart are called the scale.
 
 ```py
@@ -67,6 +69,7 @@ plt.xticks(rotation=90)
 ![Barplot](\images\barplot.png)
 
 ### Scatter Plots
+
 A scatter plot is a graph that uses dots to represent values for two different numeric variables. The position of each dot on the horizontal and vertical axis indicates values for an individual data point. Scatter plots are used to observe relationships between variables, and are especially useful if you're looking for correlations.
 
 ```py
@@ -93,7 +96,9 @@ plt.xlabel("Property Area")
 plt.ylabel("Price in US Dollars")
 plt.title("Property Area vs Price in US Dollars")
 ```
+
 ### Add a vertical or horizontal line across a plot
+
 ```py
 # Vertical lines can be added to an existing plot in Matplotlib
 plt.axvline(250, linestyle="--", color="blue", label="Line Title") 
@@ -110,6 +115,7 @@ plt.legend()
 ## Pandas
 
 ### Correlation Matrices
+
 When examining numerical data in columns of a DataFrame, you might want to know how well one column can be approximated as a linear function of another column.
 
 ```py
@@ -126,7 +132,8 @@ corr.style.background_gradient(axis=None)
 | **price_aprox_usd**   | 1.000000        | 0.553326              |
 | **surface_covered_in_m2** | 0.553326        | 1.000000              |
 
-### Bar Charts
+### Bar Chart
+
 A bar chart is a graph that shows all the values of a categorical variable in a dataset. They consist of an axis and a series of labeled horizontal or vertical bars. The bars depict frequencies of different values of a variable or simply the different values themselves. The numbers on the y-axis of a vertical bar chart or the x-axis of a horizontal bar chart are called the scale.
 
 ```py
@@ -135,14 +142,16 @@ df1["property_type"].value_counts().plot(
 ) # kind = "barh" for horizontal
 ```
 
-### Histograms
+### Histogram
+
 A histogram is a graph that shows the frequency distribution of numerical data. In addition to helping us understand frequency, histograms are also useful for detecting outliers. We can use the .hist() function from Pandas DataFrame to draw histograms for a specific column, as long as the data type is numerical.
 
 ```py
 df1["price"].hist(bins=100)
 ```
 
-### Scatter Plots
+### ScatterPlots
+
 A scatter plot is a graph that uses dots to represent values for two different numeric variables. The position of each dot on the horizontal and vertical axis indicates values for an individual data point. Scatter plots are used to observe relationships between variables, and are especially useful if you're looking for correlations.
 
 ```py
@@ -150,7 +159,9 @@ df1.plot(kind="scatter", x="price", y="surface_covered_in_m2")
 ```
 
 ### Line Plots
+
 Line plots demonstrate relationships between two variables which have some order.
+
 ```py
 mexico_city1.plot.scatter(x="surface_covered_in_m2", y="price_aprox_local_currency")
 
@@ -165,8 +176,10 @@ df.plot(
 
 ## PLotly
 
-### Scatter Plots
+### Scatter Plot
+
 A scatter plot is a graph that uses dots to represent values for two different numeric variables. The position of each dot on the horizontal and vertical axis indicates values for an individual data point. Scatter plots are used to observe relationships between variables, and are especially useful if you're looking for correlations.
+
 ```py
 import pandas as pd
 import plotly.express as px
@@ -182,9 +195,11 @@ mexico_city1 = mexico_city1.dropna(axis=0)
 fig = px.scatter(mexico_city1, x="price", y="surface_covered_in_m2")
 fig.show()
 ```
+
 ![Scatterplot](\images\scatter2.png)
 
 ### 3D Scatter Plots
+
 Scatter plots can summarize information in a DataFrame. Three dimensional scatter plots look great, but be careful: it can be difficult for people who might not be sure what they're looking at to accurately determine values of points in the plot. Still, scatter plots are useful for displaying relationships between three quantities that would be more difficult to observe in a two dimensional plot.
 
 ```py
@@ -204,9 +219,11 @@ fig = px.scatter_3d(
 
 fig.show()
 ```
+
 ![3d Scatter plot](\images\3d.png)
 
 ### Mapbox Scatter Plots
+
 A mapbox scatter plot is a special kind of scatter plot that allows you to create scatter plots in two dimensions and then superimpose them on top of a map. Our mexico-city-real-estate-1.csv dataset is a good place to start, because it includes location data. After importing the dataset and removing rows with missing data, split the lat-lon column into two separate columns: one for latitude and the other for longitude. Then use these to make a mapbox plot. Unfortunately, at present this type of plot does not easily allow for marker shape to vary based on a column of the DataFrame.
 
 ```py
@@ -221,9 +238,11 @@ fig = px.scatter_mapbox(
 )
 fig.show()
 ```
+
 ![Mapbox](\images\mapbox.png)
 
 ### Choropleth Maps
+
 A Choropleth Map is a map composed of colored polygons, showing the variable of interest at different color depth across geographies.Plotly express has a function called px.choropleth that be used to plot Choropleth Map. The challenges here are getting the geometry information. There are two ways, one is to use the built-in geometries in plotly when plot US States (use the state name directly) and world countries (use ISP-3 code). Another way is to look for GeoJSON files where each location has geometry information. In the following example, we will show the plot in US States with a synthetic data set.
 
 ```py
@@ -237,9 +256,11 @@ fig = px.choropleth(
 )
 fig.show()
 ```
+
 ![Choropleth Map](\images\newplot.png)
 
-### Histogram
+### Hist-ograms
+
 A histogram is a graph that shows the frequency distribution of numerical data. In addition to helping us understand frequency, histograms are also useful for detecting outliers. We can use the px.histogram() function from Plotly to draw histograms for specific columns, as long as the data type is numerical.
 
 ```py
@@ -250,8 +271,10 @@ fig = px.histogram(df, x="price")
 fig.show()
 ```
 
-### Boxplots
+### Boxplot
+
 A boxplot is a graph that shows the minimum, first quartile, median, third quartile, and the maximum values in a dataset. Boxplots are useful because they provide a visual summary of the data, enabling researchers to quickly identify mean values, the dispersion of the data set, and signs of skewness. In the following example, we will explore how to draw boxplots for specific columns of a DataFrame.
+
 ```py
 # Read Data
 mexico_city1 = pd.read_csv("./data/mexico-city-real-estate-1.csv")
@@ -270,13 +293,16 @@ import plotly.express as px
 fig = px.box(mexico_city1, y="price")
 fig.show()
 ```
+
 ```py
 fig = px.box(mexico_city1, x="property_type", y="price")
 fig.show() # to check the distribution of a column value by different categories, defined by another categorical column, you can add an x argument to specify the name of the categorical column.
 ```
+
 ![Boxplot](\images\boxplot_2.png)
 
-### Bar Chart
+### BarChart
+
 A bar chart is a graph that shows all the values of a categorical variable in a dataset. They consist of an axis and a series of labeled horizontal or vertical bars. The bars depict frequencies of different values of a variable or simply the different values themselves. The numbers on the y-axis of a vertical bar chart or the x-axis of a horizontal bar chart are called the scale.
 
 ```py
@@ -303,6 +329,7 @@ mexico_city1 = mexico_city1[mexico_city1["Borough"] != ""]
 fig = px.bar(mexico_city1["Borough"].value_counts())
 fig.show()
 ```
+
 ```py
 #  plot the number of observations by borough and property type. First of all, we need use groupby to calculate the aggregated counts for each Borough and property type combination. By specifying x, y and color, the following bar graph shows the total counts by Borough, with different property types showing in different colors. Note y has to be numerical, while x and color are usually categorical variables.
 size_df = mexico_city1.groupby(["Borough", "property_type"], as_index=False).size()
@@ -310,16 +337,19 @@ fig = px.bar(size_df, x="Borough", y="size", color="property_type", barmode="rel
 fig.show()
 # Note the argument barmode is specified as 'relative', which is also the default value. In this mode, bars are stacked above each other. We can also use 'overlay' where bars are drawn on top of each other. If we want bars to be placed beside each other, we can specify barmode as "group".
 ```
+
 ![Barplot barmode = "group"](images\barplot_2.png)
 
 ## Seaborn
 
-### Scatter Plots
+### ScatterPlot
+
 `sns.scatterplot(
     data=mexico_city1, x="price", y="surface_covered_in_m2", hue="property_type"
 )`
 
 ### Bar plot
+
 ```py
 # Read Data
 mexico_city1 = pd.read_csv("./data/mexico-city-real-estate-1.csv")
@@ -353,6 +383,7 @@ ax.set_xticklabels(ax.get_xticklabels(), rotation=75)
 ```
 
 ### Correlation Heatmaps
+
 A correlation heatmap shows the relative strength of correlations between the variables in a dataset.
 
 ```py
@@ -368,4 +399,5 @@ mexico_city1_numeric = mexico_city1.select_dtypes(include="number")
 corr = mexico_city1_numeric.corr(method="pearson")
 sns.heatmap(corr)
 ```
+
 ![Heat map](images\heatmap.png)

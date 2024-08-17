@@ -1,7 +1,9 @@
 # Pandas
+
 Pandas is a Python library used for working with datasets. It does that by helping us make sense of DataFrames, which are a form of two-dimensional structured data, like a table with columns and rows.
 
 ## CSV Files
+
 CSV stands for Comma Separated Values, and it's a file type that allows data to be saved in a table. Data presented in a table is called structured data, because it adheres to the idea that there is a meaningful relationship between the columns and rows. A CSV might also show panel data, which is data that shows observations of the same behavior at various different times.
 
 ```git
@@ -21,6 +23,7 @@ pd.DataFrame.from_dict(data) # You can create a DataFrame from a Python dictiona
 pd.DataFrame.from_dict(data, orient="index") # We can also let keys to be index instead of the columns
 pd.DataFrame.from_dict(data, orient="index", columns=["A", "B", "C", "D"]) # We can also specify column names
 ```
+
 || A     | B     | C     | D     |
 |-------|-------|-------|-------|-------|
 |col_1| 3     | 2     | 1     | 0     |
@@ -30,7 +33,7 @@ pd.DataFrame.from_dict(data, orient="index", columns=["A", "B", "C", "D"]) # We 
 
 JSON is short for JavaScript Object Notation. It is another widely used data format to store and transfer the data. It is light-weight and very human readable. In Python, we can use the json library to read JSON files. Here is an example of a JSON string.
 
-```
+```py
 info = """{
     "firstName": "Jane",
     "lastName": "Doe",
@@ -38,6 +41,7 @@ info = """{
     "age": 35
 }"""
 ```
+
 ```py
 import json
 data = json.loads(info) #  Parses a JSON-formatted string and converts it into a Python dictionary
@@ -104,7 +108,10 @@ df.set_index("lat").sort_index().head() # sort the DataFrame by it's index.
 ```
 
 ## Working with Rows & Columns
+
 ```py
+dataframe = df[["surface_covered_in_m2"]] # returns a Pandas DataFrame with a single column.
+series = df["surface_covered_in_m2"] # returns a Pandas Series. A Series is a one-dimensional array-like object containing the data for the specified column.
 df3["price_m2"] = df3["price_usd"] / df3["area_m2"] # create a new column
 df["price_cop"] = df["price_cop"] / 1e6 # scales the values in the price_cop column of the DataFrame df by dividing them by 10^6
 df2 = df.drop("department", axis="columns") # new dataframe after dropping a column
@@ -121,6 +128,7 @@ concat_sr = pd.concat([sr1, sr2]) # combines two Series
 ```
 
 ## Working with strings
+
 ```py
 df3[["lat", "lon"]] = df3["lat-lon"].str.split(",", expand=True) # splits the values in the lat-lon column of df3 at the comma and expands the result into two new columns, lat and lon, within the same DataFrame.
 df3[["department", "state", "place"]] = df3["place_with_parent_names"].str.split("|", expand=True, n=3).iloc[:, 1:] # The code splits the `place_with_parent_names` column into three parts using `"|"` as a delimiter (limiting to 3 splits), discards the first empty part (.iloc[:, 1:]), and assigns the remaining parts to the `department`, `state`, and `place` columns in the DataFrame.
@@ -132,6 +140,7 @@ df["property_type"] = df["property_type"].str.replace("house", "single_family") 
 ```
 
 ## Working with series and dataframe
+
 ```py
 surface_covered_in_m2 = mexico_city2["surface_covered_in_m2"] # Select a Series from a DataFrame
 mexico_city4_subset = mexico_city4[
@@ -183,6 +192,7 @@ df.agg({"area_m2": "sum", "price_cop": "min"}) # calculates the total sum of the
 ```
 
 ## Working with Dates
+
 ```py
 print(pd.Timestamp("January 8, 2022")) # 2022-01-08 00:00:00
 print(pd.Timestamp("01/08/22 20:13")) # 2022-01-08 20:13:00
@@ -202,49 +212,31 @@ pd.DatetimeIndex(data.index) # converts the index of a DataFrame or Series data 
 pd.date_range(start="1/8/2022", end="3/2/2022", freq="D") # generates a DatetimeIndex with daily frequency between the specified start and end dates. freq="B" for business dates
 ```
 
-## Statistics
-
-### Type of Data
-#### Categorical Data
-Categorical data is any type of data that can only be represented by distinct values. Eye color, handedness, and academic attainment are all categorical variables. The other kind of variable is called a continuous variable. Continuous variables can have an infinite number of values, whereas categorical variables have concrete values. For this reason, categorical values require special attention in statistical analysis.
-
-#### Location Data
-Location data is information about a datapoint’s location in space, and can be expressed in latitude/longitude pairs, street address, altitude, or any other place-specific identifiers.
-
-#### Numerical Data
-Numerical data is any information that can be represented by numbers.
-
 ### Descriptive Statistics
+
 #### Quartiles
+
 Quartiles divide a sequence of numbers into four equal parts. Grouping a dataset into quartiles helps us find outliers and provides the basis for the data in a boxplot.
 `price.quantile(0.5)`
 
 #### Quantiles
+
 A commonly used set of quantiles are the fourth quantiles known as quartiles. You can also find the minimum, first quartile, median, third quartile and maximum values in a series (which are typically the values used to create a boxplot). The median is the middle entry in the ordered list of prices
 `price.quantile([0, 0.25, 0.5, 0.75, 1])`
 
-#### Series
- series is a one-dimensional array that can hold any type of data. We'll generally use the term to refer to a column in a dataset that's arranged in a table. In fact, this is the reason why, in the library pandas, DataFrame columns are called Series. In a pandas Series, all items in the array must be the same data type.
-
-#### Mean
-All the data points in a dataset can be added together and then divided by the total number of data points to find the mean. You might be used to calling this number an average, but the two ideas are the same. Means help us understand the central tendency of a dataset.
-
-#### Skewed Distributions
-For any given activity, there is a range of probable outcomes. All other things being equal, we would expect most of the outcomes to fall in the middle of the possible range, with the number of outcomes diminishing on either side of the peak. In statistics, this is known as a normal distribution, but you may have heard it called a bell curve, because it looks like a bell.
-A skewed distribution is a type of distribution where the peak of the curve is shifted, or skewed, either to the right or the left of the distribution.
 #### Variance
-Variance (which is sometimes called volatility in finance), is a measurement of how spread out the points in a dataset are around the mean. It's calculated by first summing up the squared different between each data point and mean, then dividing by the number of data points minus 1.
+
+Variance (which is sometimes called volatility in finance), is a measurement of how spread out the points in a dataset are around the mean.
 `df["area_m2"].var()`
-#### Standard deviation 
-describes the proportion of records above or below the mean of a given distribution. In a normal distribution, 68% of the values fall within one standard deviation of the mean, 95% of the values fall within two standard deviations from the mean, and 99.7% of the values fall within three standard deviations from the mean.
-#### Outliers
-An outlier is a value in a dataset that falls well beyond the dataset mean — more than three standard deviations. Depending on the analytical strategy, it might be useful to drop outliers from a dataset, because their extreme deviation from the mean can result in misleading conclusions.
 
 ### Summary Statistics
+
 `mexico_city1.describe()` # get a summary of information. The describe function will ignore missing values in each column. You can also remove rows and columns with missing values, and then get a summary of the data that's still there.
 
 ### Correlation
-Correlations tell us about the relationship between two sets of data. When we calculate this relationship, the result is a correlation coefficient. Correlation coefficients can have any value between -1 and 1. Values above 0 indicate a positive relationship (as one variable goes up, the other does too), and values below 0 indicate a negative relationship (as one variable goes up, the other goes down). The closer the coefficient's value is to either 1 or -1, the stronger the relationship is; the closer the coefficient's value is to 0, the weaker the relationship is. Coefficients equal to 0 indicate that there is no relationship between the two values, and are accordingly quite rare.
+
+Correlations tell us about the relationship between two sets of data.
+
 ```py
 area_m2 = df2["area_m2"]
 price_cop = df2["price_cop"]
