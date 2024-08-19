@@ -226,6 +226,8 @@ fig.show()
 
 A mapbox scatter plot is a special kind of scatter plot that allows you to create scatter plots in two dimensions and then superimpose them on top of a map. Our mexico-city-real-estate-1.csv dataset is a good place to start, because it includes location data. After importing the dataset and removing rows with missing data, split the lat-lon column into two separate columns: one for latitude and the other for longitude. Then use these to make a mapbox plot. Unfortunately, at present this type of plot does not easily allow for marker shape to vary based on a column of the DataFrame.
 
+Note that though it is a 2-D way to visualisation we can visualose a 3rd dimention like "price" by mentioning it in the color variable, which provides a relative color to the points in the 2-D plot so we get an idea about the 3rd dimention.
+
 ```py
 fig = px.scatter_mapbox(
     mexico_city1,

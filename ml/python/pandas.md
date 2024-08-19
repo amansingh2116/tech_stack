@@ -124,6 +124,7 @@ df["area_m2"].replace(235.0, 0) # replaces all occurrences of the value 235.0 wi
 replace_value = {235: 0, 130: 1, 137: 2}
 df["area_m2"].replace(replace_value) # replaces multiple values in the area_m2 column of the DataFrame df according to the mapping provided in the replace_value dictionary.
 concat_df = pd.concat([df1, df2]) # combines two DataFrames by concatenating them along the rows (default behavior). If you want to reset the index or avoid duplicate indices, you can use the ignore_index=True parameter.
+df = pd.concat(frames, ignore_index = True) # combine a list of dataframes ignoring the index
 concat_sr = pd.concat([sr1, sr2]) # combines two Series
 ```
 
