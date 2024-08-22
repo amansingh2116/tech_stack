@@ -28,6 +28,19 @@ plt.title("Area in Square Meters")
 
 ![Boxplot](\images\boxplot.png)
 
+```py
+# Time series boxplot
+fig, ax = plt.subplots(figsize=(15, 6))
+df["P2"].plot(kind="box", vert = False, title = "Distribution of PM2.5 Readings", ax = ax)
+```
+
+### Time series plot
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+df["P2"].plot(xlabel = "Time", ylabel = "PM2.5", title = "PM2.5 Time Series",ax=ax)
+```
+
 ### Histograms
 
 A histogram is a graph that shows the frequency distribution of numerical data. In addition to helping us understand frequency, histograms are also useful for detecting outliers.

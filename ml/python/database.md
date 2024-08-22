@@ -188,6 +188,13 @@ Databases are designed to work with either structured data or semi-structured da
 
 So, now that we're connected to a server, let's take a look at what's there. Working our way down the specificity scale, the first thing we need to do is figure out which databases are on this server. To see which databases on the server, we'll use the list_databases method, like this:
 
+> **Iterators in python**
+> Iterators amounts a same space for a long data to store so help in improving space efficiency.
+>```py
+>my_list = [0,1,2,3,4,5,6,7,8,9]
+>my_range = range(10) # iterator
+>```
+
 ```py
 pp.pprint(list(client.list_databases())) # print out the list of databases
 db = client["air-quality"] # choosing a database to work with
@@ -291,7 +298,7 @@ print("Documents from site 3:", lagos.count_documents({"metadata.site": 3})) # D
 print("Documents from site 4:", lagos.count_documents({"metadata.site": 4})) # Documents from site 4: 25910
 ```
 
-find the number of readings for each site. We'll do this with the aggregate method.
+Finding the number of readings for each site this way can be very time and labour consuming. We'll now do this with the aggregate method.
 
 ```py
 result = lagos.aggregate(
@@ -341,6 +348,16 @@ pp.pprint(list(result))
     'timestamp': datetime.datetime(2018, 1, 7, 7, 21, 53, 981000)}]
 
 So far, we've been dealing with relatively small subsets of the data in our collections, but what if we need to work with something bigger? Let's start by using distinct to remind ourselves of the kinds of data we have at our disposal.
+
+Similarly we can use the find method to retrieve the PM 2.5 readings from site 29. Using the projection argument we can limit the results to the "P2" and "timestamp" keys only.
+
+```py
+result = nairobi.find(
+    {"metadata.site": 29, "metadata.measurement": "P2"},
+    projection = {"P2": 1, "timestamp": 1, "_id": 0}
+)
+pp.pprint(result.next()) # prints one at a time and next every time
+```
 
 ```py
 lagos.distinct("metadata.measurement")
@@ -549,3 +566,7 @@ pp.pprint(list(result))
     'count': 35364},
   { '_id': {'truncatedDate': datetime.datetime(2018, 11, 1, 0, 0)},
     'count': 29858}]
+
+**Read records from your result into the DataFrame df and set the index to "timestamp".**
+
+`df = pd.DataFrame(result).set_index("timestamp")`
