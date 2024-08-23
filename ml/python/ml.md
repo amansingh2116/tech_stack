@@ -123,6 +123,8 @@ array([[ 1.62304525e-01],
 (0 and 1 based on category variables)
 A property's district is categorical data, or data which can be divided into groups. For many machine learning algorithms, it's common to create a column in a DataFrame to indicate if the feature is present or absent, instead of using the category's name. First you select a column for each district names then, for each observation, you put a 1 or a 0 to indicate if the property is located in each neighborhood or not.
 
+Very helpful in Logistic Regression.
+
 ```py
 import pandas as pd
 ​
@@ -165,6 +167,8 @@ For many machine learning algorithms, it's common to use one-hot encoding. This 
 ​
 Having a large number of columns (and consequently a large number of features in your model) can lead to a number of issues often referred to as the **curse of dimensionality**. Two primary issues that can arise are **computational complexity** (operations performed on larger datasets may take longer) and **overfitting** (the model may not generalize to new data). In these scenarios, ordinal encoding is a popular choice for encoding the categorical variable. Instead of creating new columns, ordinal encoding simply replaces the categories in a categorical variable with integers.
 ​
+Very helpful in decision tree classifier.
+
 One potential risk of ordinal encoding is that some machine learning algorithms assume the integer values imply an ordering in the variables. This is important in logistic regression, where a relationship is defined between increases or decreases in the features and the target. Techniques like decision trees are okay to use ordinal encoding, because they generate splits. Rather than assuming any ordering between the numeric values, the splits will occur between the numeric values and effectively separate them. You can use the `OrdinalEncoder` transformer to perform ordinal encoding:
 
 ```py
@@ -325,7 +329,7 @@ from sklearn.pipeline import Pipeline
 lin_reg = linear_model.LinearRegression()
 ​
 pipe = Pipeline([("regressor", lin_reg)])
-We can check the steps in the pipeline, but right now, there's only 1.
+# We can check the steps in the pipeline, but right now, there's only 1.
 
 pipe.named_steps
 # {'regressor': LinearRegression()}

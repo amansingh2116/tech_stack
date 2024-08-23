@@ -71,6 +71,20 @@ FROM id_map
 LIMIT 5
 ```
 
+How many tables are in the database
+```sql
+SELECT *
+FROM sqlite_schema # contains metadata about all objects in an SQLite database, such as tables, indexes, views, and triggers.
+```
+
+Select the name column from the sqlite_schema table, showing only rows where the type is "table".
+```sql
+%%sql
+SELECT name
+FROM sqlite_schema
+WHERE type = "table"
+```
+
 ### Filtering and Sorting Data
 
 SQL provides a variety of comparison operators that can be used with the WHERE clause to filter the data.
@@ -142,6 +156,17 @@ In addition to the basic `JOIN` clause, specific join types can be specified, wh
 | `LEFT JOIN`                  | Returns rows where ID is in the left table. Return NA for values in column, if ID is not in right table.          |
 | `RIGHT JOIN`                  | Returns rows where ID is in the right table. Return NA for values in column, if ID is not in left table. |
 | `FULL JOIN`                  | Returns rows where ID is in either table. Return NA for values in column, if ID is not in either table. |
+
+`TRIPLE JOIN`
+```sql
+SELECT distinct(i.building_id),
+    s.*,
+    d.damage_grade
+FROM id_map AS i
+JOIN building_structure AS s ON i.building_id = s.building_id
+JOIN building_damage AS d ON i.building_id = d.building_id
+WHERE district_id = 4
+```
 
 ### Using pandas with SQL Databases
 
