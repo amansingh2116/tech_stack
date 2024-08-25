@@ -174,3 +174,19 @@ cd data
 gzip -d example.txt.gz # unzip file
 
 ```
+
+## Stack Overflow
+
+```py
+df = pd.read_json("data/poland-bankruptcy-data-2009.json")
+```
+
+<code style="background-color:#FEDDDE;"><span style="color:#E45E5C">ValueError</span>: Mixing dicts with non-Series may lead to ambiguous ordering.</code>
+
+What should we do? That error sounds serious, but the world is big, and we can't possibly be the first people to encounter this problem. When you come across an error, copy the message into a search engine and see what comes back. You'll get lots of results. The web has lots of places to look for solutions to problems like this one, and [Stack Overflow](https://stackoverflow.com/) is one of the best. [Click here to check out a possible solution to our problem.](https://stackoverflow.com/questions/57018859/valueerror-mixing-dicts-with-non-series-may-lead-to-ambiguous-ordering)
+
+There are three things to look for when you're browsing through solutions on Stack Overflow.
+
+1. **Context:** A good question is specific; if you click through that link, you'll see that the person asks a **specific** question, gives some relevant information about their OS and hardware, and then offers the code that threw the error. That's important, because we need...
+2. **Reproducible Code:** A good question also includes enough information for you to reproduce the problem yourself. After all, the only way to make sure the solution actually applies to your situation is to see if the code in the question throws the error you're having trouble with! In this case, the person included not only the code they used to get the error, but the actual error message itself. That would be useful on its own, but since you're looking for an actual solution to your problem, you're really looking for...
+3. **An answer:** Not every question on Stack Overflow gets answered. Luckily for us, the one we've been looking at did. There's a big green check mark next to the first solution, which means that the person who asked the question thought that solution was the best one.

@@ -1,4 +1,4 @@
-# earthquakes in nepal
+# Earthquakes in Nepal
 
 ## sqlite
 
