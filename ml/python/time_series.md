@@ -609,3 +609,340 @@ fig.show()
 ```
 
 ![line plot ARMA](images/arma.png)
+
+### ARCH and GARCH Models
+
+ARCH stands for autoregressive conditionally heteroscedastic, which models the variance of a time series. ARCH model assumes variance at time $t$ depends on the past squared observations. A GARCH (generalized autoregressive conditionally heteroscedastic) model uses values of the past squared observations and past variances to model the variance at time $t$. ARCH and GARCH models are widely used in finance and econometric time series analysis.
+
+Let's see an example of using GARCH model in forecasting Apple stock price volatility. We first import the data.
+
+```py
+df = pd.read_csv("./data/AAPL.csv", parse_dates=["date"], index_col="date")
+​
+print("df shape:", df.shape)
+df.head()
+```
+
+The dataset range from 1999 to 2022. For simplicity, we only take 5 years of data.
+
+```py
+df = df["2015-10-13":]
+df.shape
+```
+
+>(1765, 5)
+
+#### Calculating Returns
+
+The next step is to calculate the volatility of the stock close prices. Here we can use the pct_change function from pandas to calculate the daily percentage change, then multiply the result by 100 to get the returns:
+
+```py
+df.sort_index(ascending=True, inplace=True)
+df["return"] = df["close"].pct_change() * 100
+df.head()
+```
+
+We can then take out the return column as our training data. Note the first observation is missing since there is no past value to observe. We need to drop it:
+
+```py
+AAPL_return = df["return"].dropna()
+AAPL_return.head()
+```
+
+We can check the histogram to see the distribution of the returns over the past five years:
+
+```py
+plt.hist(AAPL_return, bins=50)
+​
+plt.xlabel("Returns")
+plt.ylabel("Frequency [count]")
+​
+# Add title
+plt.title("Distribution of AAPL Daily Returns")
+```
+
+![Histogram](images/hist_stock.png)
+
+There's a negative outlier in this date range, with the idxmin function, we find out it was in 31 August 2020. The stock price has a huge drop due to a stock split.
+
+`AAPL_return.idxmin(), AAPL_return.min()`
+>(Timestamp('2020-08-31 00:00:00'), -74.1521943793442)
+
+We can also check the standard deviation of the whole dataset with the pandas std() function:
+
+`AAPL_return.std()`
+> 2.581824271287778
+
+To see the statistic more clearly, we can use some time series plots. In addition to the Apple stock price return plot, we can also plot rolling volatility of the return to smooth out the noise, and see how return and volatility are associated with each other. First we can calculate a 50-day rolling standard deviation series for Apple stock price return:
+
+```py
+AAPL_return_rolling_50d_volatility = AAPL_return.rolling(window=50).std().dropna()
+AAPL_return_rolling_50d_volatility.head()
+```
+
+> date
+2015-12-23    1.664367
+2015-12-24    1.654218
+2015-12-28    1.646409
+2015-12-29    1.664682
+2015-12-30    1.671630
+Name: return, dtype: float64
+
+We can plot these two series:
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+​
+AAPL_return.plot(ax=ax, label="daily return")
+​
+# Plot
+AAPL_return_rolling_50d_volatility.plot(
+    ax=ax, label="50d rolling volatility", linewidth=3
+)
+​
+# Add axis labels
+plt.xlabel("Date")
+plt.ylabel("Return")
+​
+​
+plt.legend()
+```
+
+![Plot](images/vol_plot2..png)
+
+Here we can see that volatility goes up when the returns change drastically up or down. For instance, when return dropped enormously in 2020 August, volatility also increased a lot. However, this plot reveals a problem. We want to use returns to see if high volatility on one day is associated with high volatility on the following day. But high volatility is caused by large changes in returns, which can be either positive or negative. How can we assess negative and positive numbers together without them canceling each other out? The common solution used in building ARCH or GARCH models are to square the returns. Let's plot the squared returns:
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+​
+# Plot squared returns
+(AAPL_return**2).plot(ax=ax, label="daily return")
+​
+# Add axis labels
+plt.xlabel("date")
+plt.ylabel("Squared Returns");
+```
+
+![Plot](images/sq_return.png)
+
+Now we it much easier to see groups high and low volatility and build a GARCH model. To build a GARCH model, we need to figure out both the p and q parameters. The p parameter is handling correlations at prior time steps and the q parameter deals with prior variances, like shocks. It also uses the notion of lag. To see how many lags we should have in our model, we should create an ACF and PACF plot — but using the squared returns.
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+​
+# Create ACF of squared returns
+plot_acf(AAPL_return**2, ax=ax)
+​
+# Add axis labels
+plt.xlabel("Lag [days]")
+plt.ylabel("Correlation Coefficient");
+```
+
+![ACF](images/acf_plot.png)
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+
+# Create PACF of squared returns
+plot_pacf(AAPL_return**2, ax=ax)
+
+# Add axis labels
+plt.xlabel("Lag [days]")
+plt.ylabel("Correlation Coefficient")
+```
+
+![PACF](images/pacf_plot.png)
+
+Both the ACF and PACF graph show one lag is enough to build the model.
+
+#### Build Model
+
+```py
+# Build and train model
+model = arch_model(AAPL_return, p=1, q=1, rescale=False).fit(disp=0)
+​
+print("model type:", type(model))
+​
+# Show model summary
+model.summary()
+```
+
+The model summary provides a lot of information about the model, like the trained parameters, model performance, etc. AIC and BIC are important measurements for model performance. AIC stands for Akaike Information Criterion, it measures the goodness of fit of any estimated statistical model. BIC is Bayesian Information Criteria that selects model from a finite set of models. When fitting models, it is possible to increase model performance by adding more parameters, which would also result in overfitting. The BIC resolves this problem by introducing a penalty term for the number of parameters in the model. The penalty term is larger in BIC than in AIC. Though BIC is always higher than AIC, lower the value of these two measures, better the model.
+
+#### Standardized Residuals
+
+After fitting the model with the data, we can get also get the residuals to see how the model performs. The residual at time 𝑡 is the observed return at time 𝑡 minus the model's estimated mean return at time  𝑡 . For other models that model observations directly, like stock prices, the assumptions are the residuals are the noises that follow a normal distribution. In GARCH model, since we are model returns, which is the variance of the stock prices, the residuals of the variance will not follow a normal distribution. So we need to use standardized residuals instead of residuals to check the normality. Standardized residual at time 𝑡 is the residual at time 𝑡 divided by the square root of the model estimated variance at time  𝑡 . Let's check the plot of the standardized residuals across the time series:
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+​
+# Plot standardized residuals
+model.std_resid.plot(ax=ax, label="Standardized Residuals")
+​
+# Add axis labels
+plt.xlabel("Date")
+plt.ylabel("Value")
+​
+# Add legend
+plt.legend()
+```
+
+![Residuals](images/resid_plot.png)
+
+```py
+# Create histogram of standardized residuals
+plt.hist(model.std_resid, bins=500)
+
+# Add axis labels
+plt.xlabel("Standardized Residual")
+plt.ylabel("Frequency [count]")
+
+# Add title
+plt.title("Distribution of Standardized Residuals");
+```
+
+![Histogram residuals](images/hist_resid.png)
+
+#### Evaluation
+
+We can further evaluate the model by comparing its forecast with a subset of the observed returns to see whether the model has successfully captured the volatility. We can first check the model conditional volatility in its confidence interval throughout the dataset:
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+​
+# Plot `AAPL_return`
+AAPL_return.plot(ax=ax)
+​
+# Plot conditional volatility * 2
+(2 * model.conditional_volatility).plot(
+    ax=ax, color="C1", label="2 SD Conditional Volatility"
+)
+​
+​
+# Plot conditional volatility * -2
+(-2 * model.conditional_volatility.rename("")).plot(ax=ax, color="C1")
+​
+​
+# Add axis labels
+plt.xlabel("Date")
+plt.ylabel("Daily Returns")
+​
+# Add legend
+plt.legend()
+```
+
+![Volatility](images/vol_plot.png)
+
+We can then select the test set of the data and do a walk-forward validation on the GARCH model:
+
+```py
+# Create empty list to hold predictions
+predictions = []
+​
+# Calculate size of test data (20%)
+test_size = int(len(AAPL_return) * 0.2)
+​
+# Walk forward
+for i in range(test_size):
+    # Create test data
+    y_train = AAPL_return.iloc[: -(test_size - i)]
+​
+    # Train model
+    model = arch_model(y_train, p=1, q=1, rescale=False).fit(disp=0)
+​
+    # Generate next prediction (volatility, not variance)
+​
+    next_pred = model.forecast(horizon=1, reindex=False).variance.values[0][0] ** 0.5
+​
+    # Append prediction to list
+    predictions.append(next_pred)
+​
+# Create Series from predictions list
+y_test_wfv = pd.Series(predictions, index=AAPL_return.tail(test_size).index)
+​
+print("y_test_wfv type:", type(y_test_wfv))
+print("y_test_wfv shape:", y_test_wfv.shape)
+y_test_wfv.head()
+```
+
+We can plot the predicted volatility versus return in this test set, and see the model has captured most of the variance here:
+
+```py
+fig, ax = plt.subplots(figsize=(15, 6))
+​
+# Plot returns for test data
+AAPL_return.tail(test_size).plot(ax=ax, label="AAPL return")
+​
+# Plot volatility predictions * 2
+(2 * y_test_wfv).plot(ax=ax, c="C1", label="2 SD Predicted Volatility")
+​
+# Plot volatility predictions * -2
+(-2 * y_test_wfv).plot(ax=ax, c="C1")
+​
+# Label axes
+plt.xlabel("Date")
+plt.ylabel("Return")
+​
+# Add legend
+plt.legend()
+```
+
+![Forecast](images/forecast_vol.png)
+
+#### Forecasting
+
+The last step is to make the forecasts with our trained model. Let's make a one-day forecast first to see how GARCH model forecasting works:
+
+`one_day_forecast = model.forecast(horizon=1, reindex=False).variance`
+`print("one_day_forecast type:", type(one_day_forecast))`
+>one_day_forecast
+one_day_forecast type: <class 'pandas.core.frame.DataFrame'>
+h.1
+date
+2022-10-13 5.998737
+
+There are two things we need to keep in mind here. First, our model forecast shows the predicted variance, not the standard deviation / volatility. So we'll need to take the square root of the value. Second, the prediction's index is in the format of "h.1" as the next date of the last training data date. It's not in the form of DatetimeIndex that we desire. So we need to format the forecasts to be more readable.
+
+We first generate 5 days predictions with our trained GARCH model:
+
+```py
+# Generate 5-day volatility forecast
+prediction = model.forecast(horizon=5, reindex=False).variance ** 0.5
+​
+# Calculate forecast start date
+start = prediction.index[0] + pd.DateOffset(days=1)
+​
+# Create date range
+prediction_dates = pd.bdate_range(start=start, periods=prediction.shape[1])
+​
+# Create prediction index labels, ISO 8601 format
+prediction_index = [d.isoformat() for d in prediction_dates]
+​
+print("prediction_index type:", type(prediction_index))
+print("prediction_index len:", len(prediction_index))
+prediction_index[:3]
+```
+
+>prediction_index type: <class 'list'>
+prediction_index len: 5
+['2022-10-14T00:00:00', '2022-10-17T00:00:00', '2022-10-18T00:00:00']
+
+Then we define a function to clean the predictions to be more readable:
+
+```py
+# Take the square root of the model forecasts
+data = prediction.values.flatten() ** 0.5
+​
+# Format the forecasts with the correct date
+prediction_formatted = pd.Series(data, index=prediction_index)
+​
+# Show the results
+prediction_formatted.to_dict()
+```
+
+>{'2022-10-14T00:00:00': 1.565
+0022107851496,
+ '2022-10-17T00:00:00': 1.5695200439283639,
+ '2022-10-18T00:00:00': 1.573999197428616,
+ '2022-10-19T00:00:00': 1.578440435280944,
+ '2022-10-20T00:00:00': 1.5828444980313872}
