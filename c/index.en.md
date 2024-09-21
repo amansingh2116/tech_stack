@@ -36,55 +36,83 @@ int main() {
 ## Explanation of Topics
 
 ### Comments
+
 - **Single line comment**:
-  ```c
-  // This is a single line comment
-  ```
+
+```c
+// This is a single line comment
+```
+
 - **Multi-line comment**:
-  ```c
-  /* This is a
-  Multiline comment */
-  ```
+
+```c
+/* This is a
+Multiline comment */
+```
 
 ### Compilation Commands
+
 - To save an executable file:
-  ```shell
-  gcc file_name.c
-  ```
-  This command generates an executable file named `a.exe` which can be used to run the code.
+  
+```shell
+gcc file_name.c
+```
+
+This command generates an executable file named `a.exe` which can be used to run the code.
+
 - To create an executable file with a specific name:
-  ```shell
-  gcc file_name.c -o new_file_name
-  ```
-  This command creates the executable file `new_file_name.exe`.
+  
+```shell
+gcc file_name.c -o new_file_name
+```
+
+This command creates the executable file `new_file_name.exe`.
 
 ### Preprocessor Directive
+
 - The `#include <stdio.h>` line tells the compiler to include the standard input-output library `stdio.h` in the program. This library is necessary for using functions like `printf` and `scanf`.
 
 ### Main Function
+
 - The `main` function is where the compiler starts reading the program. Since `main` is of type `int`, it should return a value of `int` datatype.
 
 ### Variables Declaration
+
 - Declaring integer variables:
-  ```c
-  int number1, number2, sum, value;
-  ```
+  
+```c
+int number1, number2, sum, value;
+```
+
 - Declaring and initializing a double variable:
-  ```c
-  double a = 5;
-  ```
+  
+```c
+double a = 5;
+```
 
 ### printf Function
+
 - The `printf` function is used to output text to the console. It is part of the C standard library `<stdio.h>`.
+- %s is used to print "string of characters."
+- Printf not only prints the content on the screen. It also returns the number of characters that it successfully prints on the screen.
+**example:**
+int main(){printf("%d", printf("%s", "Hello World!"))
+return 0;
+}
+output: Hello World!12
 
 #### Return Value
+
 - `printf()` returns the number of characters printed after successful execution. If an error occurs, a negative value is returned.
 
 #### Formatting in `printf`
+
 - **Format Specifier Syntax**:
-  ```c
-  %[flags][width][.precision][length]specifier
-  ```
+  
+```c
+%[flags][width][.precision][length]specifier
+```
+
 - **Common Specifiers**:
   - `%d`: for printing integers
   - `%f`: for printing floating-point numbers
@@ -92,9 +120,26 @@ int main() {
   - `%s`: for printing strings
   - `%p`: for printing memory addresses
   - `%x`: for printing hexadecimal values
+example 1:
+printf("%s\n", "Hello");
+printf("%10s", "Hello");
+
+```bash
+ Hello
+      Hello
+```
+
+example 2:
+int main (){
+int var = 052; // octal value
+printf("%d", var); //  output 42
+printf("%o", var); // output 52
+return 0;
+}
 
 - **Width**:
   Specifies the minimum number of characters to be printed.
+
   ```c
   printf("%25s", some_string);
   printf("%*s", 25, some_string);
@@ -102,6 +147,7 @@ int main() {
 
 - **Precision**:
   Specifies the number of digits for various data types.
+
   ```c
   printf("%.10d", some_integer);
   printf("%.3f", some_float);
@@ -110,17 +156,21 @@ int main() {
 
 - **Length**:
   Specifies the length of the data type in memory.
+
   ```c
   printf("%lf", double_variable);
   ```
 
 ### scanf Function
+
 - The `scanf` function reads formatted input from the standard input stream (usually the keyboard) and writes the result into the given arguments.
+  
   ```c
   scanf("%d %d", &number1, &number2);
   ```
 
 #### Format Specifiers
+
 - `%d` to accept input of integers.
 - `%ld` to accept input of long integers
 - `%lld` to accept input of long long integers
@@ -128,29 +178,37 @@ int main() {
 - `%c` to accept input of character types.
 - `%s` to accept input of a string.
 
-#### Return Value
+#### Return Values
+
 - **>0**: Number of values converted and assigned successfully.
 - **0**: No value was assigned.
 - **<0**: Read error encountered or end-of-file (EOF) reached before any assignment was made.
 
 ### Address-of Operator
+
 - `&` is used to get the memory address of a variable.
+  
   ```c
   // For example, &var is the address of var.
   ```
 
 ### Calculations
+
 - Performing basic arithmetic operations:
+  
   ```c
   sum = number1 + number2;   
   value = sum * 5;
   ```
 
 ### Escape Characters
+
 - Escape characters in C:
+  
   ```c
   printf("(%d + %d) * %a = %d\n", number1, number2, value);
   ```
+
   - `\n`: New Line
   - `\b`: Backspace
   - `\f`: Form Feed
@@ -166,23 +224,49 @@ int main() {
   - `\0`: NULL
 
 ### Return Statement
+
 - The `main` function should return an integer value. Returning `0` typically signifies that the program has executed successfully.
+  
   ```c
   return 0;
   ```
 
+### Garbage value
+
+A **garbage value** refers to an uninitialized variable containing whatever data happens to be in memory at that location when the program is run. Since the variable has not been explicitly initialized, it can hold any random value left over from previous operations.
+
+In your code:
+
+```c
+#include <stdio.h>
+
+int var = 5;
+
+int main() {
+    int var = var;  // Local variable `var` is uninitialized
+    printf("%d", var);  // Prints the uninitialized `var`
+    return 0;
+}
+```
+
+- The local `var` is declared as `int var = var;`. Since the local `var` is not initialized with a valid value (it's not using the global `var` due to scope shadowing), the compiler doesn't assign any specific value to it.
+- When `printf("%d", var);` is called, the value printed is whatever was in that memory location, which is considered **garbage** because it is not predictable or meaningful.
+
+Thus, the output will be a **garbage value**, as the local `var` is uninitialized.
 
 ## Variables in C
 
 A variable in C is a memory location with some name that helps store some form of data and retrieves it when required. We can store different types of data in the variable and reuse the same variable for storing some other data any number of times.
 
 ### Variable Declaration
+
 ```c
 data_type variable_name = value;    // defining single variable
 data_type variable_name1, variable_name2;    // defining multiple variables
 ```
 
-#### Example Code
+**Example :**
+
 ```c
 #include <stdio.h> 
 
@@ -198,6 +282,7 @@ int main() {
 ```
 
 ### Rules for Naming Variables in C
+
 1. A variable name must only contain alphabets, digits, and underscore.
 2. A variable name must start with an alphabet or an underscore only. It cannot start with a digit.
 3. No white space is allowed within the variable name.
@@ -206,9 +291,11 @@ int main() {
 ### C Variable Types
 
 #### Local Variables
+
 A local variable is declared inside a function. A local variable is visible only inside their function; only statements inside a function can access that local variable. Local variables are declared when the function execution starts and get destroyed when the control exits from the function.
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -226,7 +313,8 @@ void test() {
 ```
 
 **Output:**
-```
+
+```bash
 Values in test() function p = 50 and q = 80
 Values in main() function p = 22 and q = 44
 ```
@@ -234,9 +322,11 @@ Values in main() function p = 22 and q = 44
 Operating System calls the main() function at the time of execution. The local variables within the main() are created when the main() starts execution. When a call is made to the test() function, the control is transferred from main() to test(), and the local variables within the test() are created and available only within the test() function. After completion of execution of the test() function, the local variables are destroyed and the control is transferred back to the main() function.
 
 #### Global Variables
+
 Global variables are declared outside of any function. A global variable is visible to every function and can be used by any piece of code. Unlike local variables, global variables retain their values between function calls and throughout the program execution.
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -257,7 +347,8 @@ void test() {
 ```
 
 **Output:**
-```
+
+```bash
 In main() function a = 20
 In test() function a = 40
 In main() function a = 55
@@ -266,9 +357,11 @@ In main() function a = 55
 In the above code, the global variable `a` is declared outside of all the functions. So, the variable `a` can be accessed in every function. The variable `a` has no local declaration in `main()` and `test()` functions, so they access the global variable `a`. The global variables are destroyed only after the completion of the execution of the entire program.
 
 #### Static Variables
+
 A static variable in C is a variable that is defined using the `static` keyword. It can be defined only once in a C program and its scope depends upon the region where it is declared (can be global or local). The default value of static variables is zero.
 
 **Syntax:**
+
 ```c
 static data_type variable_name = initial_value;
 ```
@@ -276,6 +369,7 @@ static data_type variable_name = initial_value;
 As its lifetime is till the end of the program, it can retain its value for multiple function calls.
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -299,7 +393,8 @@ int main() {
 ```
 
 **Output:**
-```
+
+```bash
 First Call
     Local: 30
     Static: 40
@@ -312,14 +407,17 @@ Third Call
 ```
 
 #### Automatic Variables
+
 All the local variables are automatic variables by default. They are also known as auto variables. Their scope is local and their lifetime is till the end of the block. If needed, we can use the `auto` keyword to define the auto variables. The default value of the auto variables is a garbage value.
 
 **Syntax:**
+
 ```c
 auto data_type variable_name;
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -336,19 +434,23 @@ int main() {
 ```
 
 **Output:**
-```
+
+```bash
 Auto Variable: 20
 ```
 
 #### External Variables
+
 External variables in C can be shared between multiple C files. We can declare an external variable using the `extern` keyword. Their scope is global and they exist between multiple C files.
 
 **Syntax:**
+
 ```c
 extern data_type variable_name;
 ```
 
 **Example:**
+
 ```c
 // myfile.h
 extern int x = 10;  // External variable (also global)
@@ -365,14 +467,17 @@ void printValue() {
 ```
 
 #### Register Variables
+
 Register variables in C are stored in the CPU register instead of the conventional storage place like RAM. Their scope is local and exists till the end of the block or a function. These variables are declared using the `register` keyword. The default value of register variables is a garbage value.
 
 **Syntax:**
+
 ```c
 register data_type variable_name = initial_value;
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -385,7 +490,8 @@ int main() {
 ```
 
 **Output:**
-```
+
+```bash
 Value of Register Variable: 22
 ```
 
@@ -393,12 +499,14 @@ Value of Register Variable: 22
 
 ## Data Types in C
 
-Data types in C are used to specify the type of data that a variable can hold. Each data type has a specific range and size, which determines the amount of memory required to store variables of that type.
+Data types in C are used to specify the type of data that a variable can hold. Each data type has a specific range and size, which determines the amount of memory required to store variables of that type. If out of range values given, error given with wrong output. x byte storage can store 2^(x*8) numbers divided half between positive and negative including 0.
 
 ### Integer Data Type
+
 Integer data types are used to store whole numbers, both positive and negative, without any decimal part.
 
 **Example:**
+
 ```c
 int main() { 
     int var_name;
@@ -411,6 +519,7 @@ int main() {
 - **Format Specifier:** `%d`
 
 **Variants:**
+
 - `unsigned int`: Stores values from 0 to positive numbers, cannot store negative values.
 - `short int`: Smaller than `int`, stores values from -32,768 to 32,767.
 - `long int`: Larger than `int`, can store larger values.
@@ -418,10 +527,37 @@ int main() {
 
 **Note:** The size of an integer data type is compiler-dependent. Use the `sizeof` operator to check the actual size.
 
+**example 1:**
+int main() {
+    unsigned i = 1;
+    int j = -4;
+    printf("%u", i + j);  // Output: 4294967293
+    return 0;
+}
+The answer is `4294967293` because adding `1` (unsigned) and `-4` (signed) results in `-3`. When `-3` is interpreted as an **unsigned int**, it wraps around, becoming `4294967293` due to the unsigned integer representation in 32-bit systems.
+2^32 + (−3) = 4294967296 − 3 = 4294967293
+
+**example 2:**
+int main(){
+unsigned int i = 500;
+while(i++ != 0);
+printf("⅘d", i);
+return 0;
+}
+The **range of `unsigned int`** (4 bytes) is from `0` to `4294967295`.
+
+- When the value of `i` reaches `4294967295`, adding any number (such as `i + 1`) will cause an overflow.
+- Due to the nature of **unsigned integers**, the value will wrap around and become `0`.
+- Since the condition in the `while` loop likely checks for a non-zero value (e.g., `while (i != 0)`), once `i` becomes `0`, the condition becomes false, and we exit the loop.
+
+However, due to the use of the **post-increment operator** (`i++`), after the loop exits, the value of `i` is incremented **after** the check, meaning it will be `1` when the loop terminates, **not 0**.
+
 ### Floating-Point Data Type
+
 Floating-point data types are used to store decimal and exponential values with single precision.
 
 **Example:**
+
 ```c
 int main() { 
     float var_name;
@@ -434,9 +570,11 @@ int main() {
 - **Format Specifier:** `%f`
 
 ### Character Data Type
+
 Character data types are used to store single characters.
 
 **Example:**
+
 ```c
 int main() { 
     char var_name = 'x';
@@ -445,13 +583,29 @@ int main() {
 ```
 
 - **Range:** (-128 to 127) or (0 to 255)
-- **Size:** 1 byte
+- **Size:** 1 byte , only single character allowed in single inverted comma
 - **Format Specifier:** `%c`
 
+example:
+int main() {
+    char c = 255;
+    c = c + 10;
+    printf("%d", c);
+    return 0;
+}
+output: 9
+The answer is `9` because:
+
+1. The `char` type is typically 8 bits, and the value `255` overflows in a signed `char`, wrapping around to `-1`.
+2. Adding `10` to `-1` results in `9`.
+3. The `printf("%d", c);` prints the value of `c`, which is now `9`.
+
 ### Double Data Type
+
 Double data types are used to store decimal numbers with double precision.
 
 **Example:**
+
 ```c
 int main() { 
     double var_name;
@@ -464,9 +618,11 @@ int main() {
 - **Format Specifier:** `%lf`
 
 ### Size of Data Types
+
 The size of data types in C depends on the architecture of the system. To check the size of data types, use the `sizeof` operator.
 
 **Example:**
+
 ```c
 int main() {
     int size_of_int = sizeof(int);
@@ -484,7 +640,8 @@ int main() {
 ```
 
 **Output:**
-```
+
+```bash
 The size of int data type: 4
 The size of char data type: 1
 The size of float data type: 4
@@ -499,6 +656,7 @@ Typecasting in C is the process of converting one data type to another data type
 2. **Explicit Typecasting:** Used when the programmer explicitly converts one data type to another. It is necessary when the default typecasting would result in incorrect output.
 
 **Syntax for Explicit Typecasting:**
+
 ```c
 int x;
 float y;
@@ -506,6 +664,7 @@ y = (float)x;
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h> 
   
@@ -518,22 +677,28 @@ int main()
   
     // Division of a and b 
     div = a / b; 
+    // int / int = int, float / int = float
   
     printf("The result is %f\n", div); 
   
     return 0; 
 }
 ```
+
 **Output:**
-```
+
+```bash
 The result is 7.000000
 ```
+
 **Required Output:**
-```
+
+```bash
 7.500000
 ```
 
 **Corrected Example with Explicit Typecasting:**
+
 ```c
 #include <stdio.h> 
   
@@ -557,10 +722,29 @@ int main()
     return 0; 
 }
 ```
+
 **Output:**
-```
+
+```bash
 The result of Implicit typecasting is d
 The result of Explicit typecasting is 7.500000
+```
+
+### ASCII Values
+
+A = 65
+B = 66 and so on Z = 90
+similarly,
+a = 97
+b = 98 and so on z = 122
+
+```c
+#include <stdio.h>
+int main(){
+    char ch = 'a';
+    printf("%d", ch); // prints 97
+    return 0;
+}
 ```
 
 #### Conversion Functions in C
@@ -580,6 +764,7 @@ These functions are useful for handling data conversions in various scenarios, e
 Constants in C are read-only variables whose values cannot be modified once they are declared. They can be of various types, such as integer constants, floating point constants, string constants, or character constants. The `const` keyword is used to define constants in C.
 
 **Example:**
+
 ```c
 int main() {
     const int var_name = 10;
@@ -588,6 +773,7 @@ int main() {
 ```
 
 **Properties of Constants in C:**
+
 1. **Initialization with Declaration:**
    - Constants must be initialized at the time of declaration.
    - If not initialized, they will store garbage values.
@@ -612,11 +798,13 @@ int main() {
   - They are rvalues (can appear on the right side of assignment).
 
 **Example of Constant:**
+
 ```c
 const int c = 20;
 ```
 
 **Example of Literals:**
+
 ```c
 24, 15.5, 'a', "Geeks"
 ```
@@ -626,6 +814,7 @@ const int c = 20;
 The `#define` directive is used to define constants. Unlike `const`, it does not create a variable but replaces all occurrences of the defined name with the value.
 
 **Example:**
+
 ```c
 #include <stdio.h>
 #define pi 3.14
@@ -648,6 +837,7 @@ Operators in C are symbols that perform operations on variables and values. The 
 6. **Misc Operators**
 
 ### **Arithmetic Operators:**
+
 ```c
 int main() {
     int a = 60, b = 7;
@@ -656,13 +846,77 @@ int main() {
     printf("The multiplication result of a and b is %d\n", a * b);
     printf("The division result of a and b is %d\n", a / b);
     printf("The modulo result of a and b is %d\n", a % b);
-    printf("The increment result of a is %d\n", ++a);
-    printf("The decrement result of b is %d\n", --b);
+    printf("The increment result of a is %d\n", ++a); // pre increament
+    printf("The decrement result of b is %d\n", --b); // pre decreament
+    printf("The increment result of a is %d\n", a++); // post increament
+    printf("The decrement result of b is %d\n", b--); // post decreament
     return 0;
 }
 ```
 
+**Post increment/decrement in context of equation:**
+First use the value in the equation and then increment the value.
+**Pre increment/decrement in context of equation:**
+First increment the value and then use in the equation after completion of the equation.
+**Example:**
+a = 4, b = 3
+a+++b = 7
+a + ++ b = 8
+
+**Short circuiting :**
+
+int a = 1;
+int b = 1;
+int c = ++a || b++;
+int d = b-- && --a;
+
+printf("%d %d %d %d", d, c, b, a);
+output : 1 1 1 1
+
+**Short-circuiting** is a behavior in logical expressions where the evaluation of the expression stops as soon as the result is determined. It occurs with the logical `AND` (`&&`) and logical `OR` (`||`) operators in C and many other programming languages.
+
+### How It Works
+
+- **Logical OR (`||`)**:
+  - If the first operand evaluates to `true` (non-zero), the second operand is not evaluated because the result of the entire expression is already known to be `true`.
+  
+- **Logical AND (`&&`)**:
+  - If the first operand evaluates to `false` (zero), the second operand is not evaluated because the result of the entire expression is already known to be `false`.
+
+### Examples
+
+#### 1. **OR Short-Circuiting (`||`)**
+
+```c
+int a = 1;
+int b = 0;
+int result = a || b++;
+```
+
+- **`a || b++`**:
+  - `a` is `1` (true).
+  - Because `a` is true, the second part (`b++`) is not evaluated (short-circuited). So, `b` remains `0`.
+  - `result` becomes `1`.
+
+#### 2. **AND Short-Circuiting (`&&`)**
+
+```c
+int a = 0;
+int b = 1;
+int result = a && b++;
+```
+
+- **`a && b++`**:
+  - `a` is `0` (false).
+  - Since `a` is false, the second part (`b++`) is not evaluated (short-circuited). So, `b` remains `1`.
+  - `result` becomes `0`.
+
+### Key Point
+
+Short-circuiting improves efficiency by skipping unnecessary computations and can also prevent errors, especially when working with conditions that might cause issues if fully evaluated (e.g., dividing by zero or dereferencing null pointers).
+
 ### **Relational Operators:**
+
 ```c
 int main() {
     int harry = 9, rohan = 45;
@@ -675,6 +929,7 @@ int main() {
 ```
 
 ### **Logical Operators:**
+
 ```c
 int main() {
     int h = 0, j = 1;
@@ -687,6 +942,7 @@ int main() {
 ```
 
 ### **Bitwise Operators:**
+
 ```c
 int main() {
     int A = 60, B = 14;
@@ -701,6 +957,7 @@ int main() {
 ```
 
 ### **Assignment Operators:**
+
 ```c
 int main() {
     int ha = 9;
@@ -711,11 +968,13 @@ int main() {
 ```
 
 ### **Misc Operators:**
+
 - Address-of (`&`)
 - Pointer (`*`)
 - Conditional (`?:`)
 
 **Example of Taking Input from User:**
+
 ```c
 #include <stdio.h>
 
@@ -728,6 +987,60 @@ int main() {
 }
 ```
 
+![Precedence and associativity of operators](image.png)
+
+In C, the hierarchy of operators (also known as operator precedence) defines the order in which operators are evaluated in expressions. Operators with higher precedence are evaluated before those with lower precedence. When operators have the same precedence, associativity determines the order of evaluation.
+
+Here’s a summary of the hierarchy of operators in C, from highest to lowest precedence:
+
+1. **Parentheses**: `()`  
+   - Grouping expressions
+   - Function calls
+
+2. **Unary operators**: `++`, `--`, `+`, `-`, `!`, `~`, `(type)`, `sizeof`, `&` (address), `*` (dereference)
+   - Associativity: right to left
+
+3. **Multiplication, Division, Modulus**: `*`, `/`, `%`  
+   - Associativity: left to right
+
+4. **Addition, Subtraction**: `+`, `-`  
+   - Associativity: left to right
+
+5. **Shift operators**: `<<`, `>>`  
+   - Associativity: left to right
+
+6. **Relational operators**: `<`, `>`, `<=`, `>=`  
+   - Associativity: left to right
+
+7. **Equality operators**: `==`, `!=`  
+   - Associativity: left to right
+
+8. **Bitwise AND**: `&`  
+   - Associativity: left to right
+
+9. **Bitwise XOR**: `^`  
+   - Associativity: left to right
+
+10. **Bitwise OR**: `|`  
+    - Associativity: left to right
+
+11. **Logical AND**: `&&`  
+    - Associativity: left to right
+
+12. **Logical OR**: `||`  
+    - Associativity: left to right
+
+13. **Ternary operator**: `? :`  
+    - Associativity: right to left
+
+14. **Assignment operators**: `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `|=`, `^=`, `<<=`, `>>=`  
+    - Associativity: right to left
+
+15. **Comma operator**: `,`  
+    - Associativity: left to right
+
+This order determines how complex expressions are evaluated in C. Operators with the same precedence are evaluated from **left to right**.
+
 ## Conditional Statements in C
 
 Conditional statements are used to perform different actions based on different conditions. They include `if-else`, `switch`, conditional operators, and jump statements.
@@ -737,8 +1050,10 @@ Conditional statements are used to perform different actions based on different 
 The `if-else-if-else` statement allows you to test multiple conditions sequentially.
 
 **Syntax:**
+
 ```c
-if (condition) {
+if (condition) // condition can also be an expression or even an assignment or even a character, if it evaluates to 0 false, else true
+{
     // Executes this block if condition is true
 } else if (condition) {
     // Executes this block if the previous condition is false and this condition is true
@@ -748,6 +1063,7 @@ if (condition) {
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -771,6 +1087,7 @@ int main() {
 Nested `if-else` statements are `if-else` statements within another `if` or `else`.
 
 **Syntax:**
+
 ```c
 if (condition1) {
     if (condition2) {
@@ -787,7 +1104,10 @@ if (condition1) {
 }
 ```
 
+Nested if can be used as && operator too, example wap to check a number if divisible by 3 and 5 both without using && operator.
+
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -817,11 +1137,12 @@ int main() {
 The `switch` statement is used as an alternative to multiple `if-else` statements, typically when checking the value of a variable against a series of constants.
 
 **Syntax:**
+
 ```c
 switch (expression) {
     case value1:
         // Executes when expression matches value1
-        break;
+        break; // if braek is not specified then next case if also evaluated
     case value2:
         // Executes when expression matches value2
         break;
@@ -832,6 +1153,7 @@ switch (expression) {
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -859,14 +1181,17 @@ int main() {
 
 ### 4. Conditional Operator (`? :`)
 
+Also known as ternary operator.
 The conditional operator is a shorthand for `if-else` statements, used to return a value based on a condition.
 
 **Syntax:**
+
 ```c
 condition ? true_statements : false_statements;
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -887,6 +1212,7 @@ Jump statements are used to alter the flow of control in a program.
 - **`break`**: Terminates the nearest enclosing loop or `switch` statement.
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -905,6 +1231,7 @@ int main() {
 - **`continue`**: Skips the current iteration of the nearest enclosing loop and proceeds with the next iteration.
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -923,6 +1250,7 @@ int main() {
 - **`goto`**: Jumps to a labeled statement within the same function. It is generally discouraged as it can make code harder to read and maintain.
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -950,13 +1278,19 @@ Loops in C are used to execute a block of code repeatedly based on a condition. 
 The `for` loop is used when the number of iterations is known beforehand. It initializes a variable, checks a condition, and updates the variable after each iteration.
 
 **Syntax:**
+
 ```c
 for (initialization_expression; test_expression; update_expression) {
     // body of the for loop
 }
 ```
 
+- **initial expression** : initialization condition or assigment
+- **test expression** : condition to be true for loop to run
+- **update expression** : updation to be happen after completition of each iteration of the body of loop
+
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -976,6 +1310,7 @@ int main() {
 The `while` loop is used when the number of iterations is not known beforehand and depends on the condition. The condition is checked before entering the loop body.
 
 **Syntax:**
+
 ```c
 initialization_expression;
 while (test_expression) {
@@ -985,6 +1320,7 @@ while (test_expression) {
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -1005,6 +1341,7 @@ int main() {
 The `do-while` loop is similar to the `while` loop, but the condition is checked after the loop body has executed. Therefore, the loop body is executed at least once.
 
 **Syntax:**
+
 ```c
 initialization_expression;
 do {
@@ -1014,6 +1351,7 @@ do {
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -1048,11 +1386,13 @@ The syntax of a function can be divided into three aspects:
 Function declaration tells the compiler that there is a function with the given name defined elsewhere.
 
 **Syntax:**
+
 ```c
 return_type function_name(parameter_1_type, parameter_2_type);
 ```
 
 **Example:**
+
 ```c
 int sum(int a, int b);  // Function declaration with parameter names
 int sum(int, int);      // Function declaration without parameter names
@@ -1063,6 +1403,7 @@ int sum(int, int);      // Function declaration without parameter names
 The function definition includes the actual code to be executed.
 
 **Syntax:**
+
 ```c
 return_type function_name(parameter_1_type parameter_1_name, parameter_2_type parameter_2_name) {
     // body of the function
@@ -1070,6 +1411,7 @@ return_type function_name(parameter_1_type parameter_1_name, parameter_2_type pa
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -1089,6 +1431,7 @@ int main() {
 The return type specifies the type of value returned by the function. Use `void` if no value is returned.
 
 **Example:**
+
 ```c
 int func(parameter_1, parameter_2); // Returns an integer
 void func(); // Does not return a value
@@ -1101,6 +1444,7 @@ void func(); // Does not return a value
 Arguments (or parameters) are the data passed to a function.
 
 **Example:**
+
 ```c
 int function_name(int var1, int var2);
 ```
@@ -1112,6 +1456,7 @@ Arguments can be passed in two ways:
 1. **Pass by Value:** Copies the value into the function’s parameters. Changes inside the function do not affect the caller’s variables.
 
     **Example:**
+
     ```c
     #include <stdio.h>
 
@@ -1129,8 +1474,10 @@ Arguments can be passed in two ways:
         return 0;
     }
     ```
+
     **Output:**
-    ```
+
+    ```bash
     Before swap: 3, 2
     After swap: 3, 2
     ```
@@ -1138,6 +1485,7 @@ Arguments can be passed in two ways:
 2. **Pass by Reference:** Uses pointers to refer to the actual parameters, so changes affect the caller’s variables.
 
     **Example:**
+
     ```c
     #include <stdio.h>
 
@@ -1155,8 +1503,10 @@ Arguments can be passed in two ways:
         return 0;
     }
     ```
+
     **Output:**
-    ```
+
+    ```bash
     Before swap: 3, 2
     After swap: 2, 3
     ```
@@ -1181,6 +1531,7 @@ Recursion is a process where a function calls itself to solve a problem. A recur
 #### Syntax of Recursive Functions
 
 **Syntax:**
+
 ```c
 type function_name(args) {
     // function statements
@@ -1190,6 +1541,7 @@ type function_name(args) {
 ```
 
 **Example:**
+
 ```c
 #include <stdio.h>
 
@@ -1218,7 +1570,8 @@ int main() {
 6. **nSum(0):** Returns 0
 
 The final calculation:
-```
+
+```bash
 nSum(5) = 5 + 4 + 3 + 2 + 1 + 0 = 15
 ```
 
@@ -1229,6 +1582,7 @@ nSum(5) = 5 + 4 + 3 + 2 + 1 + 0 = 15
 3. Each stack frame is removed after the function returns a value.
 
 **Steps:**
+
 1. **Create Stack Frame:** For `nSum(5)`
 2. **Recursive Calls:** New stack frames created for each call.
 3. **Return Values:** Stack frames are removed as values are returned.
@@ -1242,7 +1596,6 @@ Occurs when the recursion depth exceeds the stack memory limit, causing program 
 ---
 
 Here's a Markdown version of the notes on arrays in C:
-
 
 ## Arrays in C
 
@@ -1263,11 +1616,13 @@ An array in C is a fixed-size collection of similar data items stored in contigu
 To declare an array, specify its name, type, and size.
 
 **Syntax**:
+
 ```c
 data_type array_name[size];
 ```
 
 For multidimensional arrays:
+
 ```c
 data_type array_name[size1][size2]...[sizeN];
 ```
@@ -1277,16 +1632,19 @@ data_type array_name[size1][size2]...[sizeN];
 Arrays can be initialized in several ways:
 
 1. **With Declaration**:
+
    ```c
    data_type array_name[size] = {value1, value2, ..., valueN};
    ```
 
 2. **With Declaration (Size Deduction)**:
+
    ```c
    data_type array_name[] = {1, 2, 3, 4, 5}; // Size is automatically deduced
    ```
 
 3. **After Declaration (Using Loops)**:
+
    ```c
    for (int i = 0; i < N; i++) {
        array_name[i] = valuei;
@@ -1296,11 +1654,13 @@ Arrays can be initialized in several ways:
 ### Accessing and Updating Array Elements
 
 **Access an element**:
+
 ```c
 array_name[index];
 ```
 
 **Update an element**:
+
 ```c
 array_name[index] = new_value;
 ```
@@ -1310,6 +1670,7 @@ array_name[index] = new_value;
 Traversal involves visiting each element of the array. This is commonly done using loops.
 
 **Example using a `for` loop**:
+
 ```c
 for (int i = 0; i < N; i++) {
     // Process array_name[i]
@@ -1321,6 +1682,7 @@ for (int i = 0; i < N; i++) {
 Arrays and pointers are closely related. The array name is a constant pointer to the first element. Arrays decay to pointers when passed to functions.
 
 **Example**:
+
 ```c
 #include <stdio.h>
 
@@ -1345,6 +1707,7 @@ int main() {
 Arrays are passed to functions as pointers. The array decays to a pointer to its first element.
 
 **Example**:
+
 ```c
 #include <stdio.h>
 
@@ -1367,9 +1730,10 @@ int main() {
 
 ### Returning Arrays from Functions
 
-C functions can only return a single value. To return an array, use a pointer. 
+C functions can only return a single value. To return an array, use a pointer.
 
 **Example**:
+
 ```c
 #include <stdio.h>
 
@@ -1399,6 +1763,7 @@ A string in C is a sequence of characters terminated by a null character (`\0`).
 Declaring a string is similar to declaring a one-dimensional array.
 
 **Syntax**:
+
 ```c
 char string_name[size];
 ```
@@ -1406,24 +1771,29 @@ char string_name[size];
 ### String Initialization
 
 1. **Assigning a String Literal without Size**:
+
    ```c
    char str[] = "GeeksforGeeks";
    ```
 
 2. **Assigning a String Literal with a Predefined Size**:
+
    Ensure to account for the null character.
+
    ```c
    char str[50] = "GeeksforGeeks";
    ```
 
 3. **Assigning Character by Character with Size**:
    Manually set the null character.
+
    ```c
    char str[14] = { 'G','e','e','k','s','f','o','r','G','e','e','k','s','\0' };
    ```
 
 4. **Assigning Character by Character without Size**:
    The size is determined by the compiler.
+
    ```c
    char str[] = { 'G','e','e','k','s','f','o','r','G','e','e','k','s','\0' };
    ```
@@ -1433,6 +1803,7 @@ char string_name[size];
 The length of the string is the number of characters excluding the null character. It can be determined using the `strlen()` function from the string.h library.
 
 **Example**:
+
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1447,7 +1818,8 @@ int main() {
 ```
 
 **Output**:
-```
+
+```bash
 Geeks
 Length of string str is 5
 ```
@@ -1455,6 +1827,7 @@ Length of string str is 5
 ### Reading a String Input from the User
 
 **Example**:
+
 ```c
 #include <stdio.h>
 
@@ -1467,12 +1840,14 @@ int main() {
 ```
 
 **Input**:
-```
+
+```bash
 GeeksforGeeks
 ```
 
 **Output**:
-```
+
+```bash
 GeeksforGeeks
 ```
 
@@ -1481,6 +1856,7 @@ Note: `scanf()` reads a string until the first whitespace. To handle strings wit
 ### Reading Strings with Whitespaces
 
 1. **Using `fgets()`**:
+
    ```c
    #include <stdio.h>
    #define MAX 50
@@ -1495,6 +1871,7 @@ Note: `scanf()` reads a string until the first whitespace. To handle strings wit
    ```
 
 2. **Using Scanset in `scanf()`**:
+
    ```c
    #include <stdio.h>
 
@@ -1509,6 +1886,7 @@ Note: `scanf()` reads a string until the first whitespace. To handle strings wit
 ### Passing Strings to Functions
 
 **Example**:
+
 ```c
 #include <stdio.h>
 
@@ -1524,7 +1902,8 @@ int main() {
 ```
 
 **Output**:
-```
+
+```bash
 String is : GeeksforGeeks
 ```
 
@@ -1533,6 +1912,7 @@ String is : GeeksforGeeks
 Strings and pointers are closely related. A character pointer can point to the start of a string.
 
 **Example**:
+
 ```c
 #include <stdio.h>
 
@@ -1549,7 +1929,8 @@ int main() {
 ```
 
 **Output**:
-```
+
+```bash
 GeeksforGeeks
 ```
 
@@ -1564,7 +1945,6 @@ GeeksforGeeks
 | `strlwr()` | Converts string to lowercase. |
 | `strupr()` | Converts string to uppercase. |
 | `strstr(s1, s2)` | Finds the first occurrence of `s2` in `s1`. |
-
 
 ## Pointers in C
 
@@ -1864,7 +2244,7 @@ struct Point {
 
 The reason for the above error is simple. When a datatype is declared, no memory is allocated for it. Memory is allocated only when variables are created.
 
-**Default Initialization**
+**Default Initialization :**
 
 By default, structure members are not automatically initialized to 0 or NULL. Uninitialized structure members will contain garbage values. However, when a structure variable is declared with an initializer, all members not explicitly initialized are zero-initialized.
 
@@ -1950,7 +2330,7 @@ int main()
 
 **Output:**
 
-```
+```bash
 Struct 1:
     i = 1, c = A, f = 1.000000, s = GeeksforGeeks
 Struct 2:
@@ -1993,7 +2373,7 @@ int main()
 
 **Output:**
 
-```
+```bash
 var1.a = 20
 var2.x = 314
 ```
@@ -2056,7 +2436,7 @@ We can access nested Members by using the same ( `.` ) dot operator two times as
 str_parent.str_child.member;
 ```
 
-**Example of Structure Nesting**
+**Example of Structure Nesting:**
 
 ```c
 #include <stdio.h>
@@ -2089,7 +2469,7 @@ int main()
 
 **Output:**
 
-```
+```bash
 var1.a = 25
 var1.b.x = 195
 var1.b.c = A
@@ -2099,7 +2479,7 @@ var1.b.c = A
 
 We can define a pointer that points to the structure like any other variable. Such pointers are generally called Structure Pointers. We can access the members of the structure pointed by the structure pointer using the ( `->` ) arrow operator.
 
-**Example of Structure Pointer**
+**Example of Structure Pointer:**
 
 ```c
 #include <stdio.h>
@@ -2125,7 +2505,7 @@ int main()
 
 **Output:**
 
-```
+```bash
 1 2
 ```
 
@@ -2133,7 +2513,7 @@ int main()
 
 The self-referential structures in C are those structures that contain references to the same type as themselves i.e., they contain a member of the type pointer pointing to the same structure type.
 
-**Example of Self-Referential Structures**
+**Example of Self-Referential Structures:**
 
 ```c
 #include <stdio.h>
@@ -2169,7 +2549,7 @@ ing var2 members using var1
 
 **Output:**
 
-```
+```bash
 var2.mem1: 10
 var2.mem2: 20
 ```
@@ -2187,7 +2567,7 @@ There are some situations where we need to pack the structure tightly by removin
 - Using `#pragma pack(1)`
 - Using `__attribute((packed))`
 
-**Example of Structure Padding and Packing**
+**Example of Structure Padding and Packing:**
 
 ```c
 #include <stdio.h>
@@ -2214,7 +2594,7 @@ int main()
 
 **Output:**
 
-```
+```bash
 Size of str1: 8
 Size of str2: 5
 ```
@@ -2227,7 +2607,7 @@ To know more about structure padding and packing, refer to this article – Stru
 
 Bit Fields are used to specify the length of the structure members in bits. When we know the maximum length of the member, we can use bit fields to specify the size and reduce memory consumption.
 
-**Syntax of Bit Fields**
+**Syntax of Bit Fields:**
 
 ```c
 struct structure_name {
@@ -2235,7 +2615,7 @@ struct structure_name {
 };
 ```
 
-**Example of Bit Fields**
+**Example of Bit Fields:**
 
 ```c
 #include <stdio.h>
@@ -2263,7 +2643,7 @@ int main()
 
 **Output:**
 
-```
+```bash
 Size of Str1: 8
 Size of Str2: 4
 ```
