@@ -1406,9 +1406,12 @@ The function definition includes the actual code to be executed.
 
 ```c
 return_type function_name(parameter_1_type parameter_1_name, parameter_2_type parameter_2_name) {
-    // body of the function
+    // body of the function;
+    return;
 }
 ```
+
+Return Statement (optional): If the function is supposed to return a value, it uses the return keyword to send a value back to the caller.
 
 **Example:**
 
@@ -1448,6 +1451,183 @@ Arguments (or parameters) are the data passed to a function.
 ```c
 int function_name(int var1, int var2);
 ```
+
+### The `main` Function
+
+In C, the **`main` function** is the entry point of any C program. It is the first function the C runtime executes when the program starts. Without a `main` function, the program has no starting point, and the compiler will throw an error.
+
+**Example of `main`**
+
+```c
+int main() {
+    // code starts executing here
+    printf("Hello, World!\n");
+    return 0;  // Indicating successful program completion
+}
+```
+
+#### Key Points about `main`
+
+- The `main` function can have **parameters** such as `int argc, char *argv[]` for handling command-line arguments, but it’s optional.
+- The **return type** of `main` is usually `int`, meaning it returns an integer status code to the operating system when the program finishes.
+  - Returning `0` means the program ended successfully.
+  - Returning non-zero values (like `return 1;`) indicates an error.
+
+### The `return` Keyword
+
+The **`return` keyword** is used to exit a function and send a value back to the calling function (or the operating system in the case of `main`).
+
+- **In user-defined functions**: If the function has a non-`void` return type (e.g., `int`), the `return` statement provides a value back to the caller.
+  
+  ```c
+  int add(int a, int b) {
+      return a + b;  // Returns the sum of a and b
+  }
+  ```
+
+- **In the `main` function**: The `return` keyword typically sends a status code back to the operating system.
+  
+  ```c
+  int main() {
+      return 0;  // Indicates that the program terminated successfully
+  }
+  ```
+
+  If you omit the `return 0;` in modern C (C99 and later), it’s implied that `main` will return `0` by default, meaning the program ended without errors.
+
+### How the Compiler Handles the `return` Statement
+
+When the compiler sees a `return` statement:
+
+1. It evaluates the expression after `return` (if any).
+2. It places the result in a special register to send it back to the calling function.
+3. For the `main` function, it sends the return value to the operating system to signal how the program ended.
+
+### Types of Functions
+
+1. **Library Functions:** Built-in functions provided by the compiler package.
+
+**Example:**
+In C, the **`math.h`** header file contains declarations for mathematical functions and macros. These functions allow performing various mathematical operations such as trigonometry, logarithms, exponentiation, and more.
+
+### Key Elements in `math.h`
+
+1. **Mathematical Functions**:
+   - These functions perform operations like square roots, power calculations, trigonometric functions, etc.
+
+2. **Macros**:
+   - Some constants, such as `M_PI` for the value of π, are defined in `math.h` (though not always in all compilers; some compilers may require additional macros to be defined).
+
+### Common Functions in `math.h`
+
+Here are some frequently used functions and their descriptions:
+
+| Function               | Description                                                   | Example Usage |
+|------------------------|---------------------------------------------------------------|---------------|
+| `double sqrt(double x)` | Returns the square root of `x`.                               | `sqrt(16)` -> `4.0` |
+| `double pow(double x, double y)` | Returns `x` raised to the power of `y`.            | `pow(2, 3)` -> `8.0` |
+| `double sin(double x)`  | Returns the sine of `x` (in radians).                         | `sin(M_PI/2)` -> `1.0` |
+| `double cos(double x)`  | Returns the cosine of `x` (in radians).                       | `cos(0)` -> `1.0` |
+| `double tan(double x)`  | Returns the tangent of `x` (in radians).                      | `tan(M_PI/4)` -> `1.0` |
+| `double log(double x)`  | Returns the natural logarithm (base `e`) of `x`.              | `log(2.718)` -> `1.0` |
+| `double log10(double x)`| Returns the base-10 logarithm of `x`.                         | `log10(100)` -> `2.0` |
+| `double exp(double x)`  | Returns `e` raised to the power of `x` (i.e., `e^x`).         | `exp(1)` -> `2.718` |
+| `double fabs(double x)` | Returns the absolute value of `x`.                            | `fabs(-5.5)` -> `5.5` |
+| `double ceil(double x)` | Returns the smallest integer value greater than or equal to `x`. | `ceil(2.3)` -> `3.0` |
+| `double floor(double x)`| Returns the largest integer value less than or equal to `x`.   | `floor(2.7)` -> `2.0` |
+| `double fmod(double x, double y)` | Returns the remainder of `x/y` as `x mod y`.       | `fmod(5.3, 2)` -> `1.3` |
+
+### Example Usage of `math.h`
+
+```c
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double num1 = 16.0;
+    double num2 = 2.718;
+
+    printf("Square root of %.2f is %.2f\n", num1, sqrt(num1));    // 4.0
+    printf("Natural log of %.3f is %.2f\n", num2, log(num2));     // 1.0
+    printf("2 raised to the power 3 is %.2f\n", pow(2, 3));       // 8.0
+    printf("Sine of Pi/2 is %.2f\n", sin(M_PI / 2));              // 1.0
+    printf("Ceiling of 2.3 is %.2f\n", ceil(2.3));                // 3.0
+
+    return 0;
+}
+```
+
+### Common Constants (Available on Some Systems)
+
+- `M_PI`: Approximate value of π (`3.141592653589793`).
+- `M_E`: Euler's number (`2.718281828459045`).
+
+2. **User-Defined Functions:** Functions created by the programmer.
+
+### Function Prototype
+
+In C, a **function prototype** is a declaration of a function that specifies the function's name, its return type, and its parameters, but does not contain the function body (the actual code of the function). The prototype informs the compiler about the function's existence and how it should be called before its actual definition appears in the code.
+
+#### Structure of a Function Prototype
+
+A function prototype includes:
+
+1. **Return type**: Specifies the type of value the function will return (e.g., `int`, `float`, `void`).
+2. **Function name**: The name by which the function will be called.
+3. **Parameters**: A list of input parameters (including their types) that the function accepts.
+
+#### Syntax of a Function Prototype
+
+```c
+return_type function_name(parameter_type1, parameter_type2, ...);
+```
+
+#### Example
+
+```c
+// Function prototype
+int add(int, int);
+```
+
+Here, `add` is a function that takes two `int` parameters and returns an `int`.
+
+#### Purpose of Function Prototypes
+
+1. **Forward Declaration**: A function prototype tells the compiler about the function before its actual implementation is encountered in the code.
+2. **Type Checking**: It ensures that function calls are made with the correct number and types of arguments.
+3. **Modularity**: It allows the function to be defined after the `main` function, maintaining better code organization.
+
+#### Example of Function Prototype and Definition
+
+```c
+#include <stdio.h>
+
+// Function prototype
+int add(int, int);
+
+int main() {
+    int a = 5, b = 10;
+    printf("Sum: %d\n", add(a, b));  // Function call
+    return 0;
+}
+
+// Function definition
+int add(int x, int y) {
+    return x + y;
+}
+```
+
+#### Explanation
+
+- The **prototype** (`int add(int, int);`) tells the compiler that a function named `add` exists, which returns an integer and takes two integer arguments.
+- Later, the function is **defined** with its body: `int add(int x, int y) { return x + y; }`.
+
+#### Importance of Prototypes
+
+Without a function prototype, if the function is called before it is defined, the compiler may not know how to handle the function properly, leading to warnings or errors. A prototype ensures that the compiler checks for:
+
+- Correct number of arguments.
+- Correct data types of arguments.
 
 ### Passing Parameters to Functions
 
@@ -1511,13 +1691,242 @@ Arguments can be passed in two ways:
     After swap: 2, 3
     ```
 
-### Types of Functions
+## Pointers in C
 
-1. **Library Functions:** Built-in functions provided by the compiler package.
+A pointer is a derived data type that stores the address of another variable or a memory location. Using pointers, you can access and manipulate data stored in that memory location. The size of pointers in C is independent of the type of data they point to and depends on the system architecture.
 
-2. **User-Defined Functions:** Functions created by the programmer.
+## Syntax of C Pointers
 
----
+The syntax for declaring a pointer is similar to variable declaration but includes the dereferencing operator `*`:
+
+```c
+datatype *ptr;
+```
+
+### 1. Pointer Declaration
+
+To declare a pointer, use the `*` operator before its name:
+
+```c
+int *ptr;
+```
+
+### 2. Pointer Initialization
+
+Initialize a pointer by assigning it the address of a variable using the `&` (address-of) operator:
+
+```c
+int var = 10;
+int *ptr;
+ptr = &var;
+
+// or declare and initialize in one step
+int *ptr = &var;
+```
+
+**Note:** Pointers should be initialized before use to avoid errors.
+
+### 3. Pointer Dereferencing
+
+Dereferencing a pointer accesses the value stored at the address it points to:
+
+```c
+int var = 10;
+int *ptr = &var;
+printf("Value at *ptr = %d\n", *ptr);
+*ptr = 34; // can be used to change the value, var = 34
+```
+
+### Types of Pointers
+
+1. **Integer Pointers**
+
+Pointers to integer values:
+
+```c
+int *ptr;
+```
+
+2. **Array Pointers**
+
+Pointers to arrays:
+
+```c
+char *ptr = &array_name;
+```
+
+3. **Structure Pointers**
+
+Pointers to structures:
+
+```c
+struct struct_name *ptr;
+```
+
+4. **Function Pointers**
+
+Pointers to functions:
+
+```c
+int (*ptr)(int, char);
+```
+
+5. **Double Pointers**
+
+Pointers to pointers:
+
+```c
+datatype **pointer_name;
+```
+
+example:-
+
+```c
+#include<stdio.h>
+
+int main(){
+    int a = 25;
+    int* x = &a;       // Pointer to 'a'
+    *x = 7;            // Dereferencing x to change the value of 'a' to 7
+    int** y = &x;      // Pointer to pointer x
+
+    printf("%d\n", a);    // Printing value of 'a'
+    printf("%d\n", *x);   // Printing value pointed to by 'x' (which is 'a')
+    printf("%d", *(&a))   // Printing value pointed to by address of a
+    printf("%d\n", **y);  // Dereferencing 'y' twice to get the value of 'a'
+    
+    return 0;
+}
+```
+
+6. **Constant Pointers**
+
+Pointers with a constant memory address:
+
+```c
+data_type * const pointer_name;
+```
+
+7. **Pointer to Constant**
+
+Pointers to constant values:
+
+```c
+const data_type *pointer_name;
+```
+
+### Size of Pointers
+
+The size of pointers is determined by the operating system and CPU architecture:
+
+- 8 bytes for a 64-bit system
+- 4 bytes for a 32-bit system
+
+**Example:**
+
+```c
+#include <stdio.h>
+
+int main() {
+    int *ptr_int;
+    char *ptr_char;
+    struct str *ptr_str;
+    void (*ptr_func)(int, int);
+    void *ptr_vn;
+
+    printf("Size of Integer Pointer  \t: %lu bytes\n", sizeof(ptr_int));
+    printf("Size of Character Pointer \t: %lu bytes\n", sizeof(ptr_char));
+    printf("Size of Structure Pointer \t: %lu bytes\n", sizeof(ptr_str));
+    printf("Size of Function Pointer \t: %lu bytes\n", sizeof(ptr_func));
+    printf("Size of NULL Void Pointer \t: %lu bytes\n", sizeof(ptr_vn));
+
+    return 0;
+}
+```
+
+### C Pointer Arithmetic
+
+#### Increment and Decrement
+
+Pointers can be incremented or decremented, which changes the address by the size of the data type:
+
+```c
+int *ptr;
+ptr = ptr + 1;  // Moves to next integer
+ptr = ptr - 1;  // Moves to previous integer
+```
+
+#### Addition and Subtraction
+
+Adding or subtracting integers from pointers:
+
+```c
+int N = 4;
+int *ptr1 = &N;
+ptr1 = ptr1 + 3; // Moves 3 integers ahead
+ptr1 = ptr1 - 3; // Moves 3 integers back
+```
+
+#### Subtracting Two Pointers
+
+Find the number of elements between two pointers:
+
+```c
+int x = 6, N = 4;
+int *ptr1 = &N, *ptr2 = &x;
+int diff = ptr1 - ptr2;  // Difference in terms of number of elements
+```
+
+#### Pointer Comparison
+
+Compare pointers to check if they are equal or not:
+
+```c
+int arr[5];
+int *ptr1 = arr;
+int *ptr2 = &arr[0];
+
+if (ptr1 == ptr2) {
+    printf("Pointers are equal.\n");
+} else {
+    printf("Pointers are not equal.\n");
+}
+```
+
+### Pointer Arithmetic on Arrays
+
+Arrays and pointers are closely related. The array name acts as a pointer to its first element. You can use pointer arithmetic to traverse arrays:
+
+```c
+int arr[] = {1, 2, 3, 4, 5};
+int *ptr = arr;
+
+for (int i = 0; i < 5; i++) {
+    printf("%d ", *(ptr + i));  // Access elements using pointer
+}
+```
+
+#### Example: Traversing a 2D Array
+
+```c
+#include <stdio.h>
+
+void traverseArr(int* arr, int N, int M) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            printf("%d ", *((arr + i * M) + j));
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int arr[][2] = {{1, 2}, {3, 4}, {5, 6}};
+    traverseArr((int*)arr, 3, 2);
+    return 0;
+}
+```
+
 
 ### Recursion in C
 
@@ -1592,10 +2001,6 @@ nSum(5) = 5 + 4 + 3 + 2 + 1 + 0 = 15
 Occurs when the recursion depth exceeds the stack memory limit, causing program termination.
 
 **Definition:** Stack overflow is an error when the call stack cannot store more data due to excessive recursion.
-
----
-
-Here's a Markdown version of the notes on arrays in C:
 
 ## Arrays in C
 
@@ -1945,243 +2350,6 @@ GeeksforGeeks
 | `strlwr()` | Converts string to lowercase. |
 | `strupr()` | Converts string to uppercase. |
 | `strstr(s1, s2)` | Finds the first occurrence of `s2` in `s1`. |
-
-## Pointers in C
-
-A pointer is a derived data type that stores the address of another variable or a memory location. Using pointers, you can access and manipulate data stored in that memory location. The size of pointers in C is independent of the type of data they point to and depends on the system architecture.
-
-## Syntax of C Pointers
-
-The syntax for declaring a pointer is similar to variable declaration but includes the dereferencing operator `*`:
-
-```c
-datatype *ptr;
-```
-
-### 1. Pointer Declaration
-
-To declare a pointer, use the `*` operator before its name:
-
-```c
-int *ptr;
-```
-
-### 2. Pointer Initialization
-
-Initialize a pointer by assigning it the address of a variable using the `&` (address-of) operator:
-
-```c
-int var = 10;
-int *ptr;
-ptr = &var;
-
-// or declare and initialize in one step
-int *ptr = &var;
-```
-
-**Note:** Pointers should be initialized before use to avoid errors.
-
-### 3. Pointer Dereferencing
-
-Dereferencing a pointer accesses the value stored at the address it points to:
-
-```c
-int var = 10;
-int *ptr = &var;
-printf("Value at *ptr = %d\n", *ptr);
-```
-
-### Types of Pointers
-
-#### 1. Integer Pointers
-
-Pointers to integer values:
-
-```c
-int *ptr;
-```
-
-#### 2. Array Pointers
-
-Pointers to arrays:
-
-```c
-char *ptr = &array_name;
-```
-
-#### 3. Structure Pointers
-
-Pointers to structures:
-
-```c
-struct struct_name *ptr;
-```
-
-#### 4. Function Pointers
-
-Pointers to functions:
-
-```c
-int (*ptr)(int, char);
-```
-
-#### 5. Double Pointers
-
-Pointers to pointers:
-
-```c
-datatype **pointer_name;
-```
-
-#### 6. NULL Pointers
-
-Pointers that point to no memory location, initialized as NULL:
-
-```c
-data_type *pointer_name = NULL;
-```
-
-#### 7. Void Pointers
-
-Pointers with no associated data type:
-
-```c
-void *pointer_name;
-```
-
-**Note:** Void pointers cannot be dereferenced directly.
-
-#### 8. Wild Pointers
-
-Uninitialized pointers that can cause crashes or data corruption.
-
-#### 9. Constant Pointers
-
-Pointers with a constant memory address:
-
-```c
-data_type * const pointer_name;
-```
-
-#### 10. Pointer to Constant
-
-Pointers to constant values:
-
-```c
-const data_type *pointer_name;
-```
-
-### Size of Pointers
-
-The size of pointers is determined by the operating system and CPU architecture:
-
-- 8 bytes for a 64-bit system
-- 4 bytes for a 32-bit system
-
-**Example:**
-
-```c
-#include <stdio.h>
-
-int main() {
-    int *ptr_int;
-    char *ptr_char;
-    struct str *ptr_str;
-    void (*ptr_func)(int, int);
-    void *ptr_vn;
-
-    printf("Size of Integer Pointer  \t: %lu bytes\n", sizeof(ptr_int));
-    printf("Size of Character Pointer \t: %lu bytes\n", sizeof(ptr_char));
-    printf("Size of Structure Pointer \t: %lu bytes\n", sizeof(ptr_str));
-    printf("Size of Function Pointer \t: %lu bytes\n", sizeof(ptr_func));
-    printf("Size of NULL Void Pointer \t: %lu bytes\n", sizeof(ptr_vn));
-
-    return 0;
-}
-```
-
-### C Pointer Arithmetic
-
-#### Increment and Decrement
-
-Pointers can be incremented or decremented, which changes the address by the size of the data type:
-
-```c
-int *ptr;
-ptr = ptr + 1;  // Moves to next integer
-ptr = ptr - 1;  // Moves to previous integer
-```
-
-#### Addition and Subtraction
-
-Adding or subtracting integers from pointers:
-
-```c
-int N = 4;
-int *ptr1 = &N;
-ptr1 = ptr1 + 3; // Moves 3 integers ahead
-ptr1 = ptr1 - 3; // Moves 3 integers back
-```
-
-#### Subtracting Two Pointers
-
-Find the number of elements between two pointers:
-
-```c
-int x = 6, N = 4;
-int *ptr1 = &N, *ptr2 = &x;
-int diff = ptr1 - ptr2;  // Difference in terms of number of elements
-```
-
-#### Pointer Comparison
-
-Compare pointers to check if they are equal or not:
-
-```c
-int arr[5];
-int *ptr1 = arr;
-int *ptr2 = &arr[0];
-
-if (ptr1 == ptr2) {
-    printf("Pointers are equal.\n");
-} else {
-    printf("Pointers are not equal.\n");
-}
-```
-
-### Pointer Arithmetic on Arrays
-
-Arrays and pointers are closely related. The array name acts as a pointer to its first element. You can use pointer arithmetic to traverse arrays:
-
-```c
-int arr[] = {1, 2, 3, 4, 5};
-int *ptr = arr;
-
-for (int i = 0; i < 5; i++) {
-    printf("%d ", *(ptr + i));  // Access elements using pointer
-}
-```
-
-#### Example: Traversing a 2D Array
-
-```c
-#include <stdio.h>
-
-void traverseArr(int* arr, int N, int M) {
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            printf("%d ", *((arr + i * M) + j));
-        }
-        printf("\n");
-    }
-}
-
-int main() {
-    int arr[][2] = {{1, 2}, {3, 4}, {5, 6}};
-    traverseArr((int*)arr, 3, 2);
-    return 0;
-}
-```
 
 ## Structures in C
 
