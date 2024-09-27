@@ -1,7 +1,6 @@
-
-// int main(){
-//     // pascal(5);
-//     // ways();
-
+int main(){
+//     // secL();
+//     // reverse();
+//     matrixmul();
 //     return 0;
 // }

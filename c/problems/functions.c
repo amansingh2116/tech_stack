@@ -140,6 +140,6 @@ int main(){
     // pascal(5);
     // ways();
     // power();
-    WAY();
+    // WAY();
     return 0;
 }

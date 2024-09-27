@@ -2042,6 +2042,24 @@ Arrays can be initialized in several ways:
    data_type array_name[size] = {value1, value2, ..., valueN};
    ```
 
+   ```c
+   int size = 10, arr[size];
+   ```
+
+   ```c
+    #include <stdio.h>
+    int main(){
+    int arr[10];
+    for(int i=0; i<=9; i++){ // input
+    scanf("%d", &arr[i]);
+    }
+    for(int i=0; i<=9;i++){ // output
+    printf ("&d",  arr[i]);
+    }
+    return 0;
+    }
+    ```
+
 2. **With Declaration (Size Deduction)**:
 
    ```c
@@ -2082,6 +2100,24 @@ for (int i = 0; i < N; i++) {
 }
 ```
 
+### Length of array
+
+```c
+#include<stdio.h>
+
+int main() {
+    int arr[] = {3, 6, 2, 7, 1, 5, 1, 1, 9, 5, 6, 7, 8}; // array initialization
+
+    int n = sizeof(arr)/sizeof(arr[0]); // sizeof calculation gives length of array
+    printf("%d\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    return 0;
+}
+
+```
+
 ### Relationship Between Arrays and Pointers
 
 Arrays and pointers are closely related. The array name is a constant pointer to the first element. Arrays decay to pointers when passed to functions.
@@ -2107,6 +2143,51 @@ int main() {
 }
 ```
 
+```c
+#include<stdio.h>
+
+// Function to change the array
+void change(int x[], int n) {
+    printf("%d\n", n); // Print size of the array
+    x[2] = 90; // Change the third element
+}
+
+int main() {
+    int arr[] = {5, 2, 7, 8, 3}; // Declare array
+    int n = sizeof(arr)/sizeof(arr[0]); // Calculate size of the array
+    printf("%d\n", n); // Print size of the array
+    
+    printf("%d\n", arr[2]); // Print element at index 2 before change
+    change(arr, n); // Pass array to function
+    printf("%d\n", arr[2]); // Print element at index 2 after change
+
+    return 0; // Return 0 to indicate successful execution
+}
+```
+
+#### 1. **Pass-by-Value vs. Pass-by-Reference:**
+
+- **Pass-by-Value (for variables):** When you pass a variable (like an integer) to a function by value, the function gets a copy of the variable. Changes made to the variable inside the function do not affect the original value in the calling function.
+
+- **Pass-by-Reference (for arrays):** In C, when you pass an array to a function, the array is passed by reference. This means the function gets a reference (or pointer) to the original array, not a copy. Any changes made to the array inside the function affect the original array in the calling function.
+
+#### Example:
+
+- **Passing a single variable by value:**
+  
+  ```c
+  void change(int x) {
+      x = 90;
+  }
+
+  int main() {
+      int x = 6;
+      change(x);
+      printf("%d\n", x); // Still prints 6 because `x` was passed by value.
+      return 0;
+  }
+  ```
+
 ### Passing Arrays to Functions
 
 Arrays are passed to functions as pointers. The array decays to a pointer to its first element.
@@ -2117,7 +2198,7 @@ Arrays are passed to functions as pointers. The array decays to a pointer to its
 #include <stdio.h>
 
 void printArray(int arr[]) {
-    printf("Size of Array in Functions: %d\n", sizeof(arr));
+    printf("Size of Array in Functions: %d\n", sizeof(arr)/4); // This outputs 2 because arr decays to a pointer inside the function, and sizeof(arr) gives the size of that pointer i.e., 8 bytes
     printf("Array Elements: ");
     for (int i = 0; i < 5; i++) {
         printf("%d ", arr[i]);
@@ -2127,8 +2208,33 @@ void printArray(int arr[]) {
 int main() {
     int arr[5] = {10, 20, 30, 40, 50};
 
-    printf("Size of Array in main(): %d\n", sizeof(arr));
+    printf("Size of Array in main(): %d\n", sizeof(arr)/4); // This outputs 5 because the array has 5 elements (as you printed the result in terms of the number of elements, not bytes).
     printArray(arr);
+    return 0;
+}
+```
+
+**Fix:**
+If you want to pass the actual array size to the function, you should pass the size of the array as an argument to the function:
+
+```c
+#include <stdio.h>
+
+void printArray(int arr[], int size) {
+    printf("Size of Array in Functions: %d\n", size);
+    printf("Array Elements: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    int size = sizeof(arr) / sizeof(arr[0]); // Calculate the number of elements
+
+    printf("Size of Array in main(): %d\n", size); // Print size
+    printArray(arr, size); // Pass array and its size
     return 0;
 }
 ```
@@ -2159,7 +2265,125 @@ int main() {
 
 > *Note*: The array is declared `static` to ensure it persists after the function returns.
 
-## Strings in C
+### 2D Arrays
+
+A **2D array** is essentially an array of arrays, often used to represent data in rows and columns, much like a **matrix**. It's useful when you need to work with tabular data or grids.
+
+In a 2D array:
+
+- The first index represents the **row** number.
+- The second index represents the **column** number.
+
+### Declaration of a 2D Array
+
+You declare a 2D array as:
+
+```c
+data_type array_name[rows][columns];
+```
+
+- `rows`: Number of rows in the array.
+- `columns`: Number of columns in the array.
+
+### Example Declaration
+
+```c
+int arr[4][2]; // A 2D array with 4 rows and 2 columns
+```
+
+### Initializing a 2D Array
+
+You can initialize a 2D array in two ways:
+
+1. **Using Nested Braces:**
+   Each set of braces represents a row in the array.
+
+   ```c
+   int arr[4][2] = {
+       {1234, 56},
+       {1256, 43},
+       {1434, 32},
+       {1312, 96}
+   };
+   ```
+
+2. **Without Nested Braces:**
+   This is equivalent to the above, but the values are listed sequentially.
+
+   ```c
+   int arr[4][2] = {1234, 56, 1256, 43, 1434, 32, 1312, 96};
+   ```
+
+3. **Dynamic Initialization (Partial Size Declaration)**
+
+In C, you can partially declare the size of a 2D array:
+
+```c
+int arr[][3] = { {12, 34, 56}, {78, 91, 23} }; // 2 rows, 3 columns
+```
+
+Here, the number of rows is automatically determined based on the number of elements, but the number of columns must be specified.
+
+It can be visualized as:
+
+```bash
+1234  56
+1256  43
+1434  32
+1312  96
+```
+
+### Accessing Elements in a 2D Array
+
+To access elements in a 2D array, you use the row and column indices.
+
+Example:
+
+```c
+int value = arr[1][0]; // Accesses the element at row 1, column 0
+printf("%d\n", value); // Prints 1256
+```
+
+### Example Usage of 2D Arrays
+
+```c
+#include <stdio.h>
+
+int main() {
+    // Initializing a 2D array
+    int arr[2][3] = { {12, 34, 56}, {78, 91, 23} };
+
+    // Accessing and printing elements
+    printf("Element at arr[0][0]: %d\n", arr[0][0]); // Output: 12
+    printf("Element at arr[1][2]: %d\n", arr[1][2]); // Output: 23
+
+    // Printing the 2D array as a matrix
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n"); // Newline after each row
+    }
+
+    return 0;
+}
+```
+
+### Output
+
+```bash
+Element at arr[0][0]: 12
+Element at arr[1][2]: 23
+12 34 56
+78 91 23
+```
+
+### Important Notes
+
+1. **Row-major order:** In C, 2D arrays are stored in memory in a row-major order, meaning all elements of a row are stored consecutively.
+2. **Access time:** Accessing any element in a 2D array takes constant time because arrays have contiguous memory.
+
+## Strings in C (array of char)
 
 A string in C is a sequence of characters terminated by a null character (`\0`). In C, strings are stored as arrays of characters. Unlike a character array, a C string is explicitly terminated by a null character. Note that C does not provide an inbuilt data type for strings but uses the format specifier `%s` to print and read strings.
 
@@ -2205,7 +2429,9 @@ char string_name[size];
 
 > *Note*: When a string is enclosed in double quotation marks, a null character is automatically appended.
 
-The length of the string is the number of characters excluding the null character. It can be determined using the `strlen()` function from the string.h library.
+The length of the string is the number of characters excluding the null character. It can be determined using the `strlen()` function from the string.h library. Otherwise if you try to find length of "GeeksforGeeks" then you will get 14 instead of 13 because of ending \0. This is why while initialisation give the size atleast +1 as required.
+
+> '\0' is NULL char with ASCII value 0.
 
 **Example**:
 
@@ -2222,6 +2448,18 @@ int main() {
 }
 ```
 
+5. **Using pointers**
+
+```c
+char *ptr = "Physics Wallah";
+
+printf("%s", ptr); // Physics Wallah
+printf("%p", ptr); // address of pointer
+printf("%c", ptr[0]); // 'P'
+
+ptr = "abracadabra" // works fine while initialising it without pointer would give error when we try to chnage the string as whole.
+```
+
 **Output**:
 
 ```bash
@@ -2229,7 +2467,57 @@ Geeks
 Length of string str is 5
 ```
 
+**Note:** Such direct initialisation using pointers results in a read-only memory allocation of character arrays and hence, causes undefined behaviour when we try to change the characters.
+`ptr [0] = 'm';` -> Error!
+Pointers change the address to which they point after initialising a new character array.
+`ptr = "abracadabra"` -> Allowed!
+
+### Traversing a string
+
+```c
+#include<stdio.h>
+int main() {
+    char arr[] = "Rag\0av";  // String with null terminator in the middle
+    int n = sizeof(arr) / sizeof(arr[0]);  // Calculate size of array
+
+    for (int i = 0; i < n; i++) {
+        printf("%c", arr[i]);  // Print each character individually
+    }
+    printf("\n");
+    printf("%d", n);  // Print the length of the array (size)
+    
+    return 0;
+}
+```
+
+> OUTPUT:
+> Ragav
+> 7
+
+```c
+#include<stdio.h>
+int main() {
+    char arr[] = {'r', 'a', 'g', '\0', 'a', 'v'};  // Character array with manual null terminator
+    // int n = sizeof(arr) / sizeof(arr[0]);
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("%c", arr[0]);  // Print first character 'r'
+    printf("%s", arr);     // Print the string from arr, up to the null terminator
+    printf("%d", n);  // Print the length of the array (size)
+    
+    printf("\n");
+    
+    return 0;
+}
+```
+
+> OUTPUT:
+> r rag 6
+
 ### Reading a String Input from the User
+
+In C, the name of an array (like str in your example) is treated as a pointer to the first element of the array.
+So, when you pass str to scanf, it already points to the memory location where the string should be stored and you do not need to write `&str`.
 
 **Example**:
 
@@ -2337,6 +2625,67 @@ int main() {
 
 ```bash
 GeeksforGeeks
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+    char str[] = "raghav";  // Declare a character array and initialize it with "raghav"
+    char *ptr = str;        // Shallow copy
+    // Pointer ptr points to the first element of the str array
+
+    printf("%s\n", str);    // Print the original string using str
+    printf("%s\n", ptr);     // Print the string using the pointer ptr
+
+    str[0] = 'm';            // Modify the first character of str to 'm'
+    
+    printf("%s\n", str);     // Print the modified string
+    printf("%s\n", ptr);     // Print the string using the pointer ptr again
+
+    return 0;                // Return success
+}
+```
+
+**Output**:
+
+```bash
+raghav
+raghav
+maghav
+maghav
+```
+
+**Deep copy:**
+
+```c
+#include <stdio.h>
+#include <string.h> // Include the string.h header for strcpy
+
+int main() {
+    char str[] = "raghav";       // Original string
+    char ptr[7];                 // Create a character array to hold the copied string
+
+    strcpy(ptr, str);            // Copy str to ptr (deep copy)
+    
+    printf("%s\n", str);         // Print the original string
+    printf("%s\n", ptr);         // Print the copied string
+    
+    str[0] = 'm';                 // Modify the first character of str
+    printf("%s\n", str);         // Print the modified original string
+    printf("%s\n", ptr);         // Print the copied string again
+
+    return 0;                    // Return success
+}
+```
+
+**Output**:
+
+```bash
+raghav
+raghav
+maghav
+raghav
 ```
 
 ### Standard C Library – `string.h` Functions
@@ -2546,6 +2895,142 @@ var1.a = 20
 var2.x = 314
 ```
 
+### Array of Structures
+
+An **array of structures** in C is a powerful way to manage collections of data where each element of the array is a structure. This allows you to group related data together, making it easier to manage and manipulate.
+
+### Definition
+
+An **array of structures** is defined as follows:
+
+1. **Structure Definition**: First, you define a structure to hold related data.
+2. **Array Declaration**: Then, you declare an array where each element is of the defined structure type.
+
+### Example of Array of Structures
+
+Let’s go through a detailed example step by step.
+
+#### 1. Structure Definition
+
+You first define a structure that represents the data you want to store. For instance, let's say you want to store student records:
+
+```c
+#include <stdio.h>
+
+// Define a structure named 'student'
+struct student {
+    int rno;        // Roll number
+    float percent;  // Percentage
+    char grade;     // Grade
+};
+```
+
+#### 2. Array Declaration
+
+Once the structure is defined, you can declare an array of that structure type:
+
+```c
+struct student students[5]; // Array to hold 5 student records
+```
+
+#### 3. Initializing the Array of Structures
+
+You can initialize each element of the array individually or use a loop:
+
+```c
+int main() {
+    // Initializing the array of structures
+    struct student students[3] = {
+        {101, 85.5, 'A'},
+        {102, 78.0, 'B'},
+        {103, 92.5, 'A'}
+    };
+
+    // Alternatively, initializing one by one
+    struct student students[5];
+    students[0].rno = 101;
+    students[0].percent = 85.5;
+    students[0].grade = 'A';
+    
+    students[1].rno = 102;
+    students[1].percent = 78.0;
+    students[1].grade = 'B';
+    
+    students[2].rno = 103;
+    students[2].percent = 92.5;
+    students[2].grade = 'A';
+}
+```
+
+#### 4. Accessing Array of Structures
+
+You can access the members of each structure in the array using the dot operator (`.`) combined with the array index:
+
+```c
+for (int i = 0; i < 3; i++) {
+    printf("Roll No: %d, Percentage: %.2f, Grade: %c\n", 
+           students[i].rno, students[i].percent, students[i].grade);
+}
+```
+
+**Example:**
+
+Here is a complete example that includes structure definition, array declaration, initialization, and accessing elements:
+
+```c
+#include <stdio.h>
+
+// Define the structure
+struct student {
+    int rno;
+    float percent;
+    char grade;
+};
+
+int main() {
+    // Array of structures
+    struct student students[3] = {
+        {101, 85.5, 'A'},
+        {102, 78.0, 'B'},
+        {103, 92.5, 'A'}
+    };
+
+    // Print student details
+    for (int i = 0; i < 3; i++) {
+        printf("Roll No: %d, Percentage: %.2f, Grade: %c\n", 
+               students[i].rno, students[i].percent, students[i].grade);
+    }
+
+    return 0; // Return success
+}
+```
+
+**Output:**
+
+```bash
+Roll No: 101, Percentage: 85.50, Grade: A
+Roll No: 102, Percentage: 78.00, Grade: B
+Roll No: 103, Percentage: 92.50, Grade: A
+```
+
+### Key Points
+
+1. **Organization**: Arrays of structures allow for organizing complex data in a structured manner. Each element can hold multiple data types, making it easy to represent real-world entities like students, books, etc.
+
+2. **Flexibility**: You can easily manipulate, sort, or iterate through the data, making it suitable for various applications.
+
+3. **Memory Management**: Structures and arrays allow for efficient use of memory, as they are stored in contiguous memory locations.
+
+4. **Nested Structures**: You can also have structures within structures, allowing for more complex data representation.
+
+### Use Cases
+
+- Storing records of students, employees, or any other entities.
+- Managing data where multiple attributes are related to a single entity.
+- Used in data processing and organization in programming competitions and projects.
+
+This structure gives you a solid foundation for dealing with collections of related data in C.
+
 ### Nested Structures
 
 C language allows us to insert one structure into another as a member. This process is called nesting and such structures are called nested structures. There are two ways in which we can nest one structure into another:
@@ -2643,9 +3128,41 @@ var1.b.x = 195
 var1.b.c = A
 ```
 
+### Copying structure
+
+```c
+#include <stdio.h>
+
+typedef struct student { // Define a structure named student
+    int rno;           // Roll number
+    float percent;     // Percentage
+    char grade;        // Grade
+} student; // Typedef allows us to use 'student' as an alias for 'struct student'
+
+int main() {
+    student s1 = {76, 70.7, 'B'}; // Initialize s1 with values
+    student s2 = s1;              // Deep copy: s2 is initialized with the values of s1
+
+    printf("%c\n", s1.grade);     // Print the grade of s1
+    printf("%c\n", s2.grade);     // Print the grade of s2
+
+    s2.grade = 'A';                // Change the grade of s2 to 'A'
+    printf("%c\n", s1.grade);     // Print the grade of s1 again
+    printf("%c\n", s2.grade);     // Print the grade of s2 again
+
+    return 0;                     // Return success
+}
+```
+
+**OUTPUT:**
+B
+B
+B
+A
+
 ### Structure Pointer in C
 
-We can define a pointer that points to the structure like any other variable. Such pointers are generally called Structure Pointers. We can access the members of the structure pointed by the structure pointer using the ( `->` ) arrow operator.
+We can define a pointer that points to the structure like any other variable. Such pointers are generally called Structure Pointers. We can access the members of the structure pointed by the structure pointer using the ( `->` ) arrow operator. Structures are passed by value so we use pointers to pass by reference.
 
 **Example of Structure Pointer:**
 
@@ -2665,7 +3182,8 @@ int main()
     struct Point* ptr = &str;
 
     // Accessing structure members using structure pointer
-    printf("%d %d", ptr->x, ptr->y);
+    printf("%d %d", ptr->x // OR (*ptr).x
+    , ptr->y);
 
     return 0;
 }
