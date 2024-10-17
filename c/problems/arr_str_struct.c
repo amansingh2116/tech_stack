@@ -27,7 +27,31 @@ int secL() {
     } else {
         printf("%d is the second largest\n", smax);
     }
+    // similarly minimum can also be found
+    return 0;
+}
 
+// Program to check whether any of the digits in a number appears more than once
+int repeat() {
+    int seen[10] = {0};  // Array to keep track of digits (0-9)
+    int N, rem;
+
+    // Input the number
+    printf("Enter a number: ");
+    scanf("%d", &N);
+
+    // Loop through each digit of the number
+    while (N > 0) {
+        rem = N % 10;  // Get the last digit
+        if (seen[rem] == 1) {  // If digit is already seen
+            printf("Digit %d appears more than once.\n", rem);
+            return 0;
+        }
+        seen[rem] = 1;  // Mark digit as seen
+        N = N / 10;  // Remove the last digit
+    }
+
+    printf("No digit appears more than once.\n");
     return 0;
 }
 
@@ -132,21 +156,42 @@ int matrixmul() {
     return 0;
 }
 
-int main() {
-    char arr[] = {'r', 'a', 'g', '\0', 'a', 'v'};  // Character array with manual null terminator
-    // int n = sizeof(arr) / sizeof(arr[0]);
-    int n = sizeof(arr) / sizeof(arr[0]); 
-    printf("%c ", arr[0]);  // Print first character 'r'
-    printf("%s ", arr);     // Print the string from arr, up to the null terminator
-    printf("%d", n);  // Print the length of the array (size)
-    printf("\n");
-    
+// Program to reverse a string
+#include <stdio.h>
+#include <string.h>
+
+int strreverse() {
+    char p[20];
+    char *s = "string";  // `s` points to the string "string\0"
+    int length = strlen(s);  // Length of the string "string" is 6 (not 7)
+    int i;
+
+    // METHOD 1
+    // Loop to copy elements from `s` to `p` in reverse order
+    for (i = 0; i < length; i++)
+        p[i] = s[length - i -1]; 
+        // note that if yoy write length-i then first element in p would be the null character,
+        // so print will ignore what is after it and nothing will be printed
+
+    printf("%s", p);  // Print the result stored in `p`
     return 0;
 }
 
-// int main(){
-//     // secL();
-//     // reverse();
-//     matrixmul();
-//     return 0;
-// }
+// METHOD 2
+void strrev(char *a){
+    if(*a){
+    foo(a+1);
+    putchar(*a);
+    }
+}
+
+int main(){
+    // secL();
+    // repeat();
+    // reverse();
+    // matrixmul();
+    // strreverse();
+    // char *s = "gitl";
+    // strrev(s);
+    return 0;
+}

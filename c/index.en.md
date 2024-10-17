@@ -119,7 +119,7 @@ output: Hello World!12
   - `%c`: for printing characters
   - `%s`: for printing strings
   - `%p`: for printing memory addresses
-  - `%x`: for printing hexadecimal values
+  - `%x`: for printing hexadecimal values (`%X` will print hexadecimal in capitals)
 example 1:
 printf("%s\n", "Hello");
 printf("%10s", "Hello");
@@ -359,6 +359,7 @@ In the above code, the global variable `a` is declared outside of all the functi
 #### Static Variables
 
 A static variable in C is a variable that is defined using the `static` keyword. It can be defined only once in a C program and its scope depends upon the region where it is declared (can be global or local). The default value of static variables is zero.
+Stastic functions are restricted to the files where they are declared.
 
 **Syntax:**
 
@@ -1229,6 +1230,7 @@ int main() {
 ```
 
 - **`continue`**: Skips the current iteration of the nearest enclosing loop and proceeds with the next iteration.
+- As per C standard, "continue" can only be used in loop body and not in switch case statements.
 
 **Example:**
 
@@ -1437,7 +1439,7 @@ The return type specifies the type of value returned by the function. Use `void`
 
 ```c
 int func(parameter_1, parameter_2); // Returns an integer
-void func(); // Does not return a value
+void func(); // Does not return a value, function can be called with any number of parameters of any type
 ```
 
 **Note:** Only one value can be returned. To return multiple values, use pointers or structures.
@@ -1662,7 +1664,7 @@ Arguments can be passed in two ways:
     After swap: 3, 2
     ```
 
-2. **Pass by Reference:** Uses pointers to refer to the actual parameters, so changes affect the caller’s variables.
+2. **Pass by Reference:** Uses pointers to refer to the actual parameters, so changes affect the caller’s variables. In C, parameters are always passed by value. Pass by reference is simulated by explicitly passing pointer values.
 
     **Example:**
 
@@ -1726,6 +1728,11 @@ int *ptr = &var;
 
 **Note:** Pointers should be initialized before use to avoid errors.
 
+> In C, * symbol has different meanings depending on the context in which it's used.
+At the time of declaration, * symbol is not acting as an indirection operator. * symbol in the first statement tells the compiler that p is a pointer to an integer.
+But, if we write *p = &i then it is wrong, because here * symbol indicates the indirection operator and we cannot assign the address to some integer variable.
+Therefore, in the second statement, there is no need of * symbol in front of p. It simply means we are assigning the address to a pointer.
+
 ### 3. Pointer Dereferencing
 
 Dereferencing a pointer accesses the value stored at the address it points to:
@@ -1735,6 +1742,7 @@ int var = 10;
 int *ptr = &var;
 printf("Value at *ptr = %d\n", *ptr);
 *ptr = 34; // can be used to change the value, var = 34
+// NOTE : *ptr = *&var = 34
 ```
 
 ### Types of Pointers
@@ -1745,6 +1753,26 @@ Pointers to integer values:
 
 ```c
 int *ptr;
+```
+
+```c
+#include <stdio.h>
+
+void f(int *p, int *q) {
+    p = q;  // Make p point to the same location as q
+    *p = 2; // Set the value pointed to by p (and q) to 2
+}
+
+int main() {
+    int i = 0;
+    int j = 1;
+
+    f(&i, &j); // Pass the addresses of i and j to the function
+
+    printf("%d %d\n", i, j); // Print the values of i and j i.e., 0 2
+
+    return 0;
+}
 ```
 
 2. **Array Pointers**
@@ -2122,7 +2150,7 @@ int main() {
 
 Arrays and pointers are closely related. The array name is a constant pointer to the first element. Arrays decay to pointers when passed to functions.
 
-**Example**:
+**Example 1**:
 
 ```c
 #include <stdio.h>
@@ -2142,6 +2170,8 @@ int main() {
     return 0;
 }
 ```
+
+**Example 2**:
 
 ```c
 #include<stdio.h>
@@ -2165,11 +2195,87 @@ int main() {
 }
 ```
 
+**Example 3**:
+
+```c
+int main() {
+    int i, j;
+    char a[2][3] = { {'a', 'b', 'c'}, {'d', 'e', 'f'} }; // 2x3 array
+    char b[3][2];  // 3x2 array
+    char *p = *b;  // Pointer to the first element of b
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 3; j++) {
+            *(p + 2*j + i) = a[i][j];  // Fill array `b` using elements from `a`
+        }
+    }
+
+    // To print the contents of array b at the end
+    printf("Array b contents:\n");
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 2; j++) {
+            printf("%c ", b[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+```
+
+Output:
+a d
+b e
+c f
+
+**Example 4**:
+
+```c
+#include <stdio.h>
+
+int main() {
+    int a[2][3] = { {1, 2, 3}, {4, 5, 6} };
+    int (*ptr)[3] = a;  // ptr is a pointer to an array of 3 integers
+
+    // Printing values of the first row (pointed by ptr)
+    printf("%d %d ", (*ptr)[1], (*ptr)[2]);
+
+    // Increment the pointer to point to the next row
+    ++ptr;
+
+    // Printing values of the second row (now pointed by ptr)
+    printf("%d %d", (*ptr)[1], (*ptr)[2]);
+
+    return 0;
+}
+```
+
+### Explanation:
+
+1. `int a[2][3] = { {1, 2, 3}, {4, 5, 6} };` — This declares a 2D array `a` with 2 rows and 3 columns.
+2. `int (*ptr)[3] = a;` — This declares `ptr` as a pointer to an array of 3 integers. It points to the first row of `a`.
+3. `(*ptr)[1]` — Dereferences `ptr` to access the first row of the array and prints the second element (`2`).
+4. `(*ptr)[2]` — Accesses the third element (`3`) of the first row.
+5. `++ptr;` — Moves `ptr` to the next row (second row).
+6. `(*ptr)[1]` — Now, `ptr` points to the second row, and this accesses the second element (`5`).
+7. `(*ptr)[2]` — Accesses the third element (`6`) of the second row.
+
+### Output:
+
+```bash
+2 3 5 6
+```
+
+This demonstrates how a pointer to a 2D array works, where incrementing the pointer moves it to the next row in the array.
+
 #### 1. **Pass-by-Value vs. Pass-by-Reference:**
 
 - **Pass-by-Value (for variables):** When you pass a variable (like an integer) to a function by value, the function gets a copy of the variable. Changes made to the variable inside the function do not affect the original value in the calling function.
 
 - **Pass-by-Reference (for arrays):** In C, when you pass an array to a function, the array is passed by reference. This means the function gets a reference (or pointer) to the original array, not a copy. Any changes made to the array inside the function affect the original array in the calling function.
+
+![alt text](image-3.png)
+Answer: 19
 
 #### Example:
 
@@ -2187,6 +2293,38 @@ int main() {
       return 0;
   }
   ```
+
+### Array memory allocation
+
+The question asks for the memory address of an element in a 2D array `a[100][100]` of type `char`, where each element is one byte, and the base address of the array is 0. The goal is to find the address of `a[40][50]`.
+
+The formula to calculate the address of any element `a[i][j]` in a 2D array is:
+
+```
+Address of a[i][j] = Base Address + (i - lb1) * NC + (j - lb2) * C
+```
+
+where:
+
+- `Base Address (BA)` = 0 (starting memory address),
+- `i` and `j` are the row and column indices,
+- `lb1` and `lb2` are the lower bounds of rows and columns (both 0 here),
+- `NC` is the number of columns (100),
+- `C` is the size of each element (1 byte for `char`).
+
+Substituting the values for `a[40][50]`:
+
+```bash
+Address = 0 + (40 - 0) * 100 + (50 - 0) * 1
+Address = 4000 + 50 = 4050
+```
+
+Thus, the address of `a[40][50]` is `4050`, and the correct option is B: `4050`.
+
+This calculation is based on understanding that each row contains 100 elements, and each element occupies 1 byte in a byte-addressable memory. The formula works by computing how many elements must be traversed to reach the desired row and column, and multiplying by the size of each element.
+
+![alt text](image-1.png)
+![alt text](image-2.png)
 
 ### Passing Arrays to Functions
 
@@ -2289,6 +2427,7 @@ data_type array_name[rows][columns];
 
 ```c
 int arr[4][2]; // A 2D array with 4 rows and 2 columns
+// Much more like 4 1D arrays of length 2
 ```
 
 ### Initializing a 2D Array
@@ -2342,6 +2481,26 @@ Example:
 ```c
 int value = arr[1][0]; // Accesses the element at row 1, column 0
 printf("%d\n", value); // Prints 1256
+```
+
+**Printing elements of a 2D array:**
+
+**Method 1: 2 for loops**
+
+```c
+for (i=0; i<row; i++){
+    for (j=0; j<col; j++){
+        printf("%d", a[i][j]);
+        }
+    }
+```
+
+**Method 2: using pointers**
+
+```c
+for (p = &a[0][0]; p <= &a[row- 1][col-1]; p++){
+printf("%d", *p) ;
+}
 ```
 
 ### Example Usage of 2D Arrays
@@ -2687,6 +2846,103 @@ raghav
 maghav
 raghav
 ```
+
+### example
+
+```c
+#include <stdio.h>
+
+int main() {
+    char c[] = "GATE2011";
+    char *p = c;
+    printf("%s", p + p[3] - p[1]);
+    return 0;
+}
+```
+
+#### Memory Allocation of Strings in C
+
+- In C, strings are stored as arrays of characters in memory, with a null terminator (`\0`) marking the end of the string.
+- For `char c[] = "GATE2011";`, the array `c` is allocated 9 bytes: 8 for the characters (`'G'`, `'A'`, `'T'`, `'E'`, `'2'`, `'0'`, `'1'`, `'1'`) and 1 for the null terminator (`'\0'`).
+
+  **Memory Layout of `c[]`:**
+
+  ```bash
+  c[0] = 'G', c[1] = 'A', c[2] = 'T', c[3] = 'E', c[4] = '2', c[5] = '0', c[6] = '1', c[7] = '1', c[8] = '\0'
+  ```
+
+- `char *p = c;` assigns the pointer `p` to the start of the array, so `p` points to `'G'`.
+
+#### Expression Breakdown (`p + p[3] - p[1]`)
+
+- `p[3]` refers to `'E'` (ASCII 69) and `p[1]` refers to `'A'` (ASCII 65).
+- The expression `p + p[3] - p[1]` calculates as `p + (69 - 65) = p + 4`, so `p` moves 4 positions forward, pointing to `'2'` (the 5th character).
+
+#### Output
+
+- `printf("%s", p + 4);` p**rints the string starting from `'2'`**, which results in `"2011"`.
+
+### Summary
+
+- **Memory Allocation**: Strings in C are stored as contiguous characters in memory with a null terminator.
+- **Pointer Arithmetic**: `p + p[3] - p[1]` moves the pointer `p` forward, allowing access to different parts of the string.
+  
+#### Output of the program
+
+```bash
+2011
+```
+
+**example:**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char *c = "GATECSIT2017";
+    char *p = c;
+    printf("%d", (int)strlen(c + (2[p] - 6[p] - 1)));
+    return 0;
+}
+```
+
+1. **String Setup**:
+   - `char *c = "GATECSIT2017";` initializes a pointer `c` that points to the first character of the string literal `"GATECSIT2017"`.
+   - `char *p = c;` sets `p` to point to the same string as `c`.
+
+2. **Pointer Arithmetic in `strlen`**:
+   - The expression `2[p]` is an unusual but valid way to access `*(p + 2)`. It gives the character at index 2 of the string, which is `'T'`.
+   - Similarly, `6[p]` gives the character at index 6, which is `'I'`.
+
+3. **ASCII Values of Characters**:
+   - `2[p]` is `'T'`, and its ASCII value is 84.
+   - `6[p]` is `'I'`, and its ASCII value is 73.
+
+   Now the expression becomes:
+
+   ```c
+   c + (84 - 73 - 1) = c + 10
+   ```
+
+   - `c + 10` points to the character at index 10, which is `'1'`.
+
+4. **`strlen(c + 10)`**:
+   - `strlen(c + 10)` computes the length of the string starting from the character `'1'`.
+   - The substring starting at index 10 is `"17"`.
+   - The length of `"17"` is 2.
+
+5. **Typecasting**:
+   - The result of `strlen` is cast to an `int` to match the `%d` format specifier.
+
+6. **Final Output**:
+   - The program prints `2` because the length of the substring starting from `'1'` is 2.
+
+**Output:**
+
+```bash
+2
+``` 
 
 ### Standard C Library – `string.h` Functions
 
@@ -3193,6 +3449,39 @@ int main()
 
 ```bash
 1 2
+```
+
+The provided C program contains a struct and uses pointer arithmetic to access its members. Let's go step by step to understand the code and determine the output.
+
+### Code Breakdown:
+
+```c
+struct Ournode {
+    char x, y, z;
+};
+
+int main() {
+    struct Ournode p = {'1', '0', 'a' + 2}; // = 'c'` (since ASCII value)
+    struct Ournode *q = &p; // This creates a pointer `q` that points to the struct `p`.
+    printf("%c, %c", *((char*)q + 1), *((char*)q + 2));
+    return 0;
+}
+```
+
+**Pointer Arithmetic and Dereferencing**:
+
+```c
+printf("%c, %c", *((char*)q + 1), *((char*)q + 2));
+```
+
+- First, the pointer `q` (which is of type `struct Ournode*`) is cast to `char*`. This allows pointer arithmetic to operate on individual `char` values instead of `struct Ournode` elements.
+- `*((char*)q + 1)` accesses the second byte of the struct, which corresponds to the member `y = '0'`.
+- `*((char*)q + 2)` accesses the third byte of the struct, which corresponds to the member `z = 'c'`.
+
+**Final Output:**
+
+```bash
+0, c
 ```
 
 ### Self-Referential Structures
