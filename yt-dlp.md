@@ -10,10 +10,27 @@ python3 -m pip install -U yt-dlp
 ```
 
 For full functionality, also install FFmpeg:
+1. **Windows**:
+   - Download the FFmpeg installer from [FFmpeg website](https://ffmpeg.org/download.html).
+   - Run the installer, select default options, and complete the setup.
+   - Add FFmpeg to your system PATH:
+     - Search for "Environment Variables" in Windows.
+     - Edit the "Path" variable in System Variables.
+     - Add the path to FFmpeg's `bin` folder (e.g., `C:\Program Files\FFmpeg\bin`).
+   - check [this](https://www.youtube.com/watch?v=jZLqNocSQDM&t=2s) tutorial for windows.
+2. **Ubuntu/Debian**:
+   ```bash
+   sudo apt update
+   sudo apt install ffmpeg
+   ```
+3. **macOS** (using Homebrew):
+   ```bash
+   brew install ffmpeg
+   ```
+Verify FFmpeg installation:
 ```bash
-sudo apt install ffmpeg  # For Ubuntu/Debian
+ffmpeg -version
 ```
-(For other systems, download from the [FFmpeg website](https://ffmpeg.org/download.html))
 
 ## Basic Commands
 
@@ -52,9 +69,9 @@ yt-dlp -f bestvideo+bestaudio --merge-output-format mp4 https://www.youtube.com/
 Gets the highest quality video and audio streams and merges them into MP4.
 
 **For Playlist**
-To download all videos in a YouTube playlist in the best quality using yt-dlp:
+command to download videos 1-3, 7, and 10-12 from a specified YouTube playlist in the highest quality, merging the video and audio into MP4 format, downloading English subtitles, and saving everything to a folder named after the playlist inside `C:\Downloads` using yt-dlp:
 ```bash
-yt-dlp -f bestvideo+bestaudio --merge-output-format mp4 PLAYLIST_URL
+yt-dlp -f bestvideo+bestaudio --merge-output-format mp4 --write-subs --sub-langs en --playlist-items 1-3,7,10-12 -o "C:\Downloads\%(playlist_title)s\%(title)s.%(ext)s" PLAYLIST_URL
 ```
 
 ### Save to a specific location
