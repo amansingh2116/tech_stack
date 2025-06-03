@@ -10,7 +10,8 @@
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{fontspec}
-\usepackage{tfrupee} 
+\usepackage{tfrupee}
+\usepackage{hyperref} % Enables hyperlinks
 \setmainfont{Latin Modern Roman}
 
 % Better font and spacing
@@ -229,8 +230,7 @@ When people make transcations (buy-sell product and services) it affects the eco
 \begin{figure}[!h]
 \centering
 \includegraphics[width=0.5\textwidth]{images/economy.png}
-\caption{Economic movementa}
-\label{img:anything}
+\caption{Economic movement}
 \end{figure}
 \end{center}
 
@@ -306,9 +306,18 @@ We need to perform industry analysis to get an idea about what industry will be 
 
 
 \[
-\text{Stock Market growth} ~ \alpha ~ \text{Industry potential}
+\text{Stock Market growth} ~ \propto ~ \text{Industry potential}
 \]
 Industry potential depends on its growth, risks, opportunity and competition.
+
+\begin{center}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.5\textwidth]{images/Industry.png}
+\caption{Top-Down Approach in Fundamental Analysis}
+\label{img:anything}
+\end{figure}
+\end{center}
 
 \subsection{Factors affecting Industry}
 
@@ -612,7 +621,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 \begin{itemize}
     \item Generally released every quarter (i.e., every 3 months).
     \item Used to analyze the performance of the company during a specific period, typically a financial year.
-    \item Reflects the company's operating performance in a given year.
+    \item Reflects the company's operating performance in a given year / quarter.
 \end{itemize}
 
 \subsection*{Format Overview}
@@ -626,7 +635,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \textbf{I. Revenue from Operations / Sales} & Revenue earned from the firm's core activities (e.g. sales of products/services). & Consistent growth indicates a healthy and scalable core business. Compare YoY and QoQ. \\
 \hline
-\textbf{II. Other Income} & Non-operational income (e.g. interest, dividend, investment gains, foreign exchange gains). & High other income may indicate reliance on non-core earnings - check sustainability. \\
+\textbf{II. Other Income} & Non-operational income (e.g. interest, dividend, investment gains, foreign exchange gains, insurance claims, royalties). & High other income may indicate reliance on non-core earnings - check sustainability. \\
 \hline
 \textbf{A. Total Revenue} & \( \text{Total Revenue} = \text{I} + \text{II} \) & Used to assess the complete earning picture. Sudden jumps: investigate source. \\
 \hline
@@ -667,12 +676,20 @@ Quantitative analysis involves evaluating a company's financial health through i
 
 \begin{itemize}
     \item Generally released on the last day of every fiscal quarter (i.e., every 3 months).
+    \item It represents the company's financial position as of a specific date, showing cumulative data since inception—not performance over a period like the income statement.
     \item Contains detailed info of the company's assets, liabilities, and shareholders' equity.
     \item \textbf{ASSETS} = \textbf{LIABILITIES} + \textbf{SHAREHOLDERS' EQUITY}
     \item Assets generate revenue $\rightarrow$ revenue minus costs becomes retained earnings $\rightarrow$ retained earnings increase equity. Liabilities are either taken to fund assets or meet short-term obligations. The difference between assets and liabilities is the value attributable to owners (i.e., equity).
     \item Balance sheets should also be compared with those of other businesses in the same industry since different industries have unique approaches to financing.
 \end{itemize}
 
+\begin{center}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.5\textwidth]{images/balance_sheet.png}
+\caption{Balance Sheet Structure}
+\end{figure}
+\end{center}
 
 \subsection*{Format Overview}
 
@@ -685,11 +702,13 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \multicolumn{3}{|p{15cm}|}{\centering\textbf{EQUITY (Company's actual worth)}} \\
 \hline
-\textbf{I. Shareholder Equity / Book Value of Company} & Book value of equity contributed by shareholders. It is the paid-up capital from primary issuance like IPO, right issues, etc. & Indicates how much capital has been injected by shareholders; steady increase indicates investor confidence. \\
+\textbf{I. Shareholder Equity / Book Value of Company} & Book value of equity contributed by shareholders. It is the paid-up capital from primary issuance like IPO, right issues, etc. \hyperref[note1]{Note} & Indicates how much capital has been injected by shareholders; steady increase indicates investor confidence. \\
 \hline
 \textbf{II. Reserve and Surplus / Retained Earnings} & Cumulative profits made by the company since inception minus dividends paid. & Consistent growth suggests profitability and internal reinvestment capacity. Declines may indicate high dividend payouts or losses. \\
 \hline
-\textbf{A. Total Shareholder's Fund} & $A = \text{I} + \text{II}$ \newline What would be a company's worth if it goes for sale after clearing all its liabilities. & A strong base capital. Should ideally be increasing over time. Useful for calculating Return on Equity (RoE). \\
+\textbf{III. Non Controlling Assets} & Minority interest in a company (Non-controlling ownership in subsidiaries). & Check:- Size: Proportion to total equity. Trend: Growing/shrinking over time. Subsidiary performance: Indicates shared control, profit dilution. \\
+\hline
+\textbf{A. Total Shareholder's Fund} & $A = \text{I} + \text{II} +\text{III}$ \newline What would be a company's worth if it goes for sale after clearing all its liabilities. & A strong base capital. Should ideally be increasing over time. Useful for calculating Return on Equity (RoE). \\
 \hline
 \multicolumn{3}{|p{15cm}|}{\centering\textbf{LIABILITIES (What company owes)}} \\
 \hline
@@ -713,7 +732,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \textbf{IX. Other Current Liabilities} & Unclaimed \& Unpaid dividends, overdrafts, current maturities of long-term borrowings. & Understand breakups; higher values may indicate cash crunch. \\
 \hline
-\textbf{X. Short-term Provisions} & Set aside for short-term obligations like product warranty, employee benefits, gratuity. & High provisions may be prudent or could hint at underlying risks. \\
+\textbf{X. Short-term Provisions} & Set aside for short-term obligations like product warranty, employee benefits, gratuity, acceptances (Promises to pay bills (usually trade bills) on due date). & High provisions may be prudent or could hint at underlying risks. \\
 \hline
 \textbf{C. Total Current Liabilities} & $C = \text{VII} + \text{VIII} + \text{IX} + \text{X}$ & Helps assess short-term financial health. Key input in working capital analysis. \\
 \hline
@@ -723,11 +742,11 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \multicolumn{3}{|p{15cm}|}{\centering\textbf{NON CURRENT FIXED ASSETS (assets used in the operation of the business and not intended for resale and can't be easily encashed within 1 year)}} \\
 \hline
-\textbf{XI. Tangible Assets} & Physical assets like land, building, equipment. & Useful for calculating asset turnover ratio. Helps determine capital intensity. \\
+\textbf{XI. Tangible Assets } & Physical assets like land, building, equipment. & Useful for calculating asset turnover ratio. Helps determine capital intensity. \\
 \hline
-\textbf{XII. Intangible Assets} & Non-physical assets: patents, brands, goodwill. & Assess sustainability of competitive advantage. Check amortization schedules. \\
+\textbf{XII. Intangible Assets} & Non-physical assets: patents ( Legal right to exclude others from using an invention), brands (Public perception and identity of a company/product), trademark (Symbol or name identifying a brand, legally protected), goodwill (mentioned only after an acquisition, if purchase price > fair value of net assets due to  Intangible asset from reputation, customer loyalty, etc; Goodwill = Purchase Price - (Fair Value of Assets - Liabilities)). & Assess sustainability of competitive advantage. Check amortization schedules. \\
 \hline
-\textbf{XIII. Capital Work-in-Progress} & Costs incurred on fixed assets under construction. & Large CWIP could indicate expansion or delayed projects. \\
+\textbf{XIII. Capital Work-in-Progress (CWIP)} & Costs incurred on fixed assets under construction. & Large CWIP could indicate expansion or delayed projects. \\
 \hline
 \textbf{XIV. Intangible Assets under Development} & In-progress intangible developments like R\&D, tech platforms. & Examine carefully-may offer future benefits or signify speculative investment. \\
 \hline
@@ -739,7 +758,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \textbf{XVI. Long-term Loans and Advances} & Loans provided to others with maturity beyond one year. & Must check creditworthiness of borrowers. Could be non-core. \\
 \hline
-\textbf{XVII. Other Non-current Assets} & Assets not classified above (e.g., deferred expenses, deposits). & Inspect for materiality and recurring nature. \\
+\textbf{XVII. Other Non-current Assets} & Assets not classified above (e.g., deferred (Prepaid costs expensed later example rent, insurance, taxes), deposits). & Inspect for materiality and recurring nature. \\
 \hline
 \textbf{F. Total Non-current Assets} & $F = E + \text{XV} + \text{XVI} + \text{XVII}$ & Total long-term resource allocation. Compare with long-term liabilities. \\
 \hline
@@ -747,13 +766,13 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \textbf{XVIII. Current Investments} & Investments liquid within 1 year (e.g., mutual funds, treasury bills). & High values support liquidity. May earn short-term income. \\
 \hline
-\textbf{XIX. Inventories} & Items held for resale or production. & Key metric for manufacturing/retail. Watch inventory turnover ratio. \\
+\textbf{XIX. Inventories} & Items (raw material, work in progress, finished goods) held for resale or production. & Key metric for manufacturing/retail. Watch inventory turnover ratio. \\
 \hline
-\textbf{XX. Cash and Cash Equivalents} & Includes bank balance, cash on hand, liquid deposits. & Key liquidity buffer. Compare with short-term liabilities. \\
+\textbf{XX. Cash and Cash Equivalents} & Includes bank balance, cash on hand, liquid deposits (Bonds). & Key liquidity buffer. Compare with short-term liabilities. \\
 \hline
 \textbf{XXI. Short-term Loans and Advances} & Loans repayable within a year. & Examine credit quality and collection trends. \\
 \hline
-\textbf{XXII. Other Current Assets} & e.g., trade receivables, accrued income. & Analyze receivables aging. High values could mean cash is tied up. \\
+\textbf{XXII. Other Current Assets} & e.g., trade receivables (Customer/Vendor payments due for sales), accrued income. & Analyze receivables aging. High values could mean cash is tied up. \\
 \hline
 \textbf{G. Total Current Assets} & $G = \text{XVIII} + \text{XIX} + \text{XX} + \text{XXI} + \text{XXII}$ & Key to working capital analysis. Crucial for short-term financial decisions. \\
 \hline
@@ -761,6 +780,10 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 
 \end{longtable}
+
+\label{note1}
+\textbf{Note on Capital Structure:} \\
+Authorized capital is the maximum share capital a company is legally allowed to issue, while paid-up capital (also called equity share capital) is the actual amount received from shareholders. Each share has a face value, usually \rupee 10, which is its nominal worth—not its market price. When a company issues new shares to a new investor, it may do so at a premium if the company's valuation has increased, meaning the investor pays more than the face value. This dilutes existing shareholders' ownership but brings in additional capital. To reward shareholders or improve stock liquidity, companies may issue bonus shares (free additional shares from reserves) or conduct a stock split, where the face value is reduced and the number of shares increases, without changing the total capital. Bonus issues and splits make shares appear more affordable, attracting small investors, though they don't add real value—they're largely psychological and liquidity tools.
 
 \subsubsection*{(iii) Cash Flow Statement}
 \begin{itemize}
@@ -780,7 +803,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \textbf{Component} & \textbf{Description (with formulas)} & \textbf{What to Look for / Analysis} \\
 \hline
-\multicolumn{3}{|c|}{\textbf{Cash Flow from Operating Activities}} \\
+\multicolumn{3}{|c|}{\textbf{Cash Flow from Operating Activities (from core business operations)}} \\
 \hline
 \textbf{I. Net Profit Before Tax} & Profit before considering taxes and extraordinary items. & Starting point for operating cash flow. Should reconcile with the income statement. \\
 \hline
@@ -796,7 +819,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \textbf{A. Operating Cash Flow} & $A = \text{I} + \text{II} \pm \text{III} \pm \text{IV} - \text{V} - \text{VI}$ & Most important segment for cash sustainability. Should be positive and growing over time. \\
 \hline
-\multicolumn{3}{|c|}{\textbf{Cash Flow from Investing Activities}} \\
+\multicolumn{3}{|c|}{\textbf{Cash Flow from Investing Activities (from buying/selling assets, investments)}} \\
 \hline
 \textbf{VII. Net Capital Expenditures} & Cash used to acquire or upgrade fixed assets (e.g., plant, machinery). & Usually negative. Shows long-term reinvestment. Excessive capex without returns is a red flag. \\
 \hline
@@ -804,7 +827,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 \hline
 \textbf{B. Investing Cash Flow} & $B = \pm \text{VII} \pm \text{VIII}$ & Ideally negative due to capital reinvestment. Sustained positive values may mean asset stripping or low growth. \\
 \hline
-\multicolumn{3}{|c|}{\textbf{Cash Flow from Financing Activities}} \\
+\multicolumn{3}{|c|}{\textbf{Cash Flow from Financing Activities (from raising/repaying debt or equity)}} \\
 \hline
 \textbf{IX. Dividends Paid} & Cash paid to shareholders as dividend. & Reflects return to equity holders. High payout may reduce reinvestment ability. \\
 \hline
@@ -922,7 +945,7 @@ Quantitative analysis involves evaluating a company's financial health through i
 
 \subsubsection*{$\rightarrow$ How to Read Annual Reports of a Company?}
 
-Annual Report is a financial document published annually to showcase a company's business operations and financial condition for the concerned fiscal year.
+Annual Report is a financial document (having both qualitative and quantitative information) published annually to showcase a company's business operations and financial condition for the concerned fiscal year. It is the most trusted source for getting any data related to a company since it is a public document and verified by the the National Financial Reporting Authority (NFRA). While building any financial model when you fetch data from websites like moneycontrol, you should verify atleast the broad line items from the annual report.
 
 \textbf{Key Sections to Focus On}
 
@@ -1901,6 +1924,500 @@ The Net Present Value (NPV) for the investment decision is:
 \]
 
 Since the NPV is positive, the investment is worthwhile.
+
+\subsubsection{Other Analysis}
+
+\subsubsection*{(i) Business Contribution Analysis}
+
+When analyzing a company's financials, it's crucial to assess its revenue distribution across different geographies.
+A higher proportion of revenue from the domestic market, such as India, indicates reliance on local economic conditions, regulatory frameworks, and currency stability. Conversely, significant revenue from international markets exposes the company to foreign exchange fluctuations, geopolitical risks, and global economic trends.
+
+\textbf{Example:}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Region} & \textbf{Revenue} & \textbf{Percentage} \\
+\hline
+India & 88,087 & 22.55\% \\
+Rest of World & 233,861 & 77.45\% \\
+\hline
+\textbf{Total} & \textbf{301,938.4} & \textbf{100.00\%} \\
+\hline
+\end{tabular}
+\caption{Business Contribution by Region}
+\end{table}
+
+\textbf{Business Contribution Analysis:} The company derives approximately \textbf{22.55\%} of its revenue from India and a significant \textbf{77.45\%} from the Rest of the World. This indicates a strong global presence with limited domestic reliance. While this diversification reduces dependency on a single market, it also exposes the company to foreign exchange risks and global economic fluctuations. For investors seeking exposure to companies with strong domestic demand, this company may not be ideal. However, if the goal is to invest in a company benefitting from global diversification, this company shows significant global footprint.
+
+\subsubsection*{(ii) Shareholding Analysis}
+
+The shareholding pattern of a company reveals its ownership structure, offering insights into governance, financial health, and market perception. Key aspects include promoter holdings, pledging, and stakes of Foreign Institutional Investors (FIIs) and Domestic Institutional Investors (DIIs).
+
+\textbf{Promoter Shareholding and Pledging}
+\begin{itemize}
+\item \textbf{Promoter Stake}: High stakes (e.g., $>50\%$) show confidence and control; low stakes (e.g., $<30\%$) may signal reduced commitment.
+\item \textbf{Pledging Risks}: Promoters pledge shares for loans. High pledging ($>20\%$ of their holding) can indicate financial distress or risky expansion. If loans default, lenders may sell shares, causing price drops and potential loss of control.
+\item \textbf{Interpretation}: Low or no pledging reflects stability. Rising pledging with high debt is a red flag.
+\end{itemize}
+
+\textbf{FII - DII \& Other Share Holdings}
+\begin{itemize}
+\item \textbf{FIIs}: Foreign investors (e.g., hedge funds). High stakes ($>15\%$) show global confidence; increasing stakes signal optimism, but FIIs can be volatile due to global events.
+\item \textbf{DIIs}: Domestic investors (e.g., mutual funds). High stakes ($>10\%$) indicate stability; DIIs often counterbalance FII sell-offs in India.
+\item \textbf{Interpretation}: Rising FII/DII stakes are positive, but sudden FII exits can cause volatility. DIIs provide long-term stability.
+\item \textbf{Public Shareholding}: High public stakes ($>25\%$) improve liquidity; low stakes may violate SEBI norms in India (minimum 25\% public holding).
+\item \textbf{ESOPs}: Dilute shares but align employee interests.
+\end{itemize}
+
+\textbf{Example: Reliance Industries Ltd. (RIL) as of March 31, 2025}
+\begin{table}[h]
+\centering
+\caption{Shareholding Pattern of RIL}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Category} & \textbf{Shareholding (\%)} & \textbf{Change (\%)} \\
+\hline
+Promoters & 50.39 & -0.10 \\
+Promoters' Pledged & 5.00 (9.92\%) & +2.00 \\
+FIIs & 24.50 & +1.20 \\
+DIIs & 12.30 & -0.50 \\
+Public & 12.81 & -0.60 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item \textbf{Promoters (50.39\%)}: Strong control, minor decrease (-0.10\%) likely from ESOPs.
+\item \textbf{Pledging (9.92\%)}: Low but rising (+2.00\%). Check RIL's debt levels for risks.
+\item \textbf{FIIs (24.50\%, +1.20\%)}: Growing confidence, positive for price appreciation.
+\item \textbf{DIIs (12.30\%, -0.50\%)}: Slight decline, possibly profit booking, but stable.
+\item \textbf{Public (12.81\%)}: Below SEBI's 25\%, may need divestment.
+\end{itemize}
+
+\textbf{Takeaway}: RIL is a strong investment with growing FII confidence, but monitor pledging and public shareholding compliance.
+
+\textbf{Investor Tips:}
+\begin{itemize}
+\item Track pledging trends and debt levels.
+\item Rising FII/DII stakes are bullish; watch FII exits for volatility.
+\item Ensure SEBI compliance for public shareholding.
+\end{itemize}
+
+\subsubsection*{(iii) Share Price Analysis}
+
+Share price analysis of a company is crucial for evaluating its past performance and estimating potential returns before making investment decisions. Several key factors and financial indicators should be analyzed to get a complete picture:
+
+\textbf{Share Price History}
+Analyzing historical share prices helps identify trends, cycles, and anomalies.
+
+\begin{itemize}
+    \item \textbf{Growth Rate:} Calculate year-over-year growth using:
+    \[
+    \text{Growth Rate (\%)} = \frac{\text{Price}_{\text{current}} - \text{Price}_{\text{previous}}}{\text{Price}_{\text{previous}}} \times 100
+    \]
+    Positive growth indicates investor confidence or business expansion; negative growth may signal poor performance or market sentiment.
+
+    \item \textbf{Average Annual Growth:} Sum all yearly growth rates and divide by the number of years. Helps evaluate long-term trend.
+
+    \item \textbf{Invested Value Simulation:} If a fixed amount (e.g., \rupee 10,000) is invested each year, track how many shares are bought annually:
+    \[
+    \text{No. of Shares}_{\text{year}} = \frac{10,000}{\text{Share Price}_{\text{year}}}
+    \]
+    Sum the total shares and multiply with current share price to find total value today.
+
+    \item \textbf{Pattern Recognition:} Look for periods of rapid rise or fall. Link it with known business events such as product launches, crises, mergers, or industry-wide trends.
+\end{itemize}
+
+\textbf{Dividend History and Analysis}
+Dividends are a major component of shareholder returns, especially for long-term investors.
+
+\begin{itemize}
+    \item \textbf{Dividend Per Share (DPS):}
+    \[
+    \text{DPS} = \frac{\text{Total Dividend Paid}}{\text{No. of Outstanding Shares}}
+    \]
+
+    \item \textbf{Dividend Yield:}
+    \[
+    \text{Dividend Yield (\%)} = \frac{\text{DPS}}{\text{Market Price per Share}} \times 100
+    \]
+    This helps assess income-generating potential of the stock.
+
+    \item \textbf{Dividend Growth Rate:} Calculate year-over-year DPS growth to understand how consistently the company rewards shareholders.
+
+    \item \textbf{Cumulative Dividend Earnings:} For annual investments, compute:
+    \[
+    \text{Dividend Income}_{\text{year}} = \text{Shares Owned}_{\text{year}} \times \text{DPS}_{\text{year}}
+    \]
+    Sum across all years for total passive income generated from dividends.
+\end{itemize}
+
+\textbf{Return on Investment (ROI)}
+Return on Investment gives a complete view of how much wealth the investment has generated, accounting for both price appreciation and dividends.
+
+\[
+\text{ROI (\%)} = \left( \frac{\text{Final Value} + \text{Total Dividends} - \text{Total Investment}}{\text{Total Investment}} \right) \times 100
+\]
+
+Where:
+\begin{itemize}
+    \item \textbf{Final Value} = Total shares accumulated over years × Current Market Price
+    \item \textbf{Total Dividends} = Sum of all yearly dividends earned
+    \item \textbf{Total Investment} = \rupee 10,000 × Number of Years
+\end{itemize}
+
+Negative ROI suggests the stock underperformed or the business faced structural decline. Compare ROI across periods or with similar companies to benchmark performance.
+
+\textbf{Share Capital and Face Value Analysis}
+Changes in share capital and face value affect the number of outstanding shares.
+
+\begin{itemize}
+    \item \textbf{Face Value Adjustment:} If face value reduces (e.g., \rupee 10 to \rupee 2), total shares increase proportionally.
+    \item \textbf{Dilution Impact:} Higher number of shares may dilute earnings per share unless profits grow accordingly.
+    \item \textbf{Interpretation:} Changes in face value usually indicate stock split, which doesn't change value directly but may improve liquidity.
+\end{itemize}
+
+\textbf{Interpreting Investment Trends}
+From the sample data:
+\begin{itemize}
+    \item The share price saw a major decline from \rupee 544 in 2015 to \rupee 71 in 2020, a drop of nearly 87\%.
+    \item Despite a recovery (CMP \rupee 123), long-term investors are still in loss if they stayed invested without timely exit.
+    \item The return on \rupee 10,000 annual investment was strongly negative in later years due to sustained business underperformance.
+    \item Dividend payouts were healthy till 2017 but stopped later, reducing overall investor returns.
+\end{itemize}
+
+\textbf{Key Insights for Investment Decisions}
+\begin{itemize}
+    \item Prefer companies with consistent share price growth and dividend history.
+    \item Investigate reasons behind sudden declines (e.g., revenue loss, regulatory issues).
+    \item Diversify investments and regularly monitor business performance.
+    \item ROI and dividend yield must be aligned with your investment horizon and risk profile.
+\end{itemize}
+
+This analysis approach ensures informed and data-driven equity investment decisions.
+
+\subsection*{(iv) Corporate Action Analysis}
+
+Corporate actions are pivotal events initiated by a publicly traded company that can significantly impact its shareholders, bondholders, and overall financial structure. These actions, typically approved by the company's board of directors and sometimes requiring shareholder consent, can range from routine dividend payments to complex restructuring events like mergers or demergers. For investors, understanding corporate actions is essential, as they can influence share prices, ownership stakes, and investment returns. This section provides a comprehensive guide to corporate actions, detailing their types, mechanisms, reasons, and impacts on investments, along with guidance on how investors should analyze them.
+
+\textbf{Basic Concepts}
+
+Before exploring corporate actions, it is crucial to understand foundational concepts related to shares and capital, which underpin many of these events.
+
+\textbf{Face Value}
+
+The face value, or par value, of a share is its nominal value as specified in the company's articles of association. Typically a small amount, such as \$1 or \rupee 10, it represents the minimum price at which a share can be issued. While face value has limited practical significance in modern markets, it is critical for accounting purposes and plays a role in corporate actions like stock splits and bonus issues. For example, when a company issues shares, the face value contributes to the calculation of share capital, and changes to face value can affect how corporate actions are structured.
+
+\textbf{Share Capital}
+
+Share capital is the total amount of capital raised by a company through the issuance of shares, calculated as the sum of the face value of all issued shares. It is divided into three categories:
+
+\begin{itemize}
+    \item \textbf{Authorized Capital}: The maximum amount of share capital a company is legally permitted to issue, as outlined in its articles of association. For instance, if a company has an authorized capital of \rupee 1,00,00,000, it can issue shares up to this limit without amending its charter.
+    \item \textbf{Issued Capital}: The portion of authorized capital that has been issued to shareholders. For example, if a company with \rupee 1,00,00,000 authorized capital issues shares worth \rupee 50,00,000, the issued capital is \rupee 50,00,000.
+    \item \textbf{Paid-up Capital}: The amount of issued capital that shareholders have paid for. If shareholders have paid for only \rupee 40,00,000 of the \rupee 50,00,000 issued capital, the paid-up capital is \rupee 40,00,000.
+\end{itemize}
+
+These concepts are foundational because corporate actions often involve changes to the share capital structure, such as increasing authorized capital to issue new shares or adjusting issued capital through buybacks.
+
+\textbf{Types of Corporate Actions}
+
+Corporate actions can be classified into mandatory (automatic impact on all shareholders) and voluntary (requiring shareholder participation). Below is a detailed exploration of each type, including their mechanisms, purposes, and impacts on shareholders.
+
+\textbf{Stock Split}
+
+A stock split increases the number of outstanding shares by dividing each existing share into multiple shares. For example, in a 2-for-1 split, each shareholder receives two shares for every one owned, and the price per share is halved.
+
+\paragraph{How It Works}
+The total value of an investor's holdings remains unchanged because the number of shares increases proportionally while the price per share decreases. For instance, if a shareholder owns 100 shares at \$200 each (total value \$20,000), after a 2-for-1 split, they will own 200 shares at \$100 each, still totaling \$20,000. The face value is also adjusted proportionally (e.g., from \$10 to \$5).
+
+\paragraph{Why Companies Do It}
+Companies undertake stock splits to make shares more affordable, attracting a broader investor base, and to increase liquidity and trading volume. A lower share price can enhance marketability, especially for retail investors.
+
+\paragraph{Impact on Shareholders}
+Shareholders receive more shares, but the value per share decreases, maintaining the total investment value. Stock splits are generally viewed positively, as they can signal management's confidence in future growth and increase trading activity. However, multiple splits over time may dilute value if not accompanied by fundamental growth.
+
+\paragraph{Example}
+In 2023, Tesla announced a 3-for-1 stock split, reducing the share price from approximately \$660 to \$220, making the stock more accessible to investors (\url{https://www.investopedia.com/articles/03/081303.asp}).
+
+\textbf{Reverse Stock Split}
+
+A reverse stock split consolidates the number of outstanding shares by combining them into fewer shares. For example, in a 1-for-10 reverse split, 10 shares are combined into 1 share, and the price per share increases tenfold.
+
+\paragraph{How It Works}
+The total value of an investor's holdings remains unchanged. For example, if a shareholder owns 1,000 shares at \$1 each (total value \$1,000), after a 1-for-10 reverse split, they will own 100 shares at \$10 each, still totaling \$1,000. The face value increases proportionally (e.g., from \$1 to \$10).
+
+\paragraph{Why Companies Do It}
+Reverse splits are used to boost a low share price, often to avoid being classified as a penny stock or to meet stock exchange listing requirements. A higher share price can improve the company's market perception.
+
+\paragraph{Impact on Shareholders}
+Shareholders own fewer shares, but each share is worth more. While the intrinsic value remains unchanged, reverse splits may reduce liquidity and can be perceived as an artificial attempt to boost the share price, potentially signaling financial distress.
+
+\paragraph{Example}
+In 2022, AMC Entertainment Holdings conducted a 1-for-10 reverse split to increase its share price and comply with exchange listing rules (\url{https://www.investopedia.com/terms/c/corporateaction.asp}).
+
+\textbf{Bonus Shares}
+
+Bonus shares are additional shares issued to existing shareholders without payment, typically in proportion to their current holdings.
+
+\paragraph{How It Works}
+For example, in a 1-for-1 bonus issue, each shareholder receives one additional share per share owned. This increases the total number of shares outstanding and the issued share capital, often requiring an increase in authorized capital if insufficient. The face value remains unchanged unless combined with a stock split.
+
+\paragraph{Why Companies Do It}
+Bonus shares reward shareholders without distributing cash, often using accumulated reserves. They increase liquidity and make shares more affordable, similar to stock splits.
+
+\paragraph{Impact on Shareholders}
+Shareholders receive more shares, but the value per share may decrease due to dilution. Bonus issues are generally positive, signaling confidence in future earnings, as the company retains cash for growth.
+
+\paragraph{Example}
+In 2023, Larsen \& Toubro (L\&T) issued bonus shares in a 1:1 ratio, doubling shareholders' holdings without additional cost.
+
+\textbf{Share Buyback}
+
+A share buyback occurs when a company repurchases its own shares from the market, reducing the number of outstanding shares.
+
+\paragraph{How It Works}
+The company uses cash reserves or borrowed funds to buy back shares, which are then canceled or held as treasury stock. This reduces the issued share capital.
+
+\paragraph{Why Companies Do It}
+Buybacks increase earnings per share (EPS) by reducing outstanding shares, signal that the stock is undervalued, and distribute excess cash to shareholders. They can also enhance promoter ownership.
+
+\paragraph{Impact on Shareholders}
+Buybacks can increase EPS and share price, as the company's earnings are spread over fewer shares. Shareholders own a larger percentage of the company, which is generally positive if executed at a fair price.
+
+\paragraph{Example}
+In 2023, Apple announced a \$90 billion share buyback program, boosting EPS and signaling confidence in its stock's value (\url{https://www.investopedia.com/terms/c/corporateaction.asp}).
+
+\textbf{Dividends}
+
+Dividends are payments made to shareholders from a company's profits, either as cash or additional shares.
+
+\paragraph{Types of Dividends}
+\begin{itemize}
+    \item \textbf{Cash Dividends}: Paid in cash, providing direct income.
+    \item \textbf{Stock Dividends}: Paid in additional shares, similar to bonus shares.
+\end{itemize}
+
+\paragraph{How It Works}
+Dividends are declared based on profits and board decisions, distributed proportionally to shareholdings. For example, a \$0.50 per share dividend yields \$50 for 100 shares.
+
+\paragraph{Why Companies Do It}
+Dividends reward shareholders and attract income-seeking investors. They signal financial stability and consistent profitability.
+
+\paragraph{Impact on Shareholders}
+Cash dividends provide income but are taxable. Stock dividends increase shareholdings but may dilute value per share. Dividends are generally positive, though high payouts may indicate limited growth opportunities.
+
+\paragraph{Example}
+In 2023, Reliance Industries declared a dividend of \rupee 9 per share, providing income to shareholders.
+
+\textbf{Follow-on Public Offer (FPO)}
+
+An FPO is when a listed company issues new shares to the public to raise additional capital.
+
+\paragraph{How It Works}
+New shares are offered through book-building or fixed-price methods. Both existing and new investors can participate, increasing the issued share capital.
+
+\paragraph{Why Companies Do It}
+FPOs raise capital for expansion, debt repayment, or other strategic initiatives.
+
+\paragraph{Impact on Shareholders}
+FPOs dilute existing shareholders' ownership unless they participate. They can be positive if the capital drives growth but may depress share prices due to increased supply.
+
+\paragraph{Example}
+In 2023, Yes Bank conducted an FPO to raise \rupee 15,000 crore for strengthening its capital base.
+
+\textbf{Delisting}
+
+Delisting occurs when a company's shares are removed from a stock exchange.
+
+\paragraph{Reasons for Delisting}
+\begin{itemize}
+    \item Acquisition or privatization.
+    \item Failure to meet listing requirements.
+\end{itemize}
+
+\paragraph{How It Works}
+Shareholders may receive a cash offer or shares in another company, depending on the reason for delisting.
+
+\paragraph{Impact on Shareholders}
+Delisting can be positive if shareholders receive a favorable offer or negative if due to poor performance, limiting liquidity.
+
+\paragraph{Example}
+In 2022, Future Retail was delisted after being acquired by Reliance Retail.
+
+\textbf{Mergers and Acquisitions}
+
+Mergers combine two companies into one, while acquisitions involve one company purchasing another.
+
+\paragraph{How It Works}
+In mergers, shareholders of both companies receive shares in the new entity. In acquisitions, shareholders of the acquired company may receive cash or shares of the acquiring company.
+
+\paragraph{Why Companies Do It}
+M\&A achieves synergies, expands market share, or enters new markets.
+
+\paragraph{Impact on Shareholders}
+The impact depends on the deal's terms. Successful M\&A can enhance value, but integration issues may depress share prices.
+
+\paragraph{Example}
+In 2022, HDFC merged with HDFC Bank, creating a major financial institution.
+
+\textbf{Demerger}
+
+A demerger splits a company into two or more independent entities.
+
+\paragraph{How It Works}
+Shareholders receive shares in the new companies proportional to their holdings in the original company.
+
+\paragraph{Why Companies Do It}
+Demergers focus on core businesses and unlock value in different segments.
+
+\paragraph{Impact on Shareholders}
+Positive if the separate entities perform well, allowing shareholders to benefit from focused operations.
+
+\paragraph{Example}
+In 2023, ITC announced plans to demerge its hotels business.
+
+\textbf{Spinoff}
+
+A spinoff creates a new independent company from an existing division, distributing shares to existing shareholders.
+
+\paragraph{How It Works}
+Shareholders receive shares in the new company without additional payment.
+
+\paragraph{Why Companies Do It}
+Spinoffs allow focus on core businesses and independent growth for the new entity.
+
+\paragraph{Impact on Shareholders}
+Provides investment opportunities in a new entity with potential growth.
+
+\paragraph{Example}
+In 2023, Jio Financial Services was spun off from Reliance Industries.
+
+\textbf{Rights Issue}
+
+A rights issue allows existing shareholders to buy additional shares at a discounted price.
+
+\paragraph{How It Works}
+Shareholders receive rights proportional to their holdings, which can be used to buy new shares or sold to others.
+
+\paragraph{Why Companies Do It}
+Rights issues raise capital with less dilution than public offers, prioritizing existing shareholders.
+
+\paragraph{Impact on Shareholders}
+Allows maintaining ownership proportion; non-participation leads to dilution.
+
+\paragraph{Example}
+In 2023, Hindustan Aeronautics Limited conducted a rights issue to raise \rupee 2,500 crore.
+
+\textbf{Liquidation}
+
+Liquidation involves selling all assets and distributing proceeds to creditors and shareholders before ceasing operations.
+
+\paragraph{How It Works}
+Assets are sold, debts paid, and remaining proceeds distributed to shareholders.
+
+\paragraph{Why Companies Do It}
+Typically due to bankruptcy or insolvency.
+
+\paragraph{Impact on Shareholders}
+Shareholders are last in line and often receive little or nothing.
+
+\paragraph{Example}
+In 2023, Jet Airways was liquidated after financial struggles.
+
+\textbf{Priority of Payments on Company Sale}
+
+When a company is sold or liquidated, payments follow a priority order:
+
+\begin{enumerate}
+    \item Secured creditors
+    \item Unsecured creditors
+    \item Preferred shareholders
+    \item Common shareholders
+\end{enumerate}
+
+\paragraph{Impact on Shareholders}
+Common shareholders are last, often receiving nothing if funds are insufficient.
+
+\textbf{Contingent Value Rights (CVR)}
+
+CVRs are financial instruments guaranteeing additional compensation if specific conditions are met, often used in acquisitions.
+
+\paragraph{How It Works}
+Shareholders receive potential payments if performance targets are achieved.
+
+\paragraph{Why Companies Do It}
+CVRs bridge valuation gaps in M\&A deals.
+
+\paragraph{Impact on Shareholders}
+Provides potential additional value, though outcomes are uncertain.
+
+\textbf{Name or Symbol Change}
+
+A name or ticker symbol change reflects a shift in branding or business focus.
+
+\paragraph{How It Works}
+The company updates its name or ticker, with no direct financial impact.
+
+\paragraph{Why Companies Do It}
+To align with new strategies or improve public perception.
+
+\paragraph{Impact on Shareholders}
+Minimal direct impact but may affect investor perception.
+
+\paragraph{Example}
+In 2022, Facebook changed to Meta, reflecting a focus on the metaverse (\url{https://investor.fb.com/investor-news/press-release-details/2022/Meta-Platforms-Inc.-to-Change-Ticker-Symbol-to-META-on-June-9/default.aspx}).
+
+\textbf{Subsidiary, Alliance, Associate, Joint Venture, Affiliate}
+
+These are not corporate actions but structures resulting from strategic decisions:
+
+\begin{itemize}
+    \item \textbf{Subsidiary}: Controlled by a parent company.
+    \item \textbf{Alliance}: Cooperative agreement between companies.
+    \item \textbf{Associate}: Significant influence (20-50\% ownership).
+    \item \textbf{Joint Venture}: Entity formed for a specific project.
+    \item \textbf{Affiliate}: Related through ownership or control.
+\end{itemize}
+
+These structures often arise from corporate actions like M\&A or partnerships.
+
+\textbf{Analyzing Corporate Actions for Investment}
+
+Investors should evaluate corporate actions using the following framework:
+
+\begin{enumerate}
+    \item \textbf{Reason for the Action}: Determine the company's motive (e.g., rewarding shareholders, raising capital).
+    \item \textbf{Impact on Share Price}: Assess short-term and long-term effects on valuation.
+    \item \textbf{Dilution}: Check if ownership will be diluted (e.g., in FPOs or rights issues).
+    \item \textbf{Financial Health}: Review financial statements to ensure the company can afford the action.
+    \item \textbf{Market Reaction}: Monitor market sentiment and analyst opinions.
+    \item \textbf{Tax Implications}: Understand tax consequences (e.g., dividends are taxable).
+    \item \textbf{Long-term Strategy}: Evaluate alignment with the company's growth plans.
+\end{enumerate}
+
+\begin{table}[h]
+\centering
+\caption{Impact of Corporate Actions on Shareholders}
+\begin{tabular}{l p{6cm} p{6cm}}
+\hline
+\textbf{Corporate Action} & \textbf{Primary Impact} & \textbf{Investor Considerations} \\
+\hline
+Stock Split & Increases shares, reduces price per share & Signals growth; assess liquidity impact \\
+Reverse Split & Reduces shares, increases price per share & Check for financial distress; liquidity concerns \\
+Bonus Shares & Increases shares, potential dilution & Evaluate company's reserves and growth prospects \\
+Share Buyback & Reduces shares, increases EPS & Assess buyback price and financial health \\
+Dividends & Provides income or shares & Consider tax implications and payout sustainability \\
+FPO & Dilutes ownership & Evaluate use of proceeds and growth potential \\
+Delisting & Limits liquidity & Assess offer price and reason for delisting \\
+M\&A & Changes ownership structure & Review deal terms and synergies \\
+Demerger/Spinoff & Creates new entities & Analyze new entities' growth prospects \\
+Rights Issue & Offers discounted shares & Decide on participation to avoid dilution \\
+Liquidation & Distributes proceeds & Understand priority of payments \\
+\hline
+\end{tabular}
+\end{table}
 
 \section{Sentiment Analysis}
 
