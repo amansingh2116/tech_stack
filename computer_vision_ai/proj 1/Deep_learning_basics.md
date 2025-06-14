@@ -36,7 +36,7 @@ Let’s walk through the architecture of a basic neural network designed to clas
   \mathbf{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_{784} \end{bmatrix}, \quad x_i \in [0,1]
   $$
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 #### 2. **Hidden Layers**
 
@@ -51,7 +51,7 @@ Let’s walk through the architecture of a basic neural network designed to clas
 * The neuron with the **highest activation value** is the network's predicted digit.
 * These output activations can be interpreted as **probabilities** after normalization.
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 ---
 
@@ -92,7 +92,7 @@ Think about how humans recognize digits:
 * A "9" is a loop with a downward tail.
 * An "8" has two stacked loops.
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 In a similar way:
 
@@ -120,6 +120,7 @@ Let’s go deeper into how a neuron calculates its output (activation):
    $$
    z = \mathbf{w} \cdot \mathbf{x} + b
    $$
+   ![alt text](images/image-3.png)
 3. **Bias**: The bias $b$ adjusts the threshold at which the neuron activates.
 4. **Activation Function**: Apply a nonlinear function such as:
 
@@ -128,7 +129,7 @@ Let’s go deeper into how a neuron calculates its output (activation):
 
 This final output $a = \sigma(z)$ becomes the neuron’s activation, passed to the next layer.
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 ---
 
@@ -152,7 +153,7 @@ $$
 \mathbf{a}^{(l)} = \sigma(\mathbf{z}^{(l)})
 $$
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 Each layer's output is computed by multiplying the previous layer's activations with the weight matrix, adding biases, and applying the activation function element-wise.
 
@@ -206,7 +207,7 @@ Here:
 * $\mathbf{a}^{(L)}(\mathbf{x}^{(i)})$: the network's output for the $i$-th input.
 * $\| \cdot \|^2$: squared Euclidean norm (i.e., the sum of squared differences between predicted and actual outputs).
 
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
 The cost function is a real-valued function:
 
@@ -243,13 +244,13 @@ Imagine a function $f(x)$ of a single variable $x$. To minimize it:
 
 Here, $\eta$ is the **learning rate**, a small constant that controls step size.
 
-![alt text](image-7.png)
+![alt text](images/image-7.png)
 
 #### Extending to Multiple Variables
 
 In a two-variable scenario, we can think of the cost function as a **surface** in 2D space.
 
-![alt text](image-8.png)
+![alt text](images/image-8.png)
 
 When the cost function depends on many variables (e.g., all the weights and biases), the **gradient** is the multi-variable version of the derivative. It’s a vector:
 
@@ -296,7 +297,7 @@ Backpropagation works **only if** the cost function and activation functions are
 
 This provides both **direction** and **scale** for learning.
 
-![alt text](image-9.png)
+![alt text](images/image-9.png)
 
 ---
 
@@ -304,14 +305,14 @@ This provides both **direction** and **scale** for learning.
 
 After training:
 
-* A neural network with two hidden layers (each with 16 neurons) typically achieves **\~96% accuracy** on unseen digit images. ![alt text](image-10.png)
+* A neural network with two hidden layers (each with 16 neurons) typically achieves **\~96% accuracy** on unseen digit images. ![alt text](images/image-10.png)
 * With more advanced techniques (e.g., better initialization, regularization, and training algorithms), performance can reach **\~98% accuracy**.
 
 However, neural networks often **don’t learn features in a human-interpretable way**:
 
 * They may not develop obvious detectors for loops, lines, or edges.
 * They may confidently misclassify random noise as digits.
-* This exposes a weakness: the network has learned statistical correlations, not conceptual understanding. ![alt text](image-11.png)
+* This exposes a weakness: the network has learned statistical correlations, not conceptual understanding. ![alt text](images/image-11.png)
 
 > Neural networks are powerful pattern recognizers but **don’t understand** the underlying meaning of the patterns.
 
@@ -339,7 +340,7 @@ $$
 
 This derivative tells us how much a small change in $w$ will affect the cost. A large derivative means that weight has a **strong influence** on the network's error, and should be changed accordingly.
 
-![alt text](image-12.png)
+![alt text](images/image-12.png)
 
 Backpropagation efficiently computes **all these derivatives** using the chain rule.
 
@@ -351,16 +352,16 @@ Backpropagation efficiently computes **all these derivatives** using the chain r
 2. **Adjust final-layer weights**:
 
    * Weights linked to more active neurons (from the previous layer) have more influence.
-   * These should be increased or decreased depending on whether their influence made the output too high or too low. ![alt text](image-13.png)
+   * These should be increased or decreased depending on whether their influence made the output too high or too low. ![alt text](images/image-13.png)
 3. **Propagate backward**:
 
    * The effect of the output error ripples backward through the network.
    * Each earlier neuron receives a share of “blame” for the error.
-4. **Repeat for each layer**, working back to the input. ![alt text](image-14.png)
+4. **Repeat for each layer**, working back to the input. ![alt text](images/image-14.png)
 
 This results in a list of adjustments—one for each weight and bias—which is just the **negative gradient** of the cost function.
 
-![alt text](image-15.png)
+![alt text](images/image-15.png)
 
 ---
 
@@ -389,11 +390,11 @@ $$
 
 where $\eta$ is the learning rate.
 
-![alt text](image-16.png)
+![alt text](images/image-16.png)
 
-> Imagine someone stumbling down a hill while drunk. They may not always move perfectly downhill, but over time, they’ll still make progress toward the bottom. That's what SGD does. ![alt text](image-17.png)
+> Imagine someone stumbling down a hill while drunk. They may not always move perfectly downhill, but over time, they’ll still make progress toward the bottom. That's what SGD does. ![alt text](images/image-17.png)
 
-![alt text](image-18.png)
+![alt text](images/image-18.png)
 
 ---
 
@@ -409,7 +410,7 @@ Suppose we have a tiny network:
 * Three weights: $w^{(1)}$, $w^{(2)}$, $w^{(3)}$
 * Three biases: $b^{(1)}$, $b^{(2)}$, $b^{(3)}$
 
-![alt text](image-19.png)
+![alt text](images/image-19.png)
 
 Let’s focus on the **final layer**:
 
@@ -428,7 +429,7 @@ $$
 \frac{\partial C}{\partial w^{(L)}} = \frac{\partial C}{\partial a^{(L)}} \cdot \frac{\partial a^{(L)}}{\partial z^{(L)}} \cdot \frac{\partial z^{(L)}}{\partial w^{(L)}}
 $$
 
-![alt text](image-20.png)
+![alt text](images/image-20.png)
 
 Breaking this down:
 
@@ -537,7 +538,7 @@ $$
 C = \sum_j (a_j^{(L)} - y_j)^2
 $$
 
-![alt text](image-23.png)
+![alt text](images/image-23.png)
 
 #### Multi-Neuron Networks: Derivative Calculation
 
@@ -555,11 +556,11 @@ $$
 \delta^{(L-1)}_k = \left( \sum_j w^{(L)}_{jk} \cdot \delta^{(L)}_j \right) \cdot \sigma'(z^{(L-1)}_k)
 $$
 
-![alt text](image-21.png)
+![alt text](images/image-21.png)
 
 This summing process reflects the fact that **one neuron can influence multiple downstream neurons**, so its error must be the **sum** of all those influences.
 
-![alt text](image-22.png)
+![alt text](images/image-22.png)
 
 ---
 
@@ -577,37 +578,37 @@ Convolutional Neural Networks, or CNNs, are specialized types of neural networks
 
 Traditional neural networks, also known as artificial neural networks (ANNs), can technically process images, but they are not efficient or effective for this task. One issue is scale. A single image, especially a high-resolution one, contains thousands or even millions of pixels. Feeding all of these directly into a fully connected neural network would require a massive number of weights and computations, making training impractical. Another problem is that ANNs treat each pixel independently and equally, ignoring the spatial structure of images. A cat’s face in the top-left corner is treated no differently from the same face in the bottom-right, even though spatial relationships are crucial for understanding visual content. This lack of spatial awareness makes traditional ANNs ill-suited for image tasks.
 
-![alt text](image-24.png)
+![alt text](images/image-24.png)
 
 ### How the Human Brain Inspires CNNs
 
 The design of CNNs is inspired by the way the human brain processes visual information. In the brain, specific neurons respond to specific patterns, such as edges, shapes, or movements. These neurons are organized hierarchically—lower levels detect basic features like edges, while higher levels combine these into more complex representations like faces or objects. CNNs follow this principle. They begin by detecting simple features in the raw pixel data, and through layers of processing, build up more complex, abstract representations that are eventually used to classify or recognize the image.
 
-![alt text](image-25.png)
+![alt text](images/image-25.png)
 
 ### Filters and the Convolution Operation
 
 The core component of a CNN is the filter, or kernel—a small matrix of numbers that acts as a feature detector. A single filter might be designed (or learned) to detect vertical edges, horizontal lines, or curves.
-![alt text](image-26.png)
+![alt text](images/image-26.png)
 During the convolution operation, the filter slides over the image, one small region at a time. At each location, it multiplies its values with the corresponding pixel values and sums the result.
-![alt text](image-27.png)
+![alt text](images/image-27.png)
 This single number becomes part of a new matrix called the feature map. The feature map highlights the regions of the original image where the filter’s target pattern is present.
-![alt text](image-28.png)
+![alt text](images/image-28.png)
 For instance, if the filter is looking for a curve, the feature map will show high values where curves appear.
 
 ### Multiple Filters and Deeper Understanding
 
 In practice, CNNs use many filters at each layer to detect a wide variety of features. Each filter produces its own feature map, and these maps are stacked to form a deeper, more informative representation of the input. As we move deeper into the network, these feature maps are themselves treated like images, and more filters are applied to them. This process allows the network to identify higher-order features. For example, early layers might detect lines and corners, while later layers might recognize eyes, ears, or entire objects. This layered approach gives CNNs the ability to construct a rich, hierarchical understanding of the input image.
 
-![alt text](image-29.png)
+![alt text](images/image-29.png)
 
 ### Pooling and Dimensionality Reduction
 
 As CNNs go deeper and create more feature maps, the amount of data can become overwhelming. Pooling is a technique used to reduce the spatial size of the feature maps while retaining the most important information. The most common form is max pooling, which divides the feature map into small regions (typically 2×2) and keeps only the highest value in each
 region.
-![alt text](image-31.png)
+![alt text](images/image-31.png)
 This operation not only reduces computation but also provides a degree of translation invariance. That is, even if the feature moves slightly in the image, the pooled representation will remain largely unchanged. Average pooling, which takes the mean value instead of the maximum, is another option, though it is used less frequently.
-![alt text](image-32.png)
+![alt text](images/image-32.png)
 
 ### Introducing Non-Linearity with ReLU
 
@@ -615,19 +616,19 @@ To allow CNNs to model complex, non-linear relationships in data, a non-linear a
 $$
 ReLU(x) = max(0, x)
 $$
-![alt text](image-30.png)
+![alt text](images/image-30.png)
 This simple operation introduces non-linearity into the network, allowing it to learn much more complex patterns than a purely linear model could. ReLU also helps with training by mitigating issues like the vanishing gradient problem and making the network more efficient.
 
 ### The Full CNN Architecture
 
 A complete CNN architecture typically starts with one or more convolutional layers, each followed by a non-linear activation function like ReLU and a pooling layer. These three components—convolution, activation, and pooling—may be stacked several times to extract increasingly abstract features. After enough layers, the high-level feature maps are flattened into a one-dimensional vector and passed through one or more fully connected layers. These layers perform the final classification based on the features extracted by the earlier convolutional layers. The final output might be a single value (for binary classification) or a vector of probabilities (for multi-class problems).
-![alt text](image-33.png)
+![alt text](images/image-33.png)
 
 ### Why CNNs Work So Well
 
 CNNs offer several advantages over traditional neural networks for image-related tasks. First, they take advantage of local connections, meaning each neuron looks only at a small part of the image. This reduces the number of parameters and makes the network more efficient. Second, they use parameter sharing, where the same filter is applied across the entire image. This helps the network recognize features regardless of where they appear. Third, the use of pooling layers and the hierarchical structure makes CNNs more robust to variations such as translation, slight distortion, or changes in lighting and scale. Together, these properties make CNNs well-suited for handling the complex structure of visual data.
 
-![alt text](image-34.png)
+![alt text](images/image-34.png)
 
 ### How CNNs Learn Filters
 
