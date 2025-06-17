@@ -30,7 +30,9 @@ The journey of teaching a computer to play a video game unveils the essence of *
 
 - **Data** - The myriad forms of digital information like images, text, pixels, and numbers that fuel the learning process.
 - **ML Algorithm Code** - The rulebook guiding the processing of data.
-- **Machine Learning Model** - Often dubbed as the system's "brain," it harnesses algorithms to process data, paving the path for predictions or decisions.
+- **Machine Learning Model** - Often dubbed as the system's "brain," it harnesses algorithms to process data, paving the path for predictions or decisions. A model in machine learning is the trained algorithm that you use to identify patterns in your data. A model is trained through the machine learning process and captures and stores patterns. The more patterns a model stores, the bigger it will become. Machine learning model sizes are typically described in megabytes. The purpose of a model is to predict outcomes to new data inputs, based on
+previously observed patterns.
+
 The venture begins with training the model using a designated algorithm, transitioning next to testing its performance with fresh data, akin to gauging a game-playing bot's prowess in a gaming arena. Through a cycle of training, testing, and adjustments, we endeavor to escalate the model's performance to hit the bullseye—be it triumphing in a game or nailing a song artist identification.
 
 ![How Machine Learning Works](image-7.png)
@@ -40,9 +42,12 @@ The venture begins with training the model using a designated algorithm, transit
 - **Machine Learning (ML)** -The compass directing computers towards autonomous learning and pattern discernment from data, under the vast umbrella of AI.
 - **Machine Learning System** - The harmonious blend of data, ML algorithms, and a machine learning model.
 - **Machine Learning Model** - The system's intellect, processing data through algorithms to forge predictions or decisions.
-- **Training** - The saga of nurturing the model by processing data through the ML algorithm code.
+- **Training** - The saga of nurturing the model by processing data through the ML algorithm code. In macine learning, we can use training algorithms to help us accomplish empirical tasks that require some sort of inductive reference. This objective involves induction becuase it uses data to train algorithms to make generalizable inferences. Thus, algorithms can make statistically reliable predictions or decisions, or complete other tasks, when they apply new data that was used to train them. An algorithm-trained algorithm identifies patterns in our data without requiring any explicit, manually set rules.
 - **Testing** - The act of gauging the model's mettle using new data, post-training.
 - **Iteration** - The cycle of tweaking algorithms and data, coupled with re-training, aiming to uplift model performance.
+- **Compute model instances** - AWS provides a variety of instance types that support machine learning models, depending on the use case of the model. Amazon Elastic Compute Cloud (Amazon EC2) provides a wide selection of instance types (or families) that are optimized to fit different use cases. Instance types comprise varying combinations of CPU, memory, storage, and networking capacity. They give you the flexibility to choose the appropriate mix of resources for your applications. Each instance type includes one or more instance sizes so that you can scale your resources to the requirements of your target workload. AWS ML services, like Amazon SageMaker, use these instances to back computing needs for your ML projects. You will learn more about these instances and the use case for each, later in this course.
+- **Inference** - Inference is the process of making predictions using a trained model. In deep learning applications, inference accounts for up to 90 percent of total operational costs for two reasons. First, standalone graphics processing unit (GPU) instances are typically designed for model training-not for inference. Though training jobs batch process hundreds of data samples in parallel, inference jobs usually process a single input in real time. Thus, they consume a small amount of GPU compute, which makes standalone GPU inference cost-inefficient. On the other hand, standalone CPU instances are not specialized for matrix operations, and thus are often too slow for deep learning inference.
+Secondly, different models have different CPU, GPU, and memory requirements. Optimizing for one resource can lead to underutilization of other resources and higher costs. Amazon Web Services (AWS) resolves these cost-inefficient issues with Amazon Elastic Inference. You will learn more about Amazon Elastic Inference and when to use it in the next module.
 
 ### DEMO
 
@@ -76,7 +81,7 @@ Uses Unlabeled Data and the Model Finds the Patterns
 
 - **Learning on its Own** - The model explores a lot of data on its own to find patterns and structures, akin to solving a puzzle without seeing the picture on the box.
 - **When to Use** - If you have unlabeled data and you want the model to find patterns or structures in the data. Unsupervised learning can discover patterns in unlabeled data, which is often the case in massive datasets.
-- **Examples** - Generating new songs, speech recognition, writing code, handling massive datasets with unlabeled data.
+- **Examples** - Generating new songs, speech recognition, writing code, handling massive datasets with unlabeled data. A common subcategory of unsupervised learning is called clustering where the algorithm groups data into different clusters based on similar features to better understand the attributes of a specific cluster.
 
 ![Unsupervised Learning](image-10.png)
 

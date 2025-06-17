@@ -4,6 +4,8 @@
 
 **Artificial Intelligence (AI)** refers to computers simulating human intelligence processes like learning, reasoning, self-correction, and creativity.
 
+![alt text](image-22.png)
+
 ### Historical Development
 
 AI exploration began in the 1940s and 1950s, inspired by the human brain's workings. Notable contributions include:
@@ -27,6 +29,8 @@ AI's role has transitioned from mere fascination to being an integral part of da
 
 ## ELIZA to Alexa
 
+### ELIZA
+
 ELIZA, a computer program created in the 1960s, was one of the first programs designed to have a conversation with people.
 
 ELIZA would respond to what you said by using patterns and rules, making it seem like she understood you. One famous version of ELIZA acted like a therapist, where she'd often just repeat what you said back to you, which made some people feel like they were talking to a real person, creating an illusion of understanding.
@@ -42,7 +46,8 @@ Use the following link to experiment with an [ELIZA-like Therapist Bot](https://
 
 **Key Findings:** ELIZA likely recognizes greeting keywords and has rules to respond with related follow-up questions. ELIZA often repeat or rephrase what the user says. Repetition simulates active listening and empathy, mirroring techniques used in therapy. One of ELIZA's key rules is to mirror or rephrase the user's input. This technique, often used in Rogerian psychotherapy, creates the illusion of understanding and keeps the conversation going. When ELIZA encounters inputs without recognizable keywords or patterns, it often responds with generalized or vague statements like "I see" or "Please go on." This allows it to continue the conversation without needing specific keywords.
 
----
+### Alexa
+
 Alexa is an AI-powered virtual assistant housed in an Amazon Echo Dot device. Alexa can:
 
 - Understand and process voice commands.
@@ -53,6 +58,35 @@ Alexa uses AI to:
 - Recognize speech patterns.
 - Understand context.
 - Predict user preferences for personalized content.
+
+### When to use Machine Learning
+
+#### Classical programming Example
+
+Use classical programming if you can determine a target value by using:
+
+- Simple rules (rules can be coded)
+- Computations
+- Predetermined steps without any data-driven learning
+
+#### Machine Learning Example
+
+1. Rules cannot be coded. Many human tasks (such as recognizing whether an email is spam or not spam) cannot be adequately solved by using a simple (deterministic), rule-based solution. A large number of factors could influence the answer. When rules depend on too many factors and many of these rules overlap or need to be tuned very finely, it soon becomes difficult for a human to accurately code the rules. You can use ML to effectively solve this problem.
+2. Scaling is not an option: You might be able to manually recognize a few hundred emails and decide whether they are spam or not. However, this task becomes tedious for millions of emails. ML solutions are effective at handling large-scale problems.
+
+#### Example
+
+**Problem?**
+
+You must determine whether purchases that are being made on your website are from the account holder or whether you have reasons to suspect fraud. In your solution, you want to consider the following:
+- Is the dollar amount unusually high for the account holder?
+- Are the products being shipped to a new location?
+- Are there multiple quanties of products that are normally not duplicated in an order?
+- Did the user have several failed account logins before logging into their account?
+
+**Solution!**
+
+If your choice was machine learning, you are correct. In this example, there are again several rules that would be difficult to code for. A machine learning model would be able to see patterns in the data and make a good prediction if this was a legitimate or fraudulent transaction. Remember that machine learning is not always going to be perfect. Any of the considerations for this solution can be legitimate. The account holder can have difficulty logging in, or they might be buying multiple quantities that seem unusual for the typical purchase.
 
 ## Defining Artificial Intelligence
 
