@@ -79,6 +79,7 @@ Use classical programming if you can determine a target value by using:
 **Problem?**
 
 You must determine whether purchases that are being made on your website are from the account holder or whether you have reasons to suspect fraud. In your solution, you want to consider the following:
+
 - Is the dollar amount unusually high for the account holder?
 - Are the products being shipped to a new location?
 - Are there multiple quanties of products that are normally not duplicated in an order?
