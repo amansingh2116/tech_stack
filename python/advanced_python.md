@@ -308,6 +308,261 @@ L = [1, 2, 3, 4, 5, 6, 7]
 reduce(lambda x, y: x if x>y else y, L) # 7 (maximum element)
 ```
 
+## Exception Handling
+
+### Errors and Exceptions
+
+There are 2 stages where error may happen in a program
+
+- During compilation -> __Syntax Error__
+- During execution -> __Exceptions__
+
+#### Syntax Error
+
+- Something in the program is not written according to the program grammar.
+- Error is raised by the interpreter/compiler
+- You can solve it by rectifying the program
+
+__Example:__
+
+```py
+# Examples of syntax error
+print 'hello world'
+
+#   File "<ipython-input-3-4655b84ba7b7>", line 2
+#     print 'hello world'
+#                       ^
+# SyntaxError: Missing parentheses in call to 'print'. Did you mean print('hello world')?
+```
+
+__Other examples of syntax error:__
+
+- Leaving symbols like colon, brackets (`SyntaxError`)
+- Misspelling a keyword (`SyntaxError`)
+- Incorrect indentation (`IndentationError`)
+- empty if/else/loops/class/functions block (`IndentationError`)
+- __IndexError__: Raised when trying to access an item at an invalid index.  
+  Example: `L = [1, 2, 3]; L[100]`  
+  Output: `IndexError: list index out of range`
+- __ModuleNotFoundError__: Raised when a module could not be found.  
+  Example: `import mathi; math.floor(5.3)`  
+  Output: `ModuleNotFoundError: No module named 'mathi'`
+- __KeyError__: Raised when a dictionary key is not found.  
+  Example: `d = {'name': 'nitish'}; d['age']`  
+  Output: `KeyError: 'age'`
+- __TypeError__: Raised when an operation or function is applied to an object of inappropriate type.  
+  Example: `1 + 'a'`  
+  Output: `TypeError: unsupported operand type(s) for +: 'int' and 'str'`
+- __ValueError__: Raised when a function receives an argument of inappropriate type.  
+  Example: `int('a')`  
+  Output: `ValueError: invalid literal for int() with base 10: 'a'`
+- __NameError__: Raised when a local or global name is not found.  
+  Example: `print(k)`  
+  Output: `NameError: name 'k' is not defined`
+- __AttributeError__: Raised when an invalid attribute reference or assignment is attempted.  
+  Example: `L = [1, 2, 3]; L.upper()`  
+  Output: `AttributeError: 'list' object has no attribute 'upper'`
+- __ZeroDivisionError__: Raised when division or modulo by zero is attempted.  
+  Example: `5 / 0`  
+  Output: `ZeroDivisionError: division by zero`
+
+#### Exceptions
+
+If things go wrong during the execution of the program(runtime). It generally happens when something unforeseen has happened.
+
+- Exceptions are raised by python runtime
+- You have to takle it on the fly
+- Examples:
+  - Memory overflow
+  - Divide by 0 -> logical error
+  - Database error
+
+#### Why handle exceptions?
+
+When Python encounters an error, it raises an exception and provides a __stack trace__, which is useful for debugging. However, there are two reasons why you should handle exceptions:
+
+1. __User Experience__: If an exception is raised and not handled, it can lead to a bad user experience. The user may see a confusing error message or the application may crash, which can be frustrating and make the user less likely to use the application again.
+2. __Security__: If an exception is raised and not handled, it can also reveal sensitive information about the application, such as the code that caused the error, which can be used by malicious users to exploit the application. By handling exceptions, you can prevent this information from being exposed and keep your application secure.
+
+### `try` and `except` block
+
+When an error occurs, or exception as we call it, Python will normally stop and generate an error message.
+These exceptions can be handled using the `try` statement. If the `try` block raises an error, the `except` block will be executed.
+
+```py
+# try catch demo
+try:
+  with open('sample1.txt','r') as f:
+    print(f.read())
+except:
+  print('sorry file not found')
+
+# sorry file not found
+```
+
+__Many Exceptions:__
+
+But this way, we are not able to know what kind of error has occurred. We can handle specific exceptions using the `except` block. We can define as many exception blocks as you want, e.g. if we want to execute a special block of code for a special kind of error.
+
+```py
+try:
+  m=5
+  f = open('sample1.txt','r')
+  print(f.read())
+  print(m)
+  print(5/2)
+  L = [1,2,3]
+  L[100]
+except FileNotFoundError:
+  print('file not found')
+except NameError:
+  print('variable not defined')
+except ZeroDivisionError:
+  print("can't divide by 0")
+
+# A generic except for other unhandled exceptions, must be at the end
+except Exception as e: # Catches all other exceptions
+  print(e) # prints the error message
+
+# [Errno 2] No such file or directory: 'sample1.txt'
+```
+
+__`else`__
+
+If the `try` block does not raise any exceptions, the `else` block will be executed. For example, if you want to run a piece of code if a file is found, but do something else if the file is not found.
+
+```py
+try:
+    # write what you think may wrong
+  print("Hello")
+except:
+    # use it to handle what may go wrong in try block
+  print("Something went wrong")
+else:
+    # write what should be done if there is no error raised by try block
+  print("Nothing went wrong")
+```
+
+__finally:__
+
+The `finally` block, if specified, will be executed regardless if the try block raises an error or not. This is useful for closing files, database connections and other resources that should always be closed after use.
+
+```py
+try:
+  f = open('sample1.txt','r')
+except FileNotFoundError:
+  print('file nai mili')
+except Exception:
+  print('kuch to lafda hai')
+else:
+  print(f.read())
+finally:
+  print('ye to print hoga hi')
+```
+
+### `raise` Exceptions
+
+In Python programming, exceptions are raised when errors occur at runtime. We can also manually raise exceptions using the `raise` keyword. We can optionally pass values to the exception to clarify why that exception was raised.
+Example: `raise ZeroDivisionError('aise hi try kar raha hu')` -> Output: `ZeroDivisionError: aise hi try kar raha hu`
+
+```py
+class Bank:
+
+  def __init__(self,balance):
+    self.balance = balance
+
+  def withdraw(self,amount):
+    if amount < 0:
+      raise Exception('amount cannot be -ve')
+    if self.balance < amount:
+      raise Exception('paise nai hai tere paas')
+    self.balance = self.balance - amount
+
+obj = Bank(10000)
+try:
+  obj.withdraw(15000)
+except Exception as e:
+  print(e)
+else:
+  print(obj.balance)
+
+# paise nhi hai tere paas
+```
+
+### Custom Exception
+
+An exception class in Python is a blueprint for creating objects that represent errors or exceptional events that occur during program execution. When such an event happens, an "exception is raised," interrupting the normal flow of the program. If not handled, this can lead to the program crashing.
+
+- All exceptions (like `ValueError`, `ModuleNotFoundError`, etc.) in Python are classes.
+- Most inherit from a base class called `Exception`.
+- Fundamental errors (e.g., `SystemExit`, `KeyboardInterrupt`) inherit from `BaseException`.
+
+While Python offers many built-in exceptions (e.g., `ValueError`, `TypeError`, `KeyError`), there are cases where custom exceptions are necessary for handling unique error conditions specific to your application.
+
+__Why Use Custom Exceptions?__
+
+- __Clarity:__ Provide clear, specific error messages relevant to your application.
+- __Granularity:__ Allow fine-grained error handling, making it easier to pinpoint issues.
+- __Reusability:__ Can be reused across different parts of your application or projects.
+- __Encapsulation:__ Can carry specific data (e.g., an AuthenticationError might include a user_id).
+- __API Design:__ Essential for libraries/APIs, giving users a structured way to handle failures.
+- __Separation of Concerns:__ Helps separate error-handling logic from business logic.
+
+__Benefits:__
+
+- Improves code readability and maintainability.
+- Facilitates easier debugging by handling application-specific errors.
+
+__Create a Custom Exception:__
+
+To create a custom exception, you define a new class that inherits from the built-in `Exception` class. You can also add custom attributes or methods to provide additional context or functionality.
+
+```py
+class SecurityError(Exception):
+    def __init__(self, message):
+        print(message)
+    
+    def logout(self):
+        print('logout')
+
+class AuthenticationError(Exception):
+    def __init__(self, message="Invalid credentials"):
+        self.message = message
+        super().__init__(self.message)
+    
+    def suggest_reset(self):
+        print("Try password reset or contact support")
+
+class Google:
+    def __init__(self, name, email, password, device):
+        self.name = name
+        self.email = email
+        self.password = password
+        self.device = device
+
+    def login(self, email, password, device):
+        if device != self.device:
+            raise SecurityError('bhai teri to lag gayi')
+        if email == self.email and password == self.password:
+            print('welcome')
+        else:
+            raise AuthenticationError('Invalid email or password')
+
+obj = Google('nitish', 'nitish@gmail.com', '1234', 'android')
+
+try:
+    obj.login('nitish@gmail.com', 'wrongpass', 'android')
+except SecurityError as e:
+    e.logout()
+except AuthenticationError as e:
+    print(e)
+    e.suggest_reset()
+else:
+    print(obj.name)
+finally:
+    print('database connection closed')
+```
+
 ## Iterators
 
 __What is an Iteration__
