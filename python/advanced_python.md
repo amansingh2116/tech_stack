@@ -833,3 +833,870 @@ def greet(name):
 
 square(2) # 4
 ```
+
+## Argument Parsing
+
+Argument parsing is the process of handling command-line arguments passed to a Python script. This allows users to provide input parameters when running the script, enabling dynamic behavior based on user input.
+
+### `*args` and `**kwargs`
+
+In Python, `*args` and `**kwargs` are used to allow functions to accept an arbitrary number of arguments. These features provide great flexibility when designing functions that need to handle a varying number of inputs.
+
+Passing arguments in Python:
+
+- `*args` (Non-Keyword Arguments)
+  - Used to pass a variable number of arguments to a function. It is used to pass a non-keyworded, variable-length argument list.
+  - For example, we want to make a multiply function that takes any number of arguments and is able to multiply them all together. It can be done using *args.
+  - Using `*` the variable that we associate with the `*` becomes iterable, meaning you can do things like iterate over it, run some higher-order functions such as map and filter, etc.
+  - Example:
+
+    ```py
+    def fun(arg1, *argv):
+        print("First argument :", arg1)
+        for arg in argv:
+            print("Argument *argv :", arg)
+
+
+    fun('Hello', 'Welcome', 'to', 'GeeksforGeeks')
+    # First argument : Hello
+    # Argument *argv : Welcome
+    # Argument *argv : to
+    # Argument *argv : GeeksforGeeks
+    ```
+
+- `**kwargs` (Keyword Arguments)
+  - Used to pass a variable length argument list. We use the name kwargs with the double star `**`.
+  - A keyword argument is where you provide a name to the variable as you pass it into the function.
+  - It collects all the additional keyword arguments passed to the function and stores them in a dictionary.
+  - Example:
+
+    ```py
+    def fun(arg1, **kwargs):
+        for k, val in kwargs.items():
+            print("%s == %s" % (k, val))
+
+    # Driver code
+    fun("Hi", s1='Geeks', s2='for', s3='Geeks')
+    # s1 == Geeks
+    # s2 == for
+    # s3 == Geeks
+    ```
+
+- Using both `*args` and `**kwargs`:
+
+    ```py
+    def print_stuff(main_item, *extra_items, **formatting_options):
+        """
+        Prints a main item, optional extra items, with customizable formatting.
+        """
+        separator = formatting_options.get('sep', ' ') # Get separator, default to space
+        end_char = formatting_options.get('end', '\n') # Get end char, default to newline
+        prefix = formatting_options.get('prefix', '') # Get prefix, default to empty
+
+        output = [str(main_item)] + [str(item) for item in extra_items]
+        final_string = prefix + separator.join(output) + end_char
+        print(final_string, end='') # Use end='' because we already added end_char
+
+    print_stuff("Hello", "World", "Python")
+    # Output: Hello World Python
+
+    print_stuff("Numbers:", 1, 2, 3, sep=" - ", prefix="Data: ")
+    # Output: Data: Numbers: - 1 - 2 - 3
+
+    print_stuff("Error!", level="CRITICAL", end="!!!\n") # 'level' is ignored unless handled
+    # Output: Error!!!
+    ```
+
+### Command Line Argument Parsing in Python
+
+Command-line arguments are inputs provided to a program directly in the operating system's shell when it's executed. Python offers built-in modules to efficiently handle these arguments, making your scripts more flexible and powerful. The two primary methods are `sys.argv` for simple positional arguments and `getopt` for more complex options and flags.
+
+### Basic Arguments with `sys.argv`
+
+The `sys` module provides access to command-line arguments through the `sys.argv` list.
+
+- `sys.argv[0]` always holds the name of the script being executed.
+- `sys.argv[1]`, `sys.argv[2]`, and so on, contain the arguments passed after the script name, treated as strings.
+
+__Example Usage:__
+
+```python
+# myscript.py
+import sys
+
+# Get total number of arguments
+num_args = len(sys.argv)
+print("Total arguments passed:", num_args)
+
+# Print script name
+print("Script name:", sys.argv[0])
+
+# Print all positional arguments
+print("Arguments passed:", end=" ")
+for i in range(1, num_args):
+    print(sys.argv[i], end=" ")
+
+# Example: Summing integer arguments
+total_sum = 0
+for i in range(1, num_args):
+    try:
+        total_sum += int(sys.argv[i])
+    except ValueError:
+        print(f"\nWarning: '{sys.argv[i]}' is not a valid number. Skipping.")
+        continue
+print("\nSum of numbers:", total_sum)
+```
+
+__Running the example in your terminal:__
+
+```bash
+geeks@GFGLTTCE0026:~/Desktop$ python3 myscript.py 2 3 5 6
+Total arguments passed: 5
+Script name: myscript.py
+Arguments passed: 2 3 5 6
+Sum of numbers: 16
+```
+
+__Limitation:__ `sys.argv` is straightforward for simple positional arguments. It lacks built-in support for parsing optional flags (e.g., `-o`, `--output`) or validating argument types without manual checks.
+
+### Handling Options and Flags with `getopt`
+
+The `getopt` module is designed for parsing command-line options that begin with hyphens (`-` for short options, `--` for long options). It helps define which options are expected and whether they require a value.
+
+__Key Features:__
+
+- Parses short options (e.g., `-f`, `-m`) and long options (e.g., `--filename`, `--message`).
+- Allows specifying if an option expects an associated value (e.g., `-f value`).
+
+__Example Usage:__
+
+If you execute `python3 your_script.py -f results.txt --message "Hello World"`
+
+```python
+import getopt
+import sys
+
+# Set default values for optional arguments
+file_name = "default.txt"
+message = "Default message"
+verbose = False # Example for a flag that doesn't take a value
+
+try:
+    # `sys.argv[1:]` excludes the script name itself
+    # "f:m:v" -> 'f' and 'm' expect a value (indicated by ':'), 'v' is a boolean flag
+    # ["filename=", "message=", "verbose"] -> Long options; '=' indicates value required
+    opts, args = getopt.getopt(sys.argv[1:], "f:m:v", ["filename=", "message=", "verbose"])
+except getopt.GetoptError:
+    # Error handling for incorrect usage
+    print("Usage: your_script.py [-f <filename>] [-m <message>] [-v]")
+    sys.exit(2)
+
+# Process the parsed options
+for opt, arg in opts:
+    if opt in ("-f", "--filename"):
+        file_name = arg
+    elif opt in ("-m", "--message"):
+        message = arg
+    elif opt in ("-v", "--verbose"):
+        verbose = True # Set flag to True if -v or --verbose is present
+
+print(f"File Name: {file_name}")
+print(f"Message: {message}")
+print(f"Verbose mode: {verbose}")
+print(f"Remaining positional arguments: {args}") # Any arguments not parsed as options
+```
+
+__Running the example in your terminal:__
+
+```bash
+geeks@GFGLTTCE0026:~/Desktop$ python3 your_script.py -f my_output.log -m "Custom content" -v
+File Name: my_output.log
+Message: Custom content
+Verbose mode: True
+Remaining positional arguments: []
+
+geeks@GFGLTTCE0026:~/Desktop$ python3 your_script.py --filename report.csv some_extra_arg
+File Name: report.csv
+Message: Default message
+Verbose mode: False
+Remaining positional arguments: ['some_extra_arg']
+```
+
+#### Using `argparse` module
+
+Using argparse module is a better option than the above two options as it provides a lot of options such as positional arguments, default value for arguments, help message, specifying data type of argument etc.
+
+## Serialization and Deserialization
+
+- __Serialization__ - process of converting python data types to `JSON` format
+- __Deserialization__ - process of converting `JSON` to python data types
+
+### JSON
+
+We have learned a bit about `JSON` files in these links:
+
+- [ml/ml_proj/ml_5.md](https://github.com/amansingh2116/tech_stack/blob/main/ml/ml_proj/ml_5.md)
+- [ml/python/pandas.md](https://github.com/amansingh2116/tech_stack/blob/main/ml/python/pandas.md)
+
+`JSON` (JavaScript Object Notation) is a lightweight data format for data exchange. `JSON` is easy to read and write for humans, and easy to parse and generate for machines. It is language-independent, meaning it can be used across different programming languages.
+In Python you have the built-in `json` module for encoding and decoding JSON data. Simply import it and you are ready to work with `JSON` data: `import json`
+
+__Some advantages of JSON:__
+`JSON` exists as a "sequence of bytes" which is very useful in the case we need to transmit (stream) data over a network. - Compared to XML, `JSON` is much smaller, translating into faster data transfers, and better experiences. - `JSON` is extremely human-friendly since it is textual, and simultaneously machine-friendly.
+
+```json
+{
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "hobbies": ["running", "swimming", "singing"],
+    "age": 28,
+    "children": [
+        {
+            "firstName": "Alex",
+            "age": 5
+        },
+        {
+            "firstName": "Bob",
+            "age": 7
+        }
+    ]
+}
+```
+
+JSON supports primitive types __(strings, numbers, boolean)__, as well as __nested arrays__ and __objects__.
+Simple Python objects are translated to JSON according to the following conversion:
+
+| Python   | JSON     |
+|----------|----------|
+| dict     | object   |
+| list, tuple | array   |
+| str      | string   |
+| int, long, float | number |
+| True     | true     |
+| False    | false    |
+| None     | null     |
+
+### Serialization
+
+To convert Python objects to JSON format, you can use the `json.dumps()` method for strings.
+
+```python
+import json
+
+person = {"name": "John", "age": 30, "city": "New York", "hasChildren": False, "titles": ["engineer", "programmer"]}
+
+# convert into JSON:
+person_json = json.dumps(person)
+# use different formatting style
+person_json2 = json.dumps(person, indent=4, separators=("; ", "= "), sort_keys=True)
+
+# the result is a JSON string:
+print(person_json) 
+print(person_json2)
+
+# {"name": "John", "age": 30, "city": "New York", "hasChildren": false, "titles":["engineer", "programmer"]}
+# {
+#     "age"= 30; 
+#     "city"= "New York"; 
+#     "hasChildren"= false; 
+#     "name"= "John"; 
+#     "titles"= [
+#         "engineer"; 
+#         "programmer"
+#     ]
+# }
+```
+
+Or convert Python objects into JSON objects and save them into a file with the `json.dump()` method.
+
+```python
+import json
+
+person = {"name": "John", "age": 30, "city": "New York", "hasChildren": False, "titles": ["engineer", "programmer"]}
+
+with open('person.json', 'w') as f:
+    json.dump(person, f) # you can also specify indent etc...
+```
+
+### Deserialization
+
+To convert JSON strings back into Python objects, you can use the `json.loads()` method for strings.
+
+```python
+import json
+person_json = """
+{
+    "age": 30, 
+    "city": "New York",
+    "hasChildren": false, 
+    "name": "John",
+    "titles": [
+        "engineer",
+        "programmer"
+    ]
+}
+"""
+person = json.loads(person_json)
+print(person)
+# {'age': 30, 'city': 'New York', 'hasChildren': False, 'name': 'John', 'titles': ['engineer', 'programmer']}
+```
+
+Or read JSON objects from a file and convert them into Python objects with the `json.load()` method.
+
+```python
+import json
+
+with open('person.json', 'r') as f:
+    person = json.load(f)
+    print(person)
+
+# {'name': 'John', 'age': 30, 'city': 'New York', 'hasChildren': False, 'titles': ['engineer', 'programmer']}
+```
+
+### Working with Custom Objects
+
+Encoding a custom object with the default `JSONEncoder` will raise a TypeError. We can specify a custom encoding function that will store the class name and all object variables in a dictionary. Use this function for the default argument in the `json.dump()` method.
+
+```python
+class Person:
+
+  def __init__(self,fname,lname,age,gender):
+    self.fname = fname
+    self.lname = lname
+    self.age = age
+    self.gender = gender
+
+# format to printed in
+# -> Nitish Singh age -> 33 gender -> male
+
+person = Person('Nitish','Singh',33,'male')
+
+# As a string
+import json
+
+def show_object(person):
+  if isinstance(person,Person):
+    return "{} {} age -> {} gender -> {}".format(person.fname,person.lname,person.age,person.gender)
+
+with open('demo.json','w') as f:
+  json.dump(person,f,default=show_object)
+# "Nitish Singh age -> 33 gender -> male"
+
+# As a dict
+import json
+
+def show_object(person):
+  if isinstance(person,Person):
+    return {'name':person.fname + ' ' + person.lname,'age':person.age,'gender':person.gender}
+
+with open('demo.json','w') as f:
+  json.dump(person,f,default=show_object,indent=4) # indent is optional, it just makes the output more readable
+# {
+#     "name": "Nitish Singh",
+#     "age": 33,
+#     "gender": "male"
+# }
+```
+
+### Template encode and decode functions
+
+This works for all custom classes if all class variables are given in the `__init__` method.
+
+```py
+class User:
+    # Custom class with all class variables given in the __init__()
+    def __init__(self, name, age, active, balance, friends):
+        self.name = name
+        self.age = age
+        self.active = active
+        self.balance = balance
+        self.friends = friends
+
+class Player:
+    # Other custom class
+    def __init__(self, name, nickname, level):
+        self.name = name
+        self.nickname = nickname
+        self.level = level
+
+
+def encode_obj(obj):
+    """
+    Takes in a custom object and returns a dictionary representation of the object.
+    This dict representation also includes the object's module and class names.
+    """
+
+    #  Populate the dictionary with object meta data 
+    obj_dict = {
+      "__class__": obj.__class__.__name__,
+      "__module__": obj.__module__
+    }
+
+    #  Populate the dictionary with object properties
+    obj_dict.update(obj.__dict__)
+
+    return obj_dict
+
+
+def decode_dct(dct):
+    """
+    Takes in a dict and returns a custom object associated with the dict.
+    It makes use of the "__module__" and "__class__" metadata in the dictionary
+    to know which object type to create.
+    """
+    if "__class__" in dct:
+        # Pop ensures we remove metadata from the dict to leave only the instance arguments
+        class_name = dct.pop("__class__")
+
+        # Get the module name from the dict and import it
+        module_name = dct.pop("__module__")
+
+        # We use the built in __import__ function since the module name is not yet known at runtime
+        module = __import__(module_name)
+
+        # Get the class from the module
+        class_ = getattr(module,class_name)
+
+        # Use dictionary unpacking to initialize the object
+        # Note: This only works if all __init__() arguments of the class are exactly the dict keys
+        obj = class_(**dct)
+    else:
+        obj = dct
+    return obj
+
+# User class works with our encoding and decoding methods
+user = User(name = "John",age = 28, friends = ["Jane", "Tom"], balance = 20.70, active = True)
+
+userJSON = json.dumps(user,default=encode_obj,indent=4, sort_keys=True)
+print(userJSON)
+
+user_decoded = json.loads(userJSON, object_hook=decode_dct)
+print(type(user_decoded))
+
+# Player class also works with our custom encoding and decoding
+player = Player('Max', 'max1234', 5)
+playerJSON = json.dumps(player,default=encode_obj,indent=4, sort_keys=True)
+print(playerJSON)
+
+player_decoded = json.loads(playerJSON, object_hook=decode_dct)
+print(type(player_decoded))
+
+'''
+{
+    "__class__": "User",
+    "__module__": "__main__",
+    "active": true,
+    "age": 28,
+    "balance": 20.7,
+    "friends": [
+        "Jane",
+        "Tom"
+    ],
+    "name": "John"
+}
+<class '__main__.User'>
+{
+    "__class__": "Player",
+    "__module__": "__main__",
+    "level": 5,
+    "name": "Max",
+    "nickname": "max1234"
+}
+<class '__main__.Player'>
+'''
+```
+
+### Limitation of JSON
+
+- JSON does not support all Python data types. For example, it cannot directly represent Python tuples, sets, or custom objects.
+- JSON does not support comments, which can make it less readable for complex configurations.
+- JSON is not a self-describing format, which means it is not easily readable by machines. For that we can use python's `pickle` module, which can serialize and deserialize Python objects, including complex data types like tuples, sets, and custom classes.
+- __Pickling__ is the process whereby a Python object hierarchy is converted into a byte stream, and unpickling is the inverse operation, whereby a byte stream (from a binary file or bytes-like object) is converted back into an object hierarchy.
+- Pickle lets the user to store data in binary format. JSON lets the user store data in a human-readable text format.
+
+### jsonpickle module
+
+- jsonpickle is a Python library that provides a way to serialize and deserialize Python objects to and from JSON.
+- It supports serializing and deserializing arbitrary Python objects, including tuples, sets, and custom objects.
+- While using json module, we need to define a custom encoding function for custom objects, but jsonpickle handles this automatically.
+
+```python
+import jsonpickle # Import the jsonpickle library for serialization/deserialization
+
+# Define the Employee class
+class Employee:
+    # Constructor method (__init__) to initialize Employee objects
+    # It takes employee number (eno), name (ename), salary (esal),
+    # address (eaddr), and marital status (isMarried) as arguments.
+    def __init__(self, eno, ename, esal, eaddr, isMarried):
+        self.eno = eno
+        self.ename = ename
+        self.esal = esal
+        self.eaddr = eaddr
+        self.isMarried = isMarried
+
+    # Method to display employee details
+    def display(self):
+        print(f'ENO: {self.eno}, ENAME: {self.ename}, ESAL: {self.esal}, '
+              f'EADDR: {self.eaddr}, Is Married: {self.isMarried}')
+
+# Create an instance of the Employee class
+e = Employee(100, 'Durga', 1000.0, 'Hyderabad', True)
+
+print("--- Original Employee Object ---")
+e.display()
+print("\n")
+
+# --- Serialization to JSON string ---
+# jsonpickle.encode() converts a Python object (e) into a JSON string.
+# It automatically handles custom classes by adding a "py/object" key
+# to store the class path, allowing for proper deserialization later.
+json_string = jsonpickle.encode(e)
+print("--- Serialized JSON String ---")
+print(json_string)
+print("\n")
+
+# --- Serialization to JSON file ---
+# Open a file named 'emp.json' in write mode ('w').
+# The 'with' statement ensures the file is properly closed after writing.
+with open('emp.json', 'w') as f:
+    # Write the generated JSON string to the file.
+    f.write(json_string)
+print("--- Object serialized to 'emp.json' ---")
+print("\n")
+
+# --- Deserialization from JSON string ---
+# jsonpickle.decode() converts a JSON string back into a Python object.
+# It uses the "py/object" information to reconstruct the original class instance.
+e2 = jsonpickle.decode(json_string)
+print("--- Deserialized Object from JSON String ---")
+# Verify the type of the deserialized object
+print(f"Type of deserialized object (e2): {type(e2)}")
+# Call the display method on the deserialized object to show its contents
+e2.display()
+print("\n")
+
+# --- Deserialization from JSON file ---
+# Open the 'emp.json' file in read mode ('r').
+with open('emp.json', 'r') as f:
+    # Read the entire JSON string from the file.
+    file_json_string = f.readline() # Use readline() as it's a single line JSON string
+
+# Decode the JSON string read from the file back into a Python object.
+e3 = jsonpickle.decode(file_json_string)
+print("--- Deserialized Object from JSON File ---")
+# Call the display method on the deserialized object
+e3.display()
+```
+
+## Type Hints and Annotations
+
+__Note__ that type hints and annotations are not enforced at runtime, they are just hints to the developer and static type checkers. They help with code readability and can be checked by static type checkers like `mypy`. They __do not speed__ up your program.
+
+### Annotations
+
+__Annotations__ can be added to variables, functions, and classes using the `: type` syntax. They are a way to provide hints about the expected types of variables and function parameters, but they do not enforce type checking at runtime. Annotations are primarily used for documentation purposes and can be checked by static type checkers like `mypy` (`mypy python_script.py`).
+
+__Variable annotations__ are used to specify the expected type of a variable, making the code more readable and helping with static type checking.
+Example: `x: int = 10`, `name: str = "Alice"`, `data: List[int] = [1, 2, 3]`, etc.
+
+__Function Annotations__ are used to specify the expected types of function arguments and return values. This helps with code readability and allows for static type checking.
+Example:
+
+```python
+def greet(name: str, age: int) -> str:
+    """Return a greeting message for a user based on their name and age.
+
+    Args:
+        name (str): The name of the user.
+        age (int): The age of the user.
+
+    Returns:
+        str: A greeting message for the user.
+    """
+    return f"Hello {name}, you are {age} years old."
+
+print(greet("John", 30))  # Hello John, you are 30 years old.
+
+def add(a: int, b: int) -> None: # It is not necessary to specify return type as None if the function does not return anything. But it increases readability.
+    """Add two numbers without returning the result.
+
+    Args:
+        a (int): The first number.
+        b (int): The second number.
+    """
+    print(a + b)
+
+add(4, 5)  # 9
+```
+
+__Class annotations__ are used to specify the expected types of class attributes. This helps with code readability and allows for static type checking.
+
+```py
+class Person:
+    """A simple class example."""
+
+    name: str
+    age: int
+
+    def __init__(self, name: str, age: int) -> None:
+        """Initialize a new Person object.
+
+        Args:
+            name (str): The name of the person.
+            age (int): The age of the person.
+        """
+        self.name = name
+        self.age = age
+
+    def __str__(self) -> str:
+        """Return a string representation of the Person object.
+
+        Returns:
+            str: A string representation of the Person object.
+        """
+        return f"Person(name={self.name}, age={self.age})"
+
+p: Person = Person("John", 30) # Not necessary to specify type of p as Person, but it increases readability.
+print(p)  # Person(name=John, age=30)
+```
+
+### Type Hints
+
+__Type hints__ are used to specify the expected type of a variable, function, or class. They help with code readability and static type checking. Type hints are more powerful than annotations because they can be used to specify more complex types such as `list[list[int]]`, which is not possible with annotations. Furthermore, type hints can be used to specify the type of a variable even if it is not explicitly assigned a value. This can be useful when the type of a variable is not immediately obvious from the code, such as when a variable is assigned a value from a function call.
+We need to import the `typing` module to use type hints for complex types like lists, dictionaries, and tuples.
+
+__Variable annotations:__
+
+```python
+from typing import List, Dict, Set
+
+x: List[List[int]] = [[1, 2], [3, 431, 4]]
+y: Dict[str, float] = {"pi": 3.14, "e": 2.718}
+z: Set[bool] = {True, False}
+```
+
+__Function annotations:__
+
+```python
+from typing import List, Dict, Set
+
+def process_data(data: List[int]) -> Dict[str, float]:
+    """Process a list of integers and return a dictionary with statistics."""
+    total = sum(data)
+    count = len(data)
+    average = total / count if count > 0 else 0.0
+    return {"total": total, "average": average}
+
+print(process_data([1, 2, 3, 4, 5])) # {'total': 15, 'average': 3.0}
+```
+
+```py
+from typing import List, Dict, Set, Union
+
+# --- Type Aliases for Readability ---
+
+# A 'Record' is a dictionary with string keys and values that can be a string or an integer.
+Record = Dict[str, Union[str, int]]
+
+# A 'Dataset' is a list of Records.
+Dataset = List[Record]
+
+# A 'UniqueIDs' is a set of integers.
+UniqueIDs = Set[int]
+
+# --- Function with Type Hints ---
+
+def process_data(data: Dataset) -> UniqueIDs:
+    """
+    Takes a list of records and returns a set of unique integer IDs found within them.
+    Assumes each record has an 'id' key.
+    """
+    found_ids: UniqueIDs = set() # Initialize an empty set with type hint
+    for record in data:
+        record_id = record.get('id') # Safely get the 'id' key
+        if isinstance(record_id, int): # Ensure the ID is an integer
+            found_ids.add(record_id)
+    return found_ids
+
+# --- Example Usage ---
+
+# Sample data conforming to the 'Dataset' type
+my_dataset: Dataset = [
+    {'id': 101, 'name': 'Alpha'},
+    {'id': 102, 'name': 'Beta', 'status': 'active'},
+    {'id': 101, 'name': 'Gamma'}, # Duplicate ID
+    {'id': 103, 'name': 'Delta', 'value': 42},
+    {'id': 'not_an_int_id', 'name': 'Invalid'} # This ID will be ignored
+]
+
+# Process the data and get unique IDs
+unique_ids_result = process_data(my_dataset)
+
+print(f"Original Data: {my_dataset}")
+print(f"Unique IDs found: {unique_ids_result}")
+# Expected Output: Unique IDs found: {101, 102, 103}
+```
+
+### More functions of Type Hints
+
+#### Optional
+
+The `Optional` type hint is used to indicate that a variable or function parameter can either be of a specific type or `None`. It is a shorthand for `Union[type, None]`.
+
+```python
+from typing import Optional
+
+def greet(name: str, age: Optional[int] = None) -> str:
+    """
+    Greets a person. Age is optional.
+    """
+    if age is not None: # Check if age was provided
+        return f"Hello, {name}! You are {age} years old."
+    else:
+        return f"Hello, {name}!"
+
+# --- Example Usage ---
+print(greet("Alice"))          # Output: Hello, Alice!
+print(greet("Bob", age=30))    # Output: Hello, Bob! You are 30 years old.
+```
+
+#### Any
+
+The `Any` type hint is used when you want to allow a variable or function parameter to accept any type of value. It is useful when you don't know the specific type in advance or when the type can vary widely.
+
+```python
+from typing import Any
+
+def process_flexible_data(input_data: Any) -> Any:
+    """
+    Takes any type of input and returns a modified version (could be any type).
+    """
+    if isinstance(input_data, str):
+        return input_data.upper() + "!"
+    elif isinstance(input_data, (int, float)):
+        return input_data * 2
+    else:
+        return "Unsupported data type."
+
+# --- Example Usage ---
+print(process_flexible_data("hello"))  # Output: HELLO!
+print(process_flexible_data(10))       # Output: 20
+print(process_flexible_data([1, 2]))   # Output: Unsupported data type.
+```
+
+#### Sequence
+
+The `Sequence` type hint is used to indicate that a variable or function parameter is expected to be a sequence type, such as a str, list or tuple, but you don't care about the specific type of sequence, only that it can be iterated and indexed.
+
+```python
+from typing import Sequence, Union
+
+def calculate_total(numbers: Sequence[Union[int, float]]) -> float:
+    """
+    Calculates the sum of numbers from any sequence (list, tuple, etc.).
+    """
+    total = 0.0
+    for num in numbers:
+        total += num
+    return total
+
+# --- Example Usage ---
+my_list = [10, 20, 30.5]
+my_tuple = (5, 15)
+my_range = range(1, 4) # 1, 2, 3
+
+print(f"Total from list: {calculate_total(my_list)}")     # Output: Total from list: 60.5
+print(f"Total from tuple: {calculate_total(my_tuple)}")   # Output: Total from tuple: 20.0
+print(f"Total from range: {calculate_total(my_range)}")   # Output: Total from range: 6.0
+```
+
+#### Callable
+
+The `Callable` type hint is used to indicate that a variable or function parameter is expected to be a callable object, such as a function or a method. You can specify the types of the arguments and the return type of the callable.
+
+__Syntax:__ `Callable[[ArgType1, ArgType2, ...], ReturnType]`
+
+```python
+from typing import Callable, List
+
+# This function expects a 'processor' function that takes one string and returns a string.
+def apply_string_processor(
+    texts: List[str],
+    processor: Callable[[str], str] # The 'processor' must take a str, and return a str
+) -> List[str]:
+    """
+    Applies a given string processing function to each text in a list.
+    """
+    return [processor(text) for text in texts]
+
+# --- Example Usage ---
+
+# Define some functions that match the Callable signature: (str) -> str
+def to_uppercase(s: str) -> str:
+    return s.upper()
+
+def add_exclamation(s: str) -> str:
+    return s + "!"
+
+# Use a lambda function, which also matches the Callable signature
+remove_spaces = lambda s: s.replace(" ", "")
+
+my_texts = ["hello world", "python is fun", "type hints"]
+
+# Apply different processors using the same `apply_string_processor` function
+uppercased_texts = apply_string_processor(my_texts, to_uppercase)
+print(f"Uppercased: {uppercased_texts}")
+
+exclaimed_texts = apply_string_processor(my_texts, add_exclamation)
+print(f"Exclaimed: {exclaimed_texts}")
+
+no_space_texts = apply_string_processor(my_texts, remove_spaces)
+print(f"No Spaces: {no_space_texts}")
+
+# If you tried to pass a function with a mismatching signature,
+# a type checker would warn you (e.g., a function expecting an int, or returning an int).
+# def bad_processor(x: int) -> str: return str(x)
+# apply_string_processor(my_texts, bad_processor) # MyPy error
+```
+
+#### tuple
+
+A tuple in Python can be used in two main ways regarding type hinting:
+
+- __Variable-length Tuple (Homogeneous Elements)__
+    The syntax is `Tuple[ElementType, ...]` (using an ellipsis `...`).
+    This represents a tuple of any length, where all elements are of the same specified type. This is similar to `List[ElementType]`, but for tuples.
+    For example, `Tuple[int, ...]` means `(1, 2, 3)` or `(5,)` or `()`, where all elements are integers.
+
+- __Fixed-length Tuple (Heterogeneous or Homogeneous Elements)__
+    The syntax is `Tuple[ElementType1, ElementType2, ..., ElementTypeN]`.
+    This represents a tuple with an exact, fixed length, where each position has its own specific data type.
+    __Why specify each element?__ Because tuples of fixed length are often used to return or represent a specific "record" or "set of distinct values" where the meaning and type of each item depend on its position. Static type checkers (like MyPy) can verify that you're assigning or accessing the correct type at each specific index of the tuple. If you try to get a str from an index that's supposed to hold an int, it will warn you.
+
+    ```py
+    from typing import Tuple
+
+    # This function returns a fixed-length tuple: (string, integer, boolean)
+    def get_user_status(user_id: int) -> Tuple[str, int, bool]:
+        """
+        Returns a user's (name, age, is_active) based on their ID.
+        Each element in the returned tuple has a fixed type and meaning.
+        """
+        if user_id == 1:
+            return "Alice", 30, True
+        else:
+            return "Guest", 0, False
+
+    # --- Example Usage ---
+    # We can unpack the tuple directly into variables with clear types
+    name, age, is_active = get_user_status(1)
+    print(f"User Name: {name}, Age: {age}, Active: {is_active}")
+
+    # Another example call
+    name2, age2, is_active2 = get_user_status(99)
+    print(f"User Name: {name2}, Age: {age2}, Active: {is_active2}")
+
+    # If we tried to assign to a tuple of different types, MyPy would warn us:
+    # wrong_types: Tuple[int, str, bool] = get_user_status(1) # MyPy error
+    ```
