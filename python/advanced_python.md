@@ -1,5 +1,223 @@
 # Advanced Python Concepts
 
+## `if` `__name__` `==` `"__main__"` in python
+
+The `if` `__name__` `==` `"__main__"` idiom is a common pattern used in Python scripts to determine whether the script is being run directly or being imported as a module into another script.
+
+In Python, the `__name__` variable is a built-in variable that is automatically set to the name of the current module. When a Python script is run directly, the `__name__` variable is set to the string `__main__` When the script is imported as a module into another script, the __name__ variable is set to the name of the module.
+
+Here's an example of how the if `__name__ == __main__` idiom can be used:
+
+```py
+def main():
+    # Code to be run when the script is run directly
+    print("Running script directly")
+if __name__ == "__main__":
+    main()
+```
+
+In this example, the main function contains the code that should be run when the script is run directly. The if statement at the bottom checks whether the `__name__` variable is equal to `__main__`. If it is, the main function is called.
+
+__Why is it useful?__
+
+This idiom is useful because it allows you to reuse code from a script by importing it as a module into another script, without running the code in the original script. For example, consider the following script:
+
+```py
+def main():
+    print("Running script directly")
+if __name__ == "__main__":
+    main()
+```
+
+If you run this script directly, it will output "Running script directly". However, if you import it as a module into another script and call the main function from the imported module, it will not output anything:
+
+```py
+import script
+script.main()  # Output: "Running script directly"
+```
+
+This can be useful if you have code that you want to reuse in multiple scripts, but you only want it to run when the script is run directly and not when it's imported as a module.
+
+__Is it a necessity?__
+
+It's important to note that the if `__name__` == "`__main__`" idiom is not required to run a Python script. You can still run a script without it by simply calling the functions or running the code you want to execute directly. However, the if `__name__` == "`__main__`" idiom can be a useful tool for organizing and separating code that should be run directly from code that should be imported and used as a module.
+
+In summary, the if `__name__` == "`__main__`" idiom is a common pattern used in Python scripts to determine whether the script is being run directly or being imported as a module into another script. It allows you to reuse code from a script by importing it as a module into another script, without running the code in the original script.
+
+## Namespaces
+
+A __namespace__ is a space that holds names(identifiers).Programmatically speaking, namespaces are dictionary of identifiers(keys) and their objects(values)
+
+There are 4 types of namespaces:
+
+- __Builtin Namespace (B)__ : Names pre-defined in Python (e.g., print, len, max). These are always available
+- __Global Namespace (G)__ : Variables defined at the top-most level of a script or module. They are accessible throughout the entire script
+- __Enclosing Namespace (E)__ : Variables defined in an enclosing (or outer) function. These are accessible in nested functions
+- __Local Namespace (L)__ : Variables defined inside a function. They are accessible only within that function
+
+### Scope and LEGB Rule
+
+A __scope__ is a textual region of a Python program where a namespace is directly accessible.
+
+The interpreter searches for a name from the inside out, looking in the local, enclosing, global, and finally the built-in scope. If the interpreter doesn’t find the name in any of these locations, then Python raises a NameError exception.
+
+### Examples
+
+__Local and Global Variables:__
+
+```py
+# global var
+a = 2
+
+def temp():
+  # local var
+  b = 3
+  print(b) # Accessing local 'b'
+
+temp() # Calls temp(), prints 3
+print(a) # Accessing global 'a', prints 2
+```
+
+__Local and Global with Same Name (Shadowing):__
+
+```py
+a = 2 # Global 'a'
+
+def temp():
+  # local var
+  a = 3 # Local 'a' (different from global 'a')
+  print(b) # This line would cause a NameError because 'b' is not defined here
+  print(a) # Accessing local 'a', prints 3
+
+temp() # Calls temp(), prints 3
+print(a) # Accessing global 'a', prints 2
+```
+
+__Local Does Not Have, but Global Has:__
+
+```py
+a = 2 # Global 'a'
+
+def temp():
+  # local var
+  print(a) # Accessing global 'a'
+
+temp() # Calls temp(), prints 2
+print(a) # Accessing global 'a', prints 2
+```
+
+__Editing Global (Incorrect and Correct Approaches):__
+
+```py
+# Incorrect Way (Attempting to modify global without global keyword)
+a = 2 # Global 'a'
+
+def temp():
+  # This tries to rebind 'a' locally, but also uses it before assignment
+  a += 1 # This will cause an UnboundLocalError
+  print(a)
+
+# temp() # This call would raise UnboundLocalError
+# print(a)
+
+
+# Correct Way (Using global keyword):
+a = 2 # Global 'a'
+
+def temp():
+  global a # Declares that 'a' refers to the global variable
+  a += 1   # Modifies the global 'a'
+  print(a)
+
+temp() # Calls temp(), prints 3 (global 'a' becomes 3)
+print(a) # Accessing modified global 'a', prints 3
+```
+
+__Global Created Inside Local:__
+
+```py
+# 'a' does not exist globally initially
+
+def temp():
+  global a # Declares that 'a' will be a global variable
+  a = 1    # Creates the global variable 'a' and assigns 1 to it
+  print(a) # Accessing the newly created global 'a', prints 1
+
+temp() # Calls temp(), creates global 'a' and prints 1
+print(a) # Accessing the global 'a', prints 1
+```
+
+__Function Parameter is Local:__
+
+```py
+def temp(z): # 'z' is a local parameter
+  # local var
+  print(z) # Accessing local 'z'
+
+a = 5 # Global 'a'
+temp(5) # Calls temp(), 'z' becomes 5 (local to temp)
+print(a) # Accessing global 'a', prints 5
+print(z) # This would cause a NameError because 'z' is local to temp()
+```
+
+__Built-in-Scope:__
+
+- `builtins` is a module that contains all the pre-defined names in Python (functions like print, len, type, exceptions like NameError, etc.).
+- `dir(builtins)` lists all the names available in the built-in scope. These names are accessible from anywhere in your code without explicit import, unless shadowed by a variable in a narrower scope.
+
+```py
+import builtins
+print(dir(builtins))
+```
+
+__Renaming Built-ins (Shadowing Built-ins):__
+
+```py
+L = [1,2,3]
+print(max(L)) # Uses the built-in max function, prints 3
+
+def max(): # Creates a new function named 'max' in the global scope
+  print('hello')
+
+print(max(L)) # This would now cause a TypeError because the global 'max'
+              # is now your function, not the built-in one, and your function
+              # doesn't accept arguments.
+```
+
+__Enclosing Space:__
+
+```py
+a = 10 # Global 'a' (let's define it for clarity in this example)
+
+def outer():
+  # 'a' here refers to the global 'a' because there's no local 'a' in outer
+  def inner():
+    print(a) # Accessing 'a' from the enclosing (global) scope
+  inner() # Calls inner(), prints 10
+  print('outer function') # Prints 'outer function'
+
+outer() # Calls outer()
+print('main program') # Prints 'main program'
+```
+
+__`nonlocal` Keyword:__
+
+The `nonlocal` keyword is used to declare that a variable is a nonlocal variable in a nested scope.
+
+```py
+def outer():
+  a = 1 # 'a' in the enclosing scope of inner()
+  def inner():
+    nonlocal a # Declares that 'a' refers to 'a' in the nearest enclosing scope
+    a += 1    # Modifies 'a' in the enclosing scope
+    print('inner', a) # Prints 'inner 2'
+  inner()
+  print('outer', a) # Prints 'outer 2'
+
+outer() # Calls outer()
+print('main program') # Prints 'main program'
+```
+
 ## Comprehensions
 
 ### List Comprehensions
@@ -92,7 +310,7 @@ reduce(lambda x, y: x if x>y else y, L) # 7 (maximum element)
 
 ## Iterators
 
-**What is an Iteration**
+__What is an Iteration__
 Iteration is a general term for taking each item of something, one after another. Any time you use a loop, explicit or implicit, to go over a group of items, that is iteration.
 
 ```py
@@ -103,7 +321,7 @@ for i in num:
 # 1 2 3
 ```
 
-**What is Iterator**
+__What is Iterator__
 An Iterator is an object that allows the programmer to traverse through a sequence of data without having to store the entire data in the memory.
 
 ```py
@@ -126,7 +344,7 @@ print(sys.getsizeof(x)/64) # 0.75
 
 ```
 
-**What is Iterable**
+__What is Iterable__
 Iterable is an object, which one can iterate over.
 It generates an Iterator when passed to iter() method.
 
@@ -140,15 +358,15 @@ type(iter(L)) # list_iterator
 
 ```
 
-**Point to remember:**
+__Point to remember:__
 
 - Every Iterator is also an Iterable
 - Not all Iterables are Iterators like lists, tuples, sets, dictionaries, etc. (We can iterate over an iterable using `for` or `while` loops)
-- Every Iterable has an **iter function** (use `dir()` to check)
-- Every Iterator has both **iter function** as well as a **next function**
+- Every Iterable has an __iter function__ (use `dir()` to check)
+- Every Iterator has both __iter function__ as well as a __next function__
 - `iter(iter(iterable))` returns the iterator itself (that is same address, use `id()` to check)
 
-**How for loop actually works:**
+__How for loop actually works:__
 
 ```py
 def mera_khudka_for_loop(iterable):
@@ -163,7 +381,7 @@ def mera_khudka_for_loop(iterable):
             break 
 ```
 
-**create our own range() function:**
+__create our own range() function:__
 
 ```py
 # iterable
@@ -220,12 +438,12 @@ for i in gen:
 # third statement
 ```
 
-- **First iteration:** The gen_demo() function starts executing. It runs until it hits the first yield "first statement". At this point, it pauses execution, returns "first statement" to the loop (which is then printed), and remembers its exact state (where it stopped, the values of local variables, etc.).
-- **Second iteration:** The loop requests the next value from gen. The gen_demo() function resumes execution from where it left off (after the first yield). It then proceeds to the yield "second statement", pauses again, returns "second statement", and remembers its new state.
-- **Third iteration:** Similarly, the function resumes, executes yield "third statement", pauses, returns the string, and remembers its state.
-- **Subsequent iterations:** After the last yield, if the loop tries to get another value, the generator function simply finishes execution and implicitly raises a StopIteration error, signaling that there are no more items. The loop handles this gracefully, and the program continues.
+- __First iteration:__ The gen_demo() function starts executing. It runs until it hits the first yield "first statement". At this point, it pauses execution, returns "first statement" to the loop (which is then printed), and remembers its exact state (where it stopped, the values of local variables, etc.).
+- __Second iteration:__ The loop requests the next value from gen. The gen_demo() function resumes execution from where it left off (after the first yield). It then proceeds to the yield "second statement", pauses again, returns "second statement", and remembers its new state.
+- __Third iteration:__ Similarly, the function resumes, executes yield "third statement", pauses, returns the string, and remembers its state.
+- __Subsequent iterations:__ After the last yield, if the loop tries to get another value, the generator function simply finishes execution and implicitly raises a StopIteration error, signaling that there are no more items. The loop handles this gracefully, and the program continues.
 
-**yield vs return:**
+__`yield` vs `return`:__
 
 - A normal function (using `return`) executes completely once called, returns a single value, and then its local variables and state are cleared from memory.
 - A generator function (using `yield`), on the other hand, can pause its execution multiple times using yield, return a value, and then retain its state (including local variable values) so that it can resume from that exact point when called again. This makes them highly efficient for processing large data streams as they don't need to load all data into memory at once.
@@ -254,7 +472,7 @@ for i in gen:
 # 100
 ```
 
-**create our own range() function using generators:**
+__create our own `range()` function using generators:__
 
 ```py
 def mera_range(start,end):
@@ -276,7 +494,7 @@ for i in mera_range(15,26):
 # 25
 ```
 
-**Generator Expression:**
+__Generator Expression:__
 Generator expressions are similar to list comprehensions but use parentheses instead of square brackets. They create a generator object that can be iterated over, yielding one item at a time.
 
 ```py
@@ -286,7 +504,7 @@ for i in gen:
     print(i)
 ```
 
-**Uses:**
+__Uses:__
 
 Using a generator to create an iterator allows for efficient processing of large datasets by only holding one item in memory at a time. This is particularly useful in machine learning and data science when working with massive datasets that exceed system RAM capacity.
 
@@ -310,9 +528,9 @@ next(gen)
 
 Frameworks like `Keras` use similar "image data generators" which are essentially iterators, leveraging this exact principle.
 
-**Benefits of using generators:**
+__Benefits of using generators:__
 
-1. **Ease of Implementation**
+1. __Ease of Implementation__
 
     ```py
     class mera_range:
@@ -346,7 +564,7 @@ Frameworks like `Keras` use similar "image data generators" which are essentiall
             yield i
     ```
 
-2. **Memory Efficient**
+2. __Memory Efficient__
 
     ```py
     L = [x for x in range(100000)]
@@ -358,7 +576,7 @@ Frameworks like `Keras` use similar "image data generators" which are essentiall
     print('Size of gen in memory',sys.getsizeof(gen)) # Size of gen in memory 112
     ```
 
-3. **Representing Infinite Streams**
+3. __Representing Infinite Streams__
 
     ```py
     def all_even():
@@ -371,7 +589,7 @@ Frameworks like `Keras` use similar "image data generators" which are essentiall
     next(even_num_gen) # 2
     ```
 
-4. **Chaining Generators**
+4. __Chaining Generators__
 
     ```py
     def fibonacci_numbers(nums):
@@ -444,4 +662,174 @@ p2 = Person("Bob", 25)
 
 print(p1) # Alice is 30 years old
 print(p1 + p2) # 55
+```
+
+## Closures
+
+A closure is a function that captures the local variables from its enclosing scope, allowing it to access those variables even when the function is called outside that scope. Closures are often used to create functions with persistent state.
+
+```py
+def fun1(x):
+    # This is the outer function that takes an argument 'x'
+    def fun2(y):
+      
+        # This is the inner function that takes an argument 'y'
+        return x + y  # 'x' is captured from the outer function
+    
+    return fun2  # Returning the inner function as a closure
+
+# Create a closure by calling outer_function
+closure = fun1(10)
+
+# Now, we can use the closure, which "remembers" the value of 'x' as 10
+print(closure(5))
+```
+
+__How Closures Work Internally?__
+When a closure is created, Python internally stores a reference to the environment (variables in the enclosing scope) where the closure was defined. This allows the inner function to access those variables even after the outer function has completed.
+In simple terms, a closure "captures" the values from its surrounding scope and retains them for later use. This is what allows closures to remember values from their environment.
+
+__Use of Closures:__
+
+- __Encapsulation:__ Closures help encapsulate functionality. The inner function can access variables from the outer function, but those variables remain hidden from the outside world.
+- __State Retention:__ Closures can retain state across multiple function calls. This is especially useful in situations like counters, accumulators, or when you want to create a function factory that generates functions with different behaviors.
+- __Functional Programming:__ Closures are a core feature of functional programming. They allow you to create more flexible and modular code by generating new behavior dynamically.
+
+## Decorators
+
+A decorator in python is a function that receives another function as input and adds some functionality(decoration) to and it and returns it. Decorators are essentially syntactic sugar for wrapping one function with another. They are heavily reliant on closures.
+
+This can happen only because python functions are 1st class citizens. They can be assigned to variables, passed as arguments to other functions, returned from functions, etc.
+
+There are 2 types of decorators available in python
+
+- Built in decorators like `@staticmethod`, `@classmethod`, `@abstractmethod` and `@property` etc
+- User defined decorators that we programmers can create according to our needs
+
+```py
+def my_decorator(func):
+  def wrapper():
+    print('***********************')
+    func()
+    print('***********************')
+  return wrapper
+
+def hello():
+  print('hello')
+
+a = my_decorator(hello)
+a()
+
+# ***********************
+# hello
+# ***********************
+```
+
+__OR:__
+
+```py
+# Better syntax
+
+def my_decorator(func):
+  def wrapper():
+    print('***********************')
+    func()
+    print('***********************')
+  return wrapper
+
+@my_decorator
+def hello():
+  print('hello')
+
+hello()
+```
+
+---
+
+### Decorators vs. Closures
+
+At their core, __decorators are built upon closures__. A decorator is simply a function that returns a closure, where the inner function of that closure "closes over" the original function it's decorating.
+
+__Similarities:__
+
+- Both utilize __nested functions__.
+- Both rely on the inner function retaining access to variables from its __enclosing scope__.
+- Both are powerful tools in Python's __functional programming__ paradigm.
+
+__Differences:__
+
+| Feature   | Closure                                       | Decorator                                            |
+| :-------- | :-------------------------------------------- | :--------------------------------------------------- |
+| __Purpose__ | To retain state or configuration across calls | To add functionality to a function without modifying its source |
+| __Input__ | Often takes data or configuration             | Always takes a function                              |
+| __Output__ | Returns a function remembering its environment | Returns a new, wrapped version of the input function |
+| __Usage__ | General-purpose pattern for data encapsulation | Specific design pattern for modifying function behavior |
+| __Syntax__ | Explicit function call (`my_closure = outer(data)`) | Often uses the `@` syntactic sugar                 |
+
+__When to Use Which?__
+
+- __Use Closures:__
+  - To create "factories" for customized functions (e.g., a length validator).
+  - To encapsulate state that changes over time, especially when a full class isn't needed.
+
+- __Use Decorators:__
+  - To add __cross-cutting concerns__ like logging, timing, or authentication to multiple functions.
+  - To enhance or modify function behavior without altering their original definition.
+  - To improve code readability by separating core logic from auxiliary features.
+
+---
+
+### Examples of Decorators
+
+```py
+import time
+
+def timer(func):
+  def wrapper(*args): # *args allows passing any number of arguments to the function
+    start = time.time()
+    func(*args)
+    print('time taken by',func.__name__,time.time()-start,'secs')
+  return wrapper
+
+@timer
+def hello():
+  print('hello world')
+  time.sleep(2)
+
+@timer
+def square(num):
+  time.sleep(1)
+  print(num**2)
+
+@timer
+def power(a,b):
+  print(a**b)
+
+hello() # hello world   time taken by hello 2.003671884536743 secs
+square(2) # 4   time taken by square 1.0009939670562744 secs
+power(2,3) # 8  time taken by power 2.1696090698242188e-05 secs
+```
+
+Decorators with input arguments:
+
+```py
+def sanity_check(data_type):
+  def outer_wrapper(func):
+    def inner_wrapper(*args):
+      if type(*args) == data_type:
+        func(*args)
+      else:
+        raise TypeError('Ye datatype nai chalega')
+    return inner_wrapper
+  return outer_wrapper
+
+@sanity_check(int)
+def square(num):
+  print(num**2)
+
+@sanity_check(str)
+def greet(name):
+  print('hello',name)
+
+square(2) # 4
 ```

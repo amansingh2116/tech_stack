@@ -11,7 +11,7 @@ Python allows for various programming paradigms:
 ### Objects
 
 - Objects are the basic runtime entities in an object-oriented system.
-- 
+- They can represent real-world entities like a car, a person, or a bank account.
 - They encapsulate data and methods.
 
 In Python, concepts we are already very familiar with like integers, strings and dictionaries are all objects. Every object has a type, which defines what you can do with the object. For example, the int type defines what happens when adding something to an integer and what happens when trying to convert it to a string.
