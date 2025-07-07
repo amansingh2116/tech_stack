@@ -1709,7 +1709,7 @@ You’ve been invited to trade on the exchange of the West Archipelago for one d
 
 ## ways of thinking
 
-https://medium.com/@td.timodiehm/how-to-almost-win-against-thousands-of-other-teams-in-competitive-environments-bc31387e4b26
+https://medium.com/@td.timodiehm/how-to-almost-win-against-thousands-of-other-teams-in-competitive-environments-bc31387e4b26*
 
 ### 1. Question Your Assumptions — Or Better Yet, Start with None
 
