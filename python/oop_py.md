@@ -347,7 +347,122 @@ obj3 = obj1.inneratr     ##inner class object constructor
 obj3 = class_super1.class_name2()
 ```
 
-## Aggregation
+## Aggregation and Composition
+
+**Composition** and **aggregation** are specialised form of **Association**. Whereas Association is a relationship between two classes without any rules.
+
+### Composition
+
+In composition, one of the classes is composed of one or more instance of other classes. In other words, one class is container and other class is content and if you delete the container object then all of its contents objects are also deleted.
+
+- It indicates a relationship component.
+- Composition established “has-a” relationship between objects.
+- Both entities are dependent on each other in composition.
+- The composed object cannot exist without the other entity when there is a composition between two entities.
+
+Example:
+
+```py
+# Code to demonstrate Composition
+
+# Class Salary in which we are
+# declaring a public method annual salary
+class Salary:
+    def __init__(self, pay, bonus):
+        self.pay = pay
+        self.bonus = bonus
+
+    def annual_salary(self):
+        return (self.pay*12)+self.bonus
+
+
+# Class EmployeeOne which does not 
+# inherit the class Salary yet we will
+# use the method annual salary using
+# Composition
+class EmployeeOne:
+    def __init__(self, name, age, pay, bonus):
+        self.name = name
+        self.age = age
+
+        # Making an object in which we are
+        # calling the Salary class
+        # with proper arguments.
+        self.obj_salary = Salary(pay, bonus)  # composition
+
+    # Method which calculates the total salary
+    # with the help of annual_salary() method
+    # declared in the Salary class
+    def total_sal(self):
+        return self.obj_salary.annual_salary()
+
+# Making an object of the class EmployeeOne
+# and providing necessary arguments
+emp = EmployeeOne('Geek', 25, 10000, 1500)
+
+# calling the total_sal method using 
+# the emp object
+print(emp.total_sal())
+
+# we have successfully called the method of a completely different class inside another class that does not inherit the class.
+```
+
+### Aggregation
+
+Aggregation is a weak form of composition. There are not any objects or classes owns another object. It just creates a reference. If you delete the container object contents objects can live without container object.
+
+- It represents Has-A’s relationship.
+- It is a unidirectional association i.e. a one-way relationship. For example, a department can have students but vice versa is not possible and thus unidirectional in nature.
+- In Aggregation, both the entries can survive individually which means ending one entity will not affect the other entity.
+
+Example:
+
+```py
+# Code to demonstrate Aggregation
+
+# Salary class with the public method 
+# annual_salary()
+class Salary:
+    def __init__(self, pay, bonus):
+        self.pay = pay
+        self.bonus = bonus
+
+    def annual_salary(self):
+        return (self.pay*12)+self.bonus
+
+
+# EmployeeOne class with public method
+# total_sal()
+class EmployeeOne:
+
+    # Here the salary parameter reflects
+    # upon the object of Salary class we
+    # will pass as parameter later
+    def __init__(self, name, age, sal):
+        self.name = name
+        self.age = age
+
+        # initializing the sal parameter
+        self.agg_salary = sal   # Aggregation
+
+    def total_sal(self):
+        return self.agg_salary.annual_salary()
+
+# Here we are creating an object 
+# of the Salary class
+# in which we are passing the 
+# required parameters
+salary = Salary(10000, 1500)
+
+# Now we are passing the same 
+# salary object we created
+# earlier as a parameter to 
+# EmployeeOne class
+emp = EmployeeOne('Geek', 25, salary)
+
+print(emp.total_sal())
+# we will get the same output as we got before using the Composition concept. But the difference is that here we are not creating an object of the Salary class inside the EmployeeOne class, rather than that we are creating an object of the Salary class outside and passing it as a parameter of EmployeeOne class which yields the same result.
+```
 
 ## Inheritance
 
