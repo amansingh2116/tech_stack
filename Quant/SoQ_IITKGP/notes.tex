@@ -1,0 +1,413 @@
+\documentclass[12pt,openany]{book}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{imakeidx}
+\usepackage{xcolor}
+
+\makeindex
+
+% -------------------- Hyperref Setup --------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={Introduction to Quant Finance},
+    pdfauthor={Quant Club IIT KGP},
+    pdfsubject={Summer of Quant},
+    pdfkeywords={quant finance, stock markets, algorithmic trading, derivatives, machine learning}
+}
+
+% -------------------- Page Style --------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Quant Club IIT KGP}
+\fancyhead[R]{Summer of Quant}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14.5pt}
+
+% -------------------- Formatting --------------------
+\raggedbottom
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\Huge}
+  {\chaptername\ \thechapter}{20pt}{\Huge}
+
+\setcounter{tocdepth}{2}   % show chapters and sections in TOC
+
+
+% -------------------- Document --------------------
+\begin{document}
+
+% -------------------- Title Page --------------------
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\Huge \textbf{Introduction to Quant Finance}\par}
+    \vspace{0.8cm}
+    {\Large Quant Club IIT KGP\par}
+    \vspace{0.4cm}
+    {\Large Summer of Quant\par}
+
+    \vfill
+
+    {\large Study Notes\par}
+    \vspace{0.5cm}
+    {\large \today\par}
+
+    \vfill
+\end{titlepage}
+
+
+\tableofcontents
+
+% =========================================================
+% ELEMENTARY MODULE
+% =========================================================
+\part{Elementary Module}
+
+% -------------------- Introduction to Stock Markets --------------------
+\chapter{Introduction to Stock Markets}
+
+\section{Investments}
+\index{Investments}
+
+\subsection{The Imperative of Investing and Asset Allocation}
+
+\subsubsection{What is Investing?}
+Investing is the act of purchasing assets with the goal of generating passive income, capital appreciation, and future wealth. Instead of allowing money to remain idle, an investor deploys capital into productive assets so that wealth can grow over time.
+
+\subsubsection{The Mathematical Case for Investing: Why to Invest}
+Before exploring the avenues of investment, it is critical to understand the financial consequences of holding idle cash. The fundamental driver of this necessity is \textbf{inflation}, which is the persistent erosion of purchasing power over time. If wealth does not grow at a rate equal to or greater than inflation, then the investor is losing purchasing power in real terms.
+
+\paragraph{The Peril of Idle Cash: A Scenario Analysis}
+Consider a scenario with a baseline monthly income of Rs. 50,000, monthly living expenses of Rs. 30,000, and a monthly surplus of Rs. 20,000. Assume a 10\% annual salary increase, an 8\% annual inflation rate, and a 20-year working horizon before retirement.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{The Zero-Growth Trap:} Retaining the surplus as hard cash without generating any yield results in an accumulated corpus of approximately Rs. 1.7 Crores after 20 years.
+    \item \textbf{Longevity Risk:} Because the cost of living continues to compound at 8\% annually after retirement, this seemingly large corpus of Rs. 1.7 Crores may be depleted in about 8 years. The individual then faces serious financial stress for the remainder of life, despite having sacrificed lifestyle upgrades during the working years.
+\end{itemize}
+
+\paragraph{The Power of Compound Interest}
+Deploying the same surplus into an investment vehicle generating a 12\% annualized return drastically changes the financial trajectory. For the first year's retained cash of Rs. 240,000, the future value over the remaining 19 years is given by:
+
+\begin{equation*}
+    FV = P \times (1 + r)^n
+\end{equation*}
+
+\begin{equation*}
+    FV = 240{,}000 \times (1 + 0.12)^{19} \approx 2{,}067{,}063
+\end{equation*}
+
+When this discipline is applied consistently across the 20-year timeline, the accumulated corpus can grow to approximately Rs. 4.26 Crores, which is about 2.4 times the idle-cash strategy.
+
+\subsection{Core Objectives of Investing}
+Investing is essential for wealth creation, achieving financial freedom, and capitalizing on market growth. The major objectives are:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Fighting Inflation:} Investing acts as a vital hedge against the growing cost of living and protects purchasing power over time.
+    \item \textbf{Wealth Creation:} Harnessing compounding allows an investor to build a substantial corpus for goals such as education, real estate, retirement, or financial independence.
+    \item \textbf{Elevating Quality of Life:} A growing corpus provides financial flexibility to meet lifelong aspirations without jeopardizing basic security.
+    \item \textbf{Risk Reduction Through Diversification:} Spreading capital across different asset classes reduces dependence on a single source of return.
+    \item \textbf{Tax Benefits:} Certain investment vehicles provide tax advantages, depending on the applicable rules and investment structure.
+    \item \textbf{Understanding the Risk/Reward Trade-off:} Risk and return are directly correlated; higher expected returns generally require accepting higher volatility and potential capital loss. Success requires research, planning, discipline, and a long-term perspective.
+\end{enumerate}
+
+\subsection{Asset Classes: Where to Invest?}
+Selecting the correct investment vehicle depends on an individual's risk tolerance, return expectations, liquidity needs, and time horizon. An asset class is fundamentally defined by its risk--reward characteristics.
+
+\subsubsection{Fixed Income Instruments}
+Fixed income instruments are debt instruments where the principal investment is generally considered safer than equity, and the issuing entity pays a predetermined interest rate at regular intervals until maturity.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Examples:} Bank fixed deposits (FDs), government securities (G-Secs/T-Bills), corporate bonds, certificates of deposit (CDs), and treasury bills.
+    \item \textbf{Key Details:} These instruments provide relatively stable income and capital preservation. They protect nominal principal but may lose value after adjusting for inflation.
+    \item \textbf{Risk vs. Return:} Returns typically range from 5\% to 10\%. Government bonds offer lower yields, around 5.5\%, because they carry very low default risk due to sovereign backing. Corporate bonds offer higher yields, around 9--10\%, to compensate for elevated credit risk, since companies can default and potentially wipe out principal.
+\end{itemize}
+
+\subsubsection{Equity}
+Equities represent fractional ownership in publicly traded companies listed on major exchanges such as the BSE and NSE.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Examples:} Stocks and equity mutual funds.
+    \item \textbf{Key Details:} Equities offer potential for capital appreciation and dividends. They historically beat inflation, often averaging around 14--15\% returns over long periods, but come with higher risk and market fluctuations.
+    \item \textbf{Risk vs. Return:} Unlike fixed income, equities offer no capital guarantee. However, this risk is compensated by historically superior long-term returns. The Indian equity market has historically delivered a CAGR of upwards of 12\% over 10-to-15-year horizons, while fundamentally strong and exceptionally managed companies can deliver over 20\% CAGR.
+    \item \textbf{Requirements:} Succeeding in equities requires rigorous fundamental analysis, emotional discipline during volatility, and a long-term investment horizon.
+\end{itemize}
+
+\subsubsection{Real Estate}
+Real estate involves the acquisition, management, and sale of commercial or residential land and properties.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Examples:} Physical properties and Real Estate Investment Trusts (REITs).
+    \item \textbf{Income Streams:} Investors earn through rental yields, typically around 2--3\%, and capital appreciation, which is highly localized and non-uniform.
+    \item \textbf{Key Details:} Real estate can generate rental income and property value appreciation, but it requires substantial upfront capital and lacks liquidity.
+    \item \textbf{Challenges:} Real estate has high barriers to entry, complex legal procedures, severe illiquidity, and an opaque, non-standardized market. As a result, accurately measuring broad market returns is difficult.
+\end{itemize}
+
+\subsubsection{Commodities and Bullion}
+Precious metals, primarily gold and silver, have served as traditional stores of value for long periods.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Examples:} Gold, silver, jewelry, ETFs, and sovereign gold bonds (SGBs).
+    \item \textbf{Key Details:} Precious metals act as relatively safe hedges against inflation and economic uncertainty, though their historical returns have not been consistently high.
+    \item \textbf{Risk vs. Return:} Bullion typically yields a long-term CAGR of 5--8\%. It is primarily a defensive hedge against inflation and systemic instability rather than a primary driver of aggressive wealth creation.
+\end{itemize}
+
+\subsubsection{The Exclusion of Cryptocurrencies}
+Although cryptocurrencies are highly publicized, they currently lack the foundational regulatory frameworks, macroeconomic tethering, and structural investor protections associated with established asset classes. Until robust regulations are enacted, they are better classified as highly speculative instruments rather than foundational investments.
+
+\subsection{The Science of Asset Allocation}
+Strategic asset allocation is the methodology of diversifying capital across asset classes to optimize the risk-adjusted return of a portfolio based on the investor's life stage and risk profile.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Aggressive Profile, such as a young professional:} With a long investment horizon and high risk tolerance, a sample allocation might be 60\% equities for aggressive growth, 20\% fixed income for stability, and 20\% precious metals for hedging.
+    \item \textbf{Conservative Profile, such as a retiree:} With a focus on capital preservation and steady income, a sample allocation might shift to 80\% fixed income, 10\% equities for limited inflation protection, and 10\% precious metals.
+\end{itemize}
+
+\subsection{Critical Considerations Before Investing}
+To approach financial planning systematically, an investor must internalize the following principles:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{The Risk/Reward Axiom:} There is an inescapable direct correlation between risk and potential return. Seeking higher yields requires accepting higher volatility and the possibility of capital loss.
+    \item \textbf{The Threat of Negative Real Returns:} Fixed-income investments protect nominal principal but remain vulnerable to inflation. If a corporate bond yields 9\% while inflation is 10\%, the investor suffers a real rate of return of $-1\%$, meaning purchasing power decreases despite the apparently safe investment.
+    \item \textbf{Equity as a Long-Term Inflation Hedge:} While volatile in the short term, equities are structurally designed to beat inflation over the long term, making them important for preserving wealth across decades.
+    \item \textbf{Liquidity Constraints:} Real estate demands large capital lockups and cannot be liquidated quickly during financial emergencies.
+    \item \textbf{The Limitation of Gold:} Gold provides safety and emotional comfort, but its historical returns often lag equities. An excessive allocation to gold can slow long-term wealth generation.
+\end{enumerate}
+
+
+\section{Stocks and Stock Market}
+\index{Stocks}
+\index{Stock market}
+
+\subsection{Stocks \& the Stock Market}
+
+\subsubsection{What are Stocks?}
+Stocks, interchangeably referred to as \textbf{shares} or \textbf{equities}, represent fractional ownership in a corporation.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{The Corporate Purpose:} When a company requires capital to fund operations, expand, or pay off debt, it can raise money by issuing and selling shares of its stock to the public.
+    \item \textbf{The Shareholder's Position:} By purchasing a stock, an investor becomes a shareholder, which entitles them to a proportional claim on the company's assets and future earnings.
+\end{itemize}
+
+\paragraph{Drivers of Stock Value}
+The intrinsic and market value of a stock is not static; it fluctuates based on a confluence of variables:
+
+\begin{itemize}[leftmargin=*]
+    \item Fundamental company performance, including earnings, revenue growth, and debt levels.
+    \item Broader macroeconomic conditions.
+    \item Specific industry trends and disruptions.
+    \item Overall investor sentiment and market psychology.
+\end{itemize}
+
+\paragraph{Mechanisms for Generating Returns}
+Investors primarily generate wealth from equities through two channels:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Capital Appreciation:} The profit realized when a stock's market price increases over time, commonly described as buying low and selling high.
+    \item \textbf{Dividends:} Periodic cash payments distributed by a company to its shareholders, representing a portion of the company's generated profits.
+\end{enumerate}
+
+\begin{quote}
+\textit{Note: The stock market is inherently volatile. Stock prices can fluctuate significantly, meaning equity investments carry a strict risk of capital loss.}
+\end{quote}
+
+\subsubsection{What is the Stock Market?}
+The stock market is a highly regulated, centralized marketplace where buyers and sellers congregate to trade fractional ownership of public companies and other financial instruments.
+
+\paragraph{Dual Functionality}
+\begin{enumerate}[leftmargin=*]
+    \item It provides liquidity and a platform for \textbf{investors} to buy and sell securities.
+    \item It provides a primary market for \textbf{companies} to raise crucial capital by issuing shares to the public.
+\end{enumerate}
+
+\paragraph{Major Global Stock Exchanges}
+Exchanges provide the physical or digital infrastructure, regulatory frameworks, and standardized rules required for orderly trading. Some of the most prominent include:
+
+\begin{center}
+\begin{tabular}{|p{0.52\textwidth}|p{0.28\textwidth}|}
+\hline
+\textbf{Exchange Name} & \textbf{Country} \\
+\hline
+New York Stock Exchange (NYSE) & United States \\
+\hline
+Nasdaq & United States \\
+\hline
+London Stock Exchange (LSE) & United Kingdom \\
+\hline
+Tokyo Stock Exchange (TSE) & Japan \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Factors Affecting the Stock Market}
+At its most fundamental level, stock-market pricing is dictated by the economic laws of \textbf{supply and demand}. However, the forces that shift this supply and demand are multifaceted:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Micro Factors:} Individual company earnings reports, leadership changes, or product launches.
+    \item \textbf{Macro Factors:} Economic indicators such as inflation rates, GDP growth, and interest rates.
+    \item \textbf{External Shocks:} Geopolitical events, wars, or global pandemics.
+    \item \textbf{Psychology:} Investor sentiment, including fear that drives sell-offs and greed that drives rallies.
+\end{itemize}
+
+\subsubsection{Why Do Investors Participate?}
+Market participants have varying horizons and strategic objectives:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Long-Term Investing:} Purchasing fundamentally strong companies to hold for years or decades, aiming for compounded wealth creation.
+    \item \textbf{Short-Term Trading:} Attempting to capitalize on daily or weekly price fluctuations for rapid profits. This requires active management and carries higher risk.
+    \item \textbf{Diversification:} Adding equities to a broader portfolio, alongside assets such as bonds or real estate, to optimize risk-adjusted returns.
+\end{itemize}
+
+Investors generally tailor their strategies to target either \textbf{capital gains} through growth-focused portfolios or consistent \textbf{dividend income} through yield-focused portfolios.
+
+\subsubsection{Important Considerations Before Investing}
+Success in the stock market requires discipline and preparation. Before deploying capital, individuals must critically evaluate:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Investment Objectives \& Financial Goals:} What is the specific purpose of the capital, such as retirement, buying a house, or building a legacy?
+    \item \textbf{Risk Tolerance:} How much portfolio drawdown can the investor endure both financially and emotionally without panic selling?
+    \item \textbf{Due Diligence:} Investors should conduct thorough market research and fundamental analysis before buying any asset.
+\end{enumerate}
+
+Because of the inherent risks and volatility involved, consulting with a certified financial advisor and continuously educating oneself are critical steps for long-term survival and success in the markets.
+
+
+\section{Market Participants}
+\index{Market participants}
+\index{SEBI}
+\index{Stock exchanges}
+\index{Market intermediaries}
+
+\subsection{Market Participants: The Ecosystem of the Stock Market}
+The stock market functions much like a cohesive organization, similar to a large company with distinct departments such as HR, sales, and finance working together toward a common goal. It comprises a network of participants that serve as the integral link between buyers and sellers of securities, ensuring that the market operates smoothly, transparently, and efficiently.
+
+The main participants in this financial ecosystem are divided into five distinct categories:
+
+\subsubsection{Regulators}
+Just as the Board of Control for Cricket in India (BCCI) governs and administers the rules of cricket, the stock market requires a governing body to oversee financial activities and ensure fairness. Regulators are government agencies tasked with overseeing financial markets, enforcing strict rules, and protecting the interests of the investing public. While different financial sectors have regulators such as the Ministry of Finance, RBI, IRDA, and PFRDA, the primary regulator for the Indian stock market is the \textbf{Securities and Exchange Board of India (SEBI)}.
+
+\paragraph{Key Responsibilities of SEBI}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Investor Protection \& Education:} Protects investor interests by ensuring fair, honest treatment and conducting widespread awareness programs.
+    \item \textbf{Market Oversight:} Regulates stock-market activities to keep markets efficient and transparent.
+    \item \textbf{Fraud Prevention:} Actively prevents malpractices and investigates suspected fraud.
+    \item \textbf{Rule Enforcement:} Designs strict guidelines and codes of conduct for financial intermediaries, conducts inquiries and audits under the SEBI Act, and exercises the power to impose penalties for rule violations.
+    \item \textbf{Licensing:} Grants investment advisory licenses and registers market intermediaries such as brokers, sub-brokers, and merchant bankers.
+\end{itemize}
+
+\subsubsection{Stock Exchanges}
+Stock exchanges, also called securities exchanges, are centralized platforms where publicly listed securities are actively traded between buyers and sellers. They provide the digital infrastructure and electronic systems required to facilitate efficient price discovery and rapid trade execution for registered stockbrokers and investors.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Major Indian Examples:} The two premier stock exchanges in India are the \textbf{National Stock Exchange (NSE)} and \textbf{BSE Limited (BSE)}.
+\end{itemize}
+
+\subsubsection{Companies}
+Every share available for transaction in the stock market originates from a publicly traded company. When a private company needs to raise capital, it can introduce itself to the stock exchange by conducting an \textbf{Initial Public Offer (IPO)}. Through this process, the company issues ownership shares to the public and transitions into a publicly traded entity.
+
+\subsubsection{Investors and Traders}
+Individuals and institutions deploying capital are among the most vital participants in the market, though they approach it with different time horizons and strategic objectives.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Investors:} Focus on long-term wealth creation. By investing in publicly listed companies, they take an ownership stake and aim to achieve specific financial goals over extended periods.
+    \item \textbf{Traders:} Focus on short-term horizons. Their primary intention is to profit rapidly from day-to-day or week-to-week price fluctuations of a security.
+\end{itemize}
+
+Investors are further categorized by their size and structure:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Retail Investors:} Individual participants who directly invest personal funds into the stock market to build personal portfolios.
+    \item \textbf{Institutional Investors:} Large organizations, both domestic and foreign, that invest substantial pools of capital on behalf of clients or beneficiaries. Examples include mutual funds, pension funds, insurance companies, asset management companies (AMCs), and hedge funds. Because of the volume of capital they command, institutional investors can significantly influence broad market movements and trends.
+\end{itemize}
+
+\subsubsection{Market Intermediaries}
+Intermediaries act as the vital bridge between investors and the stock exchange, facilitating the buying, selling, and settlement of securities while ensuring that regulatory rules are followed.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Depositories \& Depository Participants (DP):} In the 1990s, stock ownership required physical paper certificates. Today, securities are held digitally through dematerialization (DEMAT). Depositories such as NSDL and CDSL in India act like banks for digital securities. Because investors cannot directly interface with depositories, they open DEMAT accounts through agents known as depository participants.
+    \item \textbf{Trading Members or Stock Brokers:} Entities permitted to become members of recognized stock exchanges, subject to strict eligibility criteria, to provide electronic securities trading facilities to investors. They may be individuals, partnerships, corporates, or banks. Since retail investors cannot trade directly on the exchange, they must open a trading account with a broker.
+    \item \textbf{Clearing Houses or Clearing Corporations:} Mediators responsible for clearing and settling all transactions executed in the market. They reduce counterparty risk by ensuring that the buyer receives the correct securities and the seller receives the correct funds. For example, NSE Clearing Limited performs this role for the National Stock Exchange.
+    \item \textbf{Clearing Members:} Entities that help clear and settle the specific deals executed by trading members through clearing houses.
+    \item \textbf{Clearing Banks:} Financial institutions that act as the link between clearing corporations and clearing members for settlement of funds. Clearing members must maintain accounts with sufficient balances at these banks to meet financial obligations.
+    \item \textbf{Other Intermediaries:} Dealers and investment banks also play important roles by providing trade execution, advisory support, underwriting services, and other market functions.
+\end{itemize}
+
+\section{Candlesticks and How to Read Them}
+\section{How Do Stock Prices Change?}
+\section{Stock Market Index}
+\section{Fundamental Analysis}
+\section{Quiz}
+
+% -------------------- Introduction to Algorithmic Trading --------------------
+\chapter{Introduction to Algorithmic Trading}
+\section{What is Algorithmic Trading?}
+\section{Basic Terminologies}
+\section{Diving into Technical Analysis (Bonus)}
+\section{Technical Analysis}
+\section{Types of Technical Indicators}
+\section{Introduction to Strategies}
+\section{Combining Trading Indicators}
+\section{Backtesting Your Strategy}
+\section{Backtesting on TradingView}
+\section{Backtesting with Python (from Scratch)}
+\section{Backtesting with Vectorbt}
+\section{Algorithmic Trading Quiz}
+
+% -------------------- Introduction to Derivatives --------------------
+\chapter{Introduction to Derivatives}
+\section{What are Derivatives?}
+\section{Types of Derivatives}
+\section{OTC vs Exchange-Traded Derivatives}
+\section{Forwards}
+\section{Futures}
+\section{Netting and Mark-to-Market (MTM)}
+\section{Introduction to Stock Options}
+\section{Going Deeper with Stock Options}
+\section{Basic Options Strategies}
+\section{Basics of Greeks and How to Use Them}
+\section{Swaps}
+\section{Volatility and its Effect on Option Prices}
+\section{Introduction to Derivative Market Quiz}
+\section{Options Strategies Quiz}
+
+% -------------------- Introduction to Machine Learning for Finance --------------------
+\chapter{Introduction to Machine Learning for Finance}
+\section{Linear Regression and Logistic Regression}
+\section{Linear Regression Continued}
+\section{Decision Trees}
+\section{Random Forest}
+\section{Decision Tree Assignment}
+\section{Performance Metrics}
+\section{Ensemble Methods}
+\section{Fraud Detection Assignment}
+\section{Time Series Analysis (Basic)}
+\section{Sentiment Analysis (Intro)}
+\section{Sentiment Analysis (Depth)}
+\section{How Does it Work?}
+\section{Sentiment Analysis Quiz}
+
+% =========================================================
+% ADVANCED MODULE
+% =========================================================
+\part{Advanced Module (Later)}
+
+\chapter{Advanced Module}
+\section{Topic 1}
+
+
+% -------------------- Back Matter --------------------
+\backmatter
+
+\clearpage
+\small
+\printindex
+
+\end{document}
