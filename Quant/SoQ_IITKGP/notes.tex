@@ -8,6 +8,7 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\usepackage{array}
 \usepackage{imakeidx}
 \usepackage{xcolor}
 \usepackage{tikz}
@@ -68,6 +69,7 @@
   {\chaptername\ \thechapter}{20pt}{\Huge}
 
 \setcounter{tocdepth}{2}   % show chapters and sections in TOC
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 
 % -------------------- Document --------------------
@@ -1388,6 +1390,445 @@ An \textbf{equal-weighted index} assigns the same weight to every constituent, w
 A stock market index is not just a list of companies. It is a rules-based measurement system. The weighting methodology determines how much each company affects the index, how passive funds allocate capital, and how accurately the index reflects the market segment it is designed to represent.
 
 \section{Fundamental Analysis}
+
+\subsection{What is Fundamental Analysis?}
+
+Fundamental Analysis (FA) evaluates a security's intrinsic value by examining the factors that drive its underlying business and industry, rather than short-term price action. The goal is to judge whether a stock is undervalued or overvalued relative to its fundamentals, so an investor can decide what to buy.
+
+FA has two components: Quantitative Analysis (balance sheets, P\&L, cash flows --- numbers-driven) and Qualitative Analysis (business model, management quality, competitive position --- judgment-driven). Both matter; numbers tell you what happened, qualitative factors help explain why and whether it will continue.
+
+A useful framing: anyone whose daily decisions affect a company's revenue or costs --- engineers improving efficiency, salespeople closing deals, doctors running a hospital department --- is effectively already shaping the company's financial health, even without a finance title. An accountant, by contrast, only records transactions; they don't drive the operational outcomes that determine performance. This matters because it reframes FA as understanding \emph{business} drivers, not just accounting mechanics.
+
+\subsection{1. Macro \& Industry Analysis}
+
+This is the outermost layer --- the environment a company operates in, which sets the ceiling and floor on what's achievable regardless of company quality.
+
+\paragraph{Economic conditions} GDP growth (overall demand in the economy), interest rates (cost of borrowing for both the company and its customers; also affects valuation multiples), inflation (affects input costs and pricing power), and fiscal/monetary policy (government spending, taxation, central bank actions). A great company in a contracting economy still faces headwinds; a mediocre company in a booming sector can coast on tailwinds.
+
+\paragraph{Industry trends} supply-demand dynamics (is the industry growing or saturated?), regulatory changes (can create or destroy entire business models overnight), technological disruption (risk of obsolescence), and competitive intensity (how many players are fighting for the same customers, and how that affects pricing power and margins). A company's industry largely caps its long-term growth and margin potential before you even look at the company itself.
+
+\subsection{2. Company Analysis}
+
+\paragraph{Business model \& competitive advantage (moat)} how does the company actually make money, what stops a competitor from copying it, and is that protection durable? Common moats:
+
+\begin{itemize}[leftmargin=*]
+    \item \emph{Brand recognition} --- allows premium pricing (e.g., consumer goods, luxury).
+    \item \emph{Patents/IP} --- legal exclusivity, common in pharma and tech.
+    \item \emph{Network effects} --- the product gets more valuable as more people use it (e.g., marketplaces, social platforms), making it self-reinforcing.
+    \item \emph{Cost leadership} --- structurally lower costs than competitors, allowing the company to win on price while still being profitable.
+\end{itemize}
+
+The key analytical question isn't just "does an advantage exist" but "how sustainable is it" --- moats erode with technology shifts, regulation, or new entrants, so this needs periodic reassessment, not a one-time check.
+
+\paragraph{Management \& governance} judged via leadership's track record (have past promises been delivered?), capital allocation history (do they reinvest wisely, overpay for acquisitions, or return cash sensibly?), and governance practices (board independence, related-party transactions, alignment of management incentives with shareholders). Poor governance is a common reason fundamentally "good" businesses still destroy shareholder value --- the numbers can look fine while capital is being misallocated or minority shareholders are being short-changed.
+
+\subsection{3. The Annual Report --- Where to Find Everything}
+
+The annual report is the primary, authoritative source --- pull it directly from the company's investor relations page rather than relying solely on secondary data aggregators. Key sections:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Management Discussion \& Analysis (MD\&A):} opens with commentary on the macro economy and the specific sector, then financial highlights and segment-wise discussion. This is where management explains \emph{why} the numbers look the way they do and gives forward guidance --- useful for projecting which business segments will drive future growth.
+    \item \textbf{Outlook/pipeline:} disclosure of upcoming products, capacity expansions, or strategic initiatives.
+    \item \textbf{Operations detail:} plant/manufacturing information, subsidiary performance, and geographic footprint --- useful for understanding diversification and operating leverage.
+    \item \textbf{Corporate Governance section:} director backgrounds, qualifications, and shareholding --- a direct check on the management quality factor above.
+    \item \textbf{Directors' Report and Auditor's Report.}
+    \item \textbf{Financial Statements:} issued in both \emph{standalone} (parent company only) and \emph{consolidated} (including subsidiaries) form --- for a holding company or one with major subsidiaries, consolidated figures give the truer picture of overall economic exposure.
+\end{itemize}
+
+Treat the annual report as the single source of truth; use data aggregators (Yahoo Finance, Screener, etc.) for speed and cross-company comparison, but verify anything material against the filed report.
+
+\subsection{4. Income Statement (Profit \& Loss)}
+
+\paragraph{Purpose} shows whether a business generated a profit or loss over a period, and where that profit went (or got eaten up). This is also the source of "top line" (revenue, literally the top line of the statement) and "bottom line" (net income, the last line).
+
+\subsubsection{Line-by-line structure and interpretation}
+
+\paragraph{Total Revenue} Total sales generated before any costs are deducted. Figures are often reported in thousands, so "\$47,000" thousand means \$47 billion. TTM means trailing twelve months: the most recent rolling year of data, which may not align with the fiscal year-end. \emph{Interpretation:} this is the most basic growth signal, but revenue growth alone says nothing about profitability, so it must always be read alongside the lines below it.
+
+\paragraph{Cost of Revenue (COGS)} The direct cost of producing or delivering whatever was sold. \emph{Interpretation:} a rising COGS as a percentage of revenue, or falling gross margin, often signals pricing pressure, rising input costs, or loss of operating leverage.
+
+\paragraph{Gross Profit and Gross Margin}
+\begin{equation*}
+    \text{Gross Profit} = \text{Revenue} - \text{Cost of Revenue}, \qquad
+    \text{Gross Margin} = \frac{\text{Gross Profit}}{\text{Revenue}}.
+\end{equation*}
+\emph{Interpretation:} this is the cleanest measure of how much pricing power and production efficiency a business has before overhead is considered. Comparing gross margin across years or against peers shows whether core unit economics are improving, stable, or deteriorating.
+
+\paragraph{SG\&A} Selling, General \& Administrative expenses include marketing, salaries, and the general cost of running the company, separate from production costs. \emph{Interpretation:} if SG\&A grows faster than revenue, the business is becoming less efficient at converting sales into overhead-adjusted profit. Data aggregators sometimes show SG\&A as a lump sum; the company's filed statements provide more detail when needed.
+
+\paragraph{Total Operating Expenses} The sum of all operating costs, including SG\&A and any other operating categories the company reports.
+
+\paragraph{Operating Income and Operating Margin}
+\begin{align*}
+    \text{Operating Income} &= \text{Gross Profit} - \text{Total Operating Expenses}, \\
+    \text{Operating Margin} &= \frac{\text{Operating Income}}{\text{Revenue}}.
+\end{align*}
+\emph{Interpretation:} this is one of the most important profitability measures because it captures the profitability of the \emph{core business} before financing costs and taxes. Around 15\% operating margin can be a healthy rough benchmark, but industry context matters. Rising operating margin alongside rising revenue suggests efficient scaling; falling margin despite revenue growth signals that growth may be coming at the expense of profitability.
+
+\paragraph{Interest Expense} The cost of servicing debt, such as bonds, loans, and credit lines. \emph{Interpretation:} compare this against operating income to gauge how much operating profit is consumed by debt service before reaching net income.
+
+\paragraph{Other Income/Expense, Net} Items unrelated to core operations, such as one-off gains or losses and investment income. \emph{Interpretation:} because these are non-core and often non-recurring, large swings should be treated cautiously when projecting future earnings.
+
+\paragraph{Income Before Tax}
+\begin{equation*}
+    \text{Income Before Tax} = \text{Operating Income} - \text{Interest Expense} \pm \text{Other Income/Expense}.
+\end{equation*}
+
+\paragraph{Income Tax} The tax paid on income. \emph{Interpretation:} effective tax-rate changes can distort net income trends year-to-year without reflecting any change in the underlying business, so check whether a net income jump is driven by operations or by a falling tax bill.
+
+\paragraph{Net Income}
+\begin{equation*}
+    \text{Net Income} = \text{Income Before Tax} - \text{Tax}.
+\end{equation*}
+This is the headline profit figure used in EPS, P/E, ROE, and most other valuation work.
+
+\subsubsection{What to check, holistically}
+
+\begin{itemize}[leftmargin=*]
+    \item Both operating income and net income should be positive --- a negative operating income means the core business itself is unprofitable, which is more serious than a net loss caused by, say, a one-off tax charge.
+    \item Pull as long a history as possible (ideally 10 years, though free tools like Yahoo Finance typically cap at \textasciitilde{}4 years) to separate cyclical noise from genuine trend.
+    \item The single most important pattern: \textbf{does operating income grow in step with revenue?} If yes (Google's pattern: revenue \$90B\(\to\)\$161B alongside operating income \$23B\(\to\)\$36B from 2016--2019), the business scales efficiently. If revenue rises while operating income falls or turns more negative (Uber: revenue \$3.8B\(\to\)\$14.1B in 2016--2019 while operating loss widened from -\$3B to -\$8.5B, with opex eventually exceeding total revenue), that's a structural red flag, regardless of how impressive the growth headline looks. Delta's case (2016--2019) illustrates a more nuanced pattern: absolute net income rose (\$4.3B \(\to\) \$4.7B), but this was driven partly by a \emph{lower tax bill} rather than core operational improvement --- gross and operating margins were actually higher back in 2016, showing why digging into the components matters more than just glancing at the bottom line.
+\end{itemize}
+
+\subsection{5. Cash Flow Statement}
+
+\paragraph{Why it exists} under accrual accounting (mandatory under IFRS/GAAP), revenue is recognized when \emph{earned} and expenses when \emph{incurred} --- not when cash actually moves. This means reported net income can diverge significantly from actual cash generated (e.g., a sale recorded as revenue today might not be paid for in cash for 90 days; depreciation reduces reported profit without involving any cash outflow at all). The Cash Flow Statement strips accounting adjustments back out to show real cash movement, which is critical because a company can show accounting profit while quietly running out of cash.
+
+\paragraph{Structure} reconciles Opening Cash to Closing Cash (both pulled from the Balance Sheet) across three sections. Positive values are inflows, negative are outflows.
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Operating Activities} --- cash generated/consumed by core, day-to-day revenue-generating operations.
+    \item \textbf{Investing Activities} --- cash spent on, or received from selling, long-term assets and investments.
+    \item \textbf{Financing Activities} --- cash raised or repaid via debt (banks/bondholders) or equity (issuing shares, paying dividends, buybacks).
+\end{enumerate}
+
+\paragraph{Direct method} operating section mirrors a cash-basis P\&L directly --- cash received from customers minus cash paid to suppliers/employees minus interest/tax paid. Intuitive to read, but harder for accountants to actually compile, so it's rarely used in practice.
+
+\paragraph{Indirect method (the standard in practice)} 
+
+\begin{enumerate}[leftmargin=*]
+    \item Start with \textbf{Net Profit/Loss} from the Income Statement.
+    \item \textbf{Add back non-cash expenses} --- depreciation, amortization, and any losses on asset sales (these reduced accounting profit but involved no actual cash leaving the business). Note: a \emph{gain} on an asset sale would be subtracted, since it inflated profit without representing operating cash.
+    \item \textbf{Adjust for changes in working capital} (current assets and current liabilities, excluding cash itself):
+\begin{itemize}[leftmargin=*]
+    \item A \emph{rise} in current assets like receivables or inventory is \textbf{subtracted} --- money tied up in unpaid invoices or unsold stock isn't cash in hand, even though it may already be counted as revenue or have consumed cash to produce.
+    \item A \emph{rise} in current liabilities like payables is \textbf{added} --- the company is holding onto cash longer by delaying payment to suppliers. A \emph{fall} in payables is subtracted (cash has gone out to settle old obligations).
+\end{itemize}
+\end{enumerate}
+
+\paragraph{Interpretation of working capital changes} this is one of the most useful diagnostic sections in all of FA. A company can report rising revenue and rising net income while its operating cash flow stagnates or turns negative --- usually because receivables and inventory are ballooning faster than sales. That's often an early warning sign of either aggressive revenue recognition or genuine difficulty collecting cash from customers, well before it shows up anywhere else.
+
+\paragraph{Worked example (Tumble, fictional dating app)} 
+
+\begin{itemize}[leftmargin=*]
+    \item Net profit: \$9.65M
+    \item + Non-cash D\&A: \$850K
+    \item + Loss on sale of furniture: \$5K (furniture cost \$20K, accumulated depreciation \$5K \(\to\) carrying value \$15K; sold for \$10K \(\to\) \$5K loss, a non-cash item originally charged through G\&A expense on the income statement, so it must be added back here)
+    \item - Increase in receivables: \$5.2M (receivables rose from \$8.85M to \$14.05M)
+    \item - Decrease in payables: \$450K (payables fell from \$14.85M to \$14.4M)
+    \item \textbf{= Operating Cash Flow: \$4.855M}
+\end{itemize}
+
+\begin{itemize}[leftmargin=*]
+    \item Investing: -\$910K (computer equipment purchased) + \$10K (cash proceeds from the furniture sale) = \textbf{-\$900K}
+    \item Financing: +\$100K (new long-term debt raised, no repayments made) + \$50K (common stock issued) - \$1M (dividends paid) = \textbf{-\$850K}
+\end{itemize}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Net change in cash} = \$4.855M - \$0.9M - \$0.85M = \textbf{\$3.105M}, which ties out exactly against the Balance Sheet (cash rose from \$13.895M to \$17M).
+\end{itemize}
+
+\paragraph{Why this matters as a check} if your computed net change in cash doesn't match the actual Balance Sheet cash movement, you've either missed a transaction or misclassified something --- this reconciliation is effectively a built-in error check, and is also why the three statements must always be read together rather than in isolation.
+
+\subsection{6. Balance Sheet}
+
+\paragraph{Purpose} a snapshot (not a period) of what a company owns (Assets) versus what it owes (Liabilities + Equity) at one specific point in time. The defining identity: \textbf{Total Assets = Total Liabilities + Shareholders' Equity} --- this must always balance, which is the origin of the name.
+
+\subsubsection{Assets}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Fixed Assets} --- long-term physical assets (land, machinery, buildings) requiring substantial upfront capital and used over many years. \emph{Interpretation:} steady, planned growth here (without runaway debt funding it) usually signals genuine capacity expansion.
+    \item \textbf{Current Assets} --- consumed/converted within one year, primarily \emph{inventory} (finished goods plus raw materials). \emph{Interpretation:} inventory growing much faster than sales can mean unsold stock building up --- a working-capital and demand-risk warning sign (cross-reference with the Inventory Turnover Ratio below).
+    \item \textbf{Financial Assets} --- investments in other companies' stocks/bonds. \emph{Interpretation:} large financial-asset holdings unrelated to the core business can sometimes indicate cash hoarding or a conglomerate structure rather than focused capital allocation.
+    \item \textbf{Intangible Assets} --- non-physical assets like patents (e.g., a pharma company's drug patent). \emph{Interpretation:} valuable when tied to genuine IP-driven moats, but can also be an accounting artifact of acquisitions (see Goodwill below) rather than organically built value.
+\end{itemize}
+
+\subsubsection{Liabilities}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Current Liabilities} --- obligations due within 1 year, including the portion of long-term debt due in the next 12 months.
+    \item \textbf{Long-term Debt} --- due beyond 1 year. \emph{Interpretation:} the key question is whether this is "manageable" relative to equity (see Debt-to-Equity below) and whether it's funding productive growth or just plugging operating losses.
+    \item \textbf{Other Liabilities} --- other long-term obligations, e.g., unpaid bills due in the future.
+    \item \textbf{Net Worth/Equity} --- what the company owes its owners; effectively the residual claim shareholders have on the business. Comprises:
+\begin{itemize}[leftmargin=*]
+    \item \emph{Paid-up Capital} --- capital raised by issuing shares.
+    \item \emph{Reserves/Retained Earnings} --- the cumulative profits the company has kept (not paid out as dividends) over its life.
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Detailed item walkthrough (illustrated via Tata Motors, 2017--2021)}
+
+\paragraph{Current assets} 
+
+\begin{itemize}[leftmargin=*]
+    \item \emph{Cash \& short-term investments} --- readily convertible to cash; Tata Motors showed consistent year-on-year growth here, a positive liquidity signal.
+    \item \emph{Total receivables} --- amounts owed by customers for goods/services already delivered but not yet paid for; essentially "sales that haven't turned into cash yet."
+    \item \emph{Total inventory} --- unsold finished goods plus raw materials.
+    \item \emph{Other current assets} --- anything else converting to cash within a year.
+\end{itemize}
+
+\paragraph{Non-current assets} 
+
+\begin{itemize}[leftmargin=*]
+    \item \emph{Net loans} --- loans the company itself has extended to others (zero for Tata Motors, since it's not a lending business).
+    \item \emph{Net PP\&E (property, plant \& equipment)} --- buildings, machinery, land, equipment; for Tata Motors this rose steadily, consistent with ongoing capacity investment.
+    \item \emph{Goodwill} --- arises when a company pays more than the accounting (book) value of a target in an acquisition, often reflecting brand value or expected synergies; recorded as an intangible asset. \emph{Interpretation:} large goodwill balances are worth scrutinizing --- if the acquired business later underperforms, goodwill can be written down, hitting reported profit even though no new cash changes hands at that point.
+    \item \emph{Intangible assets} --- patents, trademarks, and similar IP.
+    \item \emph{Long-term investments} --- holdings in stocks, bonds, real estate intended to be held for the long run.
+    \item \emph{Other long-term assets} --- e.g., employee advances, prepaid expenses.
+\end{itemize}
+
+\paragraph{Liabilities} 
+
+\begin{itemize}[leftmargin=*]
+    \item \emph{Accounts payable} --- money owed to suppliers/creditors; conceptually the mirror image of receivables (Tata Motors' payables also rose steadily, generally in line with growing scale of operations).
+    \item \emph{Total deposits} --- relevant only to banks/NBFCs (zero for Tata Motors); for a bank, deposits are a liability (interest is paid out on them) while loans made by the bank are assets (interest is earned on them) --- the reverse of how a normal company's balance sheet works.
+    \item \emph{Total other current liabilities} --- short-term obligations due within 12 months, e.g., debt due in the near term.
+    \item \emph{Long-term debt} --- Tata Motors' long-term debt rose from roughly Rs.60,000 crore (2017) to roughly Rs.93,000 crore (2021); generally, lower (or at least well-covered by equity) is preferable.
+    \item \emph{Deferred income tax liability} --- arises when a company's accounting tax expense differs from what tax law actually requires it to pay currently --- a future tax obligation not yet due.
+    \item \emph{Other liabilities} --- pension obligations, capital leases, deferred credits, and similar items not falling into other categories.
+    \item \emph{Common stock} --- capital raised through share issuance in the primary market; what subsequently trades in the secondary market.
+    \item \emph{Preferred stock} --- a separate capital-raising route from common stock; preferred holders receive fixed/priority dividends and are repaid before common shareholders in bankruptcy or merger, but typically have no voting rights (common shareholders do). Not all companies issue preferred stock --- Tata Motors, for example, has none.
+    \item \emph{Other equity} --- primarily accumulated reserves/retained earnings.
+\end{itemize}
+
+\subsubsection{What to check}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Net worth trend:} rising steadily over 5--10 years signals the business is genuinely generating and retaining value for shareholders, rather than just reporting accounting profit that doesn't accumulate.
+    \item \textbf{Debt-to-Equity:} should stay "manageable" --- investigate further if it exceeds 1, as that signals liabilities exceed the equity cushion, raising insolvency risk if earnings deteriorate.
+    \item \textbf{Working capital health:} current assets (including cash) should exceed current liabilities, indicating the company can meet near-term obligations without needing to raise new financing or sell long-term assets under duress.
+\end{itemize}
+
+\subsection{7. How the Three Statements Connect}
+
+The Income Statement shows the profit generated over a period; the Balance Sheet shows the resulting assets/liabilities/equity snapshot; the Cash Flow Statement shows how much actual cash was produced, invested, and raised. None of the three tells the full story alone --- net income can be positive while cash flow is negative (working capital drag), or a company can be raising large amounts of cash through financing while its core operations are actually loss-making.
+
+\paragraph{Worked example --- Tim's Cars (one car sold for \$100,000)} 
+
+\paragraph{Step 1 --- Income Statement} Revenue \$100,000 - COGS \$70,000 = Gross Profit \$30,000 - SG\&A \$25,000 = \textbf{Net Income \$5,000}.
+
+\paragraph{Step 2 --- Cash Flow Statement (indirect method), starting from that \$5,000} 
+
+\begin{itemize}[leftmargin=*]
+    \item Add back non-cash D\&A: 20\% of the \$70,000 COGS is depreciation/amortization = \$14,000 \(\to\) running total \$19,000.
+    \item Adjust working capital using the Balance Sheet: Accounts Receivable rose from \$10,000 to \$15,000 (+\$5,000, subtract --- this is recorded revenue not yet collected in cash) and Inventory rose from \$40,000 to \$45,000 (+\$5,000, subtract --- cash was spent producing stock not yet sold) \(\to\) combined -\$10,000. Accounts Payable rose from \$5,000 to \$7,000 (+\$2,000, add --- the company is holding cash longer by delaying supplier payment); the current portion of debt payments stayed flat at \$1,000 (no change).
+    \item \textbf{Operating Cash Flow} = \$19,000 - \$10,000 + \$2,000 = \textbf{\$11,000}.
+\end{itemize}
+
+\paragraph{Step 3 --- Investing activities} \$9,000 spent on PP\&E (\$4,500 replacing worn-out equipment + \$4,500 on additional new equipment to support growth) \(\to\) \textbf{-\$9,000}. Note that only the \emph{incremental} \$4,500 increases the non-current PP\&E balance on the Balance Sheet (50,000 \(\to\) 54,500), since the other \$4,500 simply replaced assets at the same carrying value.
+
+\paragraph{Step 4 --- Financing activities} \$5,000 raised by issuing stock + \$5,000 raised via new long-term debt (no repayments made) \(\to\) \textbf{+\$10,000}. This pushes long-term debt on the Balance Sheet from \$10,000 to \$15,000.
+
+\paragraph{Step 5 --- Reconciliation} Net cash change = \$11,000 (operating) - \$9,000 (investing) + \$10,000 (financing) = \textbf{\$12,000}. Adding this to the prior year's \$10,000 cash balance gives a \textbf{closing cash balance of \$22,000}, which flows directly onto this year's Balance Sheet.
+
+\paragraph{Step 6 --- Completing the Balance Sheet} Total Current Assets = \$82,000 (including the new \$22,000 cash balance, \$15,000 receivables, \$45,000 inventory). Total Non-current Assets = \$54,500 (PP\&E). \textbf{Total Assets = \$136,500}. Total Current Liabilities = \$8,000. Total Non-current Liabilities = \$15,000 (the long-term debt). \textbf{Total Liabilities = \$23,000}. Since Assets = Liabilities + Equity, \textbf{Owner's Equity = \$136,500 - \$23,000 = \$113,500} --- the amount shareholders would theoretically be entitled to if the business were liquidated at book value.
+
+This single transaction shows the full loop: a sale on the Income Statement feeds into Operating Cash Flow on the Cash Flow Statement (adjusted for non-cash items and working capital), which combines with Investing and Financing activity to determine the closing cash balance, which becomes an asset on the Balance Sheet --- and the Balance Sheet's other movements (new debt, new equity, new PP\&E, changed receivables/inventory/payables) are themselves the very inputs used to build the Cash Flow Statement in the first place. Real companies have thousands of transactions running through this same loop simultaneously, but the underlying mechanics never change.
+
+\subsection{8. Key Financial Ratios}
+
+A ratio compares one financial-statement line against another, almost always expressed as a percentage or a multiple, and is most useful when tracked over time and benchmarked against peers (a ratio in isolation, without context, is rarely meaningful on its own). They split into five groups.
+
+\subsubsection{A. Profitability Ratios --- how efficiently the business converts revenue, assets, equity, or capital into profit}
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Gross Profit Margin & Gross Profit / Revenue & How much profit survives after direct production costs --- reflects pricing power and production efficiency. Higher and stable/rising is generally better. \\
+\hline
+Operating Profit Margin & Operating Profit / Revenue & Profitability after overhead too, before financing/tax --- the cleanest read on core business efficiency. \\
+\hline
+Net Profit Margin & Net Profit / Revenue & The final take-home profit per dollar of sales, after everything including interest and tax. \\
+\hline
+Return on Assets (ROA) & Net Profit / Total Assets & How efficiently the business turns its total asset base into profit --- useful for comparing capital intensity across companies. \\
+\hline
+Return on Equity (ROE) & Net Profit / Total Equity & How efficiently shareholders' own capital is being used to generate profit. \emph{Caveat:} heavy debt financing shrinks the equity base and can artificially inflate ROE, so a high ROE driven mainly by leverage is riskier than one driven by genuine operating efficiency --- always check D/E alongside ROE. \\
+\hline
+Return on Capital Employed (ROCE) & EBIT / (Total Assets - Current Liabilities) & Strips out the leverage distortion in ROE by using \emph{all} capital (debt + equity) employed in the business rather than just equity --- a better comparison tool across companies with different capital structures. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+\paragraph{General interpretation note} when comparing a P\&L figure (a flow, over a period) against a Balance Sheet figure (a snapshot, at a point in time), it's best practice to average the opening and closing Balance Sheet numbers, so you're comparing like with like.
+
+\subsubsection{B. Liquidity Ratios --- ability to meet short-term obligations}
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Cash Ratio & Cash / Current Liabilities & The strictest test --- can the company pay off all short-term debt using only cash on hand? A ratio above 1 indicates strong liquidity, though holding excessive cash idle isn't always optimal either. \\
+\hline
+Quick Ratio (Acid-Test) & (Cash + Marketable Securities + Receivables) / Current Liabilities & A more realistic near-term liquidity test --- excludes inventory and prepaid expenses, since these aren't quickly convertible to cash. \\
+\hline
+Current Ratio & Current Assets / Current Liabilities & The broadest liquidity measure, including inventory. Generally, a ratio comfortably above 1 indicates the company can cover near-term obligations without distress; too high a ratio, though, can also suggest inefficiently parked working capital. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+\subsubsection{C. Efficiency Ratios --- how well the business moves inventory, collects cash, and pays bills}
+
+\textbf{Turnover Ratios} (an Income Statement line against a related Balance Sheet line):
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Inventory Turnover & COGS / Inventory & How many times inventory is sold and replenished over the period --- higher generally means efficient inventory management and strong demand; very low turnover can signal obsolete or slow-moving stock. \\
+\hline
+Receivables Turnover & Revenue / Accounts Receivable & How efficiently the company collects cash from customers --- higher means faster collection. \\
+\hline
+Asset Turnover & Revenue / Total Assets & How much revenue is generated per dollar of total assets --- a measure of asset-use efficiency, related to but distinct from ROA (which uses profit instead of revenue). \\
+\hline
+Payables Turnover & COGS / Accounts Payable & How quickly the company pays its own suppliers --- very high turnover may mean the company isn't taking full advantage of supplier credit terms; very low can signal cash strain. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+\textbf{Cash Conversion Cycle} --- converts the turnover ratios above into "days," giving a more intuitive operational picture:
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Days Sales of Inventory (DSI) & (Inventory / COGS) \(\times\) 365 & Average days to convert inventory into a sale. Lower is generally better --- faster inventory turnover ties up less cash. \\
+\hline
+Days Sales Outstanding (DSO) & (Receivables / Revenue) \(\times\) 365 & Average days to collect cash after a sale. Lower means faster cash collection. \\
+\hline
+Days Payable Outstanding (DPO) & (Payables / COGS) \(\times\) 365 & Average days the company takes to pay its own suppliers. Higher DPO is generally favorable for the company's own cash position (it delays cash outflow), though excessively high DPO can strain supplier relationships. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+The \textbf{Cash Conversion Cycle (CCC) = DSI + DSO - DPO} measures the net number of days cash is tied up in operations before it's recovered. (Note: subtracting DPO is the standard formula, since a longer payables period \emph{delays} cash going out, partially offsetting the cash tied up in inventory and receivables --- a shorter or even negative CCC is generally a sign of strong operating efficiency, common in businesses that collect cash quickly but pay suppliers slowly.)
+
+\subsubsection{D. Leverage Ratios --- how much debt-funded risk the business carries}
+
+\paragraph{Balance Sheet-based} 
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Debt-to-Assets (D/A) & Total Liabilities / Total Assets & What proportion of the asset base is financed by debt versus equity. Higher means more financial risk. \\
+\hline
+Debt-to-Equity (D/E) & Total Liabilities / Total Equity & How much debt exists per dollar of shareholder equity. A D/E above 1 (more debt than equity) warrants closer scrutiny of insolvency risk, particularly in cyclical or low-margin industries. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+\paragraph{Income Statement-based (debt-servicing ability)} 
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Interest Coverage Ratio & Operating Profit / Interest Expense & Whether operating profit alone is sufficient to cover interest obligations --- calculated before interest, so it isolates the core business's ability to service debt. A low ratio signals the company is at risk if profits dip even slightly. \\
+\hline
+Debt Service Coverage Ratio (DSCR) & EBITDA / Total Debt Service (interest + current portion of principal) & A stricter test than interest coverage --- checks whether the business generates enough to cover \emph{both} interest and scheduled principal repayments, using EBITDA (which excludes non-cash D\&A) as the profit base. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+\subsubsection{E. Price Ratios --- used to assess whether the share price is attractive}
+
+\paragraph{Earnings-based} 
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Earnings per Share (EPS) & Net Profit (- Preferred Dividends) / Common Shares Outstanding & The slice of profit attributable to each share of common stock --- preferred dividends are subtracted first since preferred shareholders are paid before common shareholders. \\
+\hline
+Price-to-Earnings (P/E) & Share Price / EPS & How much the market is willing to pay per dollar of current earnings. A high P/E can mean the stock is overvalued, or it can reflect the market pricing in strong expected future growth --- context (growth rate, industry norms) is essential to interpret it correctly. \\
+\hline
+PEG Ratio & P/E Ratio / Expected EPS Growth Rate & Adjusts the P/E for expected growth --- in theory, a PEG near 1 suggests fair value relative to growth, below 1 potentially undervalued, above 1 potentially overvalued. The major caveat: this is only as reliable as the EPS growth estimate feeding into it, which is itself a forecast, not a fact. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+\paragraph{Dividend-based} 
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}\begin{tabular}{|L{0.22\textwidth}|L{0.24\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{What it tells you} \\
+\hline
+Dividends per Share (DPS) & Dividends Paid / Common Shares Outstanding & Cash income per share returned to shareholders (excluding one-off special dividends, which should be stripped out for a representative figure). \\
+\hline
+Dividend Yield & DPS / Share Price & Dividend income as a percentage of the current share price --- useful for income-focused investors comparing across stocks or against alternatives like bonds. \\
+\hline
+Dividend Payout Ratio & Dividends Paid / Net Profit & What percentage of profit is being returned to shareholders versus retained for reinvestment. A very high payout ratio can mean limited reinvestment for growth, or in extreme cases, an unsustainable dividend if it exceeds 100\% of profit. \\
+\hline
+\end{tabular}\end{center}
+\endgroup
+
+\subsection{9. Determining Intrinsic Value (Valuation Methods)}
+
+The end goal of fundamental analysis is to estimate what a business is \emph{actually} worth, then compare that to its market price. Two broad approaches exist: estimating value from the business's own future cash-generating ability (DCF), or inferring value by comparison with similar businesses (Relative Valuation).
+
+\subsubsection{Discounted Cash Flow (DCF)}
+
+The core idea: a business is worth the sum of all the cash it will generate for its owners in the future, adjusted for the fact that a dollar received in the future is worth less than a dollar today (time value of money, and the risk that future cash flows may not materialize as expected).
+
+The general process:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Forecast future free cash flows} --- typically projected explicitly for some number of years (e.g., 5--10), based on assumptions about revenue growth, margins, capital expenditure, and working capital needs.
+    \item \textbf{Estimate a terminal value} --- since a business is assumed to keep operating beyond the explicit forecast period, a terminal value captures all cash flows after that point, usually estimated either via a perpetual growth assumption or an exit-multiple approach.
+    \item \textbf{Discount both the projected cash flows and the terminal value back to present value}, using a discount rate that reflects the riskiness of those cash flows (commonly the Weighted Average Cost of Capital, WACC, for the firm as a whole). A higher discount rate is applied to riskier, less predictable businesses, which lowers their present value relative to a safer business with identical projected cash flows.
+    \item \textbf{Sum the discounted cash flows and terminal value} to arrive at an estimate of intrinsic (enterprise or equity) value.
+\end{enumerate}
+
+If this intrinsic value exceeds the current market price, the stock may be considered undervalued (and vice versa). The major weakness of DCF is its sensitivity to assumptions --- small changes in the assumed growth rate or discount rate can swing the resulting valuation dramatically, so DCF outputs are best treated as a range or a sanity check rather than a precise number, and are most reliable for businesses with relatively stable, predictable cash flows (less reliable for early-stage or highly cyclical companies where forecasting even five years out is largely guesswork).
+
+\subsubsection{Relative Valuation}
+
+Rather than building cash-flow projections from scratch, relative valuation infers what a business \emph{should} be worth by comparing its valuation multiples (P/E, P/B, EV/EBITDA, and similar ratios from the Price Ratios section above) against:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Industry peers} --- similar businesses operating in the same sector facing comparable growth and risk profiles, on the logic that similar businesses should trade at broadly similar multiples unless there's a specific reason (better growth, better margins, lower risk) for a premium or discount.
+    \item \textbf{The company's own historical averages} --- comparing today's multiple against where the stock has typically traded in the past, to flag whether it currently looks unusually cheap or expensive relative to its own history.
+\end{itemize}
+
+Commonly used multiples beyond P/E include Price-to-Book (P/B, share price relative to book value of equity per share --- useful for asset-heavy businesses like banks and real estate) and EV/EBITDA (Enterprise Value relative to EBITDA --- useful because it's capital-structure-neutral, allowing comparison between companies with very different debt levels, unlike P/E which is affected by leverage through its impact on net income).
+
+The strength of relative valuation is its simplicity and speed; the weakness is that it's only as good as the chosen peer group --- if the entire sector is overvalued or undervalued at a point in time, relative valuation will simply confirm the mispricing rather than catch it, since it doesn't independently assess intrinsic worth the way DCF attempts to. In practice, the two methods are typically used together: DCF for an independent fundamental anchor, and relative valuation as a market-based cross-check.
 
 % -------------------- Introduction to Algorithmic Trading --------------------
 \chapter{Introduction to Algorithmic Trading}
