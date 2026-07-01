@@ -1832,13 +1832,1724 @@ The strength of relative valuation is its simplicity and speed; the weakness is 
 
 % -------------------- Introduction to Algorithmic Trading --------------------
 \chapter{Introduction to Algorithmic Trading}
+
+
 \section{What is Algorithmic Trading?}
+
+Algorithmic trading, or algo-trading, is a sophisticated method of interacting with financial markets using computer programs to execute trades automatically. Instead of a human manually clicking ``buy'' or ``sell,'' a mathematical algorithm follows a defined set of instructions based on timing, price, volume, or mathematical models to place trades at speeds and frequencies that are impossible for a human trader.
+
+To build a successful algorithmic trading system, quantitative developers focus on three core pillars:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Technical Indicators \& Signals:} The mathematical triggers that tell the algorithm when an opportunity exists, such as moving average crossovers or volatility spikes.
+    \item \textbf{Strategy Formulation:} The logic governing the trade. Common strategies include mean reversion, trend following, and statistical arbitrage.
+    \item \textbf{Backtesting:} The crucial process of running the algorithm through historical market data to see how it \emph{would} have performed in the past before risking live capital.
+\end{enumerate}
+
+\subsection{Advantages and Disadvantages of Algo-Trading}
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{center}
+\begin{tabular}{|L{0.43\textwidth}|L{0.43\textwidth}|}
+\hline
+\textbf{Advantages} & \textbf{Disadvantages} \\
+\hline
+\textbf{Speed and Precision:} Algorithms execute orders in milliseconds or microseconds, capturing fleeting opportunities before human traders even see them. & \textbf{System Failures \& Glitches:} Code bugs, connectivity issues, or hardware crashes can lead to massive, unintended financial losses in seconds. \\
+\hline
+\textbf{Emotionless Trading:} Removes human psychology, such as fear, greed, and panic, from the equation, ensuring discipline to the trading plan. & \textbf{Over-Optimization:} An algorithm might perform flawlessly in a backtest by memorizing historical data, but fail in live, unpredictable markets. \\
+\hline
+\textbf{Simultaneous Processing:} A computer can scan thousands of stocks across multiple markets and execute multiple strategies simultaneously. & \textbf{High Infrastructure Costs:} Competing at the highest level requires expensive colocation servers, direct market access, and massive data feeds. \\
+\hline
+\textbf{Backtesting Capability:} Traders can mathematically validate a strategy against decades of past data before deploying capital. & \textbf{Systemic Risk:} When multiple institutional algorithms react to the same data simultaneously, they can contribute to rapid market dislocations. \\
+\hline
+\end{tabular}
+\end{center}
+\endgroup
+
 \section{Basic Terminologies}
-\section{Diving into Technical Analysis (Bonus)}
+
+\subsection{Order Types and Execution}
+
+Different order types provide investors with precise control over exactly \emph{how} and \emph{when} their capital is deployed based on their specific risk tolerance and market conditions.
+
+\subsubsection{Order Types Explained}
+
+\paragraph{Market Order}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} An instruction to buy or sell a security immediately at the best currently available market price.
+    \item \textbf{Intuition:} ``I do not care about getting the perfect price; I just want to enter or exit this trade right now.''
+    \item \textbf{Example:} A stock is trading at Rs. 100. You place a market buy order. Because the market is moving quickly, the lowest available seller is at Rs. 100.10. Your order fills instantly at Rs. 100.10. Execution is guaranteed; the exact price is not.
+\end{itemize}
+
+\paragraph{Limit Order}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} An instruction to buy or sell a security only at a specific designated price or better.
+    \item \textbf{Intuition:} ``I am setting a strict boundary. I will only buy if it goes on sale, or sell if it hits my premium target.''
+    \item \textbf{Example:} A stock is trading at Rs. 105. You want it, but only at Rs. 100. You place a limit buy at Rs. 100. The order sits in the order book. If the stock never drops to Rs. 100, your order is never executed.
+\end{itemize}
+
+\paragraph{Stop-Loss Order}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} A defensive order that automatically converts into a market order once the stock hits a specific stop price, used primarily to cap potential losses.
+    \item \textbf{Intuition:} ``This is my emergency parachute. If the trade goes against me, get me out immediately before the bleeding gets worse.''
+    \item \textbf{Example:} You bought a stock at Rs. 100. You set a sell stop-loss at Rs. 90. If the stock crashes to Rs. 90, your parachute deploys---it becomes a market order and sells immediately, perhaps at Rs. 89.90, to prevent a larger loss if the stock falls to Rs. 70.
+\end{itemize}
+
+\paragraph{Stop-Limit Order}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} A two-step order. Once a specific stop price is hit, it triggers a limit order instead of a market order.
+    \item \textbf{Intuition:} ``Deploy my emergency parachute, but only if I can land on a soft cushion. If the market is in a free fall, do not sell my shares at a ridiculously low price.''
+    \item \textbf{Example:} You bought at Rs. 100. You set a stop price at Rs. 90 and a limit price at Rs. 89. If the stock hits Rs. 90, your limit order to sell at Rs. 89 is activated. \emph{Risk:} If the stock gaps down instantly from Rs. 91 to Rs. 85 overnight, your Rs. 89 limit is never met, and you are left holding a crashing stock.
+\end{itemize}
+
+\paragraph{Take Profit Order}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} An order used to automatically close a profitable position once a specific target price is reached.
+    \item \textbf{Intuition:} ``Locking in the win while I sleep. I do not need to be greedy; once it hits my target, secure the gain.''
+    \item \textbf{Example:} You buy a stock at Rs. 100 with a target of Rs. 120. You place a take-profit order at Rs. 120. When the stock hits Rs. 120, the system automatically sells your position, securing your Rs. 20 profit without you needing to monitor the screen.
+\end{itemize}
+
+\subsection{Market Friction and Risk Assessment}
+
+\subsubsection{Slippage}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} Slippage is the difference between the expected price of a trade and the actual price at which the trade is executed. It is the hidden cost of market speed and illiquidity.
+    \item \textbf{Intuition:} You see a price tag on a shirt for Rs. 100, but by the time you run to the cash register, the manager has updated the system, and you are charged Rs. 102.
+    \item \textbf{Example:} You place a large market order to buy 10,000 shares of a low-volume stock at Rs. 100. Because there are not enough sellers at Rs. 100, your order eats through the order book, buying shares at Rs. 100, Rs. 101, and Rs. 102. Your average price ends up being Rs. 101, so you experienced Rs. 1 of slippage per share.
+\end{itemize}
+
+\paragraph{The Disadvantages of High Slippage}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Increased Trading Costs:} Acts as an invisible tax, worsening your average execution price and eating directly into your capital.
+    \item \textbf{Reduced Profitability:} For short-term algorithmic traders relying on tiny price movements, such as 0.5\% gains, high slippage can turn a winning strategy into a net loser.
+    \item \textbf{Inaccurate Risk Management:} If a trader calculates maximum risk based on a stop-loss triggering exactly at Rs. 90, but severe slippage causes it to fill at Rs. 85, the trader suffers a significantly larger loss than anticipated.
+    \item \textbf{Execution Difficulty:} Makes entering and exiting illiquid markets at desired levels practically impossible, breaking strict systematic trading rules.
+\end{itemize}
+
+\subsubsection{Risk-Reward Ratio}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} A mathematical assessment used by traders to compare the potential profit of a trade against its potential loss. It calculates how much capital is expected to be gained for every unit of capital put at risk.
+    \item \textbf{Intuition:} ``Is the juice worth the squeeze? Am I risking my entire wallet just to pick up a penny?''
+\end{itemize}
+
+\paragraph{The Calculation}
+\begin{equation*}
+    \text{Risk/Reward Ratio} =
+    \frac{\text{Potential Profit (Target Price - Entry Price)}}{\text{Potential Loss (Entry Price - Stop-Loss Price)}}.
+\end{equation*}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Example:} You buy a stock at Rs. 100. You set your stop-loss at Rs. 90, risking Rs. 10. You set your take-profit target at Rs. 130, targeting Rs. 30 in profit.
+\end{itemize}
+
+\begin{equation*}
+    \text{Risk/Reward} = \frac{30}{10} = 3{:}1.
+\end{equation*}
+
+This means you stand to make 3 units of reward for every 1 unit of risk. Traders heavily favor ratios greater than 1:1, as it provides a positive expected value over a large sample size of trades---meaning you can lose the majority of your trades and still be profitable overall.
+
+
 \section{Technical Analysis}
+
+\subsection{What is Technical Analysis?}
+Technical analysis is a methodical approach used to evaluate and forecast future price movements in financial markets by studying \textbf{historical market data}, primarily price and volume. It is grounded in the foundational idea that market prices move in specific \textbf{trends} and \textbf{repeating patterns}.
+
+These trends and patterns tend to repeat over time because human investor psychology and collective market behavior often repeat. Traders use visual tools such as charts, price patterns, and technical indicators to identify the most suitable times to buy or sell assets.
+
+Technical analysts commonly use the following tools to identify possible entry and exit points:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Charts:} Visual representations of price and volume over time.
+    \item \textbf{Pattern Recognition:} Identification of recurring price formations and market structures.
+    \item \textbf{Technical Indicators:} Mathematical tools that summarize price, volume, volatility, and momentum information.
+\end{itemize}
+
+\subsection{Core Idea}
+Technical analysis does \textbf{not} guarantee absolute success. It is a decision-support tool, not a certainty-producing method. Its main value is that it provides a structured and analytical approach to making trading decisions. Its usefulness improves when combined with:
+
+\begin{itemize}[leftmargin=*]
+    \item Strict risk management
+    \item Trading discipline
+    \item Backtesting
+    \item Proper trade execution
+\end{itemize}
+
+\subsection{Technical Indicators}
+
+\subsubsection{What are Technical Indicators?}
+Technical indicators are \textbf{mathematical calculations and tools} applied to historical market variables, especially price and volume. Price data usually includes the open, high, low, and close (OHLC), while volume measures market participation.
+
+These indicators are designed to help traders identify trends, patterns, potential reversals, and market opportunities so they can make more informed trading decisions. Their purpose is to simplify market information and help traders detect:
+
+\begin{itemize}[leftmargin=*]
+    \item Trends
+    \item Momentum
+    \item Volatility
+    \item Volume confirmation
+    \item Possible reversals
+    \item Potential entry and exit signals
+\end{itemize}
+
+The results of these calculations are usually displayed visually as lines, overlays, oscillators, bands, or signal markers on a price chart. This makes complex market information easier to interpret and helps traders analyze price movement more efficiently.
+
+Because each indicator uses a different method for interpreting price action, different indicators generate different types of insights and trading signals. Since most indicators rely on a small set of core variables, mainly price and volume, traders have developed hundreds, and even thousands, of unique technical indicators.
+
+\subsection{Classification of Technical Indicators}
+Technical indicators are commonly grouped in two different ways: by timing behavior and by functional purpose.
+
+\subsubsection{Leading vs. Lagging Indicators}
+
+\paragraph{Leading Indicators}
+Leading indicators try to signal a move \textbf{before} the price trend or reversal fully happens. They are often used to anticipate turning points, but they may also generate false signals.
+
+\paragraph{Lagging Indicators}
+Lagging indicators confirm a move \textbf{after} it has already started. They are usually more reliable for confirmation, but they may enter later.
+
+\begin{quote}
+In practice, leading indicators are more predictive, while lagging indicators are more confirmatory.
+\end{quote}
+
+\subsubsection{By Functional Type}
+Technical indicators are broadly divided into four main categories based on what the indicator is trying to measure:
+
+\begin{enumerate}[leftmargin=*]
+    \item Trend indicators
+    \item Momentum indicators
+    \item Volatility indicators
+    \item Volume indicators
+\end{enumerate}
+
+\subsection{Main Indicator Categories}
+
+\subsubsection{Trend Indicators}
+
+\paragraph{Purpose}
+Trend indicators help identify the \textbf{direction of the market} or asset price. They show whether the market is uptrending, downtrending, or moving sideways. They are useful for traders who follow the prevailing direction of price movement.
+
+\paragraph{Common Examples}
+\begin{itemize}[leftmargin=*]
+    \item Moving Averages
+    \item MACD (Moving Average Convergence Divergence)
+    \item ADX (Average Directional Index)
+    \item Parabolic SAR
+    \item Linear Regression
+    \item Forecast Oscillator
+\end{itemize}
+
+\paragraph{Intuition}
+Trend indicators often smooth price data so that the underlying direction becomes easier to see. For example, a simple moving average can be used to compare the current price with the recent average price. If price stays above the moving average, it may indicate an uptrend.
+
+\paragraph{Example Logic}
+\begin{itemize}[leftmargin=*]
+    \item Buy when price is above a moving average.
+    \item Sell when price falls below it.
+\end{itemize}
+
+Trend indicators are often \textbf{lagging}, because they confirm direction after price has already moved.
+
+\subsubsection{Momentum Indicators}
+
+\paragraph{Purpose}
+Momentum measures the \textbf{speed and strength} of price movement over a given period. Momentum indicators are often used to detect:
+
+\begin{itemize}[leftmargin=*]
+    \item Overbought conditions
+    \item Oversold conditions
+    \item Strength or weakness in a trend
+    \item Possible exhaustion of a move
+\end{itemize}
+
+\paragraph{Common Examples}
+\begin{itemize}[leftmargin=*]
+    \item RSI (Relative Strength Index)
+    \item Stochastic Oscillator
+    \item CCI (Commodity Channel Index)
+    \item Chande Momentum Oscillator
+    \item Williams \%R
+\end{itemize}
+
+\paragraph{Intuition}
+If price is rising quickly with strong participation, momentum is high. If price starts losing speed, that may signal weakening strength. Momentum indicators are usually oscillators, which move within a bounded or interpretable range.
+
+\paragraph{Example Logic}
+\begin{itemize}[leftmargin=*]
+    \item Buy when RSI falls below a low threshold and begins recovering.
+    \item Sell when RSI becomes too high and signals possible overbought conditions.
+\end{itemize}
+
+Momentum indicators are often useful in range-bound markets and in spotting reversal zones.
+
+\subsubsection{Volatility Indicators}
+
+\paragraph{Purpose}
+Volatility indicators measure how much and how quickly price changes. They help traders understand:
+
+\begin{itemize}[leftmargin=*]
+    \item Market uncertainty
+    \item Risk level
+    \item Potential breakout zones
+    \item Strength of price expansion or contraction
+\end{itemize}
+
+\paragraph{Meaning of Volatility}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{High volatility:} Price moves up and down sharply in a short time.
+    \item \textbf{Low volatility:} Price changes more slowly and smoothly.
+\end{itemize}
+
+\paragraph{Common Examples}
+\begin{itemize}[leftmargin=*]
+    \item Bollinger Bands
+    \item Envelopes
+    \item Average True Range (ATR)
+    \item Volatility Channels
+    \item Chaikin Volatility
+    \item Projection Oscillator
+\end{itemize}
+
+\paragraph{Intuition}
+Volatility is often estimated using standard deviation or related measures, but there are also more specialized estimators such as:
+
+\begin{itemize}[leftmargin=*]
+    \item Parkinson volatility estimator
+    \item Garman--Klass estimator
+    \item Rogers--Satchell estimator
+    \item Yang--Zhang estimator
+\end{itemize}
+
+\paragraph{Example Logic}
+Volatility indicators are often used to:
+
+\begin{itemize}[leftmargin=*]
+    \item Detect compression before breakout
+    \item Identify unusually large movements
+    \item Set stop-loss distances
+    \item Adjust position size according to risk
+\end{itemize}
+
+\subsubsection{Volume Indicators}
+
+\paragraph{Purpose}
+Volume indicators analyze trading volume together with price movement. They are used to judge whether a trend is supported by participation or whether it may be weakening.
+
+Volume helps answer questions such as:
+
+\begin{itemize}[leftmargin=*]
+    \item Is the move supported by strong market interest?
+    \item Is the trend likely to continue?
+    \item Is a reversal becoming more likely?
+\end{itemize}
+
+\paragraph{Common Examples}
+\begin{itemize}[leftmargin=*]
+    \item On-Balance Volume (OBV)
+    \item Accumulation/Distribution Line
+    \item Chaikin Money Flow
+    \item Ease of Movement
+    \item Money Flow Index (MFI)
+    \item Demand Index
+    \item Force Index
+\end{itemize}
+
+\paragraph{Intuition}
+A price move accompanied by strong volume is generally considered more credible than one with weak volume. For stocks, volume usually means the number of shares traded. In other markets, volume may be interpreted differently, but the core idea remains the same: it measures participation.
+
+\paragraph{Example Logic}
+Volume indicators are often used to:
+
+\begin{itemize}[leftmargin=*]
+    \item Confirm a trend
+    \item Detect buying or selling pressure
+    \item Spot possible trend exhaustion
+    \item Identify divergence between price and participation
+\end{itemize}
+
+\subsection{How These Indicators Are Used Together}
+Technical indicators can be used across stocks, futures, forex, options, ETFs, and other tradable instruments. They can also be applied across different time horizons, including intraday trading, short-term trading, medium-term trading, and long-term investing.
+
+A common approach is to combine indicators from different categories, for example:
+
+\begin{itemize}[leftmargin=*]
+    \item One trend indicator
+    \item One momentum indicator
+    \item One volatility indicator
+    \item One volume indicator
+\end{itemize}
+
+This helps reduce the chance of relying on a single misleading signal.
+
+\subsection{Important Caution}
+Although it is often suggested to include at least one indicator from each category in a trading system, that is not automatically a good strategy. The correct approach is to:
+
+\begin{itemize}[leftmargin=*]
+    \item Build the rule
+    \item Backtest it
+    \item Evaluate the results
+    \item Check robustness
+    \item Compare against simpler alternatives
+\end{itemize}
+
+\begin{quote}
+Always test any trading idea before using real capital.
+\end{quote}
+
+\subsection{Key Takeaways}
+\begin{itemize}[leftmargin=*]
+    \item Technical analysis studies past price and volume data to forecast possible future movement.
+    \item It is based on trends, patterns, and investor behavior.
+    \item Technical indicators are mathematical tools that simplify market data into signals.
+    \item Indicators are commonly classified as leading or lagging, and by functional type: trend, momentum, volatility, or volume.
+    \item Each category provides a different kind of market insight.
+    \item No indicator should be trusted blindly; every strategy should be backtested and risk-managed.
+\end{itemize}
+
 \section{Types of Technical Indicators}
-\section{Introduction to Strategies}
-\section{Combining Trading Indicators}
+
+\subsection{Overview}
+
+Technical indicators are mathematical calculations based on \textbf{price}, \textbf{volume}, or \textbf{open interest} data that help traders identify trends, time entries/exits, and assess market strength. They are broadly categorized into four types:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{\#} & \textbf{Category} & \textbf{What it Measures} \\ \hline
+ 1 & \textbf{Momentum Indicators} & Rate and speed of price change \\ \hline
+ 2 & \textbf{Trend Indicators} & Direction and strength of the trend \\ \hline
+ 3 & \textbf{Volume Indicators} & Buying/selling pressure via trading volume \\ \hline
+ 4 & \textbf{Volatility Indicators} & Degree and speed of price variation \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{1. Momentum Indicators}
+
+\subsubsection{What is Momentum?}
+
+Momentum in finance refers to the \textbf{inertia of a price trend} to continue either rising or falling for a particular length of time. It incorporates both \textbf{price and volume information}, and measures the \emph{rate} at which price changes --- not the direction itself.
+
+\paragraph{Analogy --- The Train:}
+\begin{quote}
+Think of a price trend like a moving train:
+\begin{itemize}[leftmargin=*]
+    \item At startup: the train accelerates slowly \(\rightarrow\) early-stage trend
+    \item At full speed: highest velocity, no longer accelerating \(\rightarrow\) mature trend
+    \item Applying brakes: decelerates over a long distance \(\rightarrow\) trend losing momentum
+\end{itemize}
+
+The ideal entry for a momentum investor is the \textbf{middle of the ride} --- when velocity is highest.
+
+\end{quote}
+\textbf{Key note:} Research indicates momentum indicators are \textbf{more reliable in rising markets} than falling ones.
+
+\subsubsection{Three Subcategories}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{Type} & \textbf{What it Compares} & \textbf{Examples} \\ \hline
+ Closing price vs. previous close & Is the market overbought/oversold at close? & RSI, ROC \\ \hline
+ Closing price vs. range & How strong is the current close within the recent high--low range? & Stochastic Oscillator, CCI \\ \hline
+ Closing price vs. moving average & How fast is price moving relative to its average? & MACD \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Relative Strength Index (RSI)}
+
+\paragraph{Intuition}
+RSI measures the \textbf{speed and magnitude} of recent price changes. It compares the average size of gains on up-days to the average size of losses on down-days. The result tells you whether a security has been bought (overbought) or sold (oversold) too aggressively.
+
+Think of it as asking: \emph{"Over the last 14 days, how much bigger were the up-moves compared to the down-moves?"}
+
+\paragraph{Formula}
+
+\[
+\text{RSI} = 100 - \frac{100}{1 + RS}
+\]
+
+Where:
+
+\[
+RS = \frac{\text{Average Gain}}{\text{Average Loss}} = \frac{\text{Previous Avg Gain} \times 13 + \text{Current Gain}}{\text{Previous Avg Loss} \times 13 + \text{Current Loss}}
+\]
+
+\begin{itemize}[leftmargin=*]
+    \item Default period: \textbf{14}
+    \item The first RS is a simple 14-period average; subsequent values use the \textbf{Wilder smoothing} formula above (multiplying by 13 and adding the new value, then dividing by 14 --- this is an exponential smoothing)
+    \item RSI output range: \textbf{0 to 100}
+\end{itemize}
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{RSI Value} & \textbf{Condition} & \textbf{Implication} \\ \hline
+ \(>\) 70 & Overbought & Possible reversal/pullback downward \\ \hline
+ \(<\) 30 & Oversold & Possible reversal/bounce upward \\ \hline
+ 50 -- 80 & Uptrend zone & Bulls in control \\ \hline
+ 20 -- 50 & Downtrend zone & Bears in control \\ \hline
+ Crosses above 50 & Momentum turning bullish &  \\ \hline
+ Crosses below 50 & Momentum turning bearish &  \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Signal Types}
+
+\paragraph{1. Overbought/Oversold}
+RSI \(>\) 70 or RSI \(<\) 30 are warning signals. However, in strongly trending markets, RSI can remain extreme for extended periods. Do \textbf{not} treat these as automatic reversal signals.
+
+\paragraph{2. Trend Confirmation}
+RSI generally fluctuates between 50 and 80 in strong uptrends (holding above 50 on dips) and between 20 and 50 in strong downtrends.
+
+\paragraph{3. Divergence (Most Powerful Signal)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Bearish Divergence}: Price makes a new higher high, but RSI makes a lower high \(\rightarrow\) momentum weakening \(\rightarrow\) potential reversal down
+    \item \textbf{Bullish Divergence}: Price makes a new lower low, but RSI makes a higher low \(\rightarrow\) bearish momentum weakening \(\rightarrow\) potential reversal up
+\end{itemize}
+
+\begin{quote}
+Price makes a new high while RSI makes a lower high; this bearish divergence warns that upward momentum is weakening.
+\end{quote}
+
+\paragraph{4. Support/Resistance on RSI}
+RSI itself forms support and resistance levels that confirm or warn of price continuations and reversals.
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item Use RSI in the \textbf{context of the larger trend}: a bounce off RSI 40 in an uptrend is more meaningful than RSI 30 in a sideways market
+    \item \textbf{Divergences at extremes} (above 70 or below 30) are the most reliable signals
+    \item Avoid using RSI alone in strongly trending markets --- combine it with trend indicators like MACD or moving averages
+\end{itemize}
+
+\subsubsection{Stochastic Oscillator}
+
+\paragraph{Intuition}
+The stochastic oscillator asks: \emph{"Where did the price close relative to its recent trading range?"}
+
+The logic: in an \textbf{uptrend}, prices tend to close near the \textbf{high} of their recent range. In a \textbf{downtrend}, prices close near the \textbf{low}. When this pattern breaks --- e.g., price closes near the low during an uptrend --- momentum may be shifting.
+
+\paragraph{Formula}
+
+\[
+\%K = \frac{C - L_{14}}{H_{14} - L_{14}} \times 100
+\]
+
+Where:
+\begin{itemize}[leftmargin=*]
+    \item \(C\) = Most recent closing price
+    \item \(L_{14}\) = Lowest price traded over the past 14 trading sessions
+    \item \(H_{14}\) = Highest price traded over the past 14 trading sessions
+    \item \(\%K\) = Current stochastic value (the "fast" line)
+\end{itemize}
+
+The \textbf{\%D line} (the "slow" line) is a 3-period simple moving average of \%K:
+
+\[
+\%D = \text{3-period SMA of } \%K
+\]
+
+\textbf{Charting}: Two lines are plotted --- \%K and \%D --- within a 0--100 range.
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{Value} & \textbf{Condition} & \textbf{Implication} \\ \hline
+ \(>\) 80 & Overbought & Possible reversal downward \\ \hline
+ \(<\) 20 & Oversold & Possible reversal upward \\ \hline
+ \%K crosses \textbf{above} \%D & Bullish crossover signal &  \\ \hline
+ \%K crosses \textbf{below} \%D & Bearish crossover signal &  \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Signal Types}
+
+\paragraph{1. Overbought/Oversold}
+Above 80 suggests overbought; below 20 suggests oversold. However, \textbf{strong trends can sustain these levels for a long time} --- do not sell just because the stochastic is at 85 in a bull market.
+
+\paragraph{2. \%K and \%D Crossovers}
+When the fast line (\%K) crosses the slow line (\%D):
+\begin{itemize}[leftmargin=*]
+    \item If crossing upward \(\rightarrow\) potential bullish reversal
+    \item If crossing downward \(\rightarrow\) potential bearish reversal
+\end{itemize}
+
+The intersection of the two lines indicates a \textbf{large shift in momentum from day to day} and is considered a reversal signal.
+
+\paragraph{3. Divergence}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Bearish divergence}: A bearish trend reaches a new lower low, but the oscillator prints a \textbf{higher low} \(\rightarrow\) bears exhausting momentum \(\rightarrow\) bullish reversal possible
+    \item \textbf{Bullish divergence}: A bullish trend reaches a new higher high, but the oscillator makes a \textbf{lower high} \(\rightarrow\) bulls losing steam \(\rightarrow\) bearish reversal possible
+\end{itemize}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Reduce sensitivity} by increasing the period or smoothing with a longer \%D
+    \item Best used alongside trend indicators --- only take buy signals in confirmed uptrends, sell signals in confirmed downtrends
+    \item Divergences at extreme readings (\(>\)80 or \(<\)20) are the most reliable signals
+    \item Adjust sensitivity: "fast stochastic" uses raw \%K and \%D; "slow stochastic" smooths \%K first
+\end{itemize}
+
+\subsection{2. Trend Indicators}
+
+\subsubsection{What is Trend Trading?}
+
+\paragraph{Core principle: "The trend is your friend."}
+
+Trend trading capitalizes on an asset's \textbf{directional momentum} without attempting to predict precise peaks and valleys (which is extremely difficult). Studies confirm that:
+\begin{itemize}[leftmargin=*]
+    \item Price momentum \textbf{persists over prolonged periods}
+    \item Trend-following produces positive returns across decades
+    \item Longer-term movements follow directional patterns far beyond what random chance allows
+\end{itemize}
+
+However, trends \textbf{do not move in straight lines} --- they zig-zag, pause, and consolidate. Trend indicators help \textbf{filter out noise} and protect positions from temporary reversals.
+
+\subsubsection{Moving Averages (MA)}
+
+\paragraph{Intuition}
+Moving averages \textbf{smooth out price fluctuations} by computing the average price over a specified number of past periods. Removing short-term noise makes the underlying trend direction clearer.
+
+Think of it as: \emph{"What is the 'typical' price of this asset over the last N days, updated daily?"}
+
+\paragraph{Types}
+
+\paragraph{Simple Moving Average (SMA):}
+
+\[
+\text{SMA}_n = \frac{P_1 + P_2 + \cdots + P_n}{n}
+\]
+
+Gives \textbf{equal weight} to all \(n\) past closing prices. Slower to react to recent price changes.
+
+\paragraph{Exponential Moving Average (EMA):}
+
+\[
+\text{EMA}_t = P_t \times k + \text{EMA}_{t-1} \times (1 - k)
+\]
+
+Where the smoothing factor:
+
+\[
+k = \frac{2}{n + 1}
+\]
+
+Gives \textbf{more weight to recent prices}, making the EMA faster and more responsive to new information than the SMA.
+
+\begin{quote}
+\textbf{Example}: For a 20-period EMA, \(k = 2/21 \approx 0.095\) \(\rightarrow\) today's price gets \(\sim\)9.5\% weight, yesterday's EMA gets \(\sim\)90.5\%
+
+\end{quote}
+\paragraph{Applications}
+
+\paragraph{1. Trend Identification}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{Condition} & \textbf{Signal} \\ \hline
+ Price above a rising MA & Uptrend \\ \hline
+ Price below a falling MA & Downtrend \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{2. Dynamic Support and Resistance}
+Moving averages often act as dynamic support (in uptrends) or resistance (in downtrends). Price frequently pulls back to the MA before resuming its trend direction.
+
+\paragraph{3. Crossover Signals}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{Signal} & \textbf{Description} & \textbf{Interpretation} \\ \hline
+ \textbf{Golden Cross} & Shorter-term MA crosses \emph{above} longer-term MA & Bullish --- buy signal \\ \hline
+ \textbf{Death Cross} & Shorter-term MA crosses \emph{below} longer-term MA & Bearish --- sell signal \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{Common example}: 50-day EMA crossing above/below 200-day EMA
+
+\end{quote}
+\begin{quote}
+\textbf{Golden Cross:} the shorter-period moving average crosses above the longer-period moving average, giving a bullish signal.\\
+\textbf{Death Cross:} the shorter-period moving average crosses below the longer-period moving average, giving a bearish signal.
+\end{quote}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item MAs are \textbf{lagging indicators} --- they follow price, they do not lead it; signals confirm, not predict
+    \item \textbf{Shorter periods} = more responsive but more false signals
+    \item \textbf{Longer periods} = smoother but more delayed
+    \item Combine with momentum indicators (RSI, MACD) for confirmation
+    \item EMAs are generally preferred in volatile/fast-moving markets; SMAs in stable markets
+\end{itemize}
+
+\subsubsection{Moving Average Convergence Divergence (MACD)}
+
+\paragraph{Intuition}
+MACD combines \textbf{two moving averages with momentum} to provide both the \textbf{direction} and \textbf{strength} of a trend in a single indicator. It answers: \emph{"Are the two EMAs pulling apart (diverging = strengthening trend) or coming together (converging = weakening trend)?"}
+
+\paragraph{Components}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{Component} & \textbf{Formula} & \textbf{Purpose} \\ \hline
+ \textbf{MACD Line} & \(\text{EMA}_{12} - \text{EMA}_{26}\) & Direction and strength of trend \\ \hline
+ \textbf{Signal Line} & 9-period EMA of MACD Line & Trigger line for buy/sell \\ \hline
+ \textbf{Histogram} & MACD Line \(-\) Signal Line & Visual of divergence between the two \\ \hline
+\end{tabular}
+\end{center}
+
+\[
+\text{MACD Line} = \text{EMA}_{12} - \text{EMA}_{26}
+\]
+
+\[
+\text{Signal Line} = \text{EMA}_9(\text{MACD Line})
+\]
+
+\[
+\text{Histogram} = \text{MACD Line} - \text{Signal Line}
+\]
+
+\paragraph{Reading the histogram:}
+\begin{itemize}[leftmargin=*]
+    \item Histogram bars growing \(\rightarrow\) momentum strengthening
+    \item Histogram bars shrinking \(\rightarrow\) momentum fading, possible reversal ahead
+\end{itemize}
+
+\paragraph{Signal Types}
+
+\paragraph{1. Signal Line Crossovers (Most Common)}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{Crossover} & \textbf{Signal} \\ \hline
+ MACD line crosses \textbf{above} Signal line & Bullish --- buy signal \\ \hline
+ MACD line crosses \textbf{below} Signal line & Bearish --- sell signal \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{2. Centerline Crossovers}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{MACD vs Zero} & \textbf{Meaning} \\ \hline
+ MACD rises \textbf{above zero} & Short-term EMA above long-term EMA \(\rightarrow\) growing bullish strength \\ \hline
+ MACD falls \textbf{below zero} & Short-term EMA below long-term EMA \(\rightarrow\) growing bearish strength \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{3. Divergence (Strongest Signal)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Bearish divergence}: Price makes a new high, but MACD makes a lower high \(\rightarrow\) trend losing strength, reversal possible
+    \item \textbf{Bullish divergence}: Price makes a new low, but MACD makes a higher low \(\rightarrow\) trend losing strength to downside, reversal possible
+\end{itemize}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item MACD is most effective in \textbf{trending markets}; less reliable in sideways/choppy conditions
+    \item Pair MACD with \textbf{support/resistance levels and candlestick charts} for best results
+    \item Signal line crossovers generate the most trade signals; divergence is the most significant warning
+    \item The histogram gives early warning --- watch for histogram bars to start shrinking \textbf{before} the crossover occurs
+\end{itemize}
+
+\subsubsection{RSI as a Trend Indicator}
+
+While RSI is primarily a momentum indicator, it also serves as a \textbf{trend confirmation tool}:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{Market Condition} & \textbf{RSI Behavior} \\ \hline
+ Strong uptrend & Typically oscillates between 50 and 80; holds above 50 on pullbacks \\ \hline
+ Strong downtrend & Typically oscillates between 20 and 50; holds below 50 on bounces \\ \hline
+ Oversold bounce (in uptrend) & RSI touches 30--40 and turns back up \\ \hline
+ Bearish divergence & Price makes higher high; RSI makes lower high \\ \hline
+\end{tabular}
+\end{center}
+
+\emph{(See Section 1.1 for full RSI details.)}
+
+\subsubsection{On-Balance Volume (OBV) as a Trend Indicator}
+
+OBV confirms trends by checking whether \textbf{volume is supporting the price direction}. Details are covered in Section 3.1. From a trend perspective:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Rising OBV alongside rising price} \(\rightarrow\) uptrend is valid and volume-backed
+    \item \textbf{OBV diverging from price} \(\rightarrow\) early warning of trend weakness before price reflects it
+\end{itemize}
+
+\subsection{3. Volume Indicators}
+
+\subsubsection{What is Volume?}
+
+Volume is the \textbf{total number of shares or contracts traded} over a given time period (typically one trading day). It measures the \textbf{intensity and participation} behind a price move.
+
+\textbf{Key insight: Volume often leads price.} It can signal trend changes before the price itself moves.
+
+\subsubsection{Volume--Price Relationship Reference Table}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{Price} & \textbf{Volume} & \textbf{Expectation} \\ \hline
+ \(\uparrow\) Rising & \(\uparrow\) Rising & \textbf{Bullish} --- trend likely to continue \\ \hline
+ \(\uparrow\) Rising & \(\downarrow\) Falling & \textbf{Caution} --- weak-hands buying; trend may not sustain \\ \hline
+ \(\downarrow\) Falling & \(\uparrow\) Rising & \textbf{Bearish} --- trend likely to continue \\ \hline
+ \(\downarrow\) Falling & \(\downarrow\) Falling & \textbf{Caution} --- weak-hands selling; trend may reverse \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+High volume = strong market interest and conviction. Low volume = lack of interest; signals potential reversal.
+
+\end{quote}
+
+\subsubsection{On-Balance Volume (OBV)}
+
+\paragraph{Intuition}
+OBV calculates \textbf{cumulative buying and selling pressure} as a running total. On days the stock closes higher, the full day's volume is added; on days it closes lower, the volume is subtracted.
+
+\emph{The direction of OBV --- not its absolute value --- is what matters.}
+
+\paragraph{Formula}
+
+\[
+\text{OBV}_t = \begin{cases} \text{OBV}_{t-1} + V_t & \text{if } C_t > C_{t-1} \quad \text{(up-volume)} \\ \text{OBV}_{t-1} - V_t & \text{if } C_t < C_{t-1} \quad \text{(down-volume)} \\ \text{OBV}_{t-1} & \text{if } C_t = C_{t-1} \end{cases}
+\]
+
+Where \(C_t\) = today's closing price, \(V_t\) = today's volume.
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{OBV and Price Pattern} & \textbf{Meaning} \\ \hline
+ Price \(\uparrow\) and OBV \(\uparrow\) (both making higher peaks/troughs) & Uptrend likely to \textbf{continue} \\ \hline
+ Price \(\downarrow\) and OBV \(\downarrow\) (both making lower peaks/troughs) & Downtrend likely to \textbf{continue} \\ \hline
+ Price \(\uparrow\) but OBV \(\downarrow\) (\textbf{negative divergence}) & Uptrend likely to \textbf{fail} \\ \hline
+ Price \(\downarrow\) but OBV \(\uparrow\) (\textbf{positive divergence}) & Downtrend likely to \textbf{fail} \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Applications}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Trend confirmation}: OBV rising with price validates the trend's strength and sustainability
+    \item \textbf{Divergence signals}: OBV diverging from price warns of reversal \textbf{before price reflects it} (OBV is a leading indicator)
+    \item \textbf{Breakout validation}: Rising OBV during price consolidation often precedes and confirms a breakout
+    \item \textbf{OBV trendlines}: OBV forms its own trendlines; breaks in OBV trendlines frequently precede corresponding price movements
+\end{enumerate}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item OBV is a \textbf{leading indicator} --- one of the few that can anticipate price moves
+    \item Do not focus on the absolute OBV number; focus on its \textbf{trend and divergences}
+    \item Use OBV trendline breaks as early warning signals
+    \item Rising OBV during flat/consolidating prices \(\rightarrow\) accumulation \(\rightarrow\) bullish breakout likely
+\end{itemize}
+
+\subsubsection{Volume RSI}
+
+\paragraph{Intuition}
+Volume RSI applies the standard \textbf{RSI formula to volume instead of price}. It measures whether \textbf{up-volume dominates over down-volume} (bullish) or vice versa (bearish).
+
+\begin{itemize}[leftmargin=*]
+    \item \emph{Up-volume} = Volume on days price closes higher
+    \item \emph{Down-volume} = Volume on days price closes lower
+\end{itemize}
+
+\paragraph{Formula}
+
+\[
+\text{Volume RSI} = 100 - \frac{100}{1 + \frac{\text{Avg Up-Volume over } n \text{ periods}}{\text{Avg Down-Volume over } n \text{ periods}}}
+\]
+
+Oscillates between \textbf{0 and 100} with a \textbf{50\% centerline}.
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{Reading} & \textbf{Meaning} \\ \hline
+ \(>\) 50\% & Bullish --- up-volume dominates \\ \hline
+ \(<\) 50\% & Bearish --- down-volume dominates \\ \hline
+ Crosses \textbf{above 50\%} from below & \textbf{Buy signal} \\ \hline
+ Drops \textbf{below 50\%} from above & \textbf{Sell signal} \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Volume Price Trend (VPT)}
+
+\paragraph{Intuition}
+VPT is similar to OBV but accounts for the \textbf{magnitude of price change}, not just its direction. It adds/subtracts a \emph{proportion} of volume equal to the \emph{percentage price change}. This means a large price move contributes more to VPT than a small one --- even if both are "up days."
+
+\paragraph{Formula}
+
+\[
+\text{VPT}_t = \text{VPT}_{t-1} + V_t \times \frac{C_t - C_{t-1}}{C_{t-1}}
+\]
+
+Where \(C_t\) = today's close, \(V_t\) = today's volume.
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{Signal} & \textbf{Meaning} \\ \hline
+ Price \(\uparrow\) and VPT \(\uparrow\) & Uptrend \textbf{confirmed} \\ \hline
+ Price \(\downarrow\) and VPT \(\downarrow\) & Downtrend \textbf{confirmed} \\ \hline
+ Price \(\uparrow\) but VPT flat/\(\downarrow\) & \textbf{Negative divergence} --- uptrend weak, may reverse down \\ \hline
+ Price \(\downarrow\) but VPT flat/\(\uparrow\) & \textbf{Positive divergence} --- downtrend weak, may reverse up \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{VPT vs OBV}: VPT is more nuanced --- a day with a 3\% move and high volume contributes more than a day with a 0.1\% move. OBV treats both equally.
+
+\end{quote}
+
+\subsubsection{Money Flow Index (MFI)}
+
+\paragraph{Intuition}
+MFI is often called the \textbf{volume-weighted RSI}. Unlike RSI (which only uses price), MFI incorporates \textbf{both price and volume} to measure buying and selling pressure. It uses the concept of "Typical Price" to represent each period's price as a single value.
+
+\paragraph{Formula}
+
+\paragraph{Step 1: Typical Price}
+\[
+\text{Typical Price} = \frac{H + L + C}{3}
+\]
+
+\paragraph{Step 2: Raw Money Flow}
+\[
+\text{Raw Money Flow} = \text{Typical Price} \times \text{Volume}
+\]
+
+\begin{itemize}[leftmargin=*]
+    \item If today's Typical Price \(>\) yesterday's \(\rightarrow\) \textbf{Positive Money Flow}
+    \item If today's Typical Price \(<\) yesterday's \(\rightarrow\) \textbf{Negative Money Flow}
+\end{itemize}
+
+\paragraph{Step 3: Money Flow Ratio}
+\[
+\text{Money Flow Ratio} = \frac{\text{14-period Positive Money Flow}}{\text{14-period Negative Money Flow}}
+\]
+
+\paragraph{Step 4: MFI}
+\[
+\text{MFI} = 100 - \frac{100}{1 + \text{Money Flow Ratio}}
+\]
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.25\textwidth}|L{0.34\textwidth}|L{0.31\textwidth}|}
+\hline
+ \textbf{MFI Value} & \textbf{Condition} & \textbf{Signal} \\ \hline
+ \(>\) 80 & Overbought & Potential sell/reversal \\ \hline
+ \(<\) 20 & Oversold & Potential buy/reversal \\ \hline
+ Bullish divergence & Price makes lower low; MFI makes higher low & Reversal up \\ \hline
+ Bearish divergence & Price makes higher high; MFI makes lower high & Reversal down \\ \hline
+\end{tabular}
+\end{center}
+
+Signals are interpreted similarly to RSI but are more robust because volume is included --- a "false" price move with low volume won't impact MFI as much.
+
+\subsubsection{Chaikin Money Flow (CMF)}
+
+\paragraph{Intuition}
+CMF measures the \textbf{amount of money flowing into or out of a security} over a set period (typically 20--21 days). The key logic: \textbf{if price closes near the high of the day, accumulation (buying) is occurring; if near the low, distribution (selling) is occurring.} CMF quantifies this and sums it up.
+
+\paragraph{Formula}
+
+\paragraph{Step 1: Money Flow Multiplier (close location within bar)}
+\[
+\text{Multiplier} = \frac{(C - L) - (H - C)}{H - L} = \frac{2C - H - L}{H - L}
+\]
+
+\begin{itemize}[leftmargin=*]
+    \item Ranges from +1 (close at high) to \(-\)1 (close at low)
+\end{itemize}
+
+\paragraph{Step 2: Money Flow Volume}
+\[
+\text{Money Flow Volume} = \text{Multiplier} \times V_t
+\]
+
+\paragraph{Step 3: CMF}
+\[
+\text{CMF} = \frac{\sum_{i=1}^{20} \text{Money Flow Volume}_i}{\sum_{i=1}^{20} V_i}
+\]
+
+CMF oscillates \textbf{above and below zero} like an oscillator.
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{CMF Value} & \textbf{Meaning} \\ \hline
+ \(>\) 0 & Buying pressure dominant (accumulation) \\ \hline
+ \(<\) 0 & Selling pressure dominant (distribution) \\ \hline
+ Bullish divergence & Price lower low; CMF higher low \(\rightarrow\) buy \\ \hline
+ Bearish divergence & Price higher high; CMF lower high \(\rightarrow\) sell \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item Wait for CMF to \textbf{confirm the breakout direction}: If price breaks above resistance, wait for CMF \(>\) 0 before entering long
+    \item A CMF sell signal = price makes higher high into overbought zone, CMF makes a lower high (negative divergence)
+    \item A CMF buy signal = price makes lower low, CMF makes a higher low (positive divergence)
+\end{itemize}
+
+\subsubsection{Accumulation/Distribution (A/D) Line}
+
+\paragraph{Intuition}
+The A/D Line measures the \textbf{cumulative flow of money into and out of a stock} over time. Like OBV, it accumulates over time. Unlike OBV, it accounts for \emph{where within the day's range the stock closes} (via the CLV multiplier), making it more nuanced.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Accumulation} = Trader buying stock (long)
+    \item \textbf{Distribution} = Trader selling stock (short)
+\end{itemize}
+
+\paragraph{Formula}
+
+\textbf{Close Location Value (CLV)} --- same as CMF multiplier:
+\[
+\text{CLV} = \frac{(C - L) - (H - C)}{H - L}
+\]
+
+\paragraph{Cumulative A/D Line:}
+\[
+\text{A/D}_t = \text{A/D}_{t-1} + \text{CLV} \times V_t
+\]
+
+High positive CLV + high volume \(\rightarrow\) strong buying pressure \(\rightarrow\) A/D rises
+Low (negative) CLV + high volume \(\rightarrow\) strong selling pressure \(\rightarrow\) A/D falls
+
+\paragraph{Interpretation}
+\begin{itemize}[leftmargin=*]
+    \item A/D \textbf{rising with price} \(\rightarrow\) uptrend confirmed (accumulation)
+    \item A/D \textbf{falling with price} \(\rightarrow\) downtrend confirmed (distribution)
+    \item \textbf{Bearish divergence}: Price makes higher highs, A/D makes lower highs \(\rightarrow\) selling pressure building \(\rightarrow\) price likely to reverse down
+    \item \textbf{Bullish divergence}: Price makes lower lows, A/D makes higher lows \(\rightarrow\) buying pressure building \(\rightarrow\) price likely to reverse up
+\end{itemize}
+
+\subsubsection{Ease of Movement (EOM)}
+
+\paragraph{Intuition}
+EOM measures the \textbf{ease with which a price moves} between different levels relative to the volume required. An "easy" move is one that continues in trend direction with relatively \textbf{low volume}; a "difficult" move requires high volume and signals resistance.
+
+\begin{itemize}[leftmargin=*]
+    \item High EOM \(\rightarrow\) Price moving easily (trend is healthy)
+    \item Low EOM \(\rightarrow\) Price struggling to move (resistance, possible reversal)
+\end{itemize}
+
+\paragraph{Interpretation}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Buy signal}: EOM crosses above the \textbf{0 centerline}
+    \item \textbf{Sell signal}: EOM crosses below the \textbf{0 centerline}
+    \item Also signals via bullish/bearish \textbf{divergence}
+\end{itemize}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item Works best in \textbf{volatile markets} where trends are hard to identify visually
+    \item Most effective on \textbf{longer timeframes} (daily charts), as it identifies trends based on volume averages
+    \item Not ideal for precise short-term timing; use it for broader trend direction confirmation
+\end{itemize}
+
+\subsubsection{Negative Volume Index (NVI)}
+
+\paragraph{Intuition}
+NVI operates on the premise that \textbf{smart money is active on low-volume days} (when the general crowd isn't paying attention), while retail investors dominate high-volume days.
+
+\paragraph{NVI only updates on days when volume \emph{decreases} from the previous day.}
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{NVI vs. its 255-day EMA} & \textbf{Market Condition} \\ \hline
+ NVI \textbf{above} 255-day EMA & \textbf{Bull market} \\ \hline
+ NVI \textbf{below} 255-day EMA & \textbf{Bear market} \\ \hline
+\end{tabular}
+\end{center}
+
+Used as a long-term trend gauge based on smart money activity.
+
+\subsubsection{Volume-Weighted Average Price (VWAP)}
+
+\paragraph{Intuition}
+VWAP gives the \textbf{true average price at which an asset has traded throughout a session}, weighted by volume. It shows the actual "fair value" of the security during the day. Unlike a simple price average, VWAP gives more weight to price levels where the most trading occurred.
+
+\paragraph{Formula}
+
+\[
+\text{VWAP} = \frac{\sum_{i} P_i \times V_i}{\sum_{i} V_i}
+\]
+
+Where \(P_i\) = price at period \(i\), \(V_i\) = volume at period \(i\), and the sum runs over all periods within the trading day.
+
+\begin{quote}
+VWAP \textbf{resets at the start of each trading session} --- it is an intraday indicator.
+
+\end{quote}
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{VWAP Signal} & \textbf{Meaning} \\ \hline
+ VWAP rising / Price crosses \textbf{above} VWAP & Uptrend --- bullish bias \\ \hline
+ VWAP declining / Price crosses \textbf{below} VWAP & Downtrend --- bearish bias \\ \hline
+ Price trading above VWAP & Asset trading above fair value \\ \hline
+ Price trading below VWAP & Asset trading below fair value \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item Widely used by \textbf{institutional traders} as an execution benchmark --- buying below VWAP and selling above VWAP is considered favorable execution
+    \item Acts as a \textbf{dynamic support/resistance} during the session
+    \item Eliminates market noise --- reflects where most volume actually transacted
+    \item Combine with price action for entries/exits during the day
+\end{itemize}
+
+\subsection{4. Volatility Indicators}
+
+\subsubsection{What is Volatility?}
+
+Volatility refers to the \textbf{range in which price can vary} within a trend (upward or downward). It moves price, creating trading opportunities, and is usually accompanied by higher volume.
+
+\paragraph{Key properties:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Higher volatility} \(\rightarrow\) greater price fluctuations, increased uncertainty, may signal overbought/oversold conditions (trend stalling or reversing)
+    \item \textbf{Lower volatility} \(\rightarrow\) tighter price range, market in equilibrium, possible breakout building up
+    \item Faster price changes \(\rightarrow\) higher volatility
+    \item Slower price changes \(\rightarrow\) lower volatility
+\end{itemize}
+
+Volatility indicators are commonly used in \textbf{combination with other indicators} for signal confirmation --- they don't generate standalone buy/sell signals (except Bollinger Bands).
+
+\subsubsection{Bollinger Bands (BB)}
+
+\paragraph{Intuition}
+Bollinger Bands place \textbf{upper and lower boundaries} around a moving average, dynamically adjusting to current market volatility using standard deviation. The statistical basis: if prices are normally distributed around the moving average, \textbf{\(\sim\)95\% of price action falls within \(\pm\)2 standard deviations}.
+
+When the market is \textbf{volatile}, the bands widen. When quiet, they \textbf{narrow}. A narrow band ("squeeze") signals a breakout is building.
+
+\paragraph{Formula}
+
+\[
+\text{Middle Band} = \text{SMA}_{20}
+\]
+
+\[
+\text{Upper Band} = \text{SMA}_{20} + 2\sigma_{20}
+\]
+
+\[
+\text{Lower Band} = \text{SMA}_{20} - 2\sigma_{20}
+\]
+
+Where \(\sigma_{20}\) is the \textbf{moving standard deviation} (recalculated each period over 20 periods):
+
+\[
+\sigma_{20} = \sqrt{\frac{\sum_{i=1}^{20}(P_i - \text{SMA}_{20})^2}{20}}
+\]
+
+\begin{quote}
+Default settings: \textbf{20-period SMA} and \textbf{2 standard deviations}. This creates a channel where price has \(\sim\)95\% probability of remaining.
+
+\end{quote}
+\paragraph{Three-Band Structure}
+
+\begin{quote}
+\textbf{Upper Band:} SMA20 + \(2\sigma\), often treated as resistance or an overbought zone.\\
+\textbf{Middle Band:} SMA20, used as dynamic support or resistance.\\
+\textbf{Lower Band:} SMA20 \(-\) \(2\sigma\), often treated as support or an oversold zone.
+\end{quote}
+
+\paragraph{Signal Types}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{Signal} & \textbf{Interpretation} \\ \hline
+ Price approaches/touches Upper Band & Market potentially \textbf{overbought} \\ \hline
+ Price approaches/touches Lower Band & Market potentially \textbf{oversold} \\ \hline
+ Bands \textbf{widen} & Volatility increasing \\ \hline
+ Bands \textbf{narrow} ("Bollinger Squeeze") & Volatility decreasing \(\rightarrow\) \textbf{breakout imminent} \\ \hline
+ Price "rides" Upper Band & \textbf{Strong uptrend} --- don't short just because it's touching the upper band \\ \hline
+ Price "rides" Lower Band & \textbf{Strong downtrend} --- don't buy just because it's touching the lower band \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Key Patterns}
+
+\paragraph{1. Bollinger Squeeze}
+When bands narrow significantly (low volatility period), it signals that a large price move is coming. The \emph{direction} of the subsequent breakout determines the trade. This is the most powerful Bollinger Band signal.
+
+\paragraph{2. Riding the Bands}
+In strong trends, price can hug the upper or lower band for extended periods. A close back inside the band may signal the trend is slowing.
+
+\paragraph{3. W-Bottom / M-Top}
+\begin{itemize}[leftmargin=*]
+    \item A double bottom near the lower band, where the second low is higher, signals a bullish reversal
+    \item A double top near the upper band, where the second high is lower, signals a bearish reversal
+\end{itemize}
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Do not treat band touches as automatic signals} --- price can trend along a band in strong moves
+    \item The \textbf{squeeze} is the most reliable signal
+    \item Use with \textbf{RSI or MACD} to confirm overbought/oversold readings
+    \item Works best in \textbf{mean-reverting (sideways) markets}; less reliable in strong directional trends
+\end{itemize}
+
+\subsubsection{Average True Range (ATR)}
+
+\paragraph{Intuition}
+ATR measures the \textbf{average price range} of an asset over a set period, accounting for overnight gaps between sessions. It tells you: \emph{"How much does this asset typically move per day?"}
+
+ATR does \textbf{NOT} indicate direction --- only the \emph{degree} of price volatility. A high ATR means the asset is moving widely; a low ATR means it's quiet.
+
+\paragraph{Why "True Range" Instead of Simple High--Low Range?}
+
+A simple high--low range misses \textbf{overnight gaps}. If a stock closes at Rs. 100, then gaps up to open at Rs. 110, the intraday range (say Rs. 5) doesn't capture the Rs. 10 gap. True Range solves this.
+
+\paragraph{Formula}
+
+\paragraph{Step 1: True Range (TR) for each period}
+
+\[
+TR = \max\left(H - L, \quad |H - C_p|, \quad |L - C_p|\right)
+\]
+
+Where:
+\begin{itemize}[leftmargin=*]
+    \item \(H\) = Today's High
+    \item \(L\) = Today's Low
+    \item \(C_p\) = Previous day's closing price
+\end{itemize}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{Component} & \textbf{What it Captures} \\ \hline
+ \(H - L\) & Intraday range (normal price movement) \\ \hline
+ \(|H - C_p|\) & \textbf{Gap-up} from previous close (upward gap) \\ \hline
+ \(|L - C_p|\) & \textbf{Gap-down} from previous close (downward gap) \\ \hline
+\end{tabular}
+\end{center}
+
+Taking the \textbf{maximum} ensures all forms of volatility (intraday and gap) are captured.
+
+\paragraph{Step 2: Smooth True Range (Wilder's Smoothing, default \(n = 14\))}
+
+\[
+\text{ATR}_t = \frac{\text{ATR}_{t-1} \times (n - 1) + TR_t}{n}
+\]
+
+This is equivalent to an exponential moving average of TR with \(k = 1/n\).
+
+\paragraph{Interpretation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.30\textwidth}|L{0.60\textwidth}|}
+\hline
+ \textbf{ATR} & \textbf{Meaning} \\ \hline
+ \textbf{High ATR} & High volatility --- wider price swings per day \\ \hline
+ \textbf{Low ATR} & Low volatility --- tighter price range \\ \hline
+ \textbf{Rising ATR} & Volatility increasing (often accompanies strong moves or reversals) \\ \hline
+ \textbf{Falling ATR} & Volatility decreasing (market quieting down, possible consolidation) \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Applications}
+
+\paragraph{1. Stop-Loss Placement}
+Traders set stop-losses at \textbf{1.5\(\times\) or 2\(\times\) ATR} below the entry price (for longs). This avoids being stopped out by normal daily volatility.
+
+\begin{quote}
+Example: ATR = Rs. 20, entry = Rs. 500 \(\rightarrow\) stop at Rs. 500 \(-\) (1.5 \(\times\) Rs. 20) = Rs. 470
+
+\end{quote}
+\paragraph{2. Position Sizing}
+\begin{itemize}[leftmargin=*]
+    \item Higher ATR \(\rightarrow\) reduce position size (more risk per unit of position)
+    \item Lower ATR \(\rightarrow\) increase position size (less risk per unit)
+\end{itemize}
+
+This ensures consistent risk per trade regardless of the asset's volatility.
+
+\paragraph{3. Breakout Confirmation}
+A breakout accompanied by \textbf{rising ATR} suggests genuine momentum and not a false breakout.
+
+\paragraph{4. No Directional Signal}
+ATR only measures \emph{how much} price moves, not \emph{which direction}. Always combine ATR with trend/momentum indicators.
+
+\paragraph{Guide to Use}
+\begin{itemize}[leftmargin=*]
+    \item After a sustained low-ATR period, a surge in ATR often signals the \textbf{start of a strong directional move}
+    \item ATR can be used to set \textbf{realistic profit targets} based on actual daily movement
+    \item Commonly used in algorithmic trading for \textbf{position sizing and risk management} modules
+\end{itemize}
+
+\subsection{Summary Reference Table}
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.15\textwidth}|L{0.20\textwidth}|L{0.40\textwidth}|L{0.15\textwidth}|}
+\hline
+ \textbf{Indicator} & \textbf{Category} & \textbf{Key Use} & \textbf{Overbought / Oversold Levels} \\ \hline
+ \textbf{RSI} & Momentum / Trend & Rate of price change; overbought/oversold; divergence & \(>\) 70 / \(<\) 30 \\ \hline
+ \textbf{Stochastic Oscillator} & Momentum & Close relative to range; \%K/\%D crossovers; divergence & \(>\) 80 / \(<\) 20 \\ \hline
+ \textbf{SMA / EMA} & Trend & Trend direction; dynamic support/resistance; crossovers & --- \\ \hline
+ \textbf{MACD} & Trend / Momentum & Trend strength and direction; signal crossovers; divergence; histogram & Above / Below 0 \\ \hline
+ \textbf{OBV} & Volume / Trend & Volume-price confirmation; divergence; breakout validation & --- \\ \hline
+ \textbf{Volume RSI} & Volume & Volume dominance (up vs down) & \(>\) 50 / \(<\) 50 \\ \hline
+ \textbf{VPT} & Volume & Weighted cumulative volume trend; divergence & --- \\ \hline
+ \textbf{MFI} & Volume & Volume-weighted RSI; buying/selling pressure & \(>\) 80 / \(<\) 20 \\ \hline
+ \textbf{CMF} & Volume & Money flow direction; accumulation vs. distribution & Above / Below 0 \\ \hline
+ \textbf{A/D Line} & Volume & Cumulative money flow; divergence warning & --- \\ \hline
+ \textbf{EOM} & Volume & Ease of price movement relative to volume & Above / Below 0 \\ \hline
+ \textbf{NVI} & Volume & Smart money activity on low-volume days & Above / Below 255-day EMA \\ \hline
+ \textbf{VWAP} & Volume & Fair value; intraday trend; institutional benchmark & Above / Below VWAP \\ \hline
+ \textbf{Bollinger Bands} & Volatility & Price range relative to volatility; squeeze; overbought/oversold & Upper / Lower Band \\ \hline
+ \textbf{ATR} & Volatility & Degree of volatility; stop-loss sizing; breakout confirmation & --- \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Quick Rules for Using Indicators Together}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Confirm, don't double-count}: Use indicators from \emph{different categories} together (e.g., a trend indicator + a momentum indicator + a volume indicator) rather than multiple indicators from the same category
+    \item \textbf{Volume confirms price}: A price move with supporting volume is more reliable than one without
+    \item \textbf{Divergences beat crossovers}: Divergence signals (price and indicator disagree) are stronger and earlier than simple crossover signals
+    \item \textbf{Trend context matters}: Momentum signals (RSI oversold, stochastic \(<\) 20) are far more reliable when they occur \emph{in the direction of the larger trend}
+    \item \textbf{Volatility sets risk}: Use ATR and Bollinger Bands to calibrate stop-losses and position sizes, not just as directional signals.
+\end{enumerate}
+
+\section{Combining Trading 
+Indicators}
+
+\subsection{Building Strategies and Combining Indicators}
+
+\subsubsection{What is a Strategy, and How Do You Find One?}
+
+Finding a trading idea is \textbf{not} the hardest part of building a strategy --- there are hundreds, if not thousands, of trading ideas publicly available at any time, accessible to almost anyone at little or no cost. Many authors openly share their complete methods along with backtest results. These ideas can be found in:
+\begin{itemize}[leftmargin=*]
+    \item Finance and investment books
+    \item Newspapers and magazines
+    \item Mainstream media websites
+    \item Academic papers
+    \item Trader forums and blogs
+\end{itemize}
+
+\textbf{A natural doubt:} you might be skeptical that truly profitable strategies would be shared so openly --- after all, wouldn't revealing them increase competition and reduce their effectiveness? You'd be right, to some extent: most ready-made strategies found in these places \textbf{do not hold up well under careful backtesting}. But don't worry --- the most successful strategies often come from the simplest ideas.
+
+\textbf{Trading strategies} are systematic methods traders use to decide when to buy or sell financial instruments. They rely on:
+\begin{itemize}[leftmargin=*]
+    \item Technical and fundamental analysis
+    \item Market trends
+    \item Risk tolerance and trading goals
+\end{itemize}
+
+The goal is to profit from price movements and market inefficiencies. Common strategy types: trend following, breakout trading, mean reversion, momentum, and arbitrage. Each has its own rules/indicators, and success requires careful analysis, risk management, and continuous adjustment.
+
+\paragraph{When do strategies work?}
+\begin{itemize}[leftmargin=*]
+    \item Strategies work when prices either \textbf{revert to a long-term average} (mean-reverting) or \textbf{follow a clear trend}.
+    \item If prices move randomly, trading becomes ineffective.
+    \item Research shows stock prices mostly behave like a \textbf{random walk}, but under certain conditions/timeframes they display mean reversion or trending.
+    \item A key part of strategy-building is identifying \emph{when} prices will trend or revert, and setting the correct \textbf{reference price}.
+    \item Trending prices are said to have \textbf{momentum} \(\rightarrow\) basis for momentum-based strategies.
+\end{itemize}
+
+\subsubsection{Combining Indicators Effectively}
+
+No single indicator gives perfect signals, so traders combine two or more tools (e.g., a momentum oscillator + a trend follower) to confirm setups and reduce false alarms.
+
+\textbf{The Negroni Analogy:} A Negroni cocktail (Gin + Campari + Martini Rosso) tastes awful with any single liquor alone, but together the liquors balance each other into something great. Similarly, combining indicators lets the \textbf{weaknesses of one be offset by the strengths of another}.
+
+\begin{itemize}[leftmargin=*]
+    \item Using several indicators that agree on the same buy/sell signal \(\rightarrow\) builds confidence and reduces false signals.
+    \item \textbf{Caution:} combining \emph{too many} indicators backfires --- it overcomplicates trading, limits opportunities, and can cause fewer or even losing trades.
+\end{itemize}
+
+\paragraph{Best Indicator Combinations Often Observed in Intraday Trading}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.28\textwidth}|L{0.62\textwidth}|}
+\hline
+ \textbf{Combination Type} & \textbf{Example} \\ \hline
+ Trend + Momentum & Moving Average with RSI \\ \hline
+ Trend + Volume & Moving Average with VWAP / Volume indicators \\ \hline
+ Momentum + Volatility & RSI with Bollinger Bands \\ \hline
+\end{tabular}
+\end{center}
+
+\emph{Example interpretation:} if price stays above a moving average \textbf{and} RSI rises above its mid-range level, this may signal strengthening bullish momentum. Combining indicators this way helps screen out potential false signals.
+
+\paragraph{Why Analysts Study Multiple Indicators}
+
+\begin{itemize}[leftmargin=*]
+    \item A single indicator only offers \textbf{one perspective} (e.g., price direction, momentum, or volume --- never all at once).
+    \item Markets display complex, constantly changing price behavior, so analysts study multiple indicators together for a broader, more analytically sound view.
+    \item Simultaneous analysis helps \textbf{cross-check} readings and eliminate over-reading a single signal.
+    \item \textbf{Ideal scenario:} signals from different indicators align \(\rightarrow\) treated as validation of a trend or price movement.
+    \item \textbf{Caveat:} indicators depend on historical data, and different indicators may give varying interpretations depending on timeframe or calculation method. Hence, multiple indicators form part of a \emph{broader analytical framework} --- never a definitive predictive method.
+\end{itemize}
+
+\paragraph{Indicator Confirmation in Technical Analysis}
+
+\textbf{Confirmation} happens when signals from different indicators show similar patterns/conditions at the same time.
+
+\begin{itemize}[leftmargin=*]
+    \item Example: a trend indicator shows price direction; a momentum indicator shows whether that movement's strength is increasing or weakening. If both agree, analysts get \textbf{additional confirmation} of price behavior.
+    \item Since indicators test different aspects of price data (direction, momentum, volatility, trading activity), studying them together gives a wholesome market view.
+\end{itemize}
+
+\subsubsection{A Step-by-Step Guide to Combining Indicators}
+
+Before starting, traders first finalize their \textbf{modus operandi}: day trading, swing trading, or long-term investing.
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.17\textwidth}|L{0.43\textwidth}|L{0.30\textwidth}|}
+\hline
+ \textbf{Step} & \textbf{Focus} & \textbf{Example Indicators} \\ \hline
+ \textbf{1. Spot the market trend} & Overall direction of price movement (up/down/sideways) & SMA, EMA \\ \hline
+ \textbf{2. Analyse momentum} & Strength of price movement & RSI (0--100 scale), MACD \\ \hline
+ \textbf{3. Volatility check} & Magnitude of price fluctuations & Bollinger Bands, ATR \\ \hline
+ \textbf{4. Review trading activity} & Market participation & Volume indicators \\ \hline
+ \textbf{5. Compare signals} & Whether indicators collectively reflect similar conditions & --- \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{Best practice:} combine 2--3 indicators from \emph{different} categories rather than stacking many indicators on one chart --- this reduces overlapping signals and eases interpretation.
+
+\paragraph{Common Ways Indicators Are Analysed Together}
+
+\begin{itemize}[leftmargin=*]
+    \item Trend indicators alongside momentum indicators
+    \item Trend indicators alongside volume
+    \item Momentum indicators alongside volatility indicators
+\end{itemize}
+
+\textbf{Common combinations:} Moving Averages + RSI; RSI + MACD; Moving Averages + Volume indicators.
+
+\subsubsection{Indicator Clutter: Why It's Important to Avoid}
+
+Using too many indicators on one chart causes overlapping and confusing price interpretation, especially since:
+\begin{itemize}[leftmargin=*]
+    \item Certain indicators follow similar calculations and produce similar interpretations (e.g., many momentum indicators measure comparable aspects of price movement; many trend indicators are derived from moving-average variations).
+    \item \textbf{Solution:} prefer indicators that study \emph{varied aspects} of market behavior, rather than several indicators measuring the same thing.
+\end{itemize}
+
+\paragraph{Limitations of Indicator-Based Analysis}
+
+\begin{enumerate}[leftmargin=*]
+    \item Indicators rely on \textbf{historical data}, so they reflect what has \emph{already} happened --- a core limitation.
+    \item Market conditions are unpredictable and can pivot rapidly (economic announcements, global events, sentiment shifts) --- indicators may not fully capture sudden changes.
+    \item Different indicators can give \textbf{conflicting interpretations} since they use different calculations/frameworks.
+    \item Indicators are analytical tools, \textbf{not guarantees} of market outcomes --- traders should combine them with broader context: news, economic announcements, overall sentiment.
+\end{enumerate}
+
+\paragraph{Practical Usage of Indicators on Trading Platforms}
+
+Modern trading platforms provide built-in charting tools where traders can apply multiple indicators --- such as moving averages, RSI, MACD, VWAP, or Bollinger Bands --- directly on price charts, allowing more systematic dissection of market behaviour during intraday trading.
+
+Different categories of indicators analyse different aspects of market behaviour: trend direction, price momentum, volatility, and trading activity. Each indicator works with a specific dimension of market data, which is why analysts often examine multiple indicators together for a broader, more structured understanding.
+
+A structured approach to technical analysis means understanding how different indicators \textbf{complement or overlap} with each other --- while remembering that indicator interpretations are influenced by market conditions, timeframes, and analytical methods. Hence, signals should always be viewed within a broader market context.
+
+\subsubsection{Indicator Categories}
+
+\emph{(Source: "How To Combine The Best Indicators And Avoid Wrong Signals," Feb 6, 2019)}
+
+Indicators can be divided into \textbf{three classes}: momentum indicators, trend-following indicators, and volatility indicators. Knowing which indicator belongs to which category --- and how to combine them meaningfully --- leads to better trading decisions. Combining indicators the \emph{wrong} way can cause confusion, wrong price interpretation, and ultimately bad trading decisions.
+
+The table below arranges commonly used indicators by category, so traders can avoid picking multiple indicators from the \emph{same} category and instead combine indicators \textbf{across} categories that complement each other (a 4th column, "Chart studies," covers related structural tools):
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.19\textwidth}|L{0.19\textwidth}|L{0.20\textwidth}|L{0.32\textwidth}|}
+\hline
+ \textbf{Momentum} & \textbf{Trend} & \textbf{Volatility} & \textbf{Chart Studies} \\ \hline
+ Stochastic & ADX & Bollinger Bands & Horizontal lines (range trading, breakouts) \\ \hline
+ RSI & Moving Averages & Standard Deviation & Fibonacci retracements/pullbacks \\ \hline
+ CCI & --- & ATR & Fib extensions (trend-following targets) \\ \hline
+ Williams \%R & MACD & Keltner Channel & Trendlines (trend-following, breakout) \\ \hline
+ MACD & Parabolic SAR & Envelopes &  \\ \hline
+  & Bollinger Bands &  &  \\ \hline
+  & Ichimoku Cloud &  &  \\ \hline
+\end{tabular}
+\end{center}
+
+\emph{(Note: MACD and Bollinger Bands appear in more than one category depending on how they're used --- e.g., Bollinger Bands can measure volatility or, with care, trend strength.)}
+
+\paragraph{Indicator Redundancy --- Duplicate Signals}
+
+\textbf{Redundancy} = using multiple indicators from the \emph{same class}, which then show the same information.
+
+\begin{itemize}[leftmargin=*]
+    \item Example: MACD, RSI, and Stochastic (3 momentum indicators) all essentially provide the same information because they each examine momentum in price behavior --- they rise and fall simultaneously, turn together, and are flat together during no-momentum periods.
+    \item Example: ADX and Bollinger Bands (2 trend indicators) both confirm trend strength together --- during a trend, price hugs the outer Bands while ADX is high and rising; during a range, Bands narrow and ADX flattens/falls.
+\end{itemize}
+
+\paragraph{Problem --- Overemphasizing Information (Fooling Yourself):}
+When a trader stacks indicators that all say the same thing, they end up \textbf{overweighting} that one piece of information and can easily miss other important signals. E.g., a trader using 2+ trend indicators might believe a trend is stronger than it really is, simply because both indicators "agree" --- while missing other clues on the chart.
+
+\paragraph{Stacking the Odds --- Combining Indicators Meaningfully}
+
+\textbf{Correct approach:} pick one indicator per category so each contributes unique, complementary information.
+
+\paragraph{Example --- RSI (momentum) + ADX (trend) + Bollinger Bands (volatility, \emph{not} used as a trend indicator here):}
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.10\textwidth}|L{0.80\textwidth}|}
+\hline
+ \textbf{Point} & \textbf{Observation} \\ \hline
+ 1 & ADX shows an ongoing trend; RSI confirms rising momentum. Support/resistance kept breaking while ADX stayed above 30 and rising. \\ \hline
+ 2 & ADX turns down (losing bullish strength) \(\rightarrow\) support level may hold. Price fails to break the outer Bollinger Band and bounces off it. \\ \hline
+ 3 & Price enters a range; ADX drops below 30 (confirms range environment). RSI + Bollinger Bands help identify turning points in a range. \\ \hline
+ 4 & Still range-bound (ADX \(<\) 30). Trader looks to trendlines and rejections at the outer Bollinger Band; RSI shows turning momentum at range boundaries. \\ \hline
+ 5 & A momentum divergence appears right at the trendline/resistance --- high likelihood price stays in range. Price again fails to break outer Bands; ADX stays flat. \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Example \#2 --- RSI + Bollinger Bands:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{RSI (momentum):} low \& falling \(\rightarrow\) increasing downside momentum; near 50 \(\rightarrow\) lack of momentum; high \& rising \(\rightarrow\) strong bullish momentum.
+    \item \textbf{Bollinger Bands (volatility \emph{and} trend info):} price between middle \& outer Band \(\rightarrow\) trending phase; price breaking the middle Band \(\rightarrow\) potential reversal; price failing to reach the outer Band \(\rightarrow\) fading trend support.
+\end{itemize}
+
+\textbf{Key takeaway:} the best indicator combination is not one where all indicators always point the same direction, but one that provides \textbf{complementary} information. Knowing \emph{which} indicator to trust \emph{under which} market condition is central to good trading. Combining indicators that measure different aspects of the same price action --- and then combining that information with chart studies (trendlines, Fibonacci levels, horizontal support/resistance) --- will very quickly have a positive effect on trading.
+
+\subsubsection{Three of the Best MACD Trading Strategies}
+
+\textbf{MACD (Moving Average Convergence Divergence)} --- developed by Gerald Appel (late 1970s) --- is a momentum indicator identifying changes in the strength, direction, momentum, and duration of a trend. Frequently paired with RSI, Stochastic, and Support/Resistance levels.
+
+\paragraph{Components:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{MACD line} (blue) = short-term EMA \(-\) long-term EMA
+    \item \textbf{Signal line} (orange) = 9-day EMA of the MACD line
+    \item \textbf{Histogram} = MACD line \(-\) Signal line (shows momentum via the gap between the two lines)
+\end{itemize}
+
+A crossover between the MACD line and Signal line often signals a potential entry/exit point. When building an MACD strategy, indicators like the Stochastic Oscillator and moving averages are commonly used alongside it --- though many traders also combine MACD with simple price action. \emph{(The source article suggests following along on FXOpen's free TickTrader platform, where each of these tools is available.)}
+
+\paragraph{1. MACD + Stochastic Strategy}
+
+Combines MACD (trend-following momentum) with the Stochastic Oscillator (overbought \(>\) 80, oversold \(<\) 20). Goal: find \textbf{concurring signals} within a few candles of each other for more reliable entries/exits.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Bullish Entry:} MACD line crosses above Signal line \textbf{and} Stochastic crosses above 20 from an oversold zone.
+    \item \textbf{Bearish Entry:} MACD line crosses below Signal line \textbf{and} Stochastic crosses below 80 from an overbought zone.
+    \item \textbf{Stop Loss:} above nearby swing point (bearish) / below nearby swing point (bullish).
+    \item \textbf{Take Profit:} near support (bearish) / resistance (bullish) levels; alternatively, exit on an opposite MACD crossover.
+\end{itemize}
+
+\paragraph{2. MACD + Hull Moving Averages (HMA) Strategy}
+
+Combines MACD with 21-period and 50-period HMAs to reduce lag and improve responsiveness.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Bullish Entry:} MACD line crosses above Signal line \textbf{around the same time} the 21-HMA crosses above the 50-HMA.
+    \item \textbf{Bearish Entry:} MACD line crosses below Signal line \textbf{around the same time} the 21-HMA crosses below the 50-HMA.
+    \item \textbf{Stop Loss:} above/below nearby swing point, or just beyond the 50-HMA.
+    \item \textbf{Take Profit:} near support/resistance, or close position on an opposite HMA crossover.
+\end{itemize}
+
+\paragraph{3. MACD Histogram Divergence + Candlestick Patterns Strategy}
+
+Combines the MACD histogram with candlestick patterns (doji, hammer, engulfing) to spot divergences confirmed by candle formations.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Divergence:} price makes higher highs while histogram makes lower highs (or vice versa).
+    \item \textbf{Bullish Entry:} close of a hammer/bullish engulfing candle \textbf{after} a bullish histogram divergence.
+    \item \textbf{Bearish Entry:} close of a hammer/bearish engulfing candle \textbf{after} a bearish histogram divergence. (MACD crossover not essential, but some traders wait for it as extra confirmation.)
+    \item \textbf{Stop Loss:} above/below nearby swing point --- often slightly wider, since reversal isn't yet confirmed.
+    \item \textbf{Take Profit:} near support/resistance, or exit on opposite MACD crossover.
+\end{itemize}
+
+\subsubsection{Case Study: Combining Williams \%R and MACD in Python}
+
+\emph{(Source: "Increasing Stock Returns by Combining Williams \%R and MACD in Python" --- Nikhil Adithyan, Aug 1, 2021 \(\cdot\) 19 min read \(\cdot\) updated Aug 5, 2021)}
+
+\textbf{Motivation:} Technical indicators are powerful but prone to \textbf{false signals}. One effective way to filter these out is to combine two indicators, where one acts as a \textbf{filter} to separate authentic signals from false ones.
+
+\paragraph{Williams \%R}
+
+Founded by Larry Williams --- a \textbf{momentum indicator} oscillating between \textbf{0 and \(-\)100}, similar to the Stochastic Oscillator but with a different calculation.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Overbought:} market trend extremely bullish and likely to consolidate.
+    \item \textbf{Oversold:} market trend extremely bearish and likely to bounce.
+    \item Traditional thresholds: \textbf{overbought at \(-\)20, oversold at \(-\)80} (other values can be used).
+\end{itemize}
+
+\paragraph{Formula (14-day lookback):}
+\[
+W\%R_{14} = \frac{HH - C}{HH - LL} \times (-100)
+\]
+where:
+\begin{itemize}[leftmargin=*]
+    \item \(W\%R_{14}\) = 14-day Williams \%R
+    \item \(HH\) = 14-day Highest High
+    \item \(LL\) = 14-day Lowest Low
+    \item \(C\) = Closing price
+\end{itemize}
+
+\textbf{Intuition:} in a strong uptrend, price keeps making new highs (W\%R stays near 0); in a strong downtrend, price keeps making new lows (W\%R stays near \(-\)100).
+
+\paragraph{Two ways to use it:}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Overbought/Oversold detection} --- reading above \(-\)20 = overbought; below \(-\)80 = oversold.
+    \item \textbf{False momentum detection} --- during a healthy uptrend, W\%R should frequently reach above \(-\)20. If it falls and \emph{struggles} to reach above \(-\)20 before the next fall, this suggests the uptrend's momentum is inauthentic and a downtrend may follow. The symmetric logic applies to downtrends (readings failing to reach \(-\)80 signal fading bearish momentum).
+\end{enumerate}
+
+Williams \%R is a \textbf{directional indicator} (moves proportionally with the market) and is also useful for confirming trends. Unlike many \textbf{lagging indicators} (which rely on past data to describe the \emph{current} state), Williams \%R is considered a \textbf{leading indicator} (uses past data points to anticipate \emph{future} movement).
+
+\paragraph{MACD (Recap with EMA foundation)}
+
+\textbf{EMA (Exponential Moving Average):} a moving average that assigns \textbf{greater weight to recent data points} and less weight to older ones (analogous to a question paper weighting long-answer questions more heavily than one-mark questions).
+
+\textbf{MACD} = trend-following, leading indicator = difference between a shorter-period EMA and a longer-period EMA.
+
+\paragraph{Components:}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{MACD Line} = Fast-length EMA \(-\) Slow-length EMA (popular defaults: fast = 12, slow = 26)
+\[
+\text{MACD Line} = EMA_{\text{fast}} - EMA_{\text{slow}}
+\]
+    \item \textbf{Signal Line} = EMA of the MACD line itself (popular default period = 9). Since it averages the MACD line, it is smoother than the MACD line.
+    \item \textbf{Histogram} = MACD Line \(-\) Signal Line
+\[
+\text{Histogram} = \text{MACD Line} - \text{Signal Line}
+\]
+\end{enumerate}
+
+\paragraph{Chart intuition (using Apple stock as an example):}
+\begin{itemize}[leftmargin=*]
+    \item Histogram turns \textbf{red} in a negative trend, \textbf{green} in a positive trend --- spreads wider when the MACD--Signal gap is large, shrinks when the gap is small.
+    \item The MACD line (grey) tracks the fast/slow EMA difference; the Signal line (blue) is its smoothed EMA.
+\end{itemize}
+
+\paragraph{The Combined Trading Strategy}
+
+Combine Williams \%R (entry timing/momentum shift) with MACD (trend confirmation):
+
+\[
+\begin{aligned}
+\text{PREV.WR} > -50 \quad &\text{AND} \quad \text{CUR.WR} < -50 \\
+&\text{AND} \quad \text{MACD.L} > \text{SIGNAL.L} \implies \text{\textbf{BUY}}
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\text{PREV.WR} < -50 \quad &\text{AND} \quad \text{CUR.WR} > -50 \\
+&\text{AND} \quad \text{MACD.L} < \text{SIGNAL.L} \implies \text{\textbf{SELL}}
+\end{aligned}
+\]
+
+\paragraph{In words:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Go Long:} previous W\%R reading was above \(-\)50, current W\%R reading drops below \(-\)50, \textbf{and} MACD line \(>\) Signal line.
+    \item \textbf{Go Short:} previous W\%R reading was below \(-\)50, current W\%R reading rises above \(-\)50, \textbf{and} MACD line \(<\) Signal line.
+\end{itemize}
+
+Here, Williams \%R crossing the \(-\)50 midline flags a shift in short-term momentum, while the MACD line/Signal line relationship acts as a \textbf{trend filter}, confirming the signal is aligned with the broader trend direction --- this combination is designed to eliminate false signals.
+
+\emph{(The original article implements this strategy from scratch in Python, backtests it on Apple stock, and benchmarks results against the SPY ETF.)}
+
+\paragraph{Areas of Improvement (noted by the author)}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Strategy complexity:} Using just two indicators doesn't guarantee a strategy is robust enough to consistently beat the market. It's recommended to develop new, innovative strategies and backtest across various stocks, timeframes, and market scenarios.
+    \item \textbf{Strategy evaluation:} Evaluation = drawing practical insights from a strategy's performance beyond just "is it profitable." Simply looking at returns/profits is not sufficient --- deeper evaluation (e.g., drawdowns, win rate, risk-adjusted returns) gives a more realistic picture.
+    \item \textbf{Risk management:} The most critical and sensitive concept in trading. Not implementing it in a demonstration doesn't mean it's optional --- proper risk management \textbf{must} be deployed before taking any strategy live.
+\end{enumerate}
+
+\emph{Why these weren't covered in depth:} each of these three aspects (complex strategy design, strategy evaluation, risk management) is substantial enough to be a whole chapter on its own, and couldn't be fitted into a small section of the article. The original article also provides the full Python source code at its end for readers who want to follow the implementation.
+
+\emph{(Disclaimer from source article: educational content only, not investment advice.)}
+
+\subsubsection{Final Notes / Key Takeaways}
+
+\begin{itemize}[leftmargin=*]
+    \item Assets don't all behave the same way --- \textbf{always backtest} a combined-indicator strategy for several months before using it live, to check profitability and find the most suitable timeframes for that specific asset.
+    \item Understand each individual indicator (what it measures and why) before combining them --- the motivation for combining indicators becomes clear once the basics are solid.
+    \item The goal of combining indicators is \textbf{complementary information}, not redundant confirmation --- pick one indicator per category (trend, momentum, volatility, volume) rather than stacking similar ones.
+    \item Indicators are analytical aids based on historical data, not guarantees --- always view signals within a broader market context (news, sentiment, macro events).
+\end{itemize}
+
 \section{Backtesting Your Strategy}
 \section{Backtesting on TradingView}
 \section{Backtesting with Python (from Scratch)}
