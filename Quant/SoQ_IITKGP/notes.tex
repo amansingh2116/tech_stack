@@ -4,11 +4,13 @@
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{graphicx}
+\usepackage{xurl}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{array}
+\usepackage{fvextra}
 \usepackage{imakeidx}
 \usepackage{xcolor}
 \usepackage{tikz}
@@ -64,6 +66,7 @@
 
 % -------------------- Formatting --------------------
 \raggedbottom
+\setlength{\emergencystretch}{3em}
 \titleformat{\chapter}[display]
   {\normalfont\bfseries\Huge}
   {\chaptername\ \thechapter}{20pt}{\Huge}
@@ -3157,7 +3160,7 @@ ATR only measures \emph{how much} price moves, not \emph{which direction}. Alway
 \begin{center}
 \scriptsize
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|L{0.15\textwidth}|L{0.20\textwidth}|L{0.40\textwidth}|L{0.15\textwidth}|}
+\begin{tabular}{|L{0.13\textwidth}|L{0.18\textwidth}|L{0.36\textwidth}|L{0.14\textwidth}|}
 \hline
  \textbf{Indicator} & \textbf{Category} & \textbf{Key Use} & \textbf{Overbought / Oversold Levels} \\ \hline
  \textbf{RSI} & Momentum / Trend & Rate of price change; overbought/oversold; divergence & \(>\) 70 / \(<\) 30 \\ \hline
@@ -3336,7 +3339,7 @@ The table below arranges commonly used indicators by category, so traders can av
 \begin{center}
 \scriptsize
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|L{0.19\textwidth}|L{0.19\textwidth}|L{0.20\textwidth}|L{0.32\textwidth}|}
+\begin{tabular}{|L{0.17\textwidth}|L{0.17\textwidth}|L{0.18\textwidth}|L{0.28\textwidth}|}
 \hline
  \textbf{Momentum} & \textbf{Trend} & \textbf{Volatility} & \textbf{Chart Studies} \\ \hline
  Stochastic & ADX & Bollinger Bands & Horizontal lines (range trading, breakouts) \\ \hline
@@ -3550,17 +3553,2248 @@ Here, Williams \%R crossing the \(-\)50 midline flags a shift in short-term mome
     \item Indicators are analytical aids based on historical data, not guarantees --- always view signals within a broader market context (news, sentiment, macro events).
 \end{itemize}
 
-\section{Backtesting Your Strategy}
+\section{Backtesting Your Trading Strategy}
+
+\subsection{What is Backtesting?}
+
+Backtesting is the process of \textbf{testing a trading strategy on historical data} to evaluate its viability; that is, seeing how the strategy \emph{would have performed} in the past as a proxy for predicting future performance.
+
+\begin{quote}
+    \textbf{Core Idea:} If a strategy has worked consistently on past data under realistic conditions, it is more likely, though not guaranteed, to work going forward.
+\end{quote}
+
+\subsection{The 8-Step Backtesting Process}
+
+\subsubsection{Step 1 --- Data Collection}
+
+Gather \textbf{historical data} for the asset(s) you intend to trade. This typically includes:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Price data:} Open, High, Low, Close (OHLC).
+    \item \textbf{Volume data.}
+    \item \textbf{Corporate actions:} Dividends, splits, and delistings.
+    \item \textbf{Supplementary data:} Macroeconomic indicators, sentiment data, and other relevant variables.
+\end{itemize}
+
+\begin{quote}
+    \textbf{Quality matters:} Dirty, incomplete, or biased data will produce unreliable backtest results regardless of how good the strategy is. ``Garbage in, garbage out.''
+\end{quote}
+
+\subsubsection{Step 2 --- Strategy Development}
+
+Before writing any code, \textbf{define your strategy precisely and completely}:
+
+\begin{center}
+\begin{tabular}{|L{0.25\textwidth}|L{0.65\textwidth}|}
+\hline
+\textbf{Component} & \textbf{Description} \\
+\hline
+\textbf{Entry Rules} & Conditions under which you open a position, such as RSI $< 30$. \\
+\hline
+\textbf{Exit Rules} & Conditions under which you close a position, such as target, stop-loss, or signal-based exits. \\
+\hline
+\textbf{Position Sizing} & How much capital is allocated per trade. \\
+\hline
+\textbf{Risk Management} & Maximum loss per trade and portfolio-level stop rules. \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    Every rule must be \textbf{objective and unambiguous}; there should be no discretion. If a human can interpret the rule differently each time, the backtest is meaningless.
+\end{quote}
+
+\subsubsection{Step 3 --- Implementation}
+
+Program your strategy using a backtesting platform or framework. Common tools include:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Python libraries:} \texttt{backtrader}, \texttt{zipline}, \texttt{vectorbt}, and \texttt{bt}.
+    \item \textbf{Platforms:} MetaTrader (MT4/MT5), Amibroker, and QuantConnect.
+    \item \textbf{Custom code:} Pandas/NumPy-based simulation loops.
+\end{itemize}
+
+\begin{quote}
+    The implementation must faithfully replicate real-world trading mechanics: order types, slippage, brokerage fees, and execution delays must all be modeled.
+\end{quote}
+
+\subsubsection{Step 4 --- Running the Backtest}
+
+\textbf{Simulate trades} by applying your strategy's rules to the historical dataset chronologically. The simulation:
+\begin{itemize}[leftmargin=*]
+    \item Scans each time period, such as each bar or candle.
+    \item Checks whether entry or exit conditions are met.
+    \item Records hypothetical trades with timestamps, prices, and P\&L.
+\end{itemize}
+
+\begin{quote}
+    The simulation must be \textbf{strictly sequential}; you can only act on information available at each point in time. Using future data, even accidentally, is the most common and dangerous error (see Biases, Step 8).
+\end{quote}
+
+\subsubsection{Step 5 --- Analysis of Results (Key Metrics)}
+
+Once the backtest is run, evaluate performance using the following metrics.
+
+\paragraph{5.1 Return on Investment (ROI)}
+
+\textbf{Definition:} Measures the overall profitability of the strategy relative to the capital deployed.
+
+\begin{equation*}
+    \text{ROI (\%)} = \frac{I_0 + I - Q}{Q} \times 100
+\end{equation*}
+
+Where:
+\begin{itemize}[leftmargin=*]
+    \item $I_0$ = Current value of the investment.
+    \item $I$ = Income from the investment, such as dividends.
+    \item $Q$ = Initial investment plus other expenses, such as brokerage.
+\end{itemize}
+
+\textbf{Example:}
+\begin{itemize}[leftmargin=*]
+    \item Initial investment: Rs. 10,000; Brokerage: Rs. 200; therefore $Q = 10{,}200$.
+    \item End value: Rs. 12,500; Dividends received: Rs. 300; therefore $I_0 + I = 12{,}800$.
+\end{itemize}
+
+\begin{equation*}
+    \text{ROI} = \frac{12{,}800 - 10{,}200}{10{,}200} \times 100 = 25\%
+\end{equation*}
+
+\textbf{Limitations of ROI:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Not time-adjusted:} A 25\% ROI over 5 years is very different from 25\% over 1 year. For long-term strategies, use \textbf{Discounted ROI} or \textbf{Net Present Value (NPV)} instead.
+    \item \textbf{Doesn't capture risk:} Two strategies with equal ROI but vastly different volatility are treated identically.
+    \item \textbf{Doesn't capture consistency:} A strategy that made all its returns in one lucky month looks the same as one with steady monthly gains.
+    \item ROI must always be accompanied by the \textbf{underlying data inputs}, or the ``business case,'' to be meaningful.
+\end{itemize}
+
+\begin{quote}
+    \textbf{Takeaway:} ROI answers \emph{how much did we make?} but not \emph{how efficiently or safely did we make it?} Always use it alongside risk-adjusted metrics.
+\end{quote}
+
+\paragraph{5.2 Sharpe Ratio}
+
+\textbf{Definition:} Measures \textbf{risk-adjusted returns}: how much excess return the strategy earns per unit of risk, or volatility, taken. It was developed by economist William F. Sharpe in 1966.
+
+\begin{equation*}
+    \text{Sharpe Ratio} = \frac{R_p - R_f}{\sigma_p}
+\end{equation*}
+
+Where:
+\begin{itemize}[leftmargin=*]
+    \item $R_p$ = Return of the portfolio or strategy.
+    \item $R_f$ = Risk-free rate, such as a T-bill yield used as the baseline ``safe'' return.
+    \item $\sigma_p$ = Standard deviation of the portfolio's \textbf{excess returns}, i.e., volatility.
+\end{itemize}
+
+\textbf{Intuition:} The numerator $(R_p - R_f)$ is the \textbf{risk premium}: the extra return earned above what one would get for zero risk. The denominator $\sigma_p$ penalizes strategies that are volatile. A high Sharpe ratio means you are being well compensated for every unit of risk you take on.
+
+\textbf{Standard deviation calculation for the denominator:}
+\begin{enumerate}[leftmargin=*]
+    \item For each time period, compute the return differential from the benchmark.
+    \item Compute the variance of these differentials from their average.
+    \item Square each variance, sum them, and divide by the number of periods.
+    \item Take the square root; this is $\sigma_p$.
+\end{enumerate}
+
+\textbf{Interpretation:}
+
+\begin{center}
+\begin{tabular}{|L{0.25\textwidth}|L{0.65\textwidth}|}
+\hline
+\textbf{Sharpe Ratio} & \textbf{Interpretation} \\
+\hline
+$< 0$ & Strategy earns less than the risk-free rate; worse than holding cash. \\
+\hline
+$0$--$1$ & Positive but poor risk-adjusted returns. \\
+\hline
+$> 1$ & Good: earning more than 1 unit of return per unit of risk. \\
+\hline
+$> 2$ & Very good. \\
+\hline
+$> 3$ & Excellent, but rare in practice. \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    \textbf{Rule of thumb:} Sharpe ratios above \textbf{1.0} are generally considered acceptable. However, always compare against peers or benchmarks; a ratio of 1.0 may be below average in a strong market.
+\end{quote}
+
+\textbf{Practical Example:}
+\begin{itemize}[leftmargin=*]
+    \item Portfolio return: 18\%; Risk-free rate: 3\%; Standard deviation: 12\%.
+    \begin{equation*}
+        \text{Sharpe} = \frac{18\% - 3\%}{12\%} = 1.25
+    \end{equation*}
+    \item After adding a hedge fund, return falls to 15\%, but volatility also falls to 8\%.
+    \begin{equation*}
+        \text{Sharpe} = \frac{15\% - 3\%}{8\%} = 1.50
+    \end{equation*}
+    \item Despite lower absolute return, the \textbf{risk-adjusted performance improves}; the hedge fund allocation is beneficial.
+\end{itemize}
+
+\textbf{Pitfalls and Limitations:}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Manipulation via interval selection:} Using annual returns instead of monthly or daily returns lowers apparent volatility, artificially inflating the ratio. Analysts typically use \textbf{monthly returns}.
+    \item \textbf{Cherry-picking look-back periods:} Calculating Sharpe only for the strategy's best period distorts results.
+    \item \textbf{Assumes normal distribution:} Standard deviation assumes returns are symmetrically distributed. Real markets have \textbf{fat tails}, so $\sigma_p$ can \textbf{understate tail risk}.
+    \item \textbf{Serial correlation:} If returns in adjacent periods are correlated, such as due to momentum or mean reversion, volatility is artificially suppressed, leading to an inflated Sharpe ratio.
+\end{enumerate}
+
+\begin{quote}
+    \textbf{The ``nickels in front of a steamroller'' problem:} A strategy that earns small, consistent profits but is exposed to rare catastrophic losses will show a high Sharpe ratio right up until the catastrophe.
+\end{quote}
+
+\textbf{Sharpe Alternatives:}
+
+\begin{center}
+\begin{tabular}{|L{0.18\textwidth}|L{0.28\textwidth}|L{0.44\textwidth}|}
+\hline
+\textbf{Ratio} & \textbf{Formula} & \textbf{Use Case} \\
+\hline
+\textbf{Sortino Ratio} & $(R_p - R_f) / \sigma_{\text{downside}}$ & Uses only \textbf{downside deviation}, ignoring positive volatility. Better for asymmetric strategies. \\
+\hline
+\textbf{Treynor Ratio} & $(R_p - R_f) / \beta$ & Uses \textbf{beta}, or systematic market risk, instead of total volatility. Useful for diversified portfolios. \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    The Sortino ratio is often preferred in practice because investors care far more about \emph{downside} volatility than upside volatility; a strategy that occasionally surges should not be penalized.
+\end{quote}
+
+\paragraph{5.3 Maximum Drawdown (MDD)}
+
+\textbf{Definition:} The \textbf{largest peak-to-trough decline} in the portfolio's value before a new peak is reached. It measures the worst-case loss an investor would have suffered if they entered at the peak and exited at the trough.
+
+\begin{equation*}
+    \text{MDD} = \frac{\text{Trough Value} - \text{Peak Value}}{\text{Peak Value}}
+\end{equation*}
+
+\textbf{Key points about MDD:}
+\begin{itemize}[leftmargin=*]
+    \item MDD measures \textbf{magnitude} of the worst loss, not frequency or recovery time.
+    \item It does \textbf{not} tell you how long the recovery took, or whether recovery happened at all.
+    \item A lower MDD is always preferred; it indicates the strategy preserves capital well.
+    \item MDD = 0\% means the strategy never lost money from any peak.
+    \item MDD = $-100\%$ means the investment became completely worthless.
+\end{itemize}
+
+\textbf{Worked Example:}
+
+Portfolio value path: $500\text{K} \rightarrow 750\text{K} \rightarrow 400\text{K} \rightarrow 600\text{K} \rightarrow 350\text{K} \rightarrow 800\text{K}$.
+
+\begin{itemize}[leftmargin=*]
+    \item Peak: \textbf{$750\text{K}$}, the first major peak.
+    \item Subsequent trough before new peak: \textbf{$350\text{K}$}.
+\end{itemize}
+
+\begin{equation*}
+    \text{MDD} = \frac{350{,}000 - 750{,}000}{750{,}000} = -53.33\%
+\end{equation*}
+
+\begin{quote}
+    \textbf{Why not use $600\text{K}$ as peak or $400\text{K}$ as trough?}
+    \begin{itemize}[leftmargin=*]
+        \item The $600\text{K}$ interim recovery does \emph{not} constitute a new all-time high, so it does not reset the drawdown clock.
+        \item The $400\text{K}$ is an interim trough, but we look for the \emph{lowest point before a new high is made}, which is $350\text{K}$.
+        \item The new $800\text{K}$ peak is also irrelevant to the original drawdown calculation.
+    \end{itemize}
+\end{quote}
+
+\textbf{Contextual Interpretation:}
+\begin{itemize}[leftmargin=*]
+    \item A fund with MDD of $-30\%$ from 2000--2010 may seem bad in isolation, but if the S\&P 500 fell $-55\%$ in the same period, the fund actually \textbf{significantly outperformed its benchmark}.
+    \item Always compare MDD to a \textbf{relevant benchmark}, not in absolute terms alone.
+\end{itemize}
+
+\textbf{Derived Metrics using MDD:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Calmar Ratio} = Annualized Return / $|\text{MDD}|$; measures return per unit of drawdown risk.
+    \item \textbf{Return over Maximum Drawdown (RoMaD)} = similar concept; compares total returns to worst loss.
+\end{itemize}
+
+\begin{quote}
+    \textbf{Takeaway:} MDD is a critical metric for \textbf{capital preservation}. A strategy with great returns but a 70\% drawdown may be psychologically and financially impossible to stick with in live trading.
+\end{quote}
+
+\paragraph{5.4 Win Rate}
+
+\textbf{Definition:} The percentage of trades that end in profit.
+
+\begin{equation*}
+    \text{Win Rate (\%)} = \frac{\text{Number of Winning Trades}}{\text{Total Trades}} \times 100
+\end{equation*}
+
+\textbf{Example:} 55 profitable trades out of 100 total:
+\begin{equation*}
+    \text{Win Rate} = \frac{55}{100} \times 100 = 55\%
+\end{equation*}
+
+\textbf{Critical Insight: A higher win rate is not always better.}
+
+What truly matters is the \textbf{Risk-Reward Ratio (RRR)}: how much you gain on winners versus how much you lose on losers.
+
+\textbf{Comparative Example:}
+
+\begin{center}
+\begin{tabular}{|L{0.27\textwidth}|L{0.28\textwidth}|L{0.28\textwidth}|}
+\hline
+ & \textbf{Algo A} & \textbf{Algo B} \\
+\hline
+Win Rate & 70\% & 50\% \\
+\hline
+Avg Profit per Win & Rs. 50 & Rs. 200 \\
+\hline
+Avg Loss per Loss & Rs. 100 & Rs. 100 \\
+\hline
+Wins (out of 100) & 70 $\times$ Rs. 50 = Rs. 3,500 & 50 $\times$ Rs. 200 = Rs. 10,000 \\
+\hline
+Losses (out of 100) & 30 $\times$ Rs. 100 = Rs. 3,000 & 50 $\times$ Rs. 100 = Rs. 5,000 \\
+\hline
+\textbf{Net Profit} & \textbf{Rs. 500} & \textbf{Rs. 5,000} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    \textbf{Algo B is 10 times more profitable} despite having a \emph{lower} win rate because its reward-to-risk ratio is far superior.
+\end{quote}
+
+\textbf{Risk-Reward Ratio (RRR):}
+
+\begin{equation*}
+    \text{RRR} = \frac{\text{Average Profit per Win}}{\text{Average Loss per Loss}}
+\end{equation*}
+
+\textbf{Example with RRR = 2:1} (risk Rs. 500 to make Rs. 1,000) and win rate = 40\%:
+\begin{itemize}[leftmargin=*]
+    \item 4 wins $\times$ Rs. 1,000 = Rs. 4,000.
+    \item 6 losses $\times$ Rs. 500 = Rs. 3,000.
+    \item \textbf{Net = Rs. 1,000 profit over 10 trades.}
+\end{itemize}
+
+This illustrates \textbf{positive expectancy}: a strategy that is profitable on average even with a sub-50\% win rate.
+
+\begin{quote}
+    \textbf{Industry benchmark:} Many professional algorithmic strategies operate with \textbf{40--60\% win rates} but compensate through strong RRR setups and disciplined position sizing.
+\end{quote}
+
+\textbf{The Concept of Expectancy:}
+
+\begin{equation*}
+    \text{Expectancy} = (\text{Win Rate} \times \text{Avg Win}) - (\text{Loss Rate} \times \text{Avg Loss})
+\end{equation*}
+
+A positive expectancy means the strategy makes money on average per trade. This is the true indicator of a viable system, not win rate alone.
+
+\paragraph{5.5 Profit Factor}
+
+\textbf{Definition:} The ratio of \textbf{total gross profits} from winning trades to \textbf{total gross losses} from losing trades.
+
+\begin{equation*}
+    \text{Profit Factor} = \frac{\text{Gross Profit}}{\text{Gross Loss}}
+\end{equation*}
+
+\textbf{Interpretation:}
+
+\begin{center}
+\begin{tabular}{|L{0.25\textwidth}|L{0.65\textwidth}|}
+\hline
+\textbf{Value} & \textbf{Meaning} \\
+\hline
+$> 1$ & Strategy is profitable; profits exceed losses. \\
+\hline
+$= 1$ & Break-even strategy. \\
+\hline
+$< 1$ & Unprofitable strategy. \\
+\hline
+1.75--4.0 & Desirable range for robust strategies. \\
+\hline
+$> 4.0$ & Suspiciously high; likely curve-fitted. \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Example:} A strategy with 199 winning trades summing to Rs. 500 total profit and 156 losing trades summing to Rs. 250 total loss:
+\begin{equation*}
+    \text{Profit Factor} = \frac{500}{250} = 2.0
+\end{equation*}
+
+\textbf{Why is a Profit Factor below about 1.75 concerning?}
+\begin{itemize}[leftmargin=*]
+    \item Real-world trading almost always performs \textbf{worse} than backtests due to slippage, wider spreads, latency, and regime changes.
+    \item A Profit Factor of 1.25 in backtest leaves almost no safety margin; small real-world degradation will push it below 1.0, making it unprofitable.
+    \item \textbf{Preferred threshold: PF $> 2.0$} for a comfortable margin of safety.
+\end{itemize}
+
+\textbf{Why is a Profit Factor above about 4.0 also a warning sign?}
+\begin{itemize}[leftmargin=*]
+    \item Excessively high values often indicate \textbf{curve fitting}, or overfitting: the strategy has been over-optimized to fit the specific historical data using too many variables and too few trades over too short a period.
+    \item Such strategies rarely generalize to unseen future data.
+\end{itemize}
+
+\textbf{How to Improve Profit Factor:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Maximize gains:} Improve entry timing and let winners run longer.
+    \item \textbf{Minimize losses:} Tighten stop-losses and cut losing trades faster.
+    \item \textbf{Strategy type:} Mean-reverting strategies tend to have higher profit factors than trend-following strategies. Profit factors are also generally harder to achieve in Forex and commodities.
+\end{itemize}
+
+\textbf{Portfolio of Strategies --- The Holy Grail:}
+\begin{itemize}[leftmargin=*]
+    \item A single strategy with PF = 3.0 may be volatile and risky.
+    \item A \textbf{portfolio of uncorrelated strategies}, each with PF = 1.75, can combine to produce a much smoother and higher aggregate profit factor through \textbf{diversification of strategy risk}.
+    \item Trade across different markets, timeframes, and strategy types. The more uncorrelated the strategies, the more the risk averages out.
+\end{itemize}
+
+\textbf{Using Profit Factor alongside Other Metrics:}
+
+Profit factor should never be used in isolation. Combine it with:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Sharpe Ratio} for risk-adjusted efficiency.
+    \item \textbf{Maximum Drawdown} for capital preservation.
+    \item \textbf{Win Rate + RRR} for trade-level consistency.
+    \item \textbf{Number of trades} to validate statistical significance; more trades make PF more reliable.
+\end{itemize}
+
+\begin{quote}
+    \textbf{The Trade-off:} Increasing the number of trades by loosening thresholds often reduces the Profit Factor and worsens drawdown. Fewer, higher-quality trades can give a higher PF but a smaller total profit. This tension between \emph{quality} and \emph{quantity} of signals is a core challenge in strategy design.
+\end{quote}
+
+\subsubsection{Step 6 --- Optimization}
+
+After analyzing results, \textbf{adjust strategy parameters} to improve performance:
+\begin{itemize}[leftmargin=*]
+    \item Tune entry/exit thresholds, lookback periods, stop-loss levels, and related parameters.
+    \item Use techniques like \textbf{grid search}, \textbf{walk-forward optimization}, or \textbf{Bayesian optimization}.
+\end{itemize}
+
+\begin{quote}
+    \textbf{Critical Warning --- Overfitting / Curve Fitting:} If you optimize too many parameters on the same historical dataset, the strategy effectively ``memorizes'' past data and loses predictive power on new data. Signs of overfitting include:
+    \begin{itemize}[leftmargin=*]
+        \item Extremely high Profit Factor ($> 4.0$) or Sharpe Ratio.
+        \item Performance degrades sharply on out-of-sample data.
+        \item Too many variables relative to the number of trades.
+    \end{itemize}
+    \textbf{Best practice:} Keep the number of parameters minimal, validate on a separate out-of-sample dataset, and prefer robustness, meaning stable performance across many parameter values, over maximum peak performance.
+\end{quote}
+
+\subsubsection{Step 7 --- Forward Testing (Paper Trading)}
+
+Before committing real capital, test the strategy in a \textbf{live market environment using real-time data but without risking actual money}, also known as paper trading or walk-forward testing.
+
+\textbf{Why it is necessary:}
+\begin{itemize}[leftmargin=*]
+    \item Backtests operate on clean, static historical data. Live markets have microstructure noise, variable liquidity, and unpredictable events.
+    \item Forward testing reveals execution gaps: slippage, order rejection, latency, and data feed issues.
+    \item It acts as a \textbf{final sanity check} before live deployment.
+\end{itemize}
+
+\begin{quote}
+    A strategy that works well in backtest but fails in forward testing almost always has a structural flaw, likely a bias (see Step 8) or an execution assumption that does not hold in practice.
+\end{quote}
+
+\subsubsection{Step 8 --- Addressing Biases}
+
+Backtests can produce \textbf{falsely optimistic results} due to systematic biases. The three most important are:
+
+\paragraph{8.1 Look-Ahead Bias}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{What it is:} The strategy accidentally uses information that would not have been available at the time of the trade, such as using a closing price to generate a signal that supposedly executes at that same close.
+    \item \textbf{Why it is dangerous:} It makes strategies appear far more profitable than they actually are. The strategy is effectively ``seeing the future.''
+    \item \textbf{How to prevent it:} Ensure all signals are generated using only data available \textbf{before}, or strictly at the open of, the execution bar. Use proper indexing in code.
+\end{itemize}
+
+\paragraph{8.2 Survivorship Bias}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{What it is:} Testing a strategy only on stocks that currently exist and are actively traded, ignoring companies that went bankrupt, were delisted, or were acquired.
+    \item \textbf{Why it is dangerous:} Stocks that survived to today are, by definition, those that performed well. Excluding failures creates an artificially rosy dataset.
+    \item \textbf{Example:} A strategy that buys the worst-performing large-cap stocks looks great if tested only on today's S\&P 500 constituents, but many of the worst performers from 10 years ago no longer exist.
+    \item \textbf{How to prevent it:} Use a \textbf{point-in-time dataset} that includes all stocks that existed at each historical date, including those subsequently delisted.
+\end{itemize}
+
+\paragraph{8.3 Overfitting (Optimization Bias)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{What it is:} Excessive optimization of parameters to fit historical data so precisely that the model captures noise rather than signal.
+    \item \textbf{Why it is dangerous:} The strategy performs excellently on historical data but fails in live trading because the ``patterns'' it learned were random.
+    \item \textbf{How to prevent it:}
+    \begin{itemize}[leftmargin=*]
+        \item Use fewer parameters.
+        \item Require a large number of trades for statistical significance.
+        \item Use \textbf{out-of-sample testing}: hold back a portion of historical data, such as the most recent 20--30\%, and test on it only \emph{after} optimization is complete.
+        \item Use \textbf{walk-forward analysis}: repeatedly optimize on a rolling window and test on the next period, mimicking how the strategy would have been deployed in real time.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Summary Table of Key Metrics}
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.18\textwidth}|L{0.30\textwidth}|L{0.18\textwidth}|L{0.22\textwidth}|}
+\hline
+\textbf{Metric} & \textbf{Formula} & \textbf{Good Value} & \textbf{Measures} \\
+\hline
+\textbf{ROI} & $(I_0 + I - Q)/Q \times 100$ & Context-dependent & Overall profitability \\
+\hline
+\textbf{Sharpe Ratio} & $(R_p - R_f)/\sigma_p$ & $> 1.0$ & Risk-adjusted return \\
+\hline
+\textbf{Sortino Ratio} & $(R_p - R_f)/\sigma_{\text{down}}$ & $> 1.0$ & Downside-adjusted return \\
+\hline
+\textbf{Max Drawdown} & $(\text{Trough} - \text{Peak})/\text{Peak}$ & As low as possible & Worst-case loss \\
+\hline
+\textbf{Win Rate} & Wins / Total $\times$ 100 & Depends on RRR & Trade success frequency \\
+\hline
+\textbf{Risk-Reward Ratio} & Avg Win / Avg Loss & $> 1$, ideally $> 2$ & Reward per unit of risk \\
+\hline
+\textbf{Profit Factor} & Gross Profit / Gross Loss & 1.75--4.0 & Overall system profitability \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Key Takeaways}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{No single metric tells the full story.} Always evaluate a strategy using multiple metrics together; a high Profit Factor means little if the Sharpe Ratio is poor or the MDD is catastrophic.
+    \item \textbf{Real trading always underperforms backtests.} Build in a margin of safety: prefer a Profit Factor $> 2.0$ and a Sharpe Ratio $> 1.0$.
+    \item \textbf{Simplicity beats complexity.} Fewer parameters, more trades, and a longer test period produce more robust and trustworthy results.
+    \item \textbf{Diversify strategies, not just assets.} A portfolio of uncorrelated strategies with modest individual metrics can collectively achieve exceptional risk-adjusted performance.
+    \item \textbf{Biases can silently destroy a backtest.} Look-ahead bias, survivorship bias, and overfitting are the most critical failure modes to guard against.
+\end{itemize}
+
+\section{Backtesting with Backtrader}
+
+\subsubsection{What is Backtrader?}
+
+\textbf{Backtrader} is an \textbf{open-source Python library} used for:
+
+\begin{itemize}[leftmargin=*]
+    \item Backtesting trading strategies
+    \item Strategy visualization
+    \item Live trading
+\end{itemize}
+
+Although it is possible to build a backtesting engine entirely from scratch using Python, Backtrader greatly simplifies the process by providing high-level abstractions for common backtesting tasks. Many complex components of a traditional backtesting engine can be implemented with a \textbf{single function call}, allowing traders to focus on strategy development rather than infrastructure. It is particularly useful for evaluating, refining, and eventually deploying algorithmic trading strategies.
+
+\textbf{Official documentation:} \href{https://www.backtrader.com/docu/quickstart/quickstart/}{Backtrader quickstart} --- \url{https://www.backtrader.com/docu/quickstart/quickstart/}
+
+\subsection{Why Use Backtrader?}
+
+Python enables traders to evaluate trading strategies on historical data, but building an accurate event-driven backtesting engine from scratch requires considerable programming expertise.
+
+Backtrader addresses this by providing:
+
+\begin{itemize}[leftmargin=*]
+    \item A complete event-driven backtesting framework
+    \item Simple APIs for strategy development
+    \item Built-in broker simulation
+    \item Data feed management
+    \item Technical indicators
+    \item Performance visualization
+    \item Live trading support
+\end{itemize}
+
+Thus, even users with moderate Python knowledge can build professional-quality backtests efficiently.
+
+\subsection{Installation}
+
+Backtrader has \textbf{no mandatory dependencies}.
+
+Install using pip:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pip install backtrader
+\end{Verbatim}
+
+Verify installation:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+import backtrader as bt
+print(bt.__version__)
+\end{Verbatim}
+
+\paragraph{Plotting Support}
+
+To use Backtrader's plotting functionality, \textbf{matplotlib} is required.
+
+The article notes an important compatibility issue:
+
+\begin{itemize}[leftmargin=*]
+    \item Latest matplotlib versions may produce errors.
+    \item \textbf{Matplotlib 3.2.2} is recommended for compatibility.
+\end{itemize}
+
+Installation:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pip install matplotlib==3.2.2
+\end{Verbatim}
+
+After this, Backtrader is ready with full functionality.
+
+\subsection{Core Architecture of Backtrader}
+
+Backtrader revolves around a central engine called \textbf{Cerebro}.
+
+\subsubsection{Cerebro Engine}
+
+The \textbf{Cerebro} class is the heart of Backtrader.
+
+It is responsible for:
+
+\begin{itemize}[leftmargin=*]
+    \item Loading market data
+    \item Running the strategy
+    \item Simulating order execution
+    \item Managing broker information
+    \item Calculating portfolio value
+    \item Producing performance results
+    \item Plotting charts
+\end{itemize}
+
+Almost every component of a Backtrader program interacts through the Cerebro engine.
+
+\subsubsection{Typical Cerebro Workflow}
+
+A typical Backtrader program follows this sequence:
+
+\begin{enumerate}[leftmargin=*]
+    \item Create a Cerebro engine.
+    \item Add one or more trading strategies.
+    \item Set broker parameters.
+\end{enumerate}
+
+\begin{itemize}[leftmargin=*]
+    \item Initial cash
+    \item Commission
+\end{itemize}
+\begin{enumerate}[leftmargin=*]
+    \item Load market data.
+    \item Run the simulation.
+    \item View final results.
+    \item Plot charts.
+\end{enumerate}
+
+\subsection{Data Feeds}
+
+Before running a strategy, historical data must be supplied to Cerebro using \texttt{adddata()}.
+
+Backtrader supports multiple data sources.
+
+\subsubsection{1. Online Data}
+
+Historical data can be downloaded using \textbf{Yahoo Finance} through the \textbf{yfinance} package.
+
+Example workflow:
+
+\begin{itemize}[leftmargin=*]
+    \item Download OHLCV data
+    \item Convert it into a Backtrader \texttt{PandasData} object
+    \item Pass it to Cerebro
+\end{itemize}
+
+\paragraph{Important yfinance Update}
+
+Recent versions (\textbf{v0.2.51+}) return:
+
+\begin{itemize}[leftmargin=*]
+    \item Multi-index DataFrames
+    \item Auto-adjusted prices by default
+\end{itemize}
+
+Therefore:
+
+\begin{itemize}[leftmargin=*]
+    \item Flatten MultiIndex columns using \texttt{.xs()}
+    \item Use \texttt{auto\_adjust=True}
+\end{itemize}
+
+to ensure compatibility with Backtrader.
+
+\subsubsection{2. Offline Data}
+
+Backtrader can also read historical data stored locally.
+
+Example:
+
+\begin{itemize}[leftmargin=*]
+    \item CSV files
+    \item YahooFinanceCSVData feed
+\end{itemize}
+
+This allows testing on custom datasets without downloading data each time.
+
+\subsection{Building a Strategy}
+
+To perform a backtest, create a custom class that inherits from:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+bt.Strategy
+\end{Verbatim}
+
+The strategy contains the complete trading logic.
+
+The article introduces four important methods.
+
+\subsection{1. log()}
+
+Purpose:
+
+\begin{itemize}[leftmargin=*]
+    \item Print information
+    \item Save logs
+    \item Display trade activity
+    \item Monitor strategy execution
+\end{itemize}
+
+Typical uses:
+
+\begin{itemize}[leftmargin=*]
+    \item Current prices
+    \item Buy signals
+    \item Sell signals
+    \item Order execution
+    \item Portfolio events
+\end{itemize}
+
+Logging greatly simplifies debugging and understanding how the strategy behaves.
+
+\subsection{2. init()}
+
+The \texttt{\_\_init\_\_()} method is executed once when the strategy starts.
+
+Purpose:
+
+\begin{itemize}[leftmargin=*]
+    \item Initialize variables
+    \item Define indicators
+    \item Create objects used throughout the strategy
+\end{itemize}
+
+Example shown:
+
+\begin{itemize}[leftmargin=*]
+    \item 100-day Simple Moving Average
+\end{itemize}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+self.ma = bt.indicators.SimpleMovingAverage(...)
+\end{Verbatim}
+
+Backtrader provides numerous built-in technical indicators, making indicator calculation straightforward.
+
+\subsection{3. next()}
+
+The \textbf{next()} method is the most important function in Backtrader.
+
+It executes \textbf{once for every new bar (time step)} and contains the actual trading logic.
+
+Typical responsibilities:
+
+\begin{itemize}[leftmargin=*]
+    \item Generate trading signals
+    \item Check existing positions
+    \item Place buy/sell orders
+    \item Manage exits
+    \item Close positions
+\end{itemize}
+
+Essentially, this is where the trading strategy is implemented.
+
+\subsubsection{Example Strategy}
+
+The article demonstrates a simple \textbf{100-day Moving Average crossover strategy}.
+
+\paragraph{Entry Rules}
+
+\textbf{Buy}
+
+Current price crosses \textbf{above} the 100-day moving average.
+
+Mathematically:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+Today's Close > Today's MA
+
+AND
+
+Yesterday's Close < Yesterday's MA
+\end{Verbatim}
+
+\textbf{Sell}
+
+Current price crosses \textbf{below} the moving average.
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+Today's Close < Today's MA
+
+AND
+
+Yesterday's Close > Yesterday's MA
+\end{Verbatim}
+
+\paragraph{Exit Rule}
+
+After entering a position:
+
+\begin{itemize}[leftmargin=*]
+    \item Hold the trade for \textbf{4 bars}
+    \item Close the position afterwards
+\end{itemize}
+
+This is implemented using the execution bar index (\texttt{bar\_executed}).
+
+\subsubsection{Order Management}
+
+Before creating a new order:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+if self.order:
+    return
+\end{Verbatim}
+
+This prevents multiple pending orders from being submitted simultaneously.
+
+The strategy also checks:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+if not self.position:
+\end{Verbatim}
+
+meaning new entries are only taken when no position currently exists.
+
+\subsection{4. notify\_order()}
+
+After an order is submitted, Backtrader automatically calls \texttt{notify\_order()} whenever the order status changes.
+
+Its responsibilities include:
+
+\begin{itemize}[leftmargin=*]
+    \item Detect successful executions
+    \item Distinguish BUY vs SELL
+    \item Record:
+\end{itemize}
+
+\begin{itemize}[leftmargin=*]
+    \item execution price
+    \item trade value
+    \item commission paid
+    \item Save execution bar
+    \item Detect:
+\end{itemize}
+
+\begin{itemize}[leftmargin=*]
+    \item cancelled orders
+    \item rejected orders
+    \item margin errors
+    \item Reset pending-order state
+\end{itemize}
+
+This function is essential for tracking actual order execution rather than merely signal generation.
+
+\subsection{Complete Backtesting Workflow}
+
+The article combines all previous components into a complete backtest.
+
+The workflow is:
+
+\begin{enumerate}[leftmargin=*]
+    \item Define strategy class.
+    \item Create Cerebro engine.
+    \item Add strategy.
+    \item Set:
+\end{enumerate}
+
+\begin{itemize}[leftmargin=*]
+    \item Initial cash
+    \item Commission
+\end{itemize}
+\begin{enumerate}[leftmargin=*]
+    \item Add historical data.
+    \item Print starting portfolio value.
+    \item Run the simulation.
+    \item Print ending portfolio value.
+    \item Plot candlestick chart with strategy signals.
+\end{enumerate}
+
+\subsection{Live Trading}
+
+Backtrader is not limited to historical simulations.
+
+It also supports live trading.
+
+Supported brokers include:
+
+\begin{itemize}[leftmargin=*]
+    \item Interactive Brokers
+    \item Visual Charts
+    \item Oanda
+\end{itemize}
+
+The article emphasizes that the \textbf{core trading logic remains the same}. Only additional broker configuration is required so that orders are sent to a real broker instead of a simulated broker.
+
+\subsubsection{Example: Oanda}
+
+Steps:
+
+\begin{enumerate}[leftmargin=*]
+    \item Install Oanda API
+\end{enumerate}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pip install git+https://github.com/oanda/oandapy.git
+\end{Verbatim}
+
+\begin{enumerate}[leftmargin=*]
+    \item Create an OandaStore.
+\end{enumerate}
+
+\begin{enumerate}[leftmargin=*]
+    \item Connect Cerebro to the broker.
+\end{enumerate}
+
+\begin{enumerate}[leftmargin=*]
+    \item Obtain a live data feed.
+\end{enumerate}
+
+\begin{enumerate}[leftmargin=*]
+    \item Execute the same strategy in live markets.
+\end{enumerate}
+
+Thus, a strategy developed for backtesting can be deployed with relatively few modifications.
+
+\subsection{Advantages of Backtrader}
+
+\subsubsection{1. Fast Event-Driven Engine}
+
+Even large historical datasets can often be processed in seconds due to its efficient event-driven architecture.
+
+\subsubsection{2. Easy Transition to Live Trading}
+
+A strategy developed for backtesting can later be used for live trading with supported brokers.
+
+Without Backtrader, traders would typically need to:
+
+\begin{itemize}[leftmargin=*]
+    \item build a backtesting engine,
+    \item then separately build a trading bot.
+\end{itemize}
+
+Backtrader significantly reduces this effort.
+
+The article also notes that building a custom trading engine still provides maximum flexibility and deeper understanding for highly specialized strategies.
+
+\subsubsection{3. Built-in Performance Analysis}
+
+Backtrader can generate:
+
+\begin{itemize}[leftmargin=*]
+    \item Performance metrics
+    \item Portfolio statistics
+    \item Strategy visualizations
+\end{itemize}
+
+with very little additional code.
+
+\subsubsection{4. Rich Visualization}
+
+The generated plots display:
+
+\begin{itemize}[leftmargin=*]
+    \item Price chart
+    \item Buy signals
+    \item Sell signals
+    \item Portfolio value
+    \item Profitable trades
+    \item Losing trades
+    \item Entry markers (green upward arrows)
+    \item Exit markers (red downward arrows)
+\end{itemize}
+
+This makes strategy evaluation much easier.
+
+\subsubsection{5. Well-Documented Framework}
+
+Backtrader includes an extensive documentation site containing:
+
+\begin{itemize}[leftmargin=*]
+    \item Examples
+    \item Syntax
+    \item API references
+    \item Implementation guides
+\end{itemize}
+
+making it easier to learn the framework.
+
+\subsection{Limitations of Backtrader}
+
+\subsubsection{1. Learning Curve}
+
+Backtrader contains many features and supports numerous event-driven workflows.
+
+Consequently:
+
+\begin{itemize}[leftmargin=*]
+    \item Beginners may find it complex.
+    \item Integrating custom strategies into the framework can require significant effort.
+\end{itemize}
+
+\subsubsection{2. Limited Data Feed Options}
+
+Historical data can mainly come from:
+
+\begin{itemize}[leftmargin=*]
+    \item Public data sources
+    \item Supported broker feeds
+\end{itemize}
+
+The available built-in data feed ecosystem is relatively limited.
+
+\subsubsection{3. Limited Support for Options Backtesting}
+
+Although options can be represented as ordinary OHLC time series, Backtrader currently lacks specialized functionality for options trading, such as handling:
+
+\begin{itemize}[leftmargin=*]
+    \item Multiple expiration dates
+    \item Multiple strike prices
+    \item Complex options structures
+\end{itemize}
+
+Therefore, sophisticated options strategy backtesting can be challenging within the framework.
+
+\subsection{Overall Backtrader Workflow}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+Install Backtrader
+        ->
+Create Cerebro Engine
+        ->
+Load Historical Data
+        ->
+Create Strategy Class
+        ->
+Define Indicators (__init__)
+        ->
+Generate Signals (next)
+        ->
+Track Executions (notify_order)
+        ->
+Run Backtest
+        ->
+Analyze Results
+        ->
+Plot Strategy Performance
+        ->
+(Optional) Deploy to Live Trading
+\end{Verbatim}
+
 \section{Backtesting on TradingView}
-\section{Backtesting with Python (from Scratch)}
+
+\subsubsection{1) What is TradingView?}
+
+TradingView is a powerful charting and trading platform used by millions of traders and investors worldwide. It provides:
+
+\begin{itemize}[leftmargin=*]
+    \item Advanced charting tools
+    \item A large collection of technical indicators
+    \item An active community for sharing strategies and ideas
+    \item A web-based interface
+    \item Support for custom scripting through Pine Script
+\end{itemize}
+
+Because of these features, TradingView is widely used for technical analysis and strategy development.
+
+\subsubsection{2) What is Pine Script?}
+
+\textbf{Pine Script} is TradingView's programming language for:
+
+\begin{itemize}[leftmargin=*]
+    \item Backtesting trading strategies
+    \item Creating custom indicators
+\end{itemize}
+
+It is designed to be lightweight, so many tasks can be done with fewer lines of code than in general-purpose programming languages. It is not based on any one existing language, but users familiar with Python often learn it quickly because of some similarities. Pine Script code is written inside the \textbf{Pine Editor}, which is part of TradingView's online platform.
+
+\textbf{Official documentation:} \href{https://www.tradingview.com/pine-script-docs/welcome/}{TradingView Pine Script documentation} --- \url{https://www.tradingview.com/pine-script-docs/welcome/}
+
+\subsubsection{3) Why use Pine Script?}
+
+\paragraph{a) Built-in data}
+
+A major advantage is that TradingView already provides a large amount of market data, so you do not need to source and format data yourself before testing a strategy. In many cases, only one line of code is enough to access the data you need.
+
+\paragraph{b) Easy to learn}
+
+Pine Script syntax is relatively readable and simpler than many programming languages. TradingView also handles much of the error checking for you, which reduces friction while coding.
+
+\paragraph{c) Large community and open-source library}
+
+TradingView users can publish indicators and strategies to the public library. This makes it easier to learn from other people's code and sometimes reuse or adapt existing scripts.
+
+\paragraph{d) Alternative platform mentioned}
+
+The article briefly notes that since Quantopian has shut down, \textbf{QuantConnect} is an alternative browser-based backtesting and algo-trading platform. It supports strategies using alpha factors such as sentiment, crypto, corporate actions, and macro data, and it also supports backtesting and trading across many asset classes, including ETFs. It additionally offers Alpha Stream for licensing strategies to hedge funds while retaining intellectual property.
+
+\subsubsection{4) Why shouldn't Pine Script be used?}
+
+Pine Script is best when your work stays inside the \textbf{TradingView universe}. Its main limitations are:
+
+\paragraph{a) Data limitations}
+
+If TradingView does not provide the data you need, you cannot easily use it. This matters especially for:
+
+\begin{itemize}[leftmargin=*]
+    \item Obscure markets
+    \item Alternative datasets
+    \item Economic or statistical data that TradingView does not cover well
+\end{itemize}
+
+The article notes that some such data exists, mainly via Quandl, but it is limited.
+
+\paragraph{b) No external libraries}
+
+Pine Script is not suitable when your strategy depends on external Python-style libraries, such as machine learning or other third-party data-science tools. In such cases, another programming language is often a better choice.
+
+\subsubsection{5) Alternatives to Pine Script}
+
+The article mentions two alternatives:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{thinkorswim / thinkScript:} TD Ameritrade's thinkorswim platform stores price data in arrays in a way similar to Pine Script and already includes built-in data, indicators, and strategies.
+    \item \textbf{NinjaTrader / NinjaScript:} NinjaTrader uses NinjaScript, which is based on C\#. It is more flexible than Pine Script because it allows custom data feeds. It may be a good option if you already know C\#, C, or C++.
+\end{itemize}
+
+\subsubsection{6) Getting started with Pine Script}
+
+Getting started is simple:
+
+\begin{itemize}[leftmargin=*]
+    \item Nothing needs to be downloaded or installed.
+    \item Log in to TradingView or create an account.
+    \item Open the charting platform.
+    \item Launch \textbf{Pine Editor} from the bottom of the screen.
+    \item Scripts can be saved to TradingView's cloud if you are signed in.
+    \item Having an account also allows you to add custom indicators to charts.
+\end{itemize}
+
+\subsubsection{7) Understanding the default Pine Script structure}
+
+The article explains the default indicator script line by line.
+
+\paragraph{a) Comments}
+
+Pine Script comments begin with \texttt{//}. The first two lines in the default script are comments, including a copyright line that auto-populates with the user's TradingView name.
+
+\paragraph{b) Version directive}
+
+\texttt{//@version=5} is not a normal comment. It is a \textbf{compiler directive} that tells TradingView which version of Pine Script to use. This line is required in every script.
+
+\paragraph{c) Indicator declaration}
+
+\texttt{indicator("My Script")} declares that the script is an \textbf{indicator} and assigns it a name. The name shown on the chart comes from this declaration. The alternative is to create a \textbf{strategy} instead of an indicator.
+
+\paragraph{d) Plot command}
+
+\texttt{plot(close)} tells TradingView to plot the selected variable. Here, \texttt{close} is a built-in variable holding the latest bar's closing price.
+
+\paragraph{e) Output requirement}
+
+After adding the script to the chart, TradingView plots the closing price in a separate data window. The script must have at least one output; otherwise, a compiler error occurs.
+
+\subsubsection{8) Retrieving the price of Apple in Pine Script}
+
+By default, Pine Script works on the asset currently open on your chart. The article shows how to request data for a different ticker, such as \textbf{Apple (AAPL)}, even if the Apple chart is not currently open. This is done with \texttt{request.security()}.
+
+\paragraph{Example}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+apple_price = request.security("AAPL", "D", close)
+\end{Verbatim}
+
+Meaning:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{"AAPL"} = ticker symbol
+    \item \texttt{"D"} = daily timeframe
+    \item \texttt{close} = closing price
+\end{itemize}
+
+The returned value is stored in \texttt{apple\_price}, which now contains Apple's daily closing price. The article also notes that Pine Script provides built-in help: hovering over a function or using Ctrl-click / Cmd-click opens documentation and examples.
+
+\paragraph{Important rule}
+
+A Pine Script study must have at least one output, so the returned Apple price is plotted.
+
+\subsubsection{9) Retrieving the SMA(20) of Apple}
+
+The same \texttt{request.security()} idea can be combined with indicators.
+
+\paragraph{Process}
+
+\begin{enumerate}[leftmargin=*]
+    \item Request Apple's daily price data.
+    \item Use \texttt{ta.sma()} to compute the 20-period simple moving average.
+    \item Plot the result.
+\end{enumerate}
+
+\paragraph{Example}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+apple_price = request.security("AAPL", "D", close)
+apple_sma = ta.sma(apple_price, 20)
+plot(apple_sma)
+\end{Verbatim}
+
+The article also explains that if you do not need a separate ticker, you can use the built-in \texttt{close} of the currently displayed chart directly. To plot the SMA on the main chart instead of the data window, use:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+indicator("Get 20 SMA of Apple", overlay=true)
+\end{Verbatim}
+
+Setting \texttt{overlay=true} places the plot on top of the main chart rather than in a separate pane.
+
+\subsubsection{10) Backtesting a moving-average crossover strategy}
+
+The article next switches from indicators to \textbf{strategies}.
+
+\paragraph{Strategy declaration}
+
+To build a strategy, replace \texttt{indicator()} with \texttt{strategy()}:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+strategy("My Strategy", overlay=true)
+\end{Verbatim}
+
+This tells TradingView that the script should backtest trades rather than only plot an indicator.
+
+\paragraph{Indicators used}
+
+The example strategy uses:
+
+\begin{itemize}[leftmargin=*]
+    \item 10-period SMA
+    \item 30-period SMA
+    \item 14-period RSI as confirmation
+\end{itemize}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+shortSMA = ta.sma(close, 10)
+longSMA = ta.sma(close, 30)
+rsi = ta.rsi(close, 14)
+\end{Verbatim}
+
+Because the strategy runs on the main chart, no \texttt{security()} call is needed here.
+
+\paragraph{Crossover conditions}
+
+TradingView provides built-in crossover tools:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+longCondition = ta.crossover(shortSMA, longSMA)
+shortCondition = ta.crossunder(shortSMA, longSMA)
+\end{Verbatim}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{ta.crossover()} becomes true when the short SMA crosses above the long SMA.
+    \item \texttt{ta.crossunder()} becomes true when the short SMA crosses below the long SMA.
+\end{itemize}
+
+\paragraph{Trade execution}
+
+The strategy uses \texttt{strategy.entry()}:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+if (longCondition)
+    strategy.entry("long", strategy.long, 100, when = rsi > 50)
+
+if (shortCondition)
+    strategy.entry("short", strategy.short, 100, when = rsi < 50)
+\end{Verbatim}
+
+Important parameters:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{"long"} / \texttt{"short"} = trade ID
+    \item \texttt{strategy.long} / \texttt{strategy.short} = direction
+    \item \texttt{100} = number of shares
+    \item \texttt{when = rsi > 50} or \texttt{when = rsi < 50} = extra filter condition
+\end{itemize}
+
+So the strategy enters long only if the bullish crossover occurs \textbf{and} RSI is above 50, and enters short only if the bearish crossover occurs \textbf{and} RSI is below 50.
+
+\paragraph{Plotting}
+
+Even though a strategy does not strictly need plots, the article plots the moving averages so the user can visually verify that trades occur at the intended places. Once added to the chart, TradingView automatically opens the \textbf{Strategy Tester} window. The strategy runs on the timeframe currently selected on the chart and updates when the chart timeframe changes.
+
+\subsubsection{11) Setting take profits and stop losses}
+
+The next extension of the crossover strategy adds \textbf{exits} using stop loss and take profit levels.
+
+\paragraph{Using ATR}
+
+The article uses \textbf{Average True Range (ATR)} to build volatility-aware exit levels.
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+atr = ta.atr(14)
+\end{Verbatim}
+
+ATR measures average movement over the past specified number of bars and helps account for changing volatility.
+
+\paragraph{Long trade exits}
+
+For a long position:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+stopLoss = low - atr * 2
+takeProfit = high + atr * 2
+strategy.entry("long", strategy.long, 100, when = rsi > 50)
+strategy.exit("exit", "long", stop=stopLoss, limit=takeProfit)
+\end{Verbatim}
+
+The stop loss is placed below the bar's low by two ATR units, and the take profit is placed above the bar's high by two ATR units.
+
+\paragraph{Short trade exits}
+
+For a short position:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+stopLoss = high + atr * 2
+takeProfit = low - atr * 2
+strategy.entry("short", strategy.short, 100, when = rsi < 50)
+strategy.exit("exit", "short", stop=stopLoss, limit=takeProfit)
+\end{Verbatim}
+
+The logic is inverted for short trades. The article notes that after applying this, the exits appear on the main chart along with the entries.
+
+\subsubsection{12) Trading Apple based on Google moving 5\%}
+
+This section demonstrates how Pine Script can use data from one asset to trade another.
+
+\paragraph{Idea}
+
+\begin{itemize}[leftmargin=*]
+    \item Use Google's daily open and close.
+    \item Compute the percentage move.
+    \item If Google falls 5\% or more, go long Apple.
+    \item If Google rises 5\% or more, short Apple.
+\end{itemize}
+
+This is presented as a \textbf{mean reversion} style pair-trading idea.
+
+\paragraph{Data retrieval}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+google_close = request.security("GOOG", "D", close)
+google_open = request.security("GOOG", "D", open)
+price_change = google_close / google_open
+\end{Verbatim}
+
+Interpretation:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{1.05} means Google rose 5\%
+    \item \texttt{0.95} means Google fell 5\%
+\end{itemize}
+
+\paragraph{Trading rules}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+if price_change < 0.95
+    strategy.entry("long", strategy.long, 100)
+
+if price_change > 1.05
+    strategy.entry("short", strategy.short, 100)
+\end{Verbatim}
+
+The Apple chart must be open for the orders to execute in Apple. The article also notes that the example produced only four trades because 5\% daily moves are relatively rare, so many more observations would be needed before judging the strategy properly.
+
+\subsubsection{13) Modifying scripts without coding}
+
+Pine Script supports \textbf{inputs}, which let users change strategy parameters from the TradingView interface without editing the code directly.
+
+\paragraph{Example}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+longTrigger = input(title="% Change for short entries", defval=5)
+shortTrigger = input(title="% Change for long entries", defval=5)
+\end{Verbatim}
+
+The parameters mean:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{title} = label shown to the user
+    \item \texttt{defval} = default value
+\end{itemize}
+
+The article then converts the percentage inputs into thresholds usable in the strategy:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+longTrigger := 1 - longTrigger/100
+shortTrigger := 1 + shortTrigger/100
+\end{Verbatim}
+
+Then the strategy uses these variables instead of hard-coded thresholds:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+if price_change < longTrigger
+    strategy.entry("long", strategy.long, 100)
+
+if price_change > shortTrigger
+    strategy.entry("short", strategy.short, 100)
+\end{Verbatim}
+
+Users can change these values through the gear icon beside the strategy name, and further options are available in the Properties and Style tabs.
+
+\subsubsection{14) Plotting and annotations}
+
+The article then introduces plotting tools beyond \texttt{plot()}.
+
+\paragraph{Common annotation tools}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{hline()} --- draw horizontal lines
+    \item \texttt{plotchar()} --- plot ASCII characters
+    \item \texttt{plotshape()} --- plot shapes such as arrows for buy/sell signals
+\end{itemize}
+
+These are useful for visual annotations on the chart.
+
+\subsubsection{15) Plotting Forex sessions}
+
+This section creates an indicator that shows Forex session timing, which is especially useful because Forex trades 24 hours a day, 5 days a week.
+
+\paragraph{Motivation}
+
+Different world markets open and close at different times, affecting volatility. The article focuses on the \textbf{London} and \textbf{New York} sessions because they are highly relevant to Forex traders.
+
+\paragraph{Session definitions}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+London = time(timeframe.period, "0700-1500")
+NY = time(timeframe.period, "1200-2000")
+\end{Verbatim}
+
+\texttt{time()} returns the bar time if the current bar falls inside the session, otherwise it returns \texttt{NaN}.
+
+\paragraph{Detecting open/closed session}
+
+The article first shows a longer if/else version using \texttt{na()} to detect whether the value is missing. If London is open, a variable is set one way; otherwise, another value is used. This is then simplified to a one-line ternary expression:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+plot(na(London) ? 1 : 0)
+\end{Verbatim}
+
+Meaning:
+
+\begin{itemize}[leftmargin=*]
+    \item If \texttt{London} is \texttt{NaN}, return 1.
+    \item Otherwise return 0.
+\end{itemize}
+
+\paragraph{Better chart display}
+
+Instead of plotting a line, the script uses \texttt{bgcolor()} to color the background when a session is active. The article shows:
+
+\begin{itemize}[leftmargin=*]
+    \item Blue background for London
+    \item Green background for New York
+\end{itemize}
+
+and explains that when London and New York overlap, the chart can show multiple colors, which usually corresponds to the most volatile part of the day.
+
+\paragraph{Final session script}
+
+The final version also adds \textbf{Tokyo}:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+Tokyo = time(timeframe.period, "0000-0800")
+London = time(timeframe.period, "0700-1500")
+NY = time(timeframe.period, "1200-2000")
+
+bgcolor(na(Tokyo) ? na : color.fuchsia)
+bgcolor(na(London) ? na : color.blue)
+bgcolor(na(NY) ? na : color.green)
+\end{Verbatim}
+
+This gives a quick visual view of the major Forex sessions on one chart.
+
+\subsubsection{16) Multi-timeframe Bollinger Bands indicator}
+
+The final example builds a custom multi-timeframe indicator.
+
+\paragraph{Trading idea}
+
+The article describes a scalping/mean-reversion style setup used in the early Asian Forex session, when market conditions are usually quieter. The strategy combines:
+
+\begin{itemize}[leftmargin=*]
+    \item Bollinger Bands on a \textbf{5-minute chart}
+    \item RSI on a \textbf{1-minute chart}
+\end{itemize}
+
+The idea is to look for RSI divergence on the lower timeframe when price reaches the upper or lower Bollinger Band on the higher timeframe. A target may be the Bollinger midline or the opposite band. The article also notes this works best in the first half of the session, because later the chance of a breakout or directional move increases.
+
+\paragraph{Script structure}
+
+The custom indicator is declared as:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+indicator(title="Higher TF BBands", shorttitle="TF BBands", overlay=true)
+\end{Verbatim}
+
+The script then accepts user inputs for:
+
+\begin{itemize}[leftmargin=*]
+    \item timeframe
+    \item length
+    \item standard deviation
+\end{itemize}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+tf = input(title="BBands Timeframe", defval="60")
+len = input(title="Length", defval=20)
+stddev = input(title='StdDev', defval=2)
+\end{Verbatim}
+
+It calculates Bollinger Bands with:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+[middle, upper, lower] = ta.bb(close, len, stddev)
+\end{Verbatim}
+
+Then it uses \texttt{request.security()} together with \texttt{syminfo.tickerid} so the bands are computed on the user-selected timeframe of the same chart symbol:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+hbbandsMid = request.security(syminfo.tickerid, tf, middle, barmerge.gaps_on, barmerge.lookahead_off)
+hbbandsUpper = request.security(syminfo.tickerid, tf, upper, barmerge.gaps_on, barmerge.lookahead_off)
+hbbandsLower = request.security(syminfo.tickerid, tf, lower, barmerge.gaps_on, barmerge.lookahead_off)
+\end{Verbatim}
+
+Finally, each band is plotted:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+plot(hbbandsMid)
+plot(hbbandsUpper)
+plot(hbbandsLower)
+\end{Verbatim}
+
+This lets a higher-timeframe Bollinger Band appear directly on a lower-timeframe chart, and the inputs make it easy to customize the setup for different combinations of timeframes.
+
 \section{Backtesting with Vectorbt}
-\section{Algorithmic Trading Quiz}
+
+\subsection{What is VectorBT?}
+
+\textbf{VectorBT} is an open-source Python library for \textbf{quantitative analysis} and \textbf{backtesting}. It is designed for algorithmic traders and investors who want to develop, test, and optimize trading strategies efficiently. The library is built for performance and uses \textbf{NumPy} and \textbf{Numba} under the hood.
+
+\subsection{Why Use VectorBT?}
+
+VectorBT is useful because it combines several important advantages:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Fast performance:} Optimized for speed using NumPy and Numba.
+    \item \textbf{Ease of use:} Simple API for quick strategy testing.
+    \item \textbf{Open-source:} Free to use, modify, and contribute to.
+    \item \textbf{Telegram integration:} Useful for alerts and automation.
+    \item \textbf{Interactive charting:} Works well inside Jupyter notebooks for visual analysis.
+\end{itemize}
+
+\subsubsection{Practical Meaning}
+
+VectorBT is especially useful when you want to:
+
+\begin{itemize}[leftmargin=*]
+    \item Run many strategy experiments quickly.
+    \item Test parameter combinations at scale.
+    \item Visualize results interactively.
+    \item Combine research with automation tools.
+\end{itemize}
+
+\subsection{Limitations of VectorBT}
+
+The article notes a few drawbacks:
+
+\begin{itemize}[leftmargin=*]
+    \item It could have more features.
+    \item Documentation is not the strongest.
+    \item Serious users may eventually want \textbf{VectorBT Pro}, which is a premium successor with advanced features and better performance, but it is invite-only on GitHub.
+\end{itemize}
+
+So VectorBT is free and powerful, but users should know that the open-source version may feel limited for advanced workflows.
+
+\subsection{Alternatives Mentioned}
+
+The article lists several alternatives depending on the use case:
+
+\begin{itemize}[leftmargin=*]
+    \item QuantConnect.
+    \item TradingView (Pine Script).
+    \item Backtrader.
+    \item Interactive Brokers.
+    \item ThinkScript.
+    \item QuantRocket.
+    \item HaasOnline.
+    \item cTrader.
+    \item Trality, and others.
+\end{itemize}
+
+\subsection{Getting Started}
+
+VectorBT is simple to install with pip:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pip install -U vectorbt
+\end{Verbatim}
+
+For the full feature set:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pip install -U "vectorbt[full]"
+\end{Verbatim}
+
+You can also run it in Docker using a JupyterLab container. The article notes that this is convenient if you want a ready-made notebook environment with VectorBT already installed.
+
+\subsection{Getting Data}
+
+VectorBT can download market data directly from \textbf{Yahoo Finance} through \texttt{YFData}.
+
+Example:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+eth_price = vbt.YFData.download('ETH-USD').get('Close')
+\end{Verbatim}
+
+This gives the closing price series for ETH-USD. The article shows the returned series as a time-indexed price series, which is the typical input for most analyses in VectorBT.
+
+\subsection{Technical Indicators}
+
+VectorBT provides built-in indicator wrappers such as:
+
+\begin{itemize}[leftmargin=*]
+    \item Moving Average (MA).
+    \item Moving Standard Deviation (MSTD).
+    \item Bollinger Bands (BBANDS).
+    \item RSI.
+    \item Other common technical indicators.
+\end{itemize}
+
+Example:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+fast_ma = vbt.MA.run(eth_price, 10)
+slow_ma = vbt.MA.run(eth_price, 50)
+rsi = vbt.RSI.run(eth_price)
+\end{Verbatim}
+
+This makes it easy to compute indicators without manually coding rolling calculations.
+
+\subsection{Defining Entries and Exits}
+
+VectorBT lets you define entry and exit logic by combining boolean conditions.
+
+Example strategy:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Entry:} Fast MA crosses above slow MA and RSI is above 50.
+    \item \textbf{Exit:} Slow MA crosses above fast MA and RSI is below 50.
+\end{itemize}
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+entries = fast_ma.ma_crossed_above(slow_ma) & rsi.rsi_above(50)
+exits = slow_ma.ma_crossed_above(fast_ma) & rsi.rsi_below(50)
+\end{Verbatim}
+
+The article explicitly warns that this is only an example and strategies like this ``almost never work in real life,'' which is an important caution when learning from toy examples.
+
+\subsection{Backtesting with VectorBT}
+
+Backtesting is handled through the \textbf{Portfolio} module.
+
+Example:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pf = vbt.Portfolio.from_signals(eth_price, entries, exits, init_cash=10000)
+\end{Verbatim}
+
+This defines:
+
+\begin{itemize}[leftmargin=*]
+    \item The price series.
+    \item The entry/exit signals.
+    \item The initial capital.
+\end{itemize}
+
+\subsubsection{Example Result}
+
+The example strategy produced:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Total Profit:} 55,760.53.
+    \item \textbf{End Value:} 65,760.531431.
+    \item \textbf{Total Return:} 557.605314\%.
+    \item \textbf{Benchmark Return:} 393.42466\%.
+    \item \textbf{Max Drawdown:} 61.262033\%.
+    \item \textbf{Total Trades:} 18.
+    \item \textbf{Win Rate:} 41.176471\%.
+    \item \textbf{Profit Factor:} 3.388864.
+    \item \textbf{Sharpe Ratio:} 0.919382.
+    \item \textbf{Calmar Ratio:} 0.746707.
+    \item \textbf{Sortino Ratio:} 1.378526.
+\end{itemize}
+
+\subsubsection{Important Interpretation}
+
+This backtest is only a demonstration example, not a realistic claim that the strategy is robust. The article itself presents it as showcase-only.
+
+\subsection{Plotting Results}
+
+VectorBT uses interactive plotting, typically with Plotly.
+
+Example:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pf.plot().show()
+\end{Verbatim}
+
+This displays the full backtest range, including:
+
+\begin{itemize}[leftmargin=*]
+    \item Orders.
+    \item Trade returns.
+    \item Benchmark comparison.
+    \item Other useful visuals.
+\end{itemize}
+
+You can also plot portfolio components such as:
+
+\begin{Verbatim}[breaklines=true,breakanywhere=true,fontsize=\small]
+pf.plot(subplots=['cash', 'assets', 'value']).show()
+\end{Verbatim}
+
+This helps you inspect how cash, holdings, and total value evolved over time.
+
+\subsection{Large-Scale Strategy Analysis}
+
+One of VectorBT's strongest use cases is running many strategy variations quickly.
+
+The article gives an example of testing \textbf{10,000 combinations} of a dual-SMA crossover strategy on:
+
+\begin{itemize}[leftmargin=*]
+    \item MSFT.
+    \item AMZN.
+    \item AAPL.
+\end{itemize}
+
+It uses:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{vbt.YFData.download(...)}.
+    \item \texttt{vbt.MA.run\_combs(...)}.
+    \item \texttt{vbt.Portfolio.from\_signals(...)}.
+    \item A heatmap of total returns across parameter combinations.
+\end{itemize}
+
+\subsubsection{Why This Matters}
+
+VectorBT is especially strong for:
+
+\begin{itemize}[leftmargin=*]
+    \item Parameter sweeps.
+    \item Multi-asset analysis.
+    \item Matrix-style experimentation.
+\end{itemize}
+
+\subsubsection{Important Warning}
+
+The article warns to be careful about:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Look-ahead bias.}
+    \item \textbf{Overfitting.}
+    \item Other interpretation mistakes when exploring many combinations.
+\end{itemize}
+
+\subsection{Telegram Integration}
+
+VectorBT can integrate with Telegram for notifications.
+
+The example shows a custom Telegram bot class built using:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{telegram.ext.CommandHandler}.
+    \item \texttt{ccxt}.
+    \item A subclass of \texttt{vbt.TelegramBot}.
+\end{itemize}
+
+The bot fetches the latest Binance ticker for a symbol and sends the result back through Telegram. This is useful for monitoring markets and automating alerts.
+
+\subsection{Scheduled Commands}
+
+VectorBT also includes \textbf{ScheduleManager} for running tasks on intervals.
+
+The example:
+
+\begin{itemize}[leftmargin=*]
+    \item Fetches recent BTC/USDT trades from Binance.
+    \item Converts them into a price series.
+    \item Plots them.
+    \item Refreshes the output every 20 seconds.
+\end{itemize}
+
+\subsubsection{Why It Is Useful}
+
+This makes VectorBT not just a backtesting tool, but also a lightweight environment for:
+
+\begin{itemize}[leftmargin=*]
+    \item Repeated monitoring.
+    \item Live-data refresh.
+    \item Automated research workflows.
+\end{itemize}
+
+\subsection{Key Takeaways}
+
+\begin{itemize}[leftmargin=*]
+    \item VectorBT is an \textbf{open-source Python library} for quantitative analysis and backtesting.
+    \item It is built for \textbf{speed}, using \textbf{NumPy} and \textbf{Numba}, and is useful for rapid strategy experimentation.
+    \item It is free, but there is also a premium \textbf{VectorBT Pro} version with more advanced capabilities.
+    \item It supports direct Yahoo Finance data downloads, technical indicators, signal-based backtesting, interactive plotting, parameter sweeps, Telegram alerts, and scheduled automation.
+    \item It is particularly valuable for \textbf{research workflows} where you want to test many combinations quickly and visualize results interactively.
+    \item The main caution is that speed and convenience do not remove the need to control for \textbf{biases}, avoid \textbf{overfitting}, and judge strategy quality carefully.
+\end{itemize}
+
+\subsection{Related Tutorial Themes Mentioned by the User}
+
+The follow-up tutorials you listed appear to cover:
+
+\begin{itemize}[leftmargin=*]
+    \item \href{https://www.marketcalls.in/python/mastering-vectorbt-backtesting-and-optimization-part-1-python-tutorial.html}{Optimization} --- \url{https://www.marketcalls.in/python/mastering-vectorbt-backtesting-and-optimization-part-1-python-tutorial.html}
+    \item \href{https://www.marketcalls.in/python/mastering-vectorbt-portfolio-backtesting-and-rebalancing-part-2-python-tutorial.html}{Portfolio backtesting and rebalancing} --- \url{https://www.marketcalls.in/python/mastering-vectorbt-portfolio-backtesting-and-rebalancing-part-2-python-tutorial.html}
+    \item \href{https://www.marketcalls.in/python/mastering-vectorbt-superfast-supertrend-grid-optimization-part-3-python-tutorial.html}{Supertrend grid optimization} --- \url{https://www.marketcalls.in/python/mastering-vectorbt-superfast-supertrend-grid-optimization-part-3-python-tutorial.html}
+    \item \href{https://www.marketcalls.in/python/mastering-vectorbt-position-sizing-code-snippets-part-4-python-tutorial.html}{Position sizing} --- \url{https://www.marketcalls.in/python/mastering-vectorbt-position-sizing-code-snippets-part-4-python-tutorial.html}
+    \item \href{https://www.marketcalls.in/python/mastering-vectorbt-broadcasting-how-to-run-multiple-strategies-at-once-part-5-python-tutorial.html}{Broadcasting multiple strategies at once} --- \url{https://www.marketcalls.in/python/mastering-vectorbt-broadcasting-how-to-run-multiple-strategies-at-once-part-5-python-tutorial.html}
+    \item \href{https://vectorbt.pro/documentation/fundamentals/}{VectorBT documentation} --- \url{https://vectorbt.pro/documentation/fundamentals/}
+    \item \href{https://github.com/polakowo/vectorbt/tree/master/examples}{VectorBT examples} --- \url{https://github.com/polakowo/vectorbt/tree/master/examples}
+\end{itemize}
+
+Those topics naturally extend the VectorBT workflow from basic backtesting into more advanced portfolio and parameter-management research.
+
 
 % -------------------- Introduction to Derivatives --------------------
 \chapter{Introduction to Derivatives}
 \section{What are Derivatives?}
+
+\subsection{Derivatives: Types, Uses, and Market Structure}
+
+A \textbf{derivative} is a financial contract whose value is \textbf{derived from} (i.e., linked to) the performance of an underlying asset. The derivative itself has no intrinsic value --- it is only worth something because the underlying asset changes in value.
+
+\textbf{Underlying assets} can be virtually anything:
+\begin{itemize}[leftmargin=*]
+    \item Stocks, bonds, market indices
+    \item Commodities (oil, wheat, gold)
+    \item Currencies and interest rates
+    \item Even cryptocurrencies
+\end{itemize}
+
+\textbf{Core uses of derivatives:}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.26\textwidth}|L{0.64\textwidth}|}
+\hline
+\textbf{Purpose} & \textbf{Description} \\ \hline
+\textbf{Hedging} & Reducing or locking in risk. E.g., a company expecting foreign currency payments uses derivatives to lock in an exchange rate today. \\ \hline
+\textbf{Speculation} & Betting on the direction of price movements for potential profit. High risk, high reward. \\ \hline
+\textbf{Market Access} & Gaining exposure to assets or markets that are otherwise inaccessible or capital-intensive to invest in directly. \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    \textbf{Historical Note:} Derivatives are not new --- the first futures contracts date back to the \textbf{second millennium BC in Mesopotamia}. However, they weren't widely used until the \textbf{1970s}, when new valuation techniques (like the Black-Scholes model) enabled rapid market growth. Today, modern finance is inseparable from derivatives. Their complexity also makes them dangerous --- derivatives linked to U.S. housing markets triggered the \textbf{Global Financial Crisis of 2008}, leading to the collapse of Lehman Brothers and Bear Stearns.
+\end{quote}
+
+\subsection{Intuition: The Ramu Story (Building Intuition for Futures)}
+
+\begin{quote}
+    This story grounds abstract derivative concepts in a concrete, relatable example.
+\end{quote}
+
+\textbf{Setup:}
+\begin{itemize}[leftmargin=*]
+    \item Ramu is a farmer with 10 cows.
+    \item He wants to sell them \textbf{1 year from now}.
+    \item His cost of raising each cow: Rs. 30 $\rightarrow$ \textbf{Total investment: Rs. 300.}
+    \item His fear: if mad cow disease breaks out, market prices could crash and he won't recover his costs.
+\end{itemize}
+
+\textbf{The Contract:}
+\begin{itemize}[leftmargin=*]
+    \item Ramu meets an investor (you) through a broker.
+    \item You believe mad cow disease is unlikely, so you agree to pay \textbf{Rs. 100 per cow, 1 year from now}, regardless of market price.
+    \item This agreement is a \textbf{Futures Contract}: both parties are legally \textbf{obligated} to transact at that price on that date.
+\end{itemize}
+
+\textbf{Ramu's perspective (Seller/Hedger):}
+\begin{itemize}[leftmargin=*]
+    \item Whatever happens to market prices, Ramu locks in profit = Rs. 100 - Rs. 30 = \textbf{Rs. 70 per cow.}
+    \item Ramu has \textbf{eliminated price uncertainty} and protected his business. He is \textbf{hedging}.
+\end{itemize}
+
+\textbf{Your perspective (Buyer/Speculator):}
+
+\emph{Scenario 1 --- You are right (no disease):}
+\begin{itemize}[leftmargin=*]
+    \item Market price rises to Rs. 200 per cow.
+    \item You buy from Ramu at Rs. 100, sell in the open market at Rs. 200.
+    \item \textbf{Profit = Rs. 100 per cow $\times$ 10 cows = Rs. 1,000 on a Rs. 1,000 investment $\rightarrow$ 100\% ROI.}
+\end{itemize}
+
+\emph{Scenario 2 --- You are wrong (disease breaks out):}
+\begin{itemize}[leftmargin=*]
+    \item Market price drops to Rs. 20 per cow.
+    \item You are obligated to buy from Ramu at Rs. 100, but can only sell for Rs. 20.
+    \item \textbf{Loss = Rs. 80 per cow $\times$ 10 cows = Rs. 800 on a Rs. 1,000 investment.}
+\end{itemize}
+
+\textbf{Managing the downside --- Stop Loss:}
+\begin{itemize}[leftmargin=*]
+    \item To cap your potential losses, you instruct your broker with a \textbf{stop-loss order}.
+    \item Example: "Exit the contract if market price hits Rs. 50."
+    \item At Rs. 50, the broker sells your futures position to someone else, limiting your loss to Rs. 50 per cow instead of Rs. 80.
+    \item This illustrates a key principle: \textbf{derivatives amplify both gains and losses, but risk management tools like stop-losses can limit downside exposure.}
+\end{itemize}
+
 \section{Types of Derivatives}
+
+There are four major types of derivatives: \textbf{Forwards, Futures, Options, and Swaps.}
+
+\subsubsection{1. Forward Contracts}
+
+\textbf{Definition:} A \textbf{private, customized agreement} between two parties to buy or sell an underlying asset at a \textbf{specified price} on a \textbf{specified future date}.
+
+\textbf{Key Characteristics:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{OTC (Over-the-Counter):} Not traded on any exchange; negotiated privately between two parties.
+    \item \textbf{Customizable:} Terms (price, quantity, delivery date, quality) are tailored to the specific needs of both parties.
+    \item \textbf{Obligatory:} Both buyer and seller are legally \textbf{obligated} to fulfill the contract.
+    \item \textbf{Generally held to expiry:} Due to their bespoke nature, forward contracts are typically not unwound before the delivery date.
+\end{itemize}
+
+\textbf{Example:}
+A farmer in Tamil Nadu agrees with a wheat wholesaler to sell \textbf{10 tonnes of wheat in 3 months at Rs. 2,000/tonne.} The price, quantity, and delivery date are all locked in today. The specific terms may differ entirely from a similar forward contract signed between a farmer in Punjab and a different buyer.
+
+\textbf{Limitations of Forward Contracts:}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.26\textwidth}|L{0.64\textwidth}|}
+\hline
+\textbf{Limitation} & \textbf{Explanation} \\ \hline
+\textbf{Liquidity Risk} & Once signed, the contract cannot easily be reversed or exited. The farmer cannot back out, nor can the wholesaler. \\ \hline
+\textbf{Counterparty Risk} & Either party can \textbf{default} --- the wholesaler may not pay, or the farmer may fail to deliver. There is no intermediary to guarantee performance. \\ \hline
+\textbf{No Regulation} & Forwards are not overseen by any government or regulatory authority. \\ \hline
+\textbf{No Settlement Guarantee} & Unlike exchange-traded instruments, there is no settlement guarantee fund to protect against default. \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{2. Futures Contracts}
+
+\textbf{Definition:} A \textbf{standardized contract} to buy or sell an asset at a \textbf{predetermined price on a specified future date}, traded on organized exchanges.
+
+\textbf{Key Characteristics:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Exchange-traded:} Listed on regulated exchanges (NSE, CME, Eurex, etc.), making them transparent and publicly priced.
+    \item \textbf{Standardized:} The exchange defines contract size, expiry date, settlement process, and the underlying asset. No customization is possible.
+    \item \textbf{Obligatory:} Both buyer and seller are \textbf{obligated} to fulfill the contract (unlike options).
+    \item \textbf{Highly liquid:} Standardization makes it easy to buy or sell contracts at any time; positions can be \textbf{unwound before expiry} by taking an equal and opposite position.
+    \item \textbf{Intermediated:} A \textbf{clearinghouse} sits between buyer and seller, guaranteeing performance and eliminating counterparty risk.
+\end{itemize}
+
+\textbf{How Futures Differ from Forwards:}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.20\textwidth}|L{0.28\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Feature} & \textbf{Forwards} & \textbf{Futures} \\ \hline
+Trading Venue & OTC (private) & Exchange (public) \\ \hline
+Standardization & Customized & Standardized \\ \hline
+Regulation & Unregulated & Heavily regulated \\ \hline
+Counterparty Risk & High & Low (clearinghouse guarantees) \\ \hline
+Liquidity & Low & High \\ \hline
+Settlement & Usually at expiry & Can be exited anytime \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    \textbf{Returning to Ramu's story:} The contract Ramu signed with the investor was a \textbf{Futures Contract} --- a standardized, obligatory agreement to transact at Rs. 100/cow after 1 year.
+\end{quote}
+
+\subsubsection{3. Options}
+
+\textbf{Definition:} A contract that gives the \textbf{buyer the right, but not the obligation}, to buy or sell an underlying asset at a \textbf{specified price (the strike price)} on or before a \textbf{specified expiration date}.
+
+\begin{quote}
+    The critical distinction from futures/forwards: the \textbf{buyer has the choice} of whether to exercise the contract. The seller (writer) of the option, however, is \textbf{obligated} to fulfill it if the buyer chooses to exercise.
+\end{quote}
+
+\textbf{Two types of options:}
+
+\paragraph{Call Option}
+
+\begin{itemize}[leftmargin=*]
+    \item Gives the buyer the \textbf{right to BUY} the underlying asset at the strike price.
+    \item \textbf{Used when you expect the asset price to RISE.}
+    \item Example: You hold a call option to buy Reliance stock at Rs. 2,500. If the market price rises to Rs. 3,000, you exercise the option --- buy at Rs. 2,500 and immediately profit Rs. 500 per share. If the price falls to Rs. 2,000, you simply \textbf{don't exercise} and only lose the premium paid.
+\end{itemize}
+
+\paragraph{Put Option}
+
+\begin{itemize}[leftmargin=*]
+    \item Gives the buyer the \textbf{right to SELL} the underlying asset at the strike price.
+    \item \textbf{Used when you expect the asset price to FALL.}
+    \item Example: You hold a put option to sell Infosys stock at Rs. 1,500. If the market price drops to Rs. 1,000, you exercise the option --- buy in the open market at Rs. 1,000 and sell via the option at Rs. 1,500, profiting Rs. 500. If the price rises, you don't exercise.
+\end{itemize}
+
+\textbf{Exercise Style:}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.26\textwidth}|L{0.64\textwidth}|}
+\hline
+\textbf{Style} & \textbf{Description} \\ \hline
+\textbf{American Option} & Can be exercised at \textbf{any time} before or on the expiry date. \\ \hline
+\textbf{European Option} & Can only be exercised \textbf{on the expiry date} itself. \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{Why options are powerful:}
+\begin{itemize}[leftmargin=*]
+    \item The maximum loss for the \textbf{buyer} is limited to the \textbf{premium paid} for the option.
+    \item This makes options a cost-effective way to speculate with \textbf{capped downside} and potentially \textbf{unlimited upside} (for calls).
+    \item Options are one of the most inexpensive ways to gain leveraged exposure to an asset without owning it directly.
+\end{itemize}
+
+\subsubsection{4. Swaps}
+
+\textbf{Definition:} A derivative contract in which \textbf{two parties agree to exchange cash flows} (or other financial obligations) in the future according to a \textbf{pre-arranged formula}.
+
+\begin{quote}
+    Think of swaps as a \textbf{portfolio (basket) of forward contracts} --- multiple future cash flow exchanges bundled together.
+\end{quote}
+
+\textbf{Swaps are always OTC} --- they are not exchange-traded, because they need to be customized to the specific needs of both parties.
+
+\paragraph{Interest Rate Swap}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} Two parties exchange \textbf{interest payment cash flows} on a notional principal amount, within the \textbf{same currency}.
+    \item \textbf{Most common type:} One party pays a \textbf{fixed interest rate}, the other pays a \textbf{floating interest rate} (typically benchmarked to LIBOR/SOFR).
+    \item \textbf{Purpose:} A company with a floating-rate loan (exposed to interest rate risk) may swap its floating payments for fixed payments to achieve \textbf{predictable cash outflows}.
+\end{itemize}
+
+\textbf{Example:}
+\begin{itemize}[leftmargin=*]
+    \item Company A has a Rs. 10 crore loan at a floating rate (say, 7\% currently, but variable).
+    \item Company B has a Rs. 10 crore loan at a fixed rate of 8\%.
+    \item They agree to swap: A pays 8\% fixed to B; B pays the floating rate to A.
+    \item Now A has \textbf{fixed rate certainty}, and B gets the floating rate they wanted.
+    \item Only \textbf{interest payments} are exchanged --- the principal is never transferred.
+\end{itemize}
+
+\paragraph{Currency Swap}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Definition:} Two parties exchange \textbf{both the principal AND interest payments} in \textbf{different currencies}.
+    \item \textbf{Purpose:} Used by multinational corporations to manage foreign currency exposure or obtain cheaper financing in a foreign currency.
+\end{itemize}
+
+\textbf{Example:}
+\begin{itemize}[leftmargin=*]
+    \item An Indian company needs USD for US operations, while a US company needs INR for Indian operations.
+    \item They swap: the Indian company provides INR to the US company, which provides USD in return. At the end, both principal amounts are swapped back at the original exchange rate.
+\end{itemize}
+
+\textbf{Key distinction:}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.20\textwidth}|L{0.28\textwidth}|L{0.42\textwidth}|}
+\hline
+ & \textbf{Interest Rate Swap} & \textbf{Currency Swap} \\ \hline
+Currency & Same currency & Different currencies \\ \hline
+Principal exchanged? & No & Yes \\ \hline
+Interest exchanged? & Yes (fixed $\leftrightarrow$ floating) & Yes (in respective currencies) \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{Other advanced swap types:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Credit Default Swap (CDS):} Acts like insurance against a bond default. The protection buyer pays periodic premiums; the seller compensates if the bond issuer defaults. CDSs were central to the 2008 financial crisis.
+    \item \textbf{Inflation Swap:} Exchange fixed payments for payments linked to an inflation index.
+    \item \textbf{Total Return Swap:} One party pays the total return of an asset (capital gains + income); the other pays a fixed/floating rate.
+\end{itemize}
+
+\subsection{Vanilla vs. Exotic Derivatives}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.20\textwidth}|L{0.28\textwidth}|L{0.42\textwidth}|}
+\hline
+ & \textbf{Plain Vanilla} & \textbf{Exotic} \\ \hline
+\textbf{Complexity} & Simple, standard structure & Complex payout structures \\ \hline
+\textbf{Underlying} & Based on one underlying asset & May involve two or more underlying assets \\ \hline
+\textbf{Examples} & Standard calls, puts, vanilla interest rate swaps & Barrier options, Asian options, rainbow options \\ \hline
+\textbf{Liquidity} & High & Low (bespoke) \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    \textbf{Plain vanilla} derivatives are the building blocks of modern finance. \textbf{Exotics} are engineered for very specific institutional needs --- they can combine multiple options or have non-standard payoffs (e.g., "pay only if both the stock and the index rise").
+\end{quote}
+
+\subsection{Participants in the Derivatives Market}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.20\textwidth}|L{0.28\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Participant} & \textbf{Role} & \textbf{Example} \\ \hline
+\textbf{Hedgers} & Reduce existing risk or future price exposure & A cattle farmer sells futures to lock in a sale price before market prices potentially fall \\ \hline
+\textbf{Speculators} & Take on risk to profit from expected price movements & A trader buys S\&P 500 call options betting the index will rise, without buying all constituent stocks \\ \hline
+\textbf{Arbitrageurs} & Exploit mispricings between related markets for risk-free profits & If gold futures trade above spot price by more than storage + financing cost, buy spot gold and sell futures to lock in riskless profit \\ \hline
+\textbf{Margin Traders} & Use leverage via derivatives to amplify returns with less capital & A Forex trader uses currency futures to control large currency positions without the full capital required for direct FX purchase \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{quote}
+    \textbf{Arbitrageurs} play a vital market stabilization role: by exploiting mispricings, they drive prices back to fair value, keeping derivative and spot markets aligned.
+\end{quote}
+
+\subsection{Exchange-Traded Derivatives: Deep Dive}
+
+\subsubsection{Types of ETDs}
+
+\textbf{1. Stock/Equity Derivatives}
+\begin{itemize}[leftmargin=*]
+    \item Based on individual common stocks.
+    \item Standardization improves liquidity; many different expiry dates and strike prices are available simultaneously.
+    \item Considered \textbf{leading indicators} of future stock price trends.
+\end{itemize}
+
+\textbf{2. Index Derivatives}
+\begin{itemize}[leftmargin=*]
+    \item Based on a stock market index (e.g., Nifty 50, S\&P 500).
+    \item Allow investors to buy or sell exposure to an \textbf{entire market} without holding every stock.
+    \item Physical delivery is impossible (you can't deliver "one unit of the Nifty"), so these typically settle in \textbf{cash}.
+\end{itemize}
+
+\textbf{3. Currency Derivatives}
+\begin{itemize}[leftmargin=*]
+    \item Based on currency pairs (e.g., USD/INR, EUR/USD).
+    \item Available as futures or options; investors can go long or short on currency pairs.
+    \item Can also provide access to otherwise \textbf{restricted FX markets} via \textbf{Non-Deliverable Forwards (NDFs)}, which are settled in USD offshore.
+\end{itemize}
+
+\textbf{4. Commodities Derivatives}
+\begin{itemize}[leftmargin=*]
+    \item Based on physical commodities: crude oil, natural gas, agricultural products (wheat, soybeans), precious metals.
+    \item Critically important for \textbf{producers} (farmers, oil companies, miners) who need to hedge price risk, and for \textbf{downstream industries} that rely on these commodities as inputs.
+\end{itemize}
+
+\textbf{5. Interest Rate Derivatives}
+\begin{itemize}[leftmargin=*]
+    \item Based on fixed income instruments like government bonds.
+    \item Bond futures give fixed income traders an efficient way to manage \textbf{interest rate risk}.
+    \item Post the 2008 Global Financial Crisis, the \textbf{Dodd-Frank Act (2010)} mandated many OTC interest rate derivatives (like CDSs) to move to exchanges for greater transparency and safety.
+\end{itemize}
+
+\subsubsection{Clearing and Settlement of ETDs}
+
+A \textbf{clearinghouse} is the critical infrastructure that makes exchange-traded derivatives safe. It acts as:
+\begin{itemize}[leftmargin=*]
+    \item The \textbf{buyer to every seller}
+    \item The \textbf{seller to every buyer}
+\end{itemize}
+
+This means neither the buyer nor seller faces each other directly --- they both face the clearinghouse. This eliminates bilateral counterparty risk entirely.
+
+\textbf{How it works:}
+
+\begin{enumerate}[leftmargin=*]
+    \item Buyer and seller agree on trade terms on the exchange.
+    \item The clearinghouse \textbf{steps in} and becomes the counterparty to both sides.
+    \item The clearinghouse requires an \textbf{initial margin} from both parties as collateral to open a position.
+    \item As prices move daily, the clearinghouse recalculates exposure and may demand a \textbf{maintenance margin} (additional collateral) to keep positions open.
+    \item If a party cannot post the required margin $\rightarrow$ \textbf{margin call} $\rightarrow$ the clearinghouse may \textbf{liquidate} the position to cover the shortfall.
+\end{enumerate}
+
+\begin{quote}
+    This daily mark-to-market and margining process ensures that losses are collected incrementally, so no single party can accumulate catastrophic unpaid losses.
+\end{quote}
+
+\subsubsection{Benefits of ETDs}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{High Liquidity:} Standardized contracts with public prices can be bought/sold almost instantly. Offsetting a position (selling what you bought, or vice versa) takes seconds.
+    \item \textbf{Elimination of Counterparty Risk:} The clearinghouse guarantees every trade --- even if one party defaults, the other is protected.
+    \item \textbf{Transparency:} All trade prices and volumes are publicly published, preventing manipulation by large players.
+    \item \textbf{Regulatory Oversight:} Exchanges are heavily regulated, ensuring market integrity and investor protection.
+\end{enumerate}
+
+\subsubsection{Drawback of ETDs}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Loss of Flexibility:} Contracts are standardized --- you cannot customize size, date, or terms. This makes ETDs unsuitable for highly specific hedging needs.
+    \item \textbf{Margin Requirements:} Capital must be locked up as margin, which creates an opportunity cost.
+\end{enumerate}
+
 \section{OTC vs Exchange-Traded Derivatives}
+
+\subsection{OTC vs. Exchange-Traded Derivatives}
+
+Derivatives can be traded in two fundamentally different ways:
+
+\subsubsection{Over-the-Counter (OTC)}
+
+\begin{itemize}[leftmargin=*]
+    \item Private, bilateral agreements between two parties (e.g., two banks, a bank and a corporation).
+    \item Governed by privately signed documentation (e.g., ISDA Master Agreements).
+    \item \textbf{High flexibility} but \textbf{high counterparty risk.}
+    \item Common instruments: Forwards, Swaps (and historically, CDSs).
+\end{itemize}
+
+\subsubsection{Exchange-Traded Derivatives (ETD)}
+
+\begin{itemize}[leftmargin=*]
+    \item Standardized contracts listed on regulated exchanges (NSE, CME Group, Eurex).
+    \item A \textbf{clearinghouse} interposes itself between buyer and seller, eliminating counterparty risk.
+    \item \textbf{Low flexibility} but \textbf{high liquidity and transparency.}
+    \item Common instruments: Futures, standardized Options.
+\end{itemize}
+
+\textbf{Comparison Table:}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.20\textwidth}|L{0.28\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Aspect} & \textbf{OTC Derivatives} & \textbf{Exchange-Traded Derivatives} \\ \hline
+\textbf{Customization} & High; fully tailored & Low; standardized contracts \\ \hline
+\textbf{Privacy} & Private transactions & Public and regulated \\ \hline
+\textbf{Counterparty Risk} & High; depends on parties' creditworthiness & Low; clearinghouse guarantees settlement \\ \hline
+\textbf{Transparency} & Low; prices not publicly available & High; prices and volumes are publicly visible \\ \hline
+\textbf{Liquidity} & Low; hard to exit without moving market & High; easy to enter/exit \\ \hline
+\textbf{Transaction Costs} & Lower fees & Higher due to exchange fees and commissions \\ \hline
+\textbf{Margin Requirements} & Often not required & Required; ties up capital as collateral \\ \hline
+\textbf{Regulation} & Minimal & Heavy; governed by exchange rules \\ \hline
+\end{tabular}
+\end{center}
+
 \section{Forwards}
 \section{Futures}
 \section{Netting and Mark-to-Market (MTM)}
@@ -3587,15 +5821,6 @@ Here, Williams \%R crossing the \(-\)50 midline flags a shift in short-term mome
 \section{Sentiment Analysis (Intro)}
 \section{Sentiment Analysis (Depth)}
 \section{How Does it Work?}
-\section{Sentiment Analysis Quiz}
-
-% =========================================================
-% ADVANCED MODULE
-% =========================================================
-\part{Advanced Module (Later)}
-
-\chapter{Advanced Module}
-\section{Topic 1}
 
 
 \end{document}
