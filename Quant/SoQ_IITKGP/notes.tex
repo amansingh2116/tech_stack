@@ -15,6 +15,7 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
+\DeclareUnicodeCharacter{20B9}{Rs.\ }
 \definecolor{bullc}{HTML}{168A45}
 \definecolor{bearc}{HTML}{B83A3A}
 
@@ -5795,17 +5796,1144 @@ Derivatives can be traded in two fundamentally different ways:
 \end{tabular}
 \end{center}
 
+
 \section{Forwards}
+
+\subsection{Definition and Core Concepts}
+
+A forward contract is a foundational financial derivative representing a legal agreement between two parties---a buyer and a seller---to buy or sell an underlying asset at a specified future date for a predetermined price that is agreed upon today. As the simplest form of a derivative, its financial worth is entirely derived from the performance of an underlying asset. This underlying asset can be virtually anything, ranging from physical commodities like oil, gold, and wheat, to financial instruments such as stocks, bonds, and currencies.
+
+Unlike futures contracts, which are heavily standardized and traded on public exchanges, forward contracts are traded \textbf{over-the-counter (OTC)}. This means they are private, direct negotiations formed between the two contracting parties. Today, forward contracts remain in active use, though they are primarily utilized by a select group of participants, such as large corporations and banking institutions.
+
+\subsection{Historical Origins}
+
+The fundamental mechanics of forward contracting are deeply rooted in ancient commerce and early economic structuring.
+
+\begin{itemize}[leftmargin=*]
+    \item In 8000 BC in Sumer, individuals utilized clay tokens molded into an envelope to represent and facilitate the exchange of goods. The dates on the envelopes and the tokens dictated specific timeframes, with sellers promising to deliver the agreed-upon assets at a certain future date.
+    \item In ancient India, around 320 BCE, the jurist, economist, philosopher, and royal counsellor Chanakya, also known as Kautilya, discussed early forward contracts in his text, the Artha Sastra. He detailed a method for determining the price of standing crops that would be harvested in the future, allowing farmers to be paid well in advance of the harvest. Buyers and sellers would agree on the price and delivery date beforehand and sign a written contract, effectively structuring a true forward agreement.
+\end{itemize}
+
+\subsection{Main Characteristics of Forwards}
+
+\subsubsection{Customization}
+
+Forwards are inherently customized contracts. The two parties have the freedom to decide:
+
+\begin{itemize}[leftmargin=*]
+    \item The specific quantity of the asset.
+    \item The precise quality standards required.
+    \item The exact delivery date that suits their schedules.
+    \item The price and other contract-specific terms.
+\end{itemize}
+
+This high degree of customization makes forwards extremely flexible and highly suitable for specialized, unique business needs.
+
+\subsubsection{Over-the-Counter (OTC) Nature}
+
+Forwards are typically traded over-the-counter (OTC), and not on a centralized exchange. This means the contract is privately negotiated directly between the two specific parties rather than being standardized and regulated by a public exchange.
+
+\subsubsection{Purpose}
+
+The primary purpose of a forward contract is hedging against unpredictable future price fluctuations. These contracts are extensively used to hedge:
+
+\begin{itemize}[leftmargin=*]
+    \item Physical commodities.
+    \item Foreign currencies.
+    \item Various financial assets.
+\end{itemize}
+
+Consequently, forwards are often used when a business or an investor wants to deliberately lock in a future price to reduce financial uncertainty.
+
+\subsection{Historical Intuition Behind Forwards}
+
+The video transcript explains that the foundational idea of forward contracts is very old. In ancient Sumer around 8000 BC, clay tokens encased in envelopes were actively used to promise the future delivery of specific goods.
+
+In ancient India around 320 BCE, Kautilya's Arthashastra discussed a sophisticated method for determining the future price of standing crops, allowing buyers to pay farmers in advance.
+
+These historical examples demonstrate that the core economic idea behind forwards---agreeing today on a future price and delivery---has existed in commerce for a very long time.
+
+Modern forward contracts remain in active use today, primarily utilized by select parties such as large companies or banking institutions.
+
+\subsection{How Forward Contracts Work}
+
+A forward contract functions as a direct, legally binding agreement between a single buyer and a single seller. The key mechanics are:
+
+\begin{enumerate}[leftmargin=*]
+    \item Both parties agree today on a specific transaction price.
+    \item They also agree today on a specific delivery date in the future.
+    \item The final financial or physical settlement happens exclusively on that predetermined future date.
+    \item The underlying asset can be virtually anything, including oil, gold, wheat, currencies, or stocks.
+\end{enumerate}
+
+The overarching purpose is usually to lock in a guaranteed price for a future purchase or sale, thereby protecting both parties against unfavorable, volatile price movements.
+
+\subsection{Example-Based Understanding}
+
+\subsubsection{Example 1: Farmer / Manufacturer}
+
+A farmer may use a forward contract to sell their crops at a fixed future price so that heavily falling market prices do not hurt their overall income.
+
+Similarly, a manufacturer may use a forward contract to buy raw materials at a fixed price so that rising input costs do not unexpectedly damage their profit margins.
+
+\subsubsection{Example 2: Raw Material Purchase}
+
+A manufacturer needing a specific raw material can directly enter into a forward contract with a supplier to firmly lock in the purchase price and dramatically reduce uncertainty regarding future input costs.
+
+\subsubsection{Example 3: Coffee Beans}
+
+John, a coffee shop owner, officially agrees to buy 1,000 pounds of coffee beans from Jane in exactly six months at a set price of \$2 per pound.
+
+If the open market price rises to \$3, John benefits financially because he is legally protected and still pays only \$2.
+
+If the market price falls to \$1.50, John must still honor the contract and pay \$2, meaning he effectively overpays by \$0.50 per pound compared to the current market rate.
+
+This practical example shows that while a forward contract successfully removes price uncertainty, the ultimate financial benefit goes to whichever side would otherwise face an unfavorable market move.
+
+\subsection{Advantages of Forward Contracts}
+
+\subsubsection{Price Certainty}
+
+Both the buyer and the seller know the exact transaction price well in advance. This absolute certainty makes long-term business planning significantly easier and severely reduces exposure to unpredictable future price changes.
+
+\subsubsection{Customization}
+
+The contract's terms can be perfectly tailored to the exact operational needs of both parties, including the quantity, quality, and delivery date. This bespoke flexibility is considered a major advantage over rigid, standardized exchange-traded products.
+
+\subsubsection{Reduced Transaction Costs}
+
+Because forwards are strictly private agreements, there is no centralized exchange acting as a middleman. The absence of this intermediary can successfully lower the overall transaction costs for the involved parties.
+
+\subsection{Risks and Disadvantages of Forward Contracts}
+
+\subsubsection{Counterparty Risk}
+
+A major, inherent risk is that one party may completely default and fail to honor the terms of the contract. If a default occurs, the compliant party may suffer a severe financial loss.
+
+This counterparty risk represents one of the most important practical limitations of using forward contracts. The transcript also heavily emphasizes this point: in a highly volatile market situation, one party is economically incentivized to not honor the agreement, causing the entire transaction to fail.
+
+\subsubsection{Market Risk}
+
+The monetary value of the underlying asset can move substantially between the contract's initiation and the final delivery date. Since the transaction price is permanently locked in, one party will inevitably gain and the other may lose relative to the prevailing market price at settlement.
+
+\subsubsection{Liquidity Risk}
+
+Forwards are usually highly illiquid strictly because they are customized and not actively traded on an open exchange. Exiting the position early or finding a completely new counterparty to take over the contract can be exceptionally difficult.
+
+The transcript also notes a specific liquidity problem in the sense that the seller may simply not have the physical underlying asset available to fulfill their delivery obligations when the time comes.
+
+\subsubsection{Payment Defaults and Enforcement Issues}
+
+Because the contract is an OTC private agreement, there is absolutely no exchange guarantee ensuring that the other party will perform their duties. If one party defaults, the other can immediately face significant financial loss with limited immediate recourse.
+
+\subsection{Why Forwards Are Less Practical in Many Cases}
+
+The transcript explicitly explains the primary practical issue with these contracts:
+
+\begin{itemize}[leftmargin=*]
+    \item If the market price rises significantly, the buyer may simply not want to execute the trade.
+    \item If the market price falls significantly, the seller may strongly desire to back out and not execute the trade.
+\end{itemize}
+
+This fundamental financial mismatch can make the transaction fail entirely, even if a legally binding contract exists.
+
+The combination of counterparty risk and liquidity risk makes the practical execution of forwards highly difficult in volatile environments. This difficulty is one of the primary reasons why futures contracts eventually became the preferred alternative in many financial markets.
+
+Futures are explicitly introduced as the modern solution to some of the practical weaknesses inherent in forward contracts.
+
+
 \section{Futures}
+
+\subsection{What is a Futures Contract?}
+
+\textbf{Definition:} A futures contract is a standardized, legally binding agreement to buy or sell a specific quantity of an underlying asset at a predetermined price on a specified future date.
+
+\textbf{The Obligation:} Unlike options, which give the holder a choice, futures contracts are ``set in stone.'' Whoever holds the contract at expiration is strictly obligated to execute the transaction at the agreed-upon price, regardless of how the current market price has fluctuated.
+
+\textbf{Underlying Assets:} Futures can be written on a wide range of underlying assets:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Equity futures:} Based on individual stocks or groups of stocks.
+    \item \textbf{Stock index futures:} Based on indexes such as the S\&P 500.
+    \item \textbf{Commodity futures:} Crude oil, natural gas, corn, and wheat.
+    \item \textbf{Cryptocurrency futures:} Bitcoin and Ethereum.
+    \item \textbf{Currency futures:} Euro and British pound.
+    \item \textbf{Energy futures:} Crude oil, natural gas, gasoline, and heating oil.
+    \item \textbf{Interest rate futures:} Treasurys and other bonds.
+    \item \textbf{Precious metal futures:} Gold and silver.
+\end{itemize}
+
+\begin{quote}
+    \textbf{Important note:} A futures buyer takes possession of the underlying only at expiration, not before, although the position can be sold before expiry. This is different from options, where the holder has a choice about exercising the right.
+\end{quote}
+
+\subsection{Market Structure and Regulation}
+
+\textbf{Exchanges:} Futures are traded on regulated futures exchanges, such as the Chicago Mercantile Exchange. This public environment ensures market transparency, provides high liquidity, and aids in accurate price discovery.
+
+\textbf{Standardization:} Futures contracts are standardized by:
+
+\begin{itemize}[leftmargin=*]
+    \item Quantity.
+    \item Quality.
+    \item Delivery rules.
+\end{itemize}
+
+This standardization improves:
+
+\begin{itemize}[leftmargin=*]
+    \item Transparency.
+    \item Liquidity.
+    \item Price accuracy.
+    \item Exchange-based trading efficiency.
+\end{itemize}
+
+\textbf{Regulation:} In the US, futures markets are regulated by the Commodity Futures Trading Commission (CFTC), created by Congress in 1974. The CFTC ensures pricing integrity, regulates brokerage firms, and prevents fraud and abusive trading practices.
+
+\textbf{Settlement:} Depending on the asset, a contract is settled either by physical delivery, common for commodities like oil or grain, or via cash settlement, common for stock indexes, where the net price difference is simply paid out in cash at expiration.
+
+\subsection{Key Mechanics and Terminology}
+
+\subsubsection{Expiration Dates}
+
+Futures are typically organized by month. For example, stock index futures may expire in March, June, September, and December. The contract with the closest expiration date is called the \textbf{front-month contract}, which usually sees the highest trading volume.
+
+\textbf{What happens at expiration?} If the underlying is equities, futures are typically settled in cash at expiration. The trader pays or receives the difference depending on price movement during the holding period. In some cases, the contract requires physical delivery of the underlying asset.
+
+\subsubsection{Rolling Over}
+
+Traders who do not want to settle the contract but wish to maintain their market position will sell their expiring contract and buy the next available contract month. This process is called \textbf{rolling over}.
+
+\subsubsection{Leverage and Margin}
+
+Futures trading does not require the investor to pay the full value of the contract upfront. Instead, the broker requires an \textbf{initial margin}: a small fractional deposit of the contract's total value, such as 10\%. While this leverage allows traders to control massive assets with little capital, it magnifies both potential profits and potential losses.
+
+\textbf{Example:}
+
+\begin{itemize}[leftmargin=*]
+    \item S\&P 500 index = 5,000 points.
+    \item Contract multiplier = \$50 per point.
+    \item Total contract value = \$250,000.
+    \item Initial margin = 10\%.
+    \item Trader deposits only \$25,000 to control the contract.
+\end{itemize}
+
+If the index falls by 10\% to 4,500:
+
+\begin{itemize}[leftmargin=*]
+    \item Contract value drops to \$225,000.
+    \item Loss is \$25,000.
+    \item The trader loses 100\% of initial margin.
+\end{itemize}
+
+\textbf{Maintenance Margin:} The minimum equity required to keep the position open. If leveraged losses cause the account to drop below this level, the broker issues a margin call, requiring the trader to immediately deposit more funds.
+
+\subsection{The Purpose of Futures: Speculation vs. Hedging}
+
+Market participants generally fall into two categories.
+
+\subsubsection{A. Speculators}
+
+Speculators are traders attempting to profit from price movements. They have no intention of taking physical delivery of the asset.
+
+\textbf{Mechanics:} If a trader believes the S\&P 500 will rise, they buy a contract. If the index rises, the contract value increases, and they sell it for a profit before expiration. If the market moves against them, they must pay the difference.
+
+\paragraph{Long Speculation}
+
+If a trader buys a futures contract and the price rises above the contract price by expiration, the trader makes a profit. If the price falls, the trader loses. The long position can also be closed before expiration by selling the contract at the current price.
+
+\paragraph{Short Speculation}
+
+If a trader sells a futures contract expecting price to fall, then a decline in price creates profit, a rise in price creates loss, and the position can also be closed before expiration with an offsetting trade.
+
+\subsubsection{B. Hedgers}
+
+Hedgers are investors or businesses utilizing futures to protect themselves from adverse market volatility and lock in prices.
+
+\textbf{Business Example:} A corn farmer sells a futures contract to lock in a guaranteed sale price for their upcoming crop, removing the risk of a market crash destroying their profits.
+
+\textbf{Portfolio Example:} A mutual fund manager oversees a \$100 million S\&P 500 portfolio. Fearing a short-term market drop, they sell 80 S\&P 500 futures contracts, each hedging \$1,250,000 of value. If the market drops 10\%, the physical portfolio loses \$10 million, but the short futures contracts gain \$10 million, perfectly offsetting the loss and protecting the fund.
+
+\subsection{Comparative Analysis}
+
+\subsubsection{Futures vs. Forwards}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|L{0.22\textwidth}|L{0.32\textwidth}|L{0.32\textwidth}|}
+\hline
+\textbf{Feature} & \textbf{Forward Contracts} & \textbf{Futures Contracts} \\ \hline
+\textbf{Marketplace} & Over-the-counter (OTC); privately negotiated. & Public, regulated exchanges. \\ \hline
+\textbf{Standardization} & Highly customized with flexible terms, amounts, and dates. & Strictly standardized with set lot sizes and dates. \\ \hline
+\textbf{Regulation} & Unregulated; no governing body. & Highly regulated, for example by the CFTC. \\ \hline
+\textbf{Risk} & Severe counterparty default risk and low liquidity. & Centralized clearinghouse ensures obligations are met; highly liquid. \\ \hline
+\textbf{Evolution} & The historical predecessor. & Created specifically to solve the default and liquidity risks of forwards. \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Futures vs. Options vs. Stocks}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Vs. Options:} Options provide the right to transact without the obligation. Futures strictly obligate both parties to transact. Options are generally safer because losses are capped at the premium paid, while futures carry higher risk due to uncapped obligations.
+    \item \textbf{Vs. Stocks:} Futures offer significantly higher leverage, controlling more assets with less capital, and nearly 24-hour trading flexibility. Stock trading generally requires full capital outlay and is restricted to standard market hours.
+\end{itemize}
+
+\subsection{Advantages and Disadvantages of Futures Trading}
+
+\subsubsection{Pros}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{High Leverage:} Capitalizes on margin, allowing traders to execute massive positions with a fraction of the total cash value.
+    \item \textbf{Hedging Utility:} An indispensable tool for corporations, farmers, and fund managers to lock in budgets and defend against sudden market downturns.
+    \item \textbf{Market Efficiency:} Highly liquid, transparent markets that are frequently open outside of traditional stock market hours.
+    \item \textbf{Profit in Any Direction:} Traders can easily profit from both rising markets by going long and falling markets by going short.
+\end{itemize}
+
+\subsubsection{Cons}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Magnified Risk (Double-Edged Sword):} The exact leverage that creates massive gains can wipe out an entire account rapidly. Traders can easily lose significantly more than their initial margin deposit.
+    \item \textbf{Margin Calls:} High volatility can trigger sudden demands for additional capital to keep positions open.
+    \item \textbf{Opportunity Cost in Hedging:} While hedging prevents downside losses, it also caps upside potential. If a hedged asset performs exceptionally well, the futures contract will drag down the net gain.
+\end{itemize}
+
+\subsection{Four Basic Futures Trading Strategies}
+
+Futures trading usually begins with two fundamental directions:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Going long:} Buying a futures contract because you expect the price to rise.
+    \item \textbf{Going short:} Selling a futures contract because you expect the price to fall.
+\end{itemize}
+
+More advanced futures strategies, such as spreads, are built from these two ideas. The article then explains four popular strategies from basic to more complex.
+
+\subsubsection{1) Going Long}
+
+\paragraph{What it means}
+
+Going long means \textbf{buying a futures contract} because you expect the contract price to rise before expiration. This is the simplest futures strategy and is used when you believe the underlying asset will move higher.
+
+\paragraph{When to use it}
+
+Use a long futures position when you expect a clear upward move in the underlying asset in the near future. The contract provides \textbf{leveraged exposure}, so gains can be much larger than the actual price move in the asset.
+
+\paragraph{Example}
+
+The article gives a corn futures example:
+
+\begin{itemize}[leftmargin=*]
+    \item Price of corn futures = \textbf{\$3.50}.
+    \item Number of contracts = \textbf{5}.
+    \item Contract size = \textbf{5,000 bushels per contract}.
+    \item Initial margin = \textbf{\$800 per contract}.
+    \item Maintenance margin = \textbf{\$700 per contract}.
+\end{itemize}
+
+So:
+
+\begin{itemize}[leftmargin=*]
+    \item Total notional value = \textbf{\$87,500}.
+    \item Initial equity needed = \textbf{\$4,000}.
+    \item Maintenance margin needed = \textbf{\$3,500}.
+\end{itemize}
+
+\paragraph{Profit and Loss Profile}
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.28\textwidth}|L{0.28\textwidth}|}
+\hline
+\textbf{Futures Price} & \textbf{Profit / Loss} \\ \hline
+\$3.80 & \$7,500 \\ \hline
+\$3.70 & \$5,000 \\ \hline
+\$3.60 & \$2,500 \\ \hline
+\$3.50 & \$0 \\ \hline
+\$3.40 & -\$2,500 \\ \hline
+\$3.30 & -\$5,000 \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Risk and Reward}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Upside is theoretically uncapped} as long as the asset keeps rising.
+    \item A small move up in the underlying can create a large percentage gain on the margin posted.
+    \item Example: if corn rises from \$3.50 to \$3.60, the trader's equity grows from \$4,000 to \$6,500, which is a gain of nearly \textbf{63\%} on margin.
+\end{itemize}
+
+\paragraph{Downside Risk}
+
+\begin{itemize}[leftmargin=*]
+    \item Long futures also have \textbf{leveraged downside}.
+    \item If the price falls from \$3.50 to \$3.40, equity falls from \$4,000 to \$1,500, a drop of nearly \textbf{63\%}.
+    \item Because the equity falls below maintenance margin, the broker may issue a \textbf{margin call}, forcing the trader to deposit more money.
+\end{itemize}
+
+\paragraph{Core Idea}
+
+Long futures are a leveraged bet on rising prices. They can produce large gains quickly, but they can also produce large losses quickly if the market moves against the trader.
+
+\subsubsection{2) Going Short}
+
+\paragraph{What it means}
+
+Going short means \textbf{selling a futures contract} because you expect the contract price to fall by expiration. This is the opposite of going long.
+
+\paragraph{When to use it}
+
+A short futures position is appropriate when the trader expects the underlying asset to decline. Like the long position, it provides leveraged exposure, but to downward price movement instead of upward movement.
+
+\paragraph{Example}
+
+The same corn contract setup is used:
+
+\begin{itemize}[leftmargin=*]
+    \item Futures price = \textbf{\$3.50}.
+    \item Sell \textbf{5 contracts}.
+    \item Contract size = \textbf{5,000 bushels}.
+    \item Initial margin = \textbf{\$800 per contract}.
+    \item Maintenance margin = \textbf{\$700 per contract}.
+\end{itemize}
+
+So:
+
+\begin{itemize}[leftmargin=*]
+    \item Total notional value = \textbf{\$87,500}.
+    \item Initial equity required = \textbf{\$4,000}.
+    \item Maintenance margin = \textbf{\$3,500}.
+\end{itemize}
+
+\paragraph{Profit and Loss Profile}
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.28\textwidth}|L{0.28\textwidth}|}
+\hline
+\textbf{Futures Price} & \textbf{Profit / Loss} \\ \hline
+\$3.80 & -\$7,500 \\ \hline
+\$3.70 & -\$5,000 \\ \hline
+\$3.60 & -\$2,500 \\ \hline
+\$3.50 & \$0 \\ \hline
+\$3.40 & \$2,500 \\ \hline
+\$3.30 & \$5,000 \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Risk and Reward}
+
+\begin{itemize}[leftmargin=*]
+    \item Short futures profit when the underlying falls.
+    \item If corn falls from \$3.50 to \$3.40, the trader's equity rises from \$4,000 to \$6,500, a gain of nearly \textbf{63\%}.
+\end{itemize}
+
+\paragraph{Downside Risk}
+
+\begin{itemize}[leftmargin=*]
+    \item Short futures have \textbf{uncapped downside} because the asset price can keep rising.
+    \item If the price rises from \$3.50 to \$3.60, equity falls from \$4,000 to \$1,500, causing a loss of nearly \textbf{63\%}.
+    \item This can trigger a \textbf{margin call}, requiring extra funds to restore the account to the initial margin level.
+\end{itemize}
+
+\paragraph{Core Idea}
+
+Short futures are a leveraged bet on falling prices. They can be profitable if the market declines, but they are dangerous because upward moves can cause large losses very quickly.
+
+\subsubsection{3) Bull Calendar Spread}
+
+\paragraph{What it means}
+
+A \textbf{calendar spread} uses two futures contracts on the \textbf{same underlying asset} but with \textbf{different expiration dates}. In a \textbf{bull calendar spread}:
+
+\begin{itemize}[leftmargin=*]
+    \item The trader goes \textbf{long the short-term contract}.
+    \item The trader goes \textbf{short the long-term contract}.
+\end{itemize}
+
+\paragraph{Main Objective}
+
+The goal is for the spread to \textbf{widen in favor of the long contract}. This is a more conservative trade than a one-leg long futures position because it reduces exposure to the underlying asset itself and focuses more on the price relationship between the two contract months.
+
+\paragraph{Why it can work}
+
+The spread can widen in several ways:
+
+\begin{itemize}[leftmargin=*]
+    \item The long contract rises.
+    \item The short contract falls.
+    \item The long rises while the short falls.
+    \item The long rises more than the short rises.
+    \item The long falls less than the short falls.
+\end{itemize}
+
+The important point is that the \textbf{spread widens}.
+
+\paragraph{When to use it}
+
+Use this strategy when you expect the \textbf{short-term contract} to move up \textbf{more strongly} than the long-term contract. The article notes that this is a \textbf{less volatile} strategy than going long outright. It also requires \textbf{less margin} than a one-leg futures trade, which can increase return on capital.
+
+\paragraph{Example}
+
+The article's example:
+
+\begin{itemize}[leftmargin=*]
+    \item Buy \textbf{five September contracts} at \textbf{\$3.50}.
+    \item Sell \textbf{five December contracts} at \textbf{\$3.55}.
+    \item Initial margin per spread = \textbf{\$500}.
+    \item Maintenance margin per spread = \textbf{\$450}.
+    \item For five spreads: initial margin = \textbf{\$2,500}; maintenance margin = \textbf{\$2,250}.
+\end{itemize}
+
+\paragraph{Profit and Loss Profile}
+
+The table shows the relationship between the \textbf{December - September} spread and profit:
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.34\textwidth}|L{0.28\textwidth}|}
+\hline
+\textbf{December - September Spread} & \textbf{Profit / Loss} \\ \hline
+\$0.15 & \$2,500 \\ \hline
+\$0.10 & \$1,250 \\ \hline
+\$0.05 & \$0 \\ \hline
+\$0 & -\$1,250 \\ \hline
+-\$0.05 & -\$2,500 \\ \hline
+-\$0.10 & -\$3,750 \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Risk and Reward}
+
+\begin{itemize}[leftmargin=*]
+    \item The appeal is that you can make attractive returns on a conservative position with lower margin.
+    \item Starting from a \$0.05 spread, if the spread widens by just \textbf{\$0.10}, the trader can earn \textbf{\$2,500 profit}.
+    \item Since the margin was only \textbf{\$2,500}, that is a \textbf{100\% return} on margin for a relatively small change in spread.
+\end{itemize}
+
+\paragraph{Risk}
+
+\begin{itemize}[leftmargin=*]
+    \item If the spread moves the opposite way by \$0.10, the loss is just as large.
+    \item If the spread narrows below the starting \$0.05 spread, the trader begins to lose money.
+    \item If the adverse move happens, the trader may need to add a full \textbf{\$2,500} to maintain the position.
+\end{itemize}
+
+\paragraph{Core Idea}
+
+A bull calendar spread is a lower-margin, lower-volatility futures strategy that profits when the near-term contract strengthens relative to the later-month contract. It can generate strong percentage returns, but the spread can also move against the trader quickly.
+
+\subsubsection{4) Bear Calendar Spread}
+
+\paragraph{What it means}
+
+A \textbf{bear calendar spread} is also a calendar spread on the same underlying asset with different expirations, but the direction is reversed:
+
+\begin{itemize}[leftmargin=*]
+    \item The trader \textbf{sells the short-term contract}.
+    \item The trader \textbf{buys the long-term contract}.
+\end{itemize}
+
+\paragraph{Main Objective}
+
+The goal is for the spread to widen in favor of the \textbf{short contract}. In other words, the short-term contract should become more expensive relative to the long-term contract.
+
+\paragraph{Why it can work}
+
+The spread can widen in several ways:
+
+\begin{itemize}[leftmargin=*]
+    \item The long contract falls.
+    \item The short contract rises.
+    \item The long falls while the short rises.
+    \item The long falls more than the short falls.
+    \item The long rises less than the short rises.
+\end{itemize}
+
+The important point is that the \textbf{short September contract becomes more expensive relative to the long December contract}.
+
+\paragraph{When to use it}
+
+Use this strategy when you expect the \textbf{short-term contract} to increase \textbf{more strongly} than the long-term contract. Like the bull calendar spread, this is a more conservative position, less volatile than a one-leg futures trade, and it requires less margin. That lower margin can improve return on capital.
+
+\paragraph{Example}
+
+The article's example:
+
+\begin{itemize}[leftmargin=*]
+    \item Sell \textbf{five September contracts} at \textbf{\$3.50}.
+    \item Buy \textbf{five December contracts} at \textbf{\$3.55}.
+    \item Initial margin per spread = \textbf{\$500}.
+    \item Maintenance margin per spread = \textbf{\$450}.
+    \item For five spreads: initial margin = \textbf{\$2,500}; maintenance margin = \textbf{\$2,250}.
+\end{itemize}
+
+\paragraph{Profit and Loss Profile}
+
+The table shows the relationship between the \textbf{December - September} spread and profit:
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.34\textwidth}|L{0.28\textwidth}|}
+\hline
+\textbf{December - September Spread} & \textbf{Profit / Loss} \\ \hline
+\$0.15 & -\$2,500 \\ \hline
+\$0.10 & -\$1,250 \\ \hline
+\$0.05 & \$0 \\ \hline
+\$0 & \$1,250 \\ \hline
+-\$0.05 & \$2,500 \\ \hline
+-\$0.10 & \$3,750 \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Risk and Reward}
+
+\begin{itemize}[leftmargin=*]
+    \item The attraction is that a relatively small favorable move in the spread can produce a large percentage return.
+    \item From a starting spread of \$0.05, if the spread falls by \textbf{\$0.10}, the trader can earn \textbf{\$2,500 profit}.
+    \item Since the initial margin was only \textbf{\$2,500}, that is again a \textbf{100\% return} on margin in the example.
+\end{itemize}
+
+\paragraph{Risk}
+
+\begin{itemize}[leftmargin=*]
+    \item If the spread moves the wrong way by \$0.10, the loss is similarly large.
+    \item If the spread rises above the original \$0.05 spread, the trader begins losing money.
+    \item A bad move can force the trader to add a full \textbf{\$2,500} to maintain the position.
+\end{itemize}
+
+\paragraph{Core Idea}
+
+A bear calendar spread is a lower-margin, relatively conservative futures strategy that profits when the near-term contract strengthens relative to the later-month contract in the expected way. It offers attractive capital efficiency but still carries meaningful spread risk.
+
+
 \section{Netting and Mark-to-Market (MTM)}
+
+\subsection{Netting}
+
+\subsubsection{Meaning and Purpose}
+\textbf{Netting} is a risk-management and settlement technique used in financial markets to reduce the number of payments, the amount of capital that must physically move, and the total exposure between parties. Instead of settling every transaction separately, multiple obligations are offset against one another and converted into a single net payable or receivable.
+
+The basic principle is simple: only the residual amount after offsetting matters for settlement. If Party A owes Party B ₹1,00,000 and Party B owes Party A ₹60,000, the two parties do not need to make two separate payments. After netting, Party A makes one payment of ₹40,000 to Party B.
+
+\begin{quote}
+\textbf{Core idea:} Netting reduces gross obligations into net obligations. This lowers settlement volume, reduces operational complexity, and limits the amount that can be lost if one party fails to pay.
+\end{quote}
+
+\subsubsection{Types of Netting}
+
+\paragraph{Bilateral Netting}
+Bilateral netting occurs between exactly two parties. Every payment obligation between those two parties is compared, offset, and converted into a single amount owed by one party to the other.
+
+\begin{itemize}[leftmargin=*]
+    \item It applies when two counterparties have multiple mutual obligations.
+    \item It reduces several settlements into one final settlement amount.
+    \item It lowers settlement risk because only the net amount remains outstanding.
+    \item \textbf{Example:} If Bank A and Bank B have 20 transactions between them, they do not need to settle each transaction separately. They calculate the combined payable and receivable amounts and settle only the net balance.
+\end{itemize}
+
+\paragraph{Multilateral Netting}
+Multilateral netting involves more than two parties and is usually coordinated by a central clearinghouse. Each participant's obligations to all other participants are aggregated, offset, and converted into a single net obligation with the clearinghouse.
+
+\begin{itemize}[leftmargin=*]
+    \item It is common in organized exchange-traded markets.
+    \item The clearinghouse becomes the central counterparty to market participants.
+    \item Each member typically settles one net payable or receives one net receivable, rather than settling separately with every other member.
+    \item \textbf{Example:} At the end of the trading day, a clearinghouse nets the positions of all member brokers. Instead of hundreds of bilateral payments, each broker has one net amount to pay to, or receive from, the clearinghouse.
+\end{itemize}
+
+\paragraph{Payment Netting}
+Payment netting applies only to cash flows. The underlying contracts continue to exist, but the cash payments due on a particular date are offset.
+
+\begin{itemize}[leftmargin=*]
+    \item It reduces the number of individual cash transfers.
+    \item It does not cancel or merge the underlying contracts.
+    \item It is common in derivative contracts such as interest rate swaps, where two parties may owe each other periodic interest payments.
+\end{itemize}
+
+\paragraph{Close-Out Netting}
+Close-out netting is triggered when a counterparty defaults or when contracts are terminated early. All outstanding transactions between the parties are valued immediately and converted into one final net payment obligation.
+
+\begin{itemize}[leftmargin=*]
+    \item It is especially important in over-the-counter (OTC) derivatives.
+    \item It prevents a non-defaulting party from having to pay what it owes while being unable to collect what it is owed.
+    \item It limits loss by replacing many uncertain obligations with one legally enforceable net amount.
+    \item \textbf{Example:} If Lehman Brothers defaults on hundreds of derivative contracts with a bank, close-out netting calculates one final amount owed between the two parties rather than treating each contract as a separate recovery problem.
+\end{itemize}
+
+\begin{quote}
+\textbf{Why netting matters:} Without netting, the gross settlement obligations in an active financial system would be extremely large. Netting can reduce settlement volume dramatically, which improves liquidity, reduces operational burden, and lowers systemic settlement risk.
+\end{quote}
+
+\subsection{Mark-to-Market (MTM)}
+
+\subsubsection{Meaning of Mark-to-Market}
+\textbf{Mark-to-Market (MTM)}, also written as \textbf{M2M}, is the practice of valuing a financial instrument at its current market price rather than at its original purchase price. The purpose is to reflect the instrument's fair value under current market conditions.
+
+In futures trading, M2M is not merely an accounting convention. It is the daily settlement process through which profits and losses are calculated and transferred between the buyer and the seller for as long as the futures position remains open.
+
+\subsubsection{Key Aspects of MTM}
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.24\textwidth}|L{0.62\textwidth}|}
+\hline
+\textbf{Aspect} & \textbf{Description} \\ \hline
+Daily valuation & Assets and liabilities are repriced regularly so that their recorded values reflect current market conditions. \\ \hline
+Transparency & MTM gives traders, brokers, exchanges, and risk managers a clearer view of the current profit, loss, and exposure of each position. \\ \hline
+Risk management & Losses are collected as they arise instead of being allowed to accumulate until expiry, which reduces the probability of large defaults. \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Why Margins Are Charged}
+
+\subsubsection{Default Risk in Forward Contracts}
+Consider a forward contract in which ABC Jewellers agrees to buy 15 kg of gold from XYZ Gold Dealers at ₹2,450 per gram after three months. Since this is a forward agreement, the two parties are directly exposed to each other.
+
+\begin{itemize}[leftmargin=*]
+    \item If gold prices rise significantly, XYZ Gold Dealers suffers an economic loss because it must sell gold below the market price. This creates an incentive for XYZ to default.
+    \item If gold prices fall sharply, ABC Jewellers is under pressure because it must buy gold above the market price. This creates an incentive for ABC to default.
+\end{itemize}
+
+In a traditional forward agreement, there may be no exchange, no central counterparty, no daily settlement, and no mandatory margin deposit. The contract depends largely on the creditworthiness and willingness of both parties to honor the agreement. If one party defaults, the other party may need to pursue a lengthy legal process with uncertain recovery.
+
+\subsubsection{The Futures Market Solution}
+Exchange-traded futures reduce this problem through two connected mechanisms:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Margins:} Cash collateral is deposited before a trader enters a futures position. This collateral creates a financial buffer against potential losses.
+    \item \textbf{Mark-to-Market:} Daily profits and losses are settled continuously, so losses are collected before they become too large to pay.
+\end{enumerate}
+
+\begin{quote}
+The exchange, through the clearinghouse, acts as the guarantor of every trade. It ensures that a profitable trader receives money and that the losing side pays. The combination of margins and M2M makes counterparty default far less likely than in an uncollateralized forward contract.
+\end{quote}
+
+\subsection{How M2M Works: A Step-by-Step Example}
+
+\subsubsection{Trade Setup: Hindalco Futures}
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.32\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Detail} & \textbf{Value} \\ \hline
+Buy date & 1st Dec 2014, 11:30 AM \\ \hline
+Buy price & ₹165 per share \\ \hline
+Lot size & 2,000 shares \\ \hline
+Sell date & 4th Dec 2014, 2:15 PM \\ \hline
+Sell price & ₹170.10 per share \\ \hline
+\end{tabular}
+\end{center}
+
+If M2M is ignored, the profit calculation appears straightforward:
+
+\begin{align*}
+\text{Profit per share} &= 170.10 - 165 = \text{₹}5.10, \\
+\text{Total profit} &= 5.10 \times 2{,}000 = \text{₹}10{,}200.
+\end{align*}
+
+However, because the position is held for four working days, the profit is not settled only at the end. M2M applies each day, using that day's closing price or exit price as the new reference rate.
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.32\textwidth}|L{0.36\textwidth}|}
+\hline
+\textbf{Date} & \textbf{Closing / Exit Price} \\ \hline
+1st Dec 2014 & ₹168.30 \\ \hline
+2nd Dec 2014 & ₹172.40 \\ \hline
+3rd Dec 2014 & ₹171.60 \\ \hline
+4th Dec 2014 & Squared off at ₹170.10 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Daily M2M Walkthrough}
+
+\paragraph{Day 1: 1st Dec 2014}
+The trader buys the futures contract at ₹165. The closing price on the same day is ₹168.30. Since the price has increased, the long futures position earns a profit.
+
+\begin{align*}
+\text{M2M profit} &= (168.30 - 165.00) \times 2{,}000 \\
+&= \text{₹}6{,}600.
+\end{align*}
+
+This amount is credited to the trader's account. The reference rate is then reset from ₹165 to ₹168.30.
+
+\begin{quote}
+\textbf{Why the reset happens:} The ₹6,600 profit has already been settled. Therefore, the next day's profit or loss should be calculated only from the new reference rate, not from the original purchase price.
+\end{quote}
+
+\paragraph{Day 2: 2nd Dec 2014}
+The reference rate is ₹168.30 and the closing price is ₹172.40. The long position again makes a profit.
+
+\begin{align*}
+\text{M2M profit} &= (172.40 - 168.30) \times 2{,}000 \\
+&= \text{₹}8{,}200.
+\end{align*}
+
+The account is credited by ₹8,200 and the reference rate is reset to ₹172.40.
+
+\paragraph{Day 3: 3rd Dec 2014}
+The reference rate is ₹172.40 and the closing price falls to ₹171.60. The long position now makes a loss for the day.
+
+\begin{align*}
+\text{M2M loss} &= (172.40 - 171.60) \times 2{,}000 \\
+&= \text{₹}1{,}600.
+\end{align*}
+
+This amount is debited from the trader's account. The reference rate is reset to ₹171.60.
+
+\paragraph{Day 4: 4th Dec 2014}
+The reference rate is ₹171.60 and the trader squares off the position at ₹170.10. Since the exit price is lower than the reference rate, there is another M2M loss.
+
+\begin{align*}
+\text{M2M loss} &= (171.60 - 170.10) \times 2{,}000 \\
+&= \text{₹}3{,}000.
+\end{align*}
+
+After the square-off, the position is closed and no further M2M settlement applies.
+
+\subsubsection{Summary of Daily Settlement}
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.20\textwidth}|L{0.22\textwidth}|L{0.24\textwidth}|L{0.22\textwidth}|}
+\hline
+\textbf{Day} & \textbf{Reference Rate} & \textbf{Closing / Exit Price} & \textbf{Daily M2M} \\ \hline
+1st Dec & ₹165.00 & ₹168.30 & +₹6,600 \\ \hline
+2nd Dec & ₹168.30 & ₹172.40 & +₹8,200 \\ \hline
+3rd Dec & ₹172.40 & ₹171.60 & -₹1,600 \\ \hline
+4th Dec & ₹171.60 & ₹170.10 & -₹3,000 \\ \hline
+\textbf{Total} & & & \textbf{+₹10,200} \\ \hline
+\end{tabular}
+\end{center}
+
+The total M2M cash flow is ₹10,200, which is exactly equal to the simple buy-price versus sell-price profit. M2M does not change the final profit or loss. It only changes the timing of settlement by distributing the profit or loss across the days for which the position is open.
+
+\subsubsection{Why M2M is Required}
+M2M is the exchange's mechanism for controlling counterparty default risk on a daily basis. Without M2M, losses could accumulate over the life of a trade and become so large that the losing party may be unable or unwilling to pay. By forcing daily settlement, the exchange ensures that each participant remains current on its obligations.
+
+\subsection{Margins: The Full Picture}
+
+\subsubsection{Initial Margin}
+The \textbf{Initial Margin (IM)} is the cash deposit that a trader must place with the broker before opening a futures position. It is calculated as a percentage of the total contract value.
+
+\begin{align*}
+\text{Contract Value (CV)} &= \text{Futures Price} \times \text{Lot Size}, \\
+\text{Initial Margin (IM)} &= \text{SPAN Margin} + \text{Exposure Margin}.
+\end{align*}
+
+Since the futures price changes every day, the contract value also changes every day. Therefore, the required margin can also change over time.
+
+\subsubsection{SPAN Margin}
+\textbf{SPAN} stands for \textbf{Standard Portfolio ANalysis of Risk}. It is the minimum mandatory margin required by the exchange and is designed to cover potential adverse price movements.
+
+\begin{itemize}[leftmargin=*]
+    \item It is calculated using a risk model whose key input is the volatility of the underlying asset.
+    \item Higher expected volatility leads to a higher SPAN margin requirement.
+    \item It is also called the \textbf{maintenance margin}, because it is the minimum cash balance that must be maintained for an overnight position.
+    \item If the SPAN margin is not maintained, the exchange can levy penalties and the broker may close the position.
+\end{itemize}
+
+\subsubsection{Exposure Margin}
+The \textbf{Exposure Margin} is an additional buffer charged over and above the SPAN margin. It is typically a small percentage of the contract value and exists to absorb intraday losses that the SPAN margin alone may not cover.
+
+\begin{itemize}[leftmargin=*]
+    \item It provides a cushion between the total margin requirement and the minimum maintenance requirement.
+    \item It helps brokers and exchanges handle sudden price movements during the trading day.
+    \item It is commonly around 4--5\% of the contract value, although the actual rate depends on the contract and exchange rules.
+\end{itemize}
+
+\subsubsection{Margin Call}
+A \textbf{Margin Call} is triggered when the trader's available cash balance falls below the SPAN margin or maintenance margin. At this point, the account no longer has the minimum required safety buffer.
+
+\begin{enumerate}[leftmargin=*]
+    \item The broker asks the trader to deposit additional funds immediately.
+    \item If the trader does not add funds, the broker may forcibly square off the position to bring the account back into compliance.
+\end{enumerate}
+
+\begin{quote}
+The margin call is the exchange's last line of defence. The SPAN margin represents the minimum reserve needed to keep the trade safe. Once the account balance falls below this floor, the exchange's guarantee mechanism is at risk.
+\end{quote}
+
+\subsection{Margins and M2M Together: HDFC Bank Example}
+
+\subsubsection{Trade Details}
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.38\textwidth}|L{0.42\textwidth}|}
+\hline
+\textbf{Parameter} & \textbf{Value} \\ \hline
+Symbol & HDFC Bank Limited \\ \hline
+Trade type & Long futures position \\ \hline
+Buy date & 10th Dec 2014 \\ \hline
+Buy price & ₹938.70 per share \\ \hline
+Sell date & 19th Dec 2014 \\ \hline
+Sell price & ₹955.00 per share \\ \hline
+Lot size & 250 shares \\ \hline
+Contract value & \(250 \times 938.70 = \text{₹}2{,}34{,}675\) \\ \hline
+SPAN margin, 7.5\% of CV & ₹17,600 \\ \hline
+Exposure margin, 5\% of CV & ₹11,733 \\ \hline
+Initial margin & ₹29,334 \\ \hline
+Net profit & \((955 - 938.70) \times 250 = \text{₹}4{,}075\) \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Daily Margin and M2M Dynamics}
+
+\paragraph{10th Dec 2014: Entry Day}
+The trader buys HDFC Bank futures at ₹938.70 and deposits the initial margin of ₹29,334. The closing price is ₹940, so the position makes a small M2M profit.
+
+\begin{align*}
+\text{New CV} &= 250 \times 940 = \text{₹}2{,}35{,}000, \\
+\text{New margin requirement} &= \text{₹}29{,}375, \\
+\text{M2M profit} &= (940 - 938.70) \times 250 = \text{₹}325, \\
+\text{Cash balance} &= 29{,}334 + 325 = \text{₹}29{,}659.
+\end{align*}
+
+Since ₹29,659 is greater than the required margin of ₹29,375, the position remains comfortably funded. The reference rate resets to ₹940.
+
+\paragraph{11th Dec 2014}
+The price falls from ₹940 to ₹939. The long position makes a one-point loss.
+
+\begin{align*}
+\text{M2M loss} &= (940 - 939) \times 250 = \text{₹}250, \\
+\text{Cash balance} &= 29{,}659 - 250 = \text{₹}29{,}409, \\
+\text{New margin requirement} &= \text{₹}29{,}344.
+\end{align*}
+
+The cash balance is still above the required margin, so there is no issue. The reference rate resets to ₹939.
+
+\paragraph{12th Dec 2014: The Interesting Day}
+The price falls sharply from ₹939 to ₹930. The trader loses ₹9 per share on a lot size of 250 shares.
+
+\begin{align*}
+\text{M2M loss} &= (939 - 930) \times 250 = \text{₹}2{,}250, \\
+\text{Cash balance} &= 29{,}409 - 2{,}250 = \text{₹}27{,}159, \\
+\text{Total margin requirement at ₹930} &= \text{₹}29{,}063, \\
+\text{SPAN margin at ₹930} &= \text{₹}17{,}438.
+\end{align*}
+
+The cash balance of ₹27,159 is below the total margin requirement of ₹29,063, which is uncomfortable. However, it is still above the SPAN margin of ₹17,438. Therefore, there is no margin call yet. The exposure margin acts as a buffer zone between the full margin requirement and the SPAN floor.
+
+\begin{quote}
+\textbf{Key insight:} The exposure margin exists precisely for such situations. It gives the account room to absorb adverse M2M movements without immediately breaching the maintenance margin.
+\end{quote}
+
+\paragraph{19th Dec 2014: Exit Day}
+The trader squares off the position at ₹955. The previous reference price is ₹938, so the final M2M adjustment is positive.
+
+\begin{align*}
+\text{M2M profit} &= (955 - 938) \times 250 = \text{₹}4{,}250, \\
+\text{Cash balance before exit} &= 29{,}159 + 4{,}250 = \text{₹}33{,}409.
+\end{align*}
+
+Once the trade is closed, the broker releases the full cash balance of ₹33,409 back to the trader.
+
+\subsubsection{Four Ways to Calculate the Same Profit}
+All four methods produce the same final profit of ₹4,075.
+
+\paragraph{Method 1: Sum of all M2M settlements}
+\begin{align*}
+\text{P\&L} &= 325 - 250 - 2{,}250 + 4{,}750 - 4{,}000 - 2{,}000 + 3{,}250 + 4{,}250 \\
+&= \text{₹}4{,}075.
+\end{align*}
+
+\paragraph{Method 2: Cash released versus cash blocked}
+\begin{align*}
+\text{P\&L} &= \text{Final Cash Balance} - \text{Initial Margin} \\
+&= 33{,}409 - 29{,}334 \\
+&= \text{₹}4{,}075.
+\end{align*}
+
+\paragraph{Method 3: Contract value difference}
+\begin{align*}
+\text{P\&L} &= \text{Final Contract Value} - \text{Initial Contract Value} \\
+&= 2{,}38{,}750 - 2{,}34{,}675 \\
+&= \text{₹}4{,}075.
+\end{align*}
+
+\paragraph{Method 4: Price difference multiplied by lot size}
+\begin{align*}
+\text{P\&L} &= (955 - 938.70) \times 250 \\
+&= 16.30 \times 250 \\
+&= \text{₹}4{,}075.
+\end{align*}
+
+\subsection{Margin Call Scenario}
+
+\subsubsection{Hypothetical HDFC Bank Crash}
+Suppose the trader does not close the position on 19th Dec and instead carries it overnight. On 20th Dec, HDFC Bank falls from ₹955 to ₹880, which is a sharp adverse move for a long futures position.
+
+\paragraph{M2M Loss}
+\begin{align*}
+\text{M2M loss} &= (955 - 880) \times 250 \\
+&= 75 \times 250 \\
+&= \text{₹}18{,}750.
+\end{align*}
+
+\paragraph{Cash Balance After M2M Debit}
+\begin{align*}
+\text{Cash balance} &= 33{,}409 - 18{,}750 \\
+&= \text{₹}14{,}659.
+\end{align*}
+
+\paragraph{New Margin Requirement at ₹880}
+\begin{align*}
+\text{New CV} &= 250 \times 880 = \text{₹}2{,}20{,}000, \\
+\text{SPAN margin} &= 7.5\% \times 2{,}20{,}000 = \text{₹}16{,}500, \\
+\text{Exposure margin} &= 5\% \times 2{,}20{,}000 = \text{₹}11{,}000, \\
+\text{Total margin required} &= \text{₹}27{,}500.
+\end{align*}
+
+\paragraph{Outcome}
+The cash balance is now ₹14,659, while the SPAN margin requirement is ₹16,500. Therefore:
+
+\begin{equation*}
+\text{Cash Balance} < \text{SPAN Margin} \quad \Rightarrow \quad \text{Margin Call}.
+\end{equation*}
+
+The broker will ask the trader to deposit additional funds immediately. If the trader does not top up the account, the broker can force-close the position in real time to prevent further losses.
+
+\begin{quote}
+\textbf{Why brokers may auto-square-off:} Many brokers do not wait for a manual response once the account breaches the maintenance margin. Real-time risk systems monitor client balances continuously and close positions automatically when required, protecting the trader, the broker, and the exchange from cascading default risk.
+\end{quote}
+
+\section{Swaps}
+
+\subsection{Understanding Swaps in Financial Markets}
+
+\subsubsection{Definition and Core Mechanics}
+A \textbf{swap} is a derivative contract between two or more parties who agree to exchange cash flows or other financial instruments over a specified period. Swaps are generally \textbf{over-the-counter (OTC)} agreements, meaning they are privately negotiated rather than traded on a centralized exchange.
+
+The primary purposes of swaps are to hedge risks, such as interest rate fluctuations or currency exchange rate fluctuations, and to speculate for profit. In financial markets, the cash flows exchanged in a swap are determined using a predetermined \textbf{notional principal amount}. Each distinct stream of cash flows involved in the exchange is referred to as a \textbf{leg} of the swap.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Derivative contract:} A swap derives its value from an underlying variable such as an interest rate, exchange rate, commodity price, credit event, stock, bond, or index.
+    \item \textbf{Private agreement:} Since swaps are OTC instruments, their terms can be customized according to the needs of the counterparties.
+    \item \textbf{Risk management:} Swaps allow firms to transform one type of exposure into another without necessarily changing the underlying asset or liability.
+    \item \textbf{Speculation:} Traders may use swaps to take a view on future movements in rates, prices, or credit conditions.
+    \item \textbf{Notional principal:} The notional amount is generally used only as a calculation base. It is not always exchanged physically.
+\end{itemize}
+
+\subsubsection{The Practical Intuition: A Swap Transaction Example}
+To understand how all parties can benefit from a swap without investing direct capital, consider a scenario involving two companies, two local banks, and a facilitating swap bank such as HSBC.
+
+\paragraph{The Setup}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Company A, based in India:} Company A requires a loan with a \textit{floating} interest rate. Its local Bank A offers a fixed rate of 6\% or a floating rate of LIBOR + 3\%. For Company A, the floating rate is too costly.
+    \item \textbf{Company B, based in Australia:} Company B requires a loan with a \textit{fixed} interest rate. Its local Bank B offers a fixed rate of 8\% or a floating rate of LIBOR + 1\%. For Company B, the fixed rate is too costly.
+\end{itemize}
+
+The important point is that each company has a comparative borrowing advantage in the rate type it does not ultimately want. Company A can borrow more cheaply at a fixed rate, while Company B can borrow more cheaply at a floating rate.
+
+\paragraph{The Swap Execution}
+The swap bank intervenes to facilitate an exchange of interest rates that benefits everyone.
+
+\begin{itemize}[leftmargin=*]
+    \item Company A takes the cheaper 6\% fixed-rate loan from Bank A and passes it to the swap bank. In return, the swap bank provides Company A with a floating rate of LIBOR + 2\%.
+    \item Company B takes the cheaper LIBOR + 1\% floating-rate loan from Bank B and passes it to the swap bank. In return, the swap bank provides Company B with a fixed rate of 7\%.
+\end{itemize}
+
+\paragraph{The Mutual Benefit}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Company A} gets its desired floating rate at LIBOR + 2\%, which is 1\% cheaper than the LIBOR + 3\% originally offered by its local bank.
+    \item \textbf{Company B} gets its desired fixed rate at 7\%, which is 1\% cheaper than the 8\% originally offered by its local bank.
+    \item \textbf{The swap bank} profits from the spread. It receives 6\% fixed from Company A and gives 7\% fixed to Company B. It receives LIBOR + 1\% from Company B and gives LIBOR + 2\% to Company A. The swap bank generates this profit purely by facilitating the contract, without risking its own capital in the underlying loans.
+\end{itemize}
+
+\begin{quote}
+\textbf{Core idea:} A swap lets counterparties exchange cash-flow obligations so that each party receives a more suitable interest-rate, currency, commodity, credit, or return exposure.
+\end{quote}
+
+\subsection{Comprehensive Types of Swaps}
+Because swaps are OTC instruments, they are highly customizable and exist in many variations across different asset classes.
+
+\subsubsection{Interest Rate Swaps}
+In an \textbf{interest rate swap}, parties switch one type of interest rate payment for another. Crucially, the investors do not exchange the underlying principal amount; they exchange only the interest rate cash flows.
+
+\begin{center}
+\small
+\begin{tabular}{|L{0.28\textwidth}|L{0.58\textwidth}|}
+\hline
+\textbf{Swap Type} & \textbf{Description} \\ \hline
+Plain vanilla swap & The simplest form of interest rate swap, where parties exchange a fixed interest rate for a floating interest rate, or vice versa, at predetermined intervals during the contract's life. \\ \hline
+Basis swap & A swap used when both legs feature floating interest rates. The parties swap floating rates based on different benchmark rates. \\ \hline
+Amortizing swap & A swap where the notional principal amount gradually decreases over time, usually mirroring the amortization schedule of a standard loan. \\ \hline
+Step-up swap & The opposite of an amortizing swap; the notional principal amount increases over the life of the contract. \\ \hline
+Differential swap & A complex swap where one leg involves paying an interest rate in a currency different from the initial principal amount, while the other leg pays in the currency of the initial principal. \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Currency Swaps}
+
+\begin{itemize}[leftmargin=*]
+    \item Currency swaps involve the agreement to exchange both principal and interest payments in two distinct currencies.
+    \item They are primarily used to hedge against currency exchange rate fluctuations and carry higher credit exposure than standard interest rate swaps.
+    \item \textbf{Example:} An Indian firm expanding to the United States and a US firm expanding to India can each take a low-cost loan in their respective home markets. They can then swap the loans, providing each other with cheaper capital in the required foreign currency, and exchange the EMI payments that must be passed on to the respective financial institutions.
+    \item Currency swaps can also be combined with interest rate swaps, such as exchanging a fixed-rate USD loan for a floating-rate Euro loan.
+\end{itemize}
+
+\subsubsection{Commodity Swaps}
+
+\begin{itemize}[leftmargin=*]
+    \item Despite the name, commodity swaps usually do not involve the physical exchange of a commodity.
+    \item They allow parties to swap floating cash flows, based on the fluctuating spot rate of a commodity, with fixed cash flows based on a predetermined price.
+    \item They are heavily used by companies that rely on raw materials and want protection against unpredictable price fluctuations. A large share of commodity swaps involve oil.
+    \item \textbf{Example:} An airline agrees to pay a fixed \$50 per barrel of oil every three months. In return, it receives a payment based on the actual oil price index. If the index reaches \$55, the airline pays \$50 but receives \$55, effectively hedging its fuel cost.
+\end{itemize}
+
+\subsubsection{Credit Default Swaps}
+
+\begin{itemize}[leftmargin=*]
+    \item A \textbf{Credit Default Swap (CDS)} functions like an insurance policy, offering the buyer protection against the default of a specific debt instrument.
+    \item The buyer pays a regular premium to the seller. If the underlying asset defaults, the seller reimburses the buyer according to the contract terms.
+    \item Depending on the settlement method, the buyer may transfer ownership of the defaulted asset to the seller.
+    \item CDS contracts are used for mortgage-backed securities (MBS), emerging market bonds, and corporate or government bonds.
+    \item Originally introduced by JP Morgan in 1995, CDS contracts played a major role in triggering the 2008 Global Financial Crisis. Warren Buffett has famously referred to such derivatives as ``financial weapons of mass destruction.''
+\end{itemize}
+
+\subsubsection{Equity Swaps}
+
+\begin{itemize}[leftmargin=*]
+    \item An equity swap is a derivative where the underlying security is a stock, basket of stocks, or stock index.
+    \item One party gives up claims to the price appreciation and dividends of a stock in exchange for a guaranteed fixed or floating payment.
+    \item The opposing party receives the potential rise in the stock's value and its dividends, while making the agreed payment to the other party.
+    \item Unlike purchasing physical shares, the equity-return receiver does not necessarily make an upfront payment and does not receive shareholder voting rights.
+    \item Equity swaps are useful for customized exposure, risk diversification, tax planning, and portfolio hedging.
+\end{itemize}
+
+\subsubsection{Zero Coupon Swaps}
+
+\begin{itemize}[leftmargin=*]
+    \item A zero coupon swap is similar to a standard interest rate swap, but it provides significant cash-flow flexibility to one of the parties.
+    \item In a fixed-to-floating zero coupon swap, the fixed-rate payer does not make regular payments. Instead, the fixed-rate payer makes a single lump-sum payment at the end of the contract. The floating-rate payer continues to make regular interval payments.
+    \item In a fixed-fixed zero coupon swap, one party makes a single payment at expiration, while the other makes regular fixed payments throughout the contract's life.
+\end{itemize}
+
+\subsubsection{Total Return Swaps}
+
+\begin{itemize}[leftmargin=*]
+    \item A \textbf{Total Return Swap (TRS)} enables one party to enjoy all the financial benefits of a security without actually owning the underlying asset.
+    \item The contract involves a total return payer and a total return receiver.
+    \item The payer distributes the total return, including generated income and capital appreciation, of a specific security to the receiver.
+    \item In exchange, the payer receives a guaranteed fixed or floating payment from the receiver.
+    \item The underlying security can be a stock, bond, or commodity. This swap is mutually beneficial: the receiver gains asset exposure without ownership, while the payer transfers market and credit risk in exchange for a guaranteed revenue stream.
+\end{itemize}
+
+\begin{quote}
+\textbf{Summary:} Swaps are flexible OTC derivatives that help counterparties transform one type of financial exposure into another. Their flexibility makes them powerful, but their private structure also introduces complexity and counterparty risk.
+\end{quote}
+
 \section{Introduction to Stock Options}
 \section{Going Deeper with Stock Options}
 \section{Basic Options Strategies}
 \section{Basics of Greeks and How to Use Them}
-\section{Swaps}
 \section{Volatility and its Effect on Option Prices}
 \section{Introduction to Derivative Market Quiz}
-\section{Options Strategies Quiz}
 
 % -------------------- Introduction to Machine Learning for Finance --------------------
 \chapter{Introduction to Machine Learning for Finance}
