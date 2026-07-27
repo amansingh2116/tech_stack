@@ -192,7 +192,7 @@
 \raggedbottom
 \setlength{\emergencystretch}{3em}
 \titleformat{\chapter}[display]
-  {\normalfont\bfseries\Huge}
+  {\normalfont\bfseries\Huge\raggedright}
   {\chaptername\ \thechapter}{20pt}{\Huge}
 \titleformat{\paragraph}[block]
   {\normalfont\normalsize\bfseries}
@@ -240,7 +240,9 @@
 % ELEMENTARY MODULE CONTENT
 % =========================================================
 
-% -------------------- Introduction to Stock Markets --------------------
+
+\part*{Algorithmic Trading}
+
 
 \chapter{Algorithmic Trading}
 
@@ -2227,6 +2229,10 @@ Once the strategy needs a \textbf{realistic multi-asset universe, Pipeline-based
 Use \textbf{Pyfolio} on the Zipline output (or on any returns series, really) to get a rigorous, standardized \textbf{tear sheet} — the in-sample/out-of-sample split, drawdown analysis, round-trip trade quality, and stress-period behavior are exactly the kind of due-diligence checks you'd want before trusting a strategy with real capital.
 
 \end{enumerate}
+
+
+\part*{Derivatives}
+
 
 \chapter{Stochastic Processes}
 
@@ -12637,13 +12643,1870 @@ The recommended learning path (per the source): understand pure directional-bias
 
 \emph{Sources synthesized: CFI "Option Greeks" article; course primer text; Plain Bagel YouTube explainer; FRM Part I (Valuation \& Risk Management) lecture on the Greek letters; practical options risk-management lecture (Hindi-language trading course).}
 
-\chapter{Machine Learning in Financial Markets}
+\part*{Machine Learning in Financial Markets}
 
-\section{Sentiment Analysis: Opinion Mining}
-\section{Research Papers}
-\section{Datasets for Self-Practice}
-\section{Time Series Analysis: Handling Volatility}
-\section{Sequence-to-Sequence Modelling in Finance}
+\chapter{Sentiment Analysis: Opinion Mining}
 
+\section{Introduction}
+
+Opinions are central to almost all human activities and strongly influence
+our behaviour. Our beliefs, perceptions of reality, and choices are
+conditioned to a considerable degree by how others see and evaluate the
+world. Consequently, both individuals and organizations often seek the
+opinions of others before making decisions.
+
+Sentiment analysis and opinion mining study opinions and related concepts,
+including sentiments, evaluations, attitudes, and emotions.
+
+\section{Growth and Applications}
+
+The emergence and rapid growth of sentiment analysis coincided with the rise
+of social media on the Web, including reviews, forum discussions, blogs,
+microblogs, and social networks. For the first time, an enormous volume of
+opinionated material became available in digital form.
+
+Since the early 2000s, sentiment analysis has become one of the most active
+research areas in natural language processing. It is also studied extensively
+in:
+
+\begin{itemize}
+    \item data mining;
+    \item Web mining; and
+    \item text mining.
+\end{itemize}
+
+The field has spread beyond computer science into management and the social
+sciences because of its importance to businesses and society. Industrial
+activity has also expanded: numerous start-ups have emerged, and many large
+corporations have developed in-house sentiment-analysis capabilities. Today,
+such systems are applied across a broad range of business and social domains.
+
+\section{Books and General Resources}
+
+\begin{itemize}
+    \item Bing Liu's
+    \href{https://www.cs.uic.edu/~liub/FBS/SentimentAnalysis-and-OpinionMining.pdf}
+    {\emph{Sentiment Analysis and Opinion Mining}} provides a foundational
+    introduction to the subject.
+
+    \item \href{https://link.springer.com/book/10.1007/978-981-15-1216-2}
+    {\emph{Deep Learning-Based Approaches for Sentiment Analysis}} surveys
+    developments and techniques in deep-learning-based sentiment analysis.
+
+    \item \href{https://shop.elsevier.com/books/sentiment-analysis-in-social-networks/pozzi/978-0-12-804412-4}
+    {\emph{Sentiment Analysis in Social Networks}} examines natural-language
+    processing, big-data methods, and statistical techniques for social-media
+    analysis.
+\end{itemize}
+
+\section{Selected Research Papers}
+
+The following papers provide entry points into several sentiment-analysis
+subtopics:
+
+\begin{itemize}
+    \item Bing Liu,
+    \href{https://www.cs.uic.edu/~liub/FBS/NLP-handbook-sentiment-analysis.pdf}
+    {\emph{Sentiment Analysis and Subjectivity}}.
+
+    \item Carlos Iglesias and Antonio Moreno,
+    \href{https://www.researchgate.net/publication/337456453_Sentiment_Analysis_for_Social_Media}
+    {\emph{Sentiment Analysis for Social Media}}.
+
+    \item Apoorv Agarwal et al.,
+    \href{http://www.cs.columbia.edu/~julia/papers/Agarwaletal11.pdf}
+    {\emph{Sentiment Analysis of Twitter Data}}.
+
+    \item Shanshan Yi and Xiaofang Liu,
+    \href{https://link.springer.com/article/10.1007/s40747-020-00155-2}
+    {\emph{Machine Learning Based Customer Sentiment Analysis for
+    Recommending Shoppers and Shops Based on Customers' Reviews}}.
+
+    \item Arwa A. Al Shamsi, Reem Bayari, and Said Salloum,
+    \href{https://www.researchgate.net/publication/348153724_Sentiment_Analysis_in_English_Texts}
+    {\emph{Sentiment Analysis in English Texts}}.
+\end{itemize}
+
+\section{Training Resources}
+
+The following online resources provide practical introductions to sentiment
+analysis and natural-language processing:
+
+\begin{itemize}
+    \item Udemy:
+    \href{https://www.udemy.com/course/sentiment-analysis-beginner-to-expert/}
+    {\emph{Sentiment Analysis, Beginner to Expert}}.
+
+    \item Udemy:
+    \href{https://www.udemy.com/course/data-science-natural-language-processing-in-python/}
+    {\emph{Natural Language Processing (NLP) in Python}}, including practical
+    Python implementations.
+
+    \item BuildByPython's
+    \href{https://www.youtube.com/playlist?list=PLhTjy8cBISEoOtB5_nwykvB9wfEDscuEo}
+    {YouTube playlist on NLP and sentiment analysis}.
+
+    \item Stanford Online lectures on YouTube:
+    \href{https://www.youtube.com/watch?v=O1Xh3H1uEYY}{Lecture 1} and
+    \href{https://www.youtube.com/watch?v=6-4pJt1M18s}{Lecture 2}, the latter
+    focusing on sentiment analysis.
+\end{itemize}
+
+\chapter{Datasets for Self-Practice}
+
+Suitable datasets are useful when beginning sentiment-analysis experiments.
+The following freely available resources provide review, social-media, and
+financial-language data for self-practice.
+
+\section{Review and Social-Media Datasets}
+
+\begin{itemize}
+
+
+
+
+
+\item \textbf{\href{https://www.kaggle.com/datasets/bittlingmayer/amazonreviews}{Amazon Reviews Dataset}:}
+Millions of Amazon reviews supplied in \texttt{fastText} format.
+
+
+
+\item \textbf{\href{https://www.kaggle.com/datasets/jerryfanelli/reddit-comments-containing-bitcoin-2009-to-2019}{Reddit Bitcoin Comments Dataset}:}
+Reddit comments containing references to Bitcoin from 2009 to 2019.
+
+
+
+\item \textbf{Booking.com Reviews Dataset:}
+Thousands of hotel reviews suitable for opinion-mining experiments.
+\end{itemize}
+
+\section{Sentiment-Analysis Lexicons}
+
+Rule-based approaches require sentiment lexicons: lists of words that have
+already been labelled by sentiment or related linguistic categories.
+
+
+
+
+
+\begin{itemize}
+\item \textbf{\href{https://www.kaggle.com/datasets/rtatman/sentiment-lexicons-for-81-languages}{Sentiment Lexicons for 81 Languages}:}
+Multilingual sentiment word lists for experimentation across languages.
+\end{itemize}
+
+\subsection{Loughran--McDonald Master Dictionary (1993--2023)}
+
+The Loughran--McDonald Master Dictionary is designed for financial text and
+is available in the following formats:
+
+\begin{itemize}
+
+
+
+
+
+\item \textbf{CSV format:}
+\href{https://drive.google.com/file/d/1ptUgGVeeUGhCbaKL14Ri3Xi5xOKkPkUD/view?usp=sharing}{Download CSV}.
+
+
+
+\item \textbf{XLSX format:}
+\href{https://docs.google.com/spreadsheets/d/1qI1goptbRMlJMKXQFctE4T2wU73m1ikR/edit?usp=sharing\&ouid=116301805707217204647\&rtpof=true\&sd=true}{Download XLSX}.
+\end{itemize}
+
+
+
+\subsubsection{Baseline Dictionary}
+
+The base dictionary is derived from release 4.0 of \texttt{2of12inf}, a
+general-purpose dictionary oriented towards common words. It contains word
+inflections but excludes abbreviations, acronyms, British English,
+hyphenated words, names, and phrases.
+
+
+
+\subsubsection{Financial Extensions}
+
+The \texttt{2of12inf} baseline is extended with words found in 10-K documents
+and earnings calls but absent from the original word list. These additions
+were identified by examining tokens from the full EDGAR 10-K archive and
+earnings calls from CapIQ. Added entries are either inflections of common
+words or terms appearing in more than a trivial number of documents.
+
+
+
+\subsubsection{Reported Metrics}
+
+The dictionary reports counts, proportion of total, average proportion per
+document, standard deviation of proportion per document, document count
+(the number of documents containing at least one occurrence), seven
+sentiment-category identifiers, complexity, number of syllables, and the
+source of each word. The source is either \texttt{2of12inf} or the year in
+which the word was added.
+
+
+
+\subsubsection{Sentiment Categories}
+
+The categories are negative, positive, uncertainty, litigious, strong modal,
+weak modal, and constraining. Sentiment words are flagged with a number
+indicating the year in which they were added to the list.
+
+\begin{quote}
+\textbf{Note.} A year preceded by a negative sign indicates the year or
+version in which the word was removed from the sentiment category.
+\end{quote}
+
+The best way to improve at this stage is to practise through competitions or
+by solving real-world problems. Best of luck!
+
+\chapter{Time Series Analysis: Handling Volatility}
+
+\section{Why Should We Care About Modelling Volatility?}
+
+\textbf{Volatility} is a financial metric that reflects the degree of variation or fluctuation in the price of an asset (stocks, bonds, currencies, commodities, etc.) over time. It is widely used as a proxy for \textbf{risk}, since it captures how unpredictable an asset's price movements are.
+
+\begin{itemize}
+\item \textbf{High volatility} → the asset's price can change dramatically over a short period (large risk, large potential reward).
+\item \textbf{Low volatility} → the asset's price movements are more stable and less dramatic (lower risk, typically lower potential reward).
+\end{itemize}
+
+Understanding volatility matters to investors because it directly affects both the \textbf{risk} and the \textbf{potential return} of an investment:
+
+\begin{itemize}
+\item High volatility creates opportunities for significant gains, but also exposes the investor to the risk of substantial losses.
+\item By assessing volatility, investors can make informed decisions about their \textbf{risk tolerance}, \textbf{portfolio diversification}, and \textbf{investment strategy}, helping them navigate market uncertainty more effectively.
+\end{itemize}
+
+This is why an entire branch of time-series modelling (ARCH/GARCH-family models) exists specifically to model and forecast \emph{volatility} rather than the price/return itself.
+
+
+\section{How Do We Measure Volatility?}
+
+Volatility and \textbf{variance} are closely related but distinct concepts:
+
+{\small
+\begin{longtable}{@{}L{0.28\textwidth}L{0.64\textwidth}@{}}
+\toprule
+\textbf{Concept} & \textbf{Definition} \\
+\midrule
+\textbf{Variance} & A statistical measure that quantifies the spread of data points in a dataset — the average \emph{squared} deviation of returns from their mean over a window of time. \\
+\textbf{Volatility} & Proportional to the \textbf{square root of variance} (i.e., analogous to a standard deviation). It is more intuitive than variance because it is expressed in the \emph{same units} as the asset's returns. \\
+\bottomrule
+\end{longtable}
+}
+
+\textbf{Key relationship:}
+
+\begin{lstlisting}[style=notesCode]
+Volatility proportional to sqrt(Variance)
+\end{lstlisting}
+
+Because raw variance is in "squared return" units (hard to interpret intuitively), volatility (its square root) is preferred by practitioners since it maps back onto the same scale as returns themselves.
+
+This is the conceptual bridge to ARCH/GARCH models: since we cannot reliably predict the \emph{direction} of returns (see the Efficient Market Hypothesis below), we instead try to model and predict the \textbf{conditional variance} — i.e., volatility — of the return series.
+
+
+\section{Background for ARCH/GARCH Models}
+
+\subsection{The Efficient Market Hypothesis (EMH)}
+
+The EMH states that the price of a stock reflects an \textbf{efficient market} — i.e., all available information about the company/asset is already incorporated into its current price.
+
+\textbf{Implications of EMH:}
+\begin{itemize}
+\item No essentially riskless (or minimally riskless) profit-taking can exist, because there are no market inefficiencies causing a gap between the current price and the "true" value → \textbf{no arbitrage}.
+\item It is impossible to \emph{consistently} beat the market using only information about a security's price up to time \emph{t}, since all such information is already public knowledge by time \emph{t}.
+\end{itemize}
+
+\textbf{Mathematical statement:}
+
+\begin{lstlisting}[style=notesCode]
+E[X_t | X_t-1, X_t-2, ...] = 0
+\end{lstlisting}
+
+where X\textsubscript{t} is the current asset price/return, conditioned on all previous prices/returns. In words: the \emph{expected} return, given everything we know so far, is zero (i.e., our best forecast of tomorrow's return is "no change," consistent with a \textbf{random walk}).
+
+\textbf{Important nuance:} This does \emph{not} mean there's no way to make a profit — it means there's no \emph{riskless} way to profit (arbitrage). Riskier investments still create opportunities for profit \emph{through} that risk. This is where \textbf{volatility modelling} comes in: since we can't forecast the \emph{direction} of returns without violating EMH, we instead forecast the \emph{risk} (variance/volatility) of returns, which is still valuable and does not contradict EMH.
+
+\subsection{Returns vs. Prices}
+
+Rather than modelling raw prices, financial time-series models typically model \textbf{returns}, since returns tend to be more stationary and comparable across time and assets.
+
+\textbf{Simple return} at time \emph{t}:
+
+\begin{lstlisting}[style=notesCode]
+R_t = (P_t - P_t-1) / P_t-1
+\end{lstlisting}
+
+where P\textsubscript{t} is the asset price at time \emph{t} and P\textsubscript{t}\textsubscript{-}\textsubscript{1} is the price at the previous period.
+
+\textbf{Log return} at time \emph{t} (more commonly used):
+
+\begin{lstlisting}[style=notesCode]
+r_t = log(P_t / P_t-1) = log(P_t) - log(P_t-1)
+\end{lstlisting}
+
+\textbf{Why log returns are preferred:} Log returns have an \emph{additive} property that simple returns do not — the multi-period log return is simply the sum of single-period log returns. This makes them more convenient for statistical modelling.
+
+\textbf{Python implementation:}
+\begin{python}
+# Convert prices to log returns
+df['Return'] = np.pad(np.diff(np.log(df['Close'])) * 100, (1, 0), 'constant')
+\end{python}
+
+\subsection{Volatility Clustering}
+
+\textbf{Volatility clustering} refers to the empirical observation that financial time series alternate between \textbf{periods of high volatility} and \textbf{periods of low volatility} — large price swings tend to be followed by more large swings, and calm periods tend to be followed by more calm periods.
+
+\begin{itemize}
+\item Example: the S\&P 500 shows a visibly "jagged" (high-volatility) pattern during 2010–2012, followed by a relatively calm (low-volatility) period from 2013–2015.
+\item ARCH and GARCH models are specifically designed to \textbf{capture volatility clustering} — allowing us to model risk/volatility in a way that is consistent with the Efficient Market Hypothesis (since we're not forecasting the direction of returns, just their conditional variance).
+\end{itemize}
+
+
+\section{Heteroskedasticity — The Core Problem}
+
+Traditional autoregressive models (AR, ARIMA, SARIMA) and other common regression-style models (linear regression, ARMA) assume \textbf{homoskedasticity} — i.e., that the variance of the error terms is \textbf{constant} over time.
+
+However, real financial time series frequently display \textbf{heteroskedasticity} — a systematically \emph{changing} (non-constant) variance over time. In finance, this manifests as increasing/decreasing volatility.
+
+\begin{itemize}
+\item If this changing variance is itself \textbf{correlated over time} (i.e., it follows a predictable pattern), it can be modeled using an autoregressive process applied to the variance — this is exactly what \textbf{ARCH} does.
+\end{itemize}
+
+Real-world series where ARCH-type effects are commonly observed: \textbf{stock prices, oil prices, bond prices, inflation rates, GDP, unemployment rates}, etc.
+
+
+\section{The ARCH Model}
+
+\subsection{What Does "ARCH" Mean?}
+
+\textbf{ARCH = Autoregressive Conditional Heteroskedasticity}, introduced by Engle (1982). Its core idea is that it explicitly distinguishes between the \textbf{unconditional variance} and the \textbf{conditional variance}, allowing the conditional variance to change over time as a function of past errors.
+
+Breaking down the name:
+
+{\small
+\begin{longtable}{@{}L{0.28\textwidth}L{0.64\textwidth}@{}}
+\toprule
+\textbf{Term} & \textbf{Meaning} \\
+\midrule
+\textbf{Autoregressive} & The current value can be expressed as a function of previous values — i.e., they are correlated. \\
+\textbf{Conditional} & The variance at time \emph{t} depends on (is "conditional on") past errors. \\
+\textbf{Heteroskedasticity} & The series displays unusual/varying (non-constant) variance. \\
+\bottomrule
+\end{longtable}
+}
+
+\subsection{Why Use an ARCH Model?}
+
+\begin{itemize}
+\item Standard autoregressive models such as AR, ARIMA, and SARIMA can
+capture trend and seasonality in the \emph{mean} of a series. However, they
+assume \textbf{constant error variance} and cannot model changes in variance
+over time.
+\item ARCH models fill this gap by modelling the \textbf{conditional
+variance} as a function of past squared errors or residuals.
+\item \textbf{Practical use case:} ARCH is typically used to model the expected variance of the \emph{residuals} after another model (e.g., ARMA) has already been fit to remove any trend/seasonality/autocorrelation from the mean.
+\end{itemize}
+
+\textbf{When is ARCH appropriate?}
+\begin{itemize}
+\item ARCH should be applied only to a series that has \textbf{no trend, no seasonality, and no evident serial correlation} in the mean (i.e., it looks like discrete white noise once any ARMA/ARIMA structure has been removed).
+\item We check appropriateness by \textbf{squaring the residuals} and examining their \textbf{correlogram} (ACF/PACF) — we also need the mean of the residuals to be (near) zero.
+\item Typical workflow: fit ARIMA/SARIMA first → check if ARCH effects remain in the squared residuals → if yes, ARCH/GARCH may be a good fit for modelling the remaining variance structure.
+\end{itemize}
+
+\subsection{ARCH Model Statement and Derivation}
+
+A time series \{\ensuremath{\epsilon}(t)\} is defined at each time step as:
+
+\begin{lstlisting}[style=notesCode]
+epsilon(t) = w(t) * sigma(t)
+\end{lstlisting}
+
+where \textbf{w(t)} is white noise with zero mean and unit variance.
+
+\textbf{Conditional variance equation (ARCH(1)):}
+
+\begin{lstlisting}[style=notesCode]
+Var(x(t)) = sigma^2(t) = alpha0 + alpha1 * sigma^2(t-1)
+\end{lstlisting}
+
+or, expressed directly in terms of the previous \textbf{squared error} (more standard form):
+
+\begin{lstlisting}[style=notesCode]
+sigma^2(t) = alpha0 + alpha1 * epsilon^2(t-1)
+
+epsilon(t) = w(t) * sqrt(alpha0 + alpha1 * epsilon^2(t-1))
+\end{lstlisting}
+
+\textbf{Parameter constraints:} \ensuremath{\alpha}\textsubscript{0} > 0 and \ensuremath{\alpha}\textsubscript{1} ≥ 0, which ensures the conditional variance is always positive.
+
+This is called an \textbf{autoregressive conditional heteroskedastic model of order unity}, denoted \textbf{ARCH(1)}.
+
+\textbf{ARCH(2):}
+
+\begin{lstlisting}[style=notesCode]
+epsilon(t) = w(t) * sqrt(alpha0 + alpha1*epsilon^2(t-1) + alpha2*epsilon^2(t-2))
+\end{lstlisting}
+
+\textbf{General ARCH(p):}
+
+\begin{lstlisting}[style=notesCode]
+epsilon(t) = w(t) * sqrt( alpha0 + sum_i=1^p alpha_i * epsilon^2(t-i) )
+\end{lstlisting}
+
+where:
+\begin{itemize}
+\item \textbf{p} = the number of lagged squared residual errors included in the model.
+\item \textbf{i = 1, 2, 3, …, p} indexes the lagged periods of the squared error.
+\end{itemize}
+
+\subsection{Interpretation of the ARCH Model}
+
+\begin{enumerate}
+\item If the error was \textbf{high} during period (t−1), it is more likely that the error at period (t) will also be \textbf{high} (volatility persists/clusters).
+\item Conversely, if the error was \textbf{low} at (t−1), the term inside the square root is smaller, resulting in a smaller (lower-volatility) error at time (t).
+\item \textbf{\ensuremath{\alpha}\textsubscript{1} ≥ 0} is required to guarantee positive variance.
+\item \textbf{Stability condition:} \ensuremath{\alpha}\textsubscript{1} < 1 is required, otherwise \ensuremath{\epsilon}(t) becomes explosive (grows without bound over time).
+\item ARCH(1) should only ever be applied to a series that has already had an appropriate mean model fitted, such that its residuals resemble discrete white noise.
+\end{enumerate}
+
+\textbf{Why does this model "volatility"?}
+
+From the variance formula, we can derive:
+
+\begin{lstlisting}[style=notesCode]
+Var(epsilon(t)) = alpha0 + alpha1 * Var(epsilon(t-1))
+\end{lstlisting}
+
+This shows that the variance of the series is simply a \textbf{linear combination} of the variance of the \emph{previous} element in the series — i.e., today's volatility depends linearly on yesterday's volatility (via the squared error term).
+
+\subsection{Formal Model Statement (Alternative Notation)}
+
+An equivalent and commonly used notation for ARCH(P):
+
+\begin{lstlisting}[style=notesCode]
+X_t = sigma_t*epsilon_t,   with   sigma_t^2 = b0 + sum_j=1^p b_j*X_t-_j^2
+\end{lstlisting}
+
+where \ensuremath{\varepsilon}\textsubscript{t} is IID(0,1) and
+b\textsubscript{0}, b\textsubscript{1}, …, b\textsubscript{p} > 0.
+
+\begin{itemize}
+\item X\textsubscript{t} can represent price, returns, or log returns — for simplicity, X\textsubscript{t} is usually taken to be the \textbf{log returns} of an asset.
+\item \textbf{X\textsubscript{t}² is (in expectation) the marginal variance of the log returns.}
+\end{itemize}
+
+\textbf{Derivation — why X\textsubscript{t}² represents marginal variance:}
+
+Recall the identity:
+
+\begin{lstlisting}[style=notesCode]
+Var(X) = E[X^2] - E[X]^2
+\end{lstlisting}
+
+Because of the Efficient Market Hypothesis, expected returns are trivially zero: \textbf{E[X\textsubscript{t}] = 0}. Therefore E[X\textsubscript{t}]² = 0, and we are left with:
+
+\begin{lstlisting}[style=notesCode]
+sigma^2 = E[X_t^2]
+\end{lstlisting}
+
+which is \textbf{constant} and does not depend on \emph{t} — this is the marginal (unconditional) variance.
+
+We build on this concept of a constant marginal variance to introduce \textbf{heteroskedasticity}: the \textbf{conditional variance at time t (\ensuremath{\sigma}\textsubscript{t}²)} — i.e., volatility — is modeled as being directly influenced by the \emph{squared} log return \textbf{X\textsubscript{t}²}.
+
+\textbf{Intuition:} If X\textsubscript{t} swings rapidly (the log return increases or decreases sharply), then X\textsubscript{t}² is large, and therefore the volatility \ensuremath{\sigma}\textsubscript{t}² at time \emph{t} is high. This is precisely how ARCH captures the impact of large price swings on the volatility of an asset.
+
+
+\section{The GARCH Model}
+
+\subsection{What Does "GARCH" Mean?}
+
+\textbf{GARCH = Generalized Autoregressive Conditional Heteroskedasticity.} It is an extension of ARCH that adds a \textbf{moving-average component} on top of the autoregressive component. It was introduced by \textbf{Bollerslev (1986, Journal of Econometrics)}, generalizing Engle's original ARCH model.
+
+Adding the moving-average component allows the model to:
+\begin{enumerate}
+\item Model the \textbf{conditional change in variance} over time.
+\item Capture \textbf{time-dependent changes in variance} (e.g., conditional increases and decreases in variance) more flexibly than ARCH alone.
+\end{enumerate}
+
+\textbf{Conceptually:} GARCH is the \textbf{"ARMA equivalent" of ARCH}, since ARCH only has an autoregressive component (on the variance), whereas GARCH adds a moving-average-like component. This lets GARCH capture a wider range of behavior, including more \textbf{persistent volatility}.
+
+\subsection{GARCH Model Statement and Derivation}
+
+\textbf{GARCH(1,1):} a single autoregressive lag + a single "moving average" lag on the variance:
+
+\begin{lstlisting}[style=notesCode]
+epsilon(t) = w(t) * sigma(t)
+
+epsilon(t) = w(t) * sqrt( alpha0 + alpha1*epsilon^2(t-1) + beta1*sigma^2(t-1) )
+\end{lstlisting}
+
+\textbf{General GARCH(p,q):}
+
+A time series \{\ensuremath{\epsilon}(t)\} is given at each instance by:
+
+\begin{lstlisting}[style=notesCode]
+epsilon(t) = w(t) * sigma(t)
+\end{lstlisting}
+
+with the conditional variance given by:
+
+\begin{lstlisting}[style=notesCode]
+sigma^2_t = alpha0 + sum_i=1? alpha_i*epsilon^2(t-i) + sum_j=1^p beta_j*sigma^2(t-j)
+\end{lstlisting}
+
+where \ensuremath{\alpha}(i) and \ensuremath{\beta}(j) are the model's parameters, and:
+
+\begin{lstlisting}[style=notesCode]
+alpha0 > 0,   alpha_i >= 0 for i = 1,...,q,   beta_j >= 0 for j = 1,...,p
+\end{lstlisting}
+
+(these constraints ensure the conditional variance is always positive).
+
+\textbf{Interpretation of the moving-average addition:} \ensuremath{\sigma}²(t) now depends not only on past \emph{squared errors} (ARCH effect) but also on past \emph{conditional variances} \ensuremath{\sigma}²(t−j) themselves (GARCH effect).
+
+\subsection{Interpretation of GARCH Coefficients}
+
+\begin{enumerate}
+\item A \textbf{large value of \ensuremath{\beta}\textsubscript{1}} causes \ensuremath{\sigma}(t) to be highly correlated with \ensuremath{\sigma}²(t−1), giving the conditional standard deviation process a \textbf{long-term persistence} — much more so than under a pure ARCH model.
+\item \textbf{Special case — p = 0:} the process reduces to a pure \textbf{ARCH(q)} process.
+\item \textbf{Special case — p = q = 0:} \ensuremath{\epsilon}(t) is simply \textbf{white noise}.
+\end{enumerate}
+
+\subsection{Alternative Notation (used in the second source article)}
+
+\begin{lstlisting}[style=notesCode]
+X_t = sigma_t*epsilon_t,   with   sigma_t^2 = b0 + sum_j=1^p b_j*X_t-_j^2 + sum_j=1^n a_j*sigma^2_t-_j
+\end{lstlisting}
+
+where \ensuremath{\varepsilon}\textsubscript{t} is IID(0,1), and
+b\textsubscript{0}, b\textsubscript{1}, …, b\textsubscript{p},
+a\textsubscript{0}, a\textsubscript{1}, …, a\textsubscript{n} ≠ 0.
+
+GARCH(P,Q) is the generalized ARCH model that adds the extra term above: it
+allows the conditional variance to depend on \textbf{lagged versions of
+itself} (via a\textsubscript{0}, a\textsubscript{1}, …,
+a\textsubscript{n}), in addition to lagged squared returns.
+
+We can decompose a GARCH model's effects into two components:
+\begin{enumerate}
+\item \textbf{ARCH effects} — attributable to lagged squared log returns X\textsubscript{t}².
+\item \textbf{GARCH effects} — attributable to lagged conditional variances \ensuremath{\sigma}\textsubscript{t}².
+\end{enumerate}
+
+This additional flexibility is what allows GARCH models to better capture the \textbf{persistence} of volatility observed in real financial data.
+
+
+\section{Model Identification: Using ACF and PACF}
+
+\subsection{General Procedure}
+
+The configuration (choice of order p, q) for ARCH/GARCH models is best understood via \textbf{ACF and PACF plots of the variance} of the time series:
+
+\begin{enumerate}
+\item Subtract the mean from each observation and \textbf{square the result} (or simply square the observation if you're already working with white-noise residuals from another fitted model).
+\item Interpret the resulting \textbf{ACF and PACF plots} to estimate values for p and q — in a manner analogous to how ARMA model orders are chosen.
+\end{enumerate}
+
+\subsection{Worked Example (S\&P 500 Returns)}
+
+Steps followed on real S\&P 500 data (2010–2020):
+
+\begin{enumerate}
+\item Plot a \textbf{trace plot} of the returns over time to visually inspect for volatility clustering (e.g., visibly higher highs/lower lows in 2010–2012 vs. a calmer 2013–2015 period).
+\item Plot \textbf{ACF and PACF of the raw returns}. In the worked example, these plots showed \textbf{no significant spikes} outside the confidence bands — suggesting the \emph{raw} returns series looks close to independent, and would not, on its own, indicate ARCH/GARCH effects.
+\item To more rigorously test for independence, repeat the ACF/PACF analysis on a \textbf{transformation} of the series — either \textbf{squared returns} or \textbf{absolute returns}. Absolute returns are generally preferred in financial data because they \textbf{diminish the effect of outliers} compared to squared returns.
+\item After transforming to \textbf{absolute returns}, a clear pattern emerges: ACF and PACF values are now significantly outside the confidence bands at multiple lags — confirming the presence of ARCH/GARCH effects. In the example, the PACF does not show a sharp drop-off until around \textbf{lag 4}, suggesting an order of P, Q up to 4 might be appropriate. For simplicity, the analysis proceeds first with a \textbf{GARCH(1,1)} model before testing more complex specifications.
+\end{enumerate}
+
+\begin{python}
+# Plot ACF and PACF of raw returns
+diff_ts = df['Return'].iloc[1:]
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
+plot_acf(diff_ts, ax=ax1, lags=10)
+plot_pacf(diff_ts, ax=ax2, lags=10)
+
+# Plot ACF and PACF of absolute returns (more robust to outliers)
+abs_returns = diff_ts.abs()
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
+plot_acf(abs_returns, ax=ax1, lags=10)
+plot_pacf(abs_returns, ax=ax2, lags=10)
+\end{python}
+
+
+\section{Formal Testing for ARCH/GARCH Effects: The McLeod-Li Test}
+
+The \textbf{McLeod-Li test} formally tests for white-noise behavior in the residuals of a series (i.e., whether ARCH effects are present).
+
+\textbf{Hypotheses:}
+\begin{itemize}
+\item \textbf{H\textsubscript{0}:} There are \textbf{no ARCH effects} in the time series.
+\item \textbf{H\textsubscript{a}:} There \textbf{are ARCH effects} in the time series.
+\end{itemize}
+
+\textbf{Workflow:} First fit a GARCH(1,1) model, then apply the McLeod-Li test to the residuals.
+
+\textbf{Worked example result:} p-value < 0.001 → reject H\textsubscript{0} → conclude that ARCH effects \textbf{are} present in the time series.
+
+\begin{python}
+def mcleod_li_test(x, k):
+    """
+    Calculates the McLeod-Li test statistic for a time series with k lags.
+    Returns the test statistic and its p-value.
+    """
+    n = len(x)
+    x_sq = x ** 2
+    x_sum = np.sum(x_sq)
+    x_lag_sum = np.sum(x_sq[:-k])
+    test_stat = n * (n + 2) * x_lag_sum / (x_sum ** 2)
+    df = k
+    p_value = 1 - chi2.cdf(test_stat, df)
+    return test_stat, p_value
+
+test_stat, p_value = mcleod_li_test(abs_returns, 50)
+# Result: test statistic ~ 2929.75, p-value ~ 0.0 -> ARCH effects present
+\end{python}
+
+
+\section{Simulating ARCH and GARCH Processes in Python}
+
+Simulating these processes is a useful way to build intuition for how the models behave.
+
+\textbf{Setup:}
+\begin{python}
+import os
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from arch import arch_model
+import warnings
+warnings.filterwarnings("ignore")
+\end{python}
+
+\subsection{Simulating an ARCH(1) Process}
+
+\begin{python}
+np.random.seed(13)
+# a0 and a1 are constants and should be > 0
+a0 = 2
+a1 = .5
+
+y = w = np.random.normal(size=1000)   # random number generator, size 1000
+Y = np.empty_like(y)
+
+for t in range(len(y)):
+    Y[t] = w[t] * np.sqrt((a0 + a1 * y[t-1]**2))   # ARCH(1) formula
+
+# simulated ARCH(1) series -- looks like white noise
+tsplot(Y, lags=30)
+\end{python}
+
+\textbf{Observation on the raw simulated series:} the ARCH(1) series itself visually resembles white noise, and its ACF/PACF show no significant lags.
+
+\subsection{Squared ARCH(1) Series}
+
+\begin{python}
+tsplot(np.square(Y), lags=30)   # squared Y
+\end{python}
+
+\textbf{Observation:} Once the series is \textbf{squared}, the ACF and PACF now show significance at \textbf{lag 1}, indicating that an \textbf{AR(1) model for the variance} may be appropriate — this is exactly the ARCH(1) structure we simulated, confirming the model captures the intended dependency in the \emph{variance}, even though the raw series looks like white noise.
+
+\subsection{Simulating a GARCH(1,1) Process}
+
+\begin{python}
+np.random.seed(1)
+# Constants
+a0 = 0.2
+a1 = 0.5
+b1 = 0.3
+
+n = 10000
+w = np.random.normal(size=n)
+eps = np.zeros_like(w)
+sigsq = np.zeros_like(w)
+
+for i in range(1, n):
+    sigsq[i] = a0 + a1*(eps[i-1]**2) + b1*sigsq[i-1]
+    eps[i] = w[i] * np.sqrt(sigsq[i])     # GARCH formula
+
+tsplot(eps, lags=30)
+\end{python}
+
+\textbf{Observation:} Overall, this process again closely resembles white noise when plotted raw.
+
+\subsection{Squared GARCH(1,1) Series}
+
+\begin{python}
+tsplot(np.square(eps), lags=30)
+\end{python}
+
+\textbf{Observation:} The squared series now shows \textbf{clear autocorrelation}, with significant lags in \emph{both} the ACF and PACF — indicating that we need \textbf{both AR and MA components} (i.e., both \ensuremath{\alpha} and \ensuremath{\beta} terms) to properly model this variance process, which matches the GARCH structure used to simulate it.
+
+\subsection{Fitting a GARCH(1,1) Model to the Simulated Series}
+
+\begin{python}
+# Fit a GARCH(1,1) model to our simulated EPS series using the `arch` package
+from arch import arch_model
+
+am = arch_model(eps)
+res = am.fit(update_freq=5)
+print(res.summary())
+\end{python}
+
+\textbf{Example fitted output (from the simulated series):}
+
+\begin{lstlisting}[style=notesCode]
+Constant Mean - GARCH Model Results
+==============================================================================
+Dep. Variable:                          y   R-squared:                     -0.000
+Mean Model:                 Constant Mean   Adj. R-squared:                -0.000
+Vol Model:                          GARCH   Log-Likelihood:               -12199.1
+Distribution:                      Normal   AIC:                           24406.3
+Method:                Maximum Likelihood   BIC:                           24435.1
+                                              No. Observations:               10000
+                                              Df Residuals:                    9996
+                                              Df Model:                           4
+                                Mean Model
+==============================================================================
+                 coef    std err          t      P>|t|        95.0% Conf. Int.
+mu           -5.97e-07   6.742e-03    -8.86e-05      1.000     [-1.321e-02, 1.321e-02]
+                              Volatility Model
+==============================================================================
+              coef    std err          t      P>|t|        95.0% Conf. Int.
+omega       0.2157    1.014e-02      21.282   1.678e-100    [0.196, 0.236]
+alpha[1]    0.4939    1.960e-02      25.199   4.134e-140    [0.455, 0.532]
+beta[1]     0.2781    1.841e-02      15.107   1.452e-51     [0.242, 0.314]
+==============================================================================
+\end{lstlisting}
+
+Note the recovered parameters (omega ≈ 0.22, alpha[1] ≈ 0.49, beta[1] ≈ 0.28) are close to the true simulation parameters (a0=0.2, a1=0.5, b1=0.3) used to generate the data — confirming the model correctly recovers the underlying GARCH structure.
+
+
+\section{Applying GARCH to Real Data (S\&P 500)}
+
+\subsection{Data Import}
+
+\begin{python}
+spy = yf.Ticker("SPY")
+hist = spy.history(start="2010-01-04", end="2020-02-01")
+df = pd.DataFrame(hist, columns=['Close'])
+\end{python}
+
+\subsection{Fitting GARCH(1,1) on Absolute Returns}
+
+Workflow: split into an 80/20 train/test set (test set = more recent data), then fit using \texttt{arch\_model} with mean set to zero, GARCH volatility, and p=q=1:
+
+\begin{python}
+y_train, y_test = train_test_split(abs_returns, train_size=0.8)
+
+garch_mod = arch_model(y_train, mean="Zero", vol='Garch', p=1, q=1, rescale=False)
+res_garch = garch_mod.fit()
+\end{python}
+
+\textbf{Resulting fitted model equation:}
+
+\begin{lstlisting}[style=notesCode]
+sigma_t^2 = 0.0309 + 0.14*X^2_t-1 + 0.82*sigma^2_t-1
+\end{lstlisting}
+
+where \ensuremath{\sigma}\textsubscript{t}² is the conditional variance at time \emph{t}, X²\textsubscript{t}\textsubscript{-}\textsubscript{1} is the squared return at time \emph{t−1}, and \ensuremath{\sigma}²\textsubscript{t}\textsubscript{-}\textsubscript{1} is the conditional variance at time \emph{t−1}.
+
+\textbf{Parameter estimates:} b\textsubscript{0} (omega) = 0.0309, b\textsubscript{1} (alpha[1]) = 0.14, a\textsubscript{1} (beta[1]) = 0.82.
+
+\begin{lstlisting}[style=notesCode]
+Zero Mean - GARCH Model Results
+==============================================================================
+Dep. Variable:                     Return   R-squared:                      0.000
+Mean Model:                     Zero Mean   Adj. R-squared:                 0.000
+Vol Model:                          GARCH   Log-Likelihood:               -2403.69
+Distribution:                      Normal   AIC:                           4813.38
+Method:                Maximum Likelihood   BIC:                           4830.23
+                                              No. Observations:                2028
+                             Volatility Model
+==============================================================================
+              coef      std err        t         P>|t|      95.0% Conf. Int.
+omega       0.0309    8.422e-03      3.667      2.450e-04   [0.0144, 0.0474]
+alpha[1]    0.1432    2.548e-02      5.621      1.900e-08   [0.0933, 0.193]
+beta[1]     0.8196    2.771e-02      29.575     3.116e-192  [0.765, 0.874]
+==============================================================================
+\end{lstlisting}
+
+\textbf{Interpretation:} The high \ensuremath{\beta}\textsubscript{1} (≈0.82) indicates strong persistence of volatility — consistent with the "volatility clustering" phenomenon discussed earlier.
+
+
+\section{Forecasting Volatility}
+
+Once fitted, a GARCH model lets us forecast \textbf{\ensuremath{\sigma}\textsubscript{t}²} (volatility) at future times — these are non-trivial predictions (unlike return forecasts, which are trivially zero under EMH). There are two main forecasting approaches:
+
+\subsection{N-Step-Ahead Forecast}
+
+\begin{itemize}
+\item The model accesses log-return data X\textsubscript{t}, computes \ensuremath{\sigma}²\textsubscript{t}\textsubscript{+}\textsubscript{1}, and then \textbf{extends} this forecast forward to t+1, t+2, …, t+n \textbf{without updating} X\textsubscript{t} as time progresses.
+\item In other words: all future volatility forecasts are based solely on information available at the current date — the model does \emph{not} incorporate new actual data as it becomes available.
+\end{itemize}
+
+\begin{python}
+yhat = res_garch.forecast(horizon=y_test.shape[0], reindex=True)
+
+plt.plot(diff_ts[-y_test.shape[0]:])
+plt.plot(y_test.index, np.sqrt(yhat.variance.values[-1, :]))
+plt.title('S&P 500 Volatility Prediction')
+plt.legend(['True Daily Log Returns', 'Predicted Volatility'])
+\end{python}
+
+\textbf{Observation:} The N-step-ahead forecast produces a relatively \textbf{flat/smoothed} volatility prediction over the forecast horizon, since it isn't updated with new information as time progresses — it tends to converge toward the long-run average volatility level rather than tracking short-term spikes.
+
+\subsection{One-Step-Ahead Rolling Forecast}
+
+\begin{itemize}
+\item A more pragmatic approach: only forecast \textbf{one step ahead} at a time, then \textbf{update} the model with the actual observed return once it becomes available, and repeat.
+\item In other words: with each passing day, X\textsubscript{t}, X\textsubscript{t}\textsubscript{+}\textsubscript{1}, X\textsubscript{t}\textsubscript{+}\textsubscript{2}, … are updated with the actual observed returns, and the model re-forecasts one step ahead at a time.
+\end{itemize}
+
+\begin{python}
+rolling_preds = []
+for i in range(y_test.shape[0]):
+    train = abs_returns[:-(y_test.shape[0]-i)]
+    model = arch_model(train, p=1, q=1, rescale=False)
+    model_fit = model.fit(disp='off')
+    pred = model_fit.forecast(horizon=1, reindex=True)
+    rolling_preds.append(np.sqrt(pred.variance.values[-1, :][0]))
+
+rolling_preds = pd.Series(rolling_preds, index=y_test.index)
+
+plt.plot(rolling_preds)
+plt.title('S&P 500 Rolling Volatility Prediction')
+\end{python}
+
+\textbf{Observation — strengths of the rolling approach:}
+\begin{enumerate}
+\item It generates \textbf{spikes in predicted volatility} that line up well with periods of actual higher variance in daily returns.
+\item It successfully captures \textbf{volatility clustering} — alternating periods of low and high predicted variance.
+\item It tends to \textbf{forecast volatility spikes in advance} of the actual swings in daily returns, making it more useful in practice than the static n-step-ahead approach.
+\end{enumerate}
+
+\subsection{Comparison}
+
+{\small
+\begin{longtable}{@{}L{0.18\textwidth}L{0.34\textwidth}L{0.38\textwidth}@{}}
+\toprule
+\textbf{Approach} & \textbf{Description} & \textbf{Behavior} \\
+\midrule
+\textbf{N-step-ahead} & Forecast horizon fixed at the current date; no updating with new data & Smoothed/flat forecast, converges to long-run average \\
+\textbf{One-step-ahead rolling} & Re-forecast one step at a time, updating with each new observation & Tracks volatility clustering and spikes much more responsively \\
+\bottomrule
+\end{longtable}
+}
+
+The rolling approach is generally the more \textbf{practical} choice for real-world volatility forecasting, since it continually incorporates the latest information.
+
+
+\section{Model Diagnostics}
+
+Model diagnostics are an important (and often overlooked) step to validate whether a fitted GARCH model is appropriate, and to identify possible next steps for improvement.
+
+\subsection{Jarque-Bera Test (Normality of Residuals)}
+
+The GARCH(P,Q) model assumes that, if correctly specified, the model's errors are \textbf{normally distributed} with mean 0 and constant variance. The \textbf{Jarque-Bera test} checks whether the standardized residuals are normally distributed.
+
+\textbf{Test statistic formula:}
+
+\begin{lstlisting}[style=notesCode]
+JB = (n/6) * [ S^2 + (1/4)(K - 3)^2 ]
+\end{lstlisting}
+
+where:
+\begin{itemize}
+\item \textbf{n} = sample size
+\item \textbf{S} = sample skewness (symmetry of the data relative to the mean)
+\item \textbf{K} = sample kurtosis (shape of the distribution, particularly the tails)
+\end{itemize}
+
+\textbf{Reference point:} the kurtosis of a normal distribution is \textbf{3}.
+\begin{itemize}
+\item K > 3 → the sample is \textbf{heavier-tailed} than normal.
+\item K < 3 → the sample is \textbf{lighter-tailed} than normal.
+\end{itemize}
+
+\textbf{Hypotheses:}
+\begin{itemize}
+\item \textbf{H\textsubscript{0}:} the data has a normal distribution.
+\item \textbf{H\textsubscript{a}:} the data does not have a normal distribution.
+\end{itemize}
+
+\begin{python}
+std_resid = res_garch.resid / res_garch.conditional_volatility
+
+jb_test = jarque_bera(std_resid)
+print("Jarque-Bera test statistic:", jb_test[0])
+print("p-value:", jb_test[1])
+# Result: JB statistic ~ 1950.91, p-value ~ 0.0
+\end{python}
+
+\textbf{Conclusion from worked example:} p-value ≈ 0 → reject H\textsubscript{0} → the standardized residuals do \textbf{not} follow a normal distribution.
+
+\subsection{Implication — Heavy Tails in Financial Data}
+
+\begin{itemize}
+\item Financial time series typically have \textbf{tails heavier} than what is implied by a GARCH process using Gaussian (normal) innovations \{\ensuremath{\epsilon}(t)\}.
+\item To address this, one can assume \{\ensuremath{\epsilon}(t)\} follows a \textbf{heavy-tailed distribution} (e.g., \textbf{Student's t-distribution}) instead of a standard Gaussian white noise process.
+\item Interestingly, GARCH processes can exhibit heavy tails in their \emph{outputs} even when the underlying innovations \{\ensuremath{\epsilon}(t)\} \emph{are} Gaussian — this is a natural byproduct of the conditional variance structure.
+\item \textbf{Practical takeaway:} Using GARCH models allows us to jointly model both (a) the conditional heteroskedasticity, and (b) the heavy-tailed nature of financial returns distributions — but for better-calibrated models, it's often worth specifying a heavier-tailed error distribution (like Student's t) rather than assuming Gaussian errors.
+\end{itemize}
+
+
+\section{Model Extensions and Related Techniques}
+
+Several extensions/variants of ARCH/GARCH exist in the finance industry for more specialized use cases:
+
+\begin{itemize}
+\item \textbf{ARCH-M} — ARCH-in-Mean, where volatility feeds directly into the mean equation (e.g., to capture a risk premium).
+\item \textbf{GARCH-M} — GARCH-in-Mean, analogous extension of GARCH.
+\item \textbf{TGARCH} — Threshold GARCH, allows asymmetric responses to positive vs. negative shocks.
+\item \textbf{EGARCH} — Exponential GARCH, models the log of the conditional variance, allowing asymmetric effects without needing non-negativity constraints on coefficients.
+\end{itemize}
+
+\subsection{Combining ARIMA with GARCH}
+
+A common and powerful real-world workflow combines a \textbf{mean model (ARIMA)} with a \textbf{variance model (GARCH)}:
+
+\begin{enumerate}
+\item Iterate over combinations of ARIMA(p, d, q) models to find the best fit for the mean of the time series (e.g., using AIC as the selection criterion).
+\item Choose the GARCH model order(s) according to the best-fit ARIMA model.
+\item Fit the GARCH(p, q) model to the time series (often on the ARIMA residuals).
+\item Examine the model's residuals and \emph{squared} residuals for remaining autocorrelation (to confirm the GARCH component adequately captures the volatility structure).
+\end{enumerate}
+
+\textbf{Worked example (SPY returns, 2012–2015):}
+
+\begin{python}
+def _get_best_model(TS):
+    best_aic = np.inf
+    best_order = None
+    best_mdl = None
+    pq_rng = range(5)  # [0,1,2,3,4]
+    d_rng = range(2)   # [0,1]
+    for i in pq_rng:
+        for d in d_rng:
+            for j in pq_rng:
+                try:
+                    tmp_mdl = smt.ARIMA(TS, order=(i, d, j)).fit(method='mle', trend='nc')
+                    tmp_aic = tmp_mdl.aic
+                    if tmp_aic < best_aic:
+                        best_aic = tmp_aic
+                        best_order = (i, d, j)
+                        best_mdl = tmp_mdl
+                except:
+                    continue
+    return best_aic, best_order, best_mdl
+
+TS = lrets.SPY.ix['2012':'2015']
+res_tup = _get_best_model(TS)
+# Output: aic = -5255.56734 | order = (3, 0, 2)
+\end{python}
+
+\textbf{Result:} ARIMA(3,0,2) was found to best fit the mean of the SPY return series (lowest AIC). The next step is to fit a \textbf{GARCH(3,2)} model (using the ARIMA order as a starting point for the GARCH order) and examine the ACF/PACF of the squared residuals to check for remaining autocorrelation in the variance.
+
+This combined \textbf{ARMA + GARCH} approach — modelling the mean with ARIMA and the variance with GARCH — is one of the most versatile and widely used approaches in practical volatility forecasting.
+
+
+\section{Key Takeaways / Summary}
+
+\begin{itemize}
+\item \textbf{Volatility} measures the degree of price fluctuation in an asset and is a core proxy for financial \textbf{risk}; it is proportional to the square root of variance.
+\item Standard time-series models (ARIMA/SARIMA) assume \textbf{homoskedasticity} (constant variance) and cannot capture changing variance over time.
+\item \textbf{Heteroskedasticity} — systematically changing variance — is common in financial data, and when this changing variance is itself autocorrelated, it can be modeled with an autoregressive process on the \emph{variance}.
+\item \textbf{ARCH(p):} models the conditional variance as a function of \textbf{p lagged squared errors/returns}. Requires \ensuremath{\alpha}\textsubscript{0} > 0, \ensuremath{\alpha}\textsubscript{i} ≥ 0, and a stability condition (\ensuremath{\Sigma}\ensuremath{\alpha} < 1) to avoid explosive variance.
+\item \textbf{GARCH(p,q):} extends ARCH by adding lagged \textbf{conditional variances} themselves (the "moving average" component on variance), giving it the ability to model more persistent, flexible volatility dynamics. GARCH is the "ARMA equivalent" of ARCH.
+\item Model \textbf{identification} uses ACF/PACF plots on the (squared or absolute) residuals/returns; absolute returns are preferred in practice to reduce the influence of outliers.
+\item The \textbf{McLeod-Li test} formally tests for the presence of ARCH/GARCH effects (H\textsubscript{0}: no ARCH effects).
+\item \textbf{Two forecasting strategies:} n-step-ahead (static, no updating — smoother, less responsive) vs. one-step-ahead rolling forecasts (updates with new data — captures volatility clustering and spikes much more effectively).
+\item \textbf{Model diagnostics} (e.g., Jarque-Bera test) often reveal that GARCH residuals are not perfectly normal — financial data tends to have \textbf{heavy tails}, motivating the use of heavier-tailed error distributions (e.g., Student's t) in more advanced specifications.
+\item In practice, GARCH is frequently combined with an \textbf{ARIMA} mean model (ARIMA + GARCH) — ARIMA captures the mean/trend structure, while GARCH captures the residual volatility structure.
+\item Extensions such as \textbf{ARCH-M, GARCH-M, TGARCH, and EGARCH} exist to handle more specialized volatility dynamics (e.g., asymmetric responses to positive vs. negative shocks).
+\end{itemize}
+
+
+\section{References}
+
+\begin{itemize}
+\item Ranjith Kumar K, \href{https://medium.com/@ranjithkumar.rocking/time-series-model-s-arch-and-garch-2781a982b448}{"Time Series Model(s) — ARCH and GARCH"}, Medium.
+\item Daniel Herrera, \href{https://medium.com/@corredaniel1500/forecasting-volatility-deep-dive-into-arch-garch-models-46cd1945872b}{"Forecasting Volatility: Deep Dive into ARCH \& GARCH Models"}, Medium.
+\item Engle, R. (1982). Original ARCH paper.
+\item Bollerslev, T. (1986). \emph{Journal of Econometrics} — original GARCH paper.
+\end{itemize}
+
+\chapter{Sequence-to-Sequence Modelling in Finance}
+
+\section{What is Sequence-to-Sequence (Seq2Seq) Modelling?}
+
+Sequence-to-sequence (Seq2Seq) modelling is a machine learning approach that transforms one sequence of data into another sequence. It is the standard framework behind machine translation, time-series analysis, and speech recognition.
+
+A Seq2Seq model has two main components:
+
+\begin{itemize}
+\item \textbf{Encoder}: reads the input sequence, step by step, and compresses everything it has seen into a single fixed-size vector called the \textbf{context vector}. This vector is meant to summarize the essential information contained in the whole input sequence.
+\item \textbf{Decoder}: takes the context vector produced by the encoder and uses it to generate the output sequence, step by step.
+
+\end{itemize}
+Because the encoder and decoder are separate modules connected only through the context vector, the input and output sequences do \textbf{not} need to be the same length --- this is what makes Seq2Seq so flexible (e.g., translating a 5-word sentence into a 7-word sentence, or using 60 days of stock prices to forecast the next 10 days).
+
+\textbf{Attention mechanism}: Modern Seq2Seq models rarely rely on a single fixed context vector, since compressing an entire long sequence into one vector loses information (a bottleneck problem). Instead, they add an \emph{attention mechanism}, which allows the decoder to "look back" at different parts of the input sequence and weigh their relevance differently while generating each element of the output. This significantly improves performance, especially on long sequences, and adds flexibility to what the model can learn.
+
+\subsection{How is Seq2Seq used in Time Series?}
+
+{\small
+\begin{longtable}{@{}L{0.20\textwidth}L{0.34\textwidth}L{0.38\textwidth}@{}}
+\toprule
+Use case & What happens & Example in finance \\
+\midrule
+\textbf{Forecasting} & The encoder compresses a window of past time steps into a context vector; the decoder unrolls this into a sequence of predicted future values. & Predicting the next N days of a stock price or trading volume from the last M days. \\
+\textbf{Anomaly Detection} & The model learns the "normal" pattern of a time series by learning to predict it well. When the actual observed values deviate significantly from what the model predicted, that deviation is flagged as a possible anomaly. & Flagging unusual market behaviour (e.g., a sudden price/volume spike that doesn't match the learned pattern), useful for spotting shocks or volatility clusters. \\
+\textbf{Pattern Recognition} & Historical sequences are encoded and then decoded into predefined pattern classes rather than raw future values, i.e., the decoder outputs a classification instead of a forecast. & Classifying different types of temporal patterns in financial markets (e.g., recognizing a regime) or in industrial process monitoring. \\
+\bottomrule
+\end{longtable}
+}
+
+\textbf{Why this matters for volatility}: all three use cases are directly relevant to a volatile financial series --- forecasting the next values, catching abnormal swings early (anomaly detection), and recognizing which "regime" or pattern the market is currently in.
+
+\section{Recurrent Neural Networks (RNNs) --- Foundations}
+
+\subsection{From Feedforward Networks to Recurrence}
+
+A standard (feedforward) neural network has:
+\begin{itemize}
+\item An \textbf{input layer} --- takes in the raw input.
+\item One or more \textbf{hidden layers} --- apply an activation function to a weighted combination of inputs.
+\item An \textbf{output layer} --- produces the final prediction.
+
+\end{itemize}
+In a \emph{deep} neural network, there are multiple hidden layers, and \textbf{each hidden layer has its own distinct set of weights and biases}. Because each layer's weights differ, each layer behaves independently, and the layers cannot naturally be treated as a single repeating unit.
+
+\textbf{The key idea behind an RNN}: if you force all the hidden layers to \emph{share the same weights and biases}, they effectively become the same computational unit repeated over and over. Once every hidden layer uses identical weights/biases, they can be collapsed ("folded") into \textbf{one single recurrent layer} that is applied repeatedly --- once per time step. This is exactly what a Recurrent Neural Network does: it reuses one hidden unit across every step of a sequence, and that unit's own previous output feeds back in as part of its next input.
+
+\subsection{Formal Definition}
+
+Given an input sequence:
+
+\begin{lstlisting}[style=notesCode]
+x = (x1, x2, ..., xT)
+\end{lstlisting}
+
+an RNN maintains a \textbf{recurrent hidden state} \texttt{h\_t}, whose value at each time step depends on the input at that step \emph{and} on the hidden state from the previous step:
+
+\begin{lstlisting}[style=notesCode]
+h_t = 0                        if t = 0
+h_t = phi(h_(t-1), x_t)          otherwise
+\end{lstlisting}
+
+where \texttt{\ensuremath{\phi}} is a nonlinear function (e.g., a sigmoid or an affine transform followed by a nonlinearity). The RNN may optionally also produce an output sequence \texttt{y = (y1, y2, ..., yT)}, which can itself be of variable length.
+
+The classic ("vanilla") way to implement the hidden-state update is:
+
+\begin{lstlisting}[style=notesCode]
+h_t = g(W*x_t + U*h_(t-1))
+\end{lstlisting}
+
+where \texttt{g} is a bounded, smooth nonlinearity such as a logistic sigmoid or \texttt{tanh}, \texttt{W} is the weight matrix applied to the current input, and \texttt{U} is the weight matrix applied to the previous hidden state.
+
+\textbf{Generative interpretation}: An RNN can also be used to output a probability distribution over the \emph{next} element of a sequence given everything seen so far. Using the chain rule of probability, the likelihood of an entire sequence can be decomposed as:
+
+\begin{lstlisting}[style=notesCode]
+p(x1, ..., xT) = p(x1) * p(x2 | x1) * p(x3 | x1, x2) * ... * p(xT | x1, ..., x_(T-1))
+\end{lstlisting}
+
+with a special end-of-sequence symbol marking where the sequence terminates. Each conditional probability is modelled as \texttt{p(x\_t | x1, ..., x\_(t-1)) = g(h\_t)}, where \texttt{h\_t} comes from the recurrence above. This generative view is the foundation of sequence-modelling tasks such as language modelling and, by extension, time-series forecasting.
+
+\subsection{Visualizing the Recurrence ("Network Fold")}
+
+An RNN is often drawn as a single loop that gets "unfolded" across time steps:
+
+\begin{lstlisting}[style=notesCode]
+        O                    O_(t-1)     O_t      O_(t+1)
+        |                       |          |          |
+        V                       V          V          V
+    S (loop)(loop, weight W)  ==>  S_(t-1) -W-> S_t  -W-> S_(t+1)
+        |                       |          |          |
+        U                       U          U          U
+        X                    X_(t-1)     X_t      X_(t+1)
+\end{lstlisting}
+
+\begin{itemize}
+\item \texttt{X} = input at a time step
+\item \texttt{S} (or \texttt{h}) = hidden/recurrent state
+\item \texttt{O} = output at a time step
+\item \texttt{U} = weights from input to hidden state
+\item \texttt{W} = weights from the hidden state to itself (the recurrent connection, reused every step)
+\item \texttt{V} = weights from hidden state to output
+
+\end{itemize}
+The left side shows the \emph{folded} (compact) representation --- a single cell with a self-loop. The right side shows the same cell \emph{unfolded} across time steps \texttt{t-1, t, t+1}, making explicit that the same weight matrices \texttt{U}, \texttt{V}, \texttt{W} are reused at every time step.
+
+\subsection{Types of RNNs (by Input/Output Shape)}
+
+{\small
+\begin{longtable}{@{}L{0.20\textwidth}L{0.34\textwidth}L{0.38\textwidth}@{}}
+\toprule
+Type & Description & Example \\
+\midrule
+\textbf{One-to-One} & Single input \ensuremath{\rightarrow} single output. Equivalent to a standard (vanilla) feedforward network --- no real sequential behaviour. & Basic classification of a single fixed input. \\
+\textbf{One-to-Many} & Single input \ensuremath{\rightarrow} sequence of outputs. & Music generation from a single seed/style input. \\
+\textbf{Many-to-One} & Sequence of inputs \ensuremath{\rightarrow} single output. & Sentiment classification of a sentence; predicting the next word given prior words. \\
+\textbf{Many-to-Many} & Sequence of inputs \ensuremath{\rightarrow} sequence of outputs (this is the Seq2Seq case). & Language translation; multi-step financial time-series forecasting. \\
+\bottomrule
+\end{longtable}
+}
+
+\subsection{Applications of RNNs}
+
+\begin{itemize}
+\item \textbf{Speech Recognition} --- converting spoken audio into text, and translating speech across languages.
+\item \textbf{Language Translation} --- combined with text mining and sentiment analysis for NLP tasks.
+\item \textbf{Image Recognition and Captioning} --- analyzing sequences of visual activity and features.
+\item \textbf{Time Series Forecasting} --- e.g., predicting stock prices over an upcoming period, which is the case most relevant to this course.
+
+\end{itemize}
+
+\section{The Vanishing (and Exploding) Gradient Problem}
+
+Before building any RNN in practice, it's essential to understand \emph{why} plain ("vanilla" / tanh) RNNs struggle to learn long-range dependencies.
+
+\subsection{What Is It?}
+
+The vanishing gradient problem was identified by \textbf{Sepp Hochreiter} (a German computer scientist who also contributed to the development of RNNs, including being a co-inventor of the LSTM). It is a difficulty that arises when training deep networks --- and RNNs in particular --- using gradient descent combined with backpropagation.
+
+\textbf{Why it happens in RNNs specifically}: An RNN reuses the \emph{same} weights at every time step, and the hidden state at time \texttt{t} depends on the hidden state at \texttt{t-1}, which depends on \texttt{t-2}, and so on. When backpropagating the error signal from a late time step back to an early one, the gradient must pass through many repeated multiplications (one per time step) involving the same weight matrix and the derivative of a bounded activation function (like \texttt{tanh} or sigmoid). Since these per-step derivatives are typically less than 1 in magnitude:
+
+\begin{itemize}
+\item If they are consistently \textbf{less than 1}, repeated multiplication shrinks the gradient \textbf{exponentially} as it is propagated backward through many time steps \ensuremath{\rightarrow} the gradient "vanishes," and the network effectively cannot learn dependencies that span a long time gap, because the earliest time steps receive almost no learning signal.
+\item If they are consistently \textbf{greater than 1}, the reverse can happen --- gradients \textbf{explode}, becoming numerically unstable.
+
+\end{itemize}
+In short: the effect of long-term dependencies gets hidden/overwhelmed by the (exponentially larger, in comparison) effect of short-term dependencies, which confuses gradient-based optimization.
+
+\subsection{Approaches to Mitigate It}
+
+Two broad families of solutions exist:
+
+\begin{enumerate}
+\item \textbf{Better optimization algorithms}, rather than plain stochastic gradient descent:
+\begin{itemize}
+\item \textbf{Gradient clipping} --- rescale the gradient's norm to a fixed maximum whenever it exceeds a threshold, to explicitly prevent exploding gradients.
+\item \textbf{Second-order optimization methods}, which can be less sensitive to this issue (though this is not guaranteed, since it depends on the growth pattern of second derivatives matching that of first derivatives).
+\item \textbf{Weight initialization} --- choosing a good initial value for the weights so that backpropagation doesn't immediately start assigning vanishingly small weights.
+
+\end{itemize}
+\item \textbf{More sophisticated recurrent units (gating mechanisms)} --- instead of trying to patch the optimizer, redesign the hidden unit itself so it is naturally resistant to vanishing gradients. This is the approach behind \textbf{LSTM} and \textbf{GRU}, covered in detail next.
+
+\end{enumerate}
+
+\section{Gated Recurrent Units: LSTM and GRU}
+
+Both LSTM and GRU were designed to let a recurrent unit \emph{selectively remember or forget} information, instead of being forced to overwrite its entire state at every time step (as the vanilla RNN does). This is achieved through \textbf{gates} --- small neural network layers (typically a sigmoid) that output values between 0 and 1, acting as "how much information to let through" controls.
+
+\subsection{Long Short-Term Memory (LSTM)}
+
+Originally proposed by Hochreiter \& Schmidhuber (1997). Each LSTM unit \texttt{j} maintains its own \textbf{memory cell} \texttt{c\_t\textasciicircum{}j}, separate from the hidden output, at every time step \texttt{t}.
+
+\textbf{Output (activation) of the unit:}
+
+\begin{lstlisting}[style=notesCode]
+h_t^j = o_t^j * tanh(c_t^j)
+\end{lstlisting}
+
+where \texttt{o\_t\textasciicircum{}j} is the \textbf{output gate}, which controls how much of the memory content is exposed to the rest of the network:
+
+\begin{lstlisting}[style=notesCode]
+o_t^j = sigma(W_o x_t + U_o h_(t-1) + V_o c_t)^j
+\end{lstlisting}
+
+(\texttt{\ensuremath{\sigma}} = logistic sigmoid; \texttt{V\_o} is a diagonal matrix, meaning the output gate for unit \texttt{j} only looks at cell \texttt{j}'s own memory, not other units' memories.)
+
+\textbf{Memory cell update} --- the cell content is a mix of "keep some of the old memory" plus "add some new memory content":
+
+\begin{lstlisting}[style=notesCode]
+c_t^j = f_t^j * c_(t-1)^j + i_t^j * c_tilde_t^j
+\end{lstlisting}
+
+where the \textbf{candidate new memory content} is:
+
+\begin{lstlisting}[style=notesCode]
+c_tilde_t^j = tanh(W_c x_t + U_c h_(t-1))^j
+\end{lstlisting}
+
+\begin{itemize}
+\item \texttt{f\_t\textasciicircum{}j} = \textbf{forget gate} --- how much of the existing memory to keep/discard.
+\item \texttt{i\_t\textasciicircum{}j} = \textbf{input gate} --- how much of the newly computed candidate content to add in.
+
+\end{itemize}
+Both are computed the same way as the output gate (sigmoid over a combination of current input, previous hidden state, and previous cell state):
+
+\begin{lstlisting}[style=notesCode]
+f_t^j = sigma(W_f x_t + U_f h_(t-1) + V_f c_(t-1))^j
+i_t^j = sigma(W_i x_t + U_i h_(t-1) + V_i c_(t-1))^j
+\end{lstlisting}
+
+\textbf{Intuition}: Unlike a vanilla recurrent unit, which \emph{overwrites} its content at every step, the LSTM can \emph{decide} --- via its gates --- whether to keep its existing memory. If it detects an important feature early in a sequence, the forget gate can stay close to 1, letting that information be carried, largely undisturbed, over a long distance --- capturing long-range dependencies that a vanilla RNN cannot.
+
+\textbf{LSTM cell diagram (conceptual):}
+
+\begin{lstlisting}[style=notesCode]
+                    +--------------------------+
+        i (input   ->|                          |
+          gate)      |        c (memory)        |-> OUT (via o, tanh)
+        f (forget   ->|      c = f*c_prev+i*c_tilde    |
+          gate)      |                          |
+                    +--------------------------+
+                              ^
+                     c_tilde (candidate memory)
+                              ^
+                    IN (x_t, h_(t-1))
+        o (output gate) controls exposure of c -> h_t
+\end{lstlisting}
+
+\subsection{Gated Recurrent Unit (GRU)}
+
+Proposed by Cho et al. (2014) as a simpler alternative that still adaptively captures dependencies at different time scales, but \textbf{without a separate memory cell} --- the GRU only maintains the hidden activation \texttt{h\_t\textasciicircum{}j}.
+
+\textbf{Activation} is a linear interpolation between the previous activation and a candidate activation:
+
+\begin{lstlisting}[style=notesCode]
+h_t^j = (1 - z_t^j)*h_(t-1)^j + z_t^j*h_tilde_t^j
+\end{lstlisting}
+
+where the \textbf{update gate} \texttt{z\_t\textasciicircum{}j} decides how much of the unit's content gets updated:
+
+\begin{lstlisting}[style=notesCode]
+z_t^j = sigma(W_z x_t + U_z h_(t-1))^j
+\end{lstlisting}
+
+This "linear sum between old and new state" idea is conceptually similar to the LSTM's memory update. However, the GRU has \textbf{no mechanism to control how much of its state is exposed} --- unlike LSTM's output gate, the GRU always exposes its full state.
+
+\textbf{Candidate activation:}
+
+\begin{lstlisting}[style=notesCode]
+h_tilde_t^j = tanh(W x_t + U(r_t * h_(t-1)))^j
+\end{lstlisting}
+
+(\texttt{\ensuremath{\odot}} = element-wise multiplication). When the \textbf{reset gate} \texttt{r\_t\textasciicircum{}j} is close to 0, this effectively makes the unit behave as though it is reading the first symbol of a new sequence --- i.e., it can "forget" the previously computed state:
+
+\begin{lstlisting}[style=notesCode]
+r_t^j = sigma(W_r x_t + U_r h_(t-1))^j
+\end{lstlisting}
+
+\textbf{GRU cell diagram (conceptual):}
+
+\begin{lstlisting}[style=notesCode]
+                    +--------------------------+
+        z (update  ->|   h = (1-z)*h_prev+z*h_tilde   |-> OUT (full state exposed)
+          gate)      |                          |
+        r (reset   ->|                          |
+          gate)      +--------------------------+
+                              ^
+                      h_tilde (candidate activation,
+                       computed using r to gate h_prev)
+                              ^
+                         IN (x_t, h_(t-1))
+\end{lstlisting}
+
+\subsection{LSTM vs. GRU --- Similarities and Differences}
+
+\textbf{Shared design principle (the key innovation over vanilla RNNs)}: both units use an \textbf{additive} update --- the new state is the \emph{old} state plus/blended with a new candidate, rather than a full overwrite. This gives two major advantages:
+
+\begin{enumerate}
+\item \textbf{Persistence of important features} --- once a gate (forget gate in LSTM, update gate in GRU) decides a feature is important, it is not overwritten but maintained as-is across time steps.
+\item \textbf{Gradient shortcut paths} --- the additive structure creates paths that let the error signal backpropagate across many time steps without passing through repeated bounded nonlinearities each time (which is exactly what causes vanishing gradients in vanilla RNNs). When a gate is close to saturation at 1, the gradient can flow through almost unchanged.
+
+\end{enumerate}
+\textbf{Key differences:}
+
+{\small
+\begin{longtable}{@{}L{0.20\textwidth}L{0.34\textwidth}L{0.38\textwidth}@{}}
+\toprule
+Aspect & LSTM & GRU \\
+\midrule
+Separate memory cell & Yes (\texttt{c\_t}, distinct from \texttt{h\_t}) & No --- only a single hidden state \texttt{h\_t} \\
+Control over state exposure & Yes --- output gate \texttt{o\_t} explicitly controls how much of memory content is exposed & No --- GRU always exposes its full state \\
+Control over incoming info from previous step & Forget gate \texttt{f\_t} and input gate \texttt{i\_t} operate \emph{independently} of each other & Reset gate \texttt{r\_t} controls the previous state's influence on the \emph{candidate}, but the amount of that candidate added to the new state is tied to the same update gate \texttt{z\_t} (not independently controlled) \\
+Number of gates & 3 (input, forget, output) & 2 (update, reset) \\
+Parameters & More (extra gate + separate memory cell) & Fewer, for a similar number of "units" \\
+\bottomrule
+\end{longtable}
+}
+
+Based on similarities and differences alone, it isn't obvious which unit should perform better in general --- this ambiguity is exactly what motivated the empirical study covered next.
+
+\section{Empirical Comparison: LSTM vs. GRU vs. tanh-RNN}
+
+\emph{(Based on: Chung, Gulcehre, Cho \& Bengio --- "Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling", 2014, arXiv:1412.3555)}
+
+\subsection{Goal}
+
+To fairly compare three types of recurrent units --- the traditional \textbf{tanh unit}, the \textbf{LSTM} unit, and the \textbf{GRU} --- on the general task of \textbf{sequence modelling}, i.e., learning a probability distribution over sequences by maximizing log-likelihood:
+
+\begin{lstlisting}[style=notesCode]
+max_theta  (1/N) * sum_n sum_t  log p(x_t^n | x_1^n, ..., x_(t-1)^n; theta)
+\end{lstlisting}
+
+\subsection{Datasets and Tasks}
+
+\textbf{Polyphonic music modelling} --- 3 datasets used (from Boulanger-Lewandowski et al., 2012):
+\begin{itemize}
+\item Nottingham (93-dim binary vectors per symbol)
+\item JSB Chorales (96-dim)
+\item MuseData (105-dim)
+\item Piano-midi (108-dim)
+
+\end{itemize}
+(Each symbol is a high-dimensional binary vector; output units use a logistic sigmoid.)
+
+\textbf{Speech signal modelling} --- 2 internal datasets provided by Ubisoft, consisting of raw one-dimensional audio signals:
+\begin{itemize}
+\item \textbf{Ubisoft A}: sequence length 500, 7,230 sequences
+\item \textbf{Ubisoft B}: sequence length 8,000, 800 sequences
+
+\end{itemize}
+At each time step, the model looks at 20 consecutive audio samples to predict the following 10 consecutive samples. The output layer is a mixture of 20 Gaussians (since raw audio is continuous-valued, unlike the binary music data).
+
+\subsection{Model Setup}
+
+For each task, three RNN variants were trained --- an LSTM-RNN, a GRU-RNN, and a tanh-RNN --- each sized so that \textbf{all three models have approximately the same total number of parameters} (models were deliberately kept small to avoid overfitting distracting the comparison):
+
+{\small
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}L{0.20\textwidth}L{0.22\textwidth}L{0.22\textwidth}L{0.30\textwidth}@{}}
+\toprule
+Task & Unit & \# of Units & \# of Parameters \\
+\midrule
+Polyphonic music & LSTM & 36 & \ensuremath{\approx} 19.8k \\
+Polyphonic music & GRU & 46 & \ensuremath{\approx} 20.2k \\
+Polyphonic music & tanh & 100 & \ensuremath{\approx} 20.1k \\
+Speech signal & LSTM & 195 & \ensuremath{\approx} 169.1k \\
+Speech signal & GRU & 227 & \ensuremath{\approx} 168.9k \\
+Speech signal & tanh & 400 & \ensuremath{\approx} 168.4k \\
+\bottomrule
+\end{longtable}
+}
+
+\textbf{Training details:}
+\begin{itemize}
+\item Optimizer: \textbf{RMSProp}
+\item \textbf{Weight noise} added, standard deviation fixed at 0.075 (a regularization technique)
+\item \textbf{Gradient norm clipping}: gradient rescaled to norm 1 whenever it exceeded 1, to prevent exploding gradients
+\item \textbf{Learning rate} selected (out of 10 log-uniform random candidates from U(\ensuremath{-}12, \ensuremath{-}6)) to maximize validation performance
+\item Validation set also used for early stopping
+
+\end{itemize}
+
+\subsection{Results}
+
+Average negative log-probabilities (lower = better) on train/test sets:
+
+{\small
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}L{0.22\textwidth}L{0.13\textwidth}L{0.19\textwidth}L{0.19\textwidth}L{0.19\textwidth}@{}}
+\toprule
+Dataset & Split & tanh & GRU & LSTM \\
+\midrule
+Nottingham & train / test & 3.22 / 3.13 & 2.79 / 3.23 & 3.08 / 3.20 \\
+JSB Chorales & train / test & 8.82 / 9.10 & 6.94 / 8.54 & 8.15 / 8.67 \\
+MuseData & train / test & 5.64 / 6.23 & 5.06 / 5.99 & 5.18 / 6.23 \\
+Piano-midi & train / test & 5.64 / 9.03 & 4.93 / 8.82 & 6.49 / 9.03 \\
+Ubisoft A & train / test & 6.29 / 6.44 & 2.31 / 3.59 & 1.44 / 2.70 \\
+Ubisoft B & train / test & 7.61 / 7.62 & 0.38 / 0.88 & 0.80 / 1.26 \\
+\bottomrule
+\end{longtable}
+}
+
+\subsection{Key Findings}
+
+\begin{itemize}
+\item On the \textbf{polyphonic music datasets}, GRU-RNN outperformed both LSTM-RNN and tanh-RNN on almost all datasets (except Nottingham), although all three models performed fairly closely to each other on this task overall.
+\item On the \textbf{Ubisoft speech datasets}, both gated units (GRU and LSTM) clearly and substantially outperformed the plain tanh-RNN. Between the two gated units: \textbf{LSTM was best on Ubisoft A}, while \textbf{GRU was best on Ubisoft B}.
+\item Looking at learning curves (both per-iteration and per wall-clock-time): the \textbf{GRU-RNN converges faster} than the others on the music datasets, in both number of updates and actual CPU time. On the Ubisoft datasets, the tanh-RNN required far less computation per update, but made very little progress per update and stalled at a much worse loss level --- i.e., its computational cheapness did not translate into faster or better overall training.
+\item \textbf{Overall conclusion}: the gated units (LSTM and GRU) clearly outperform the traditional tanh unit --- convergence is generally faster, and final solutions are generally better. However, the comparison \textbf{between LSTM and GRU was inconclusive} --- which one wins appears to depend heavily on the specific dataset and task. The authors describe these results as \emph{preliminary}, noting that further, more thorough experiments are needed to isolate exactly how each gating mechanism contributes to the improvement (e.g., testing which specific gate in each architecture matters most).
+
+\end{itemize}
+
+\section{Practical Implementation: RNN/LSTM for Time-Series Forecasting (Python)}
+
+\emph{(Based on: Analytics Vidhya --- "Time Series Analysis Recurrence Neural Network in Python!")}
+
+This is a concrete, worked example of building an LSTM-based RNN to forecast \textbf{Google stock price} from historical data --- a direct illustration of everything above applied to a financial series.
+
+\subsection{Step 1 --- Load and Prepare the Data}
+
+\begin{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
+training_set = dataset_train.iloc[:, 1:2].values   # extract the 'Open' price column as a 2D array
+\end{python}
+
+\subsection{Step 2 --- Feature Scaling (Normalization)}
+
+Neural networks (especially those using sigmoid/tanh activations, as in LSTM gates) train far more effectively when inputs are scaled into a bounded range. Here, \texttt{MinMaxScaler} rescales all values into \texttt{[0, 1]}:
+
+\begin{python}
+from sklearn.preprocessing import MinMaxScaler
+sc = MinMaxScaler(feature_range=(0, 1))
+training_set_scaled = sc.fit_transform(training_set)
+\end{python}
+
+\subsection{Step 3 --- Build a Windowed (Sliding-Window) Dataset}
+
+To train a supervised model on a time series, the raw series must be converted into (input-window \ensuremath{\rightarrow} next-value) pairs. Here, a \textbf{60-timestep lookback window} is used: each training example consists of 60 consecutive past days, with the target being the very next day's value.
+
+\begin{python}
+X_train = []
+y_train = []
+for i in range(60, 1258):
+    X_train.append(training_set_scaled[i-60:i, 0])   # past 60 days
+    y_train.append(training_set_scaled[i, 0])          # next day (the target)
+X_train, y_train = np.array(X_train), np.array(y_train)
+
+# Reshape into the 3D shape Keras LSTM layers expect:
+# (samples, timesteps, features)
+X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+\end{python}
+
+This windowing step is the practical realization of the "many-to-one" RNN structure described in Section 2.4: 60 input time steps map to a single predicted output value.
+
+\subsection{Step 4 --- Build a Stacked LSTM Network}
+
+\begin{python}
+from keras.models import Sequential
+from keras.layers import Dense, LSTM, Dropout
+
+regressor = Sequential()
+
+# Layer 1
+regressor.add(LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1], 1)))
+regressor.add(Dropout(0.2))
+
+# Layer 2
+regressor.add(LSTM(units=50, return_sequences=True))
+regressor.add(Dropout(0.2))
+
+# Layer 3
+regressor.add(LSTM(units=50, return_sequences=True))
+regressor.add(Dropout(0.2))
+
+# Layer 4 (final LSTM layer -- no return_sequences, since only the last output is needed)
+regressor.add(LSTM(units=50))
+regressor.add(Dropout(0.2))
+
+# Output layer -- a single continuous value (the predicted price)
+regressor.add(Dense(units=1))
+\end{python}
+
+\textbf{Notes on the architecture:}
+\begin{itemize}
+\item \textbf{4 stacked LSTM layers}, each with 50 units --- stacking LSTM layers lets the network learn hierarchical temporal representations (similar in spirit to stacking layers in any deep network).
+\item \texttt{return\_sequences=True} on the first three LSTM layers means each of them outputs its \emph{full sequence} of hidden states (one per input timestep), which is required so the \emph{next} LSTM layer also has a sequence to process. The final LSTM layer omits this, since only the last time step's output is needed to feed into the final \texttt{Dense} (fully-connected) output layer.
+\item \textbf{Dropout(0.2)} after each LSTM layer randomly "drops" 20\% of the units during training as a regularization technique, to reduce overfitting.
+
+\end{itemize}
+
+\subsection{Step 5 --- Compile and Train}
+
+\begin{python}
+regressor.compile(optimizer='adam', loss='mean_squared_error')
+regressor.fit(X_train, y_train, epochs=100, batch_size=32)
+\end{python}
+
+\begin{itemize}
+\item \textbf{Optimizer}: Adam (an adaptive learning-rate gradient descent variant).
+\item \textbf{Loss}: mean squared error --- appropriate since this is a regression problem (predicting a continuous stock price), not classification.
+\item Training ran for 100 epochs, with the reported training loss steadily decreasing from \ensuremath{\approx}0.042 at epoch 1 down to \ensuremath{\approx}0.0014 by epoch 100 --- indicating the model was successfully learning the patterns in the training window.
+
+\end{itemize}
+
+\subsection{Step 6 --- Prepare Test Data and Predict}
+
+To predict on the 2017 test period, the model needs the last 60 days \emph{before} the test period begins (since it always needs 60 timesteps of lookback), so training and test data are concatenated before extracting windows:
+
+\begin{python}
+dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')
+real_stock_price = dataset_test.iloc[:, 1:2].values
+
+dataset_total = pd.concat((dataset_train['Open'], dataset_test['Open']), axis=0)
+inputs = dataset_total[len(dataset_total) - len(dataset_test) - 60:].values
+inputs = inputs.reshape(-1, 1)
+inputs = sc.transform(inputs)   # use the SAME scaler fitted on training data -- never refit on test data
+
+X_test = []
+for i in range(60, 80):
+    X_test.append(inputs[i-60:i, 0])
+X_test = np.array(X_test)
+X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
+
+predicted_stock_price = regressor.predict(X_test)
+predicted_stock_price = sc.inverse_transform(predicted_stock_price)   # undo scaling to get back real price units
+\end{python}
+
+\textbf{Important detail}: the scaler (\texttt{sc}) is \emph{fit only once}, on the training data, and simply \emph{applied} (\texttt{.transform}, not \texttt{.fit\_transform}) to the test data. This avoids information leakage from the test period into the scaling process.
+
+\subsection{Step 7 --- Visualize Results}
+
+\begin{python}
+plt.plot(real_stock_price, color='red', label='Real Google Stock Price')
+plt.plot(predicted_stock_price, color='blue', label='Predicted Google Stock Price')
+plt.title('Google Stock Price Prediction')
+plt.xlabel('Time')
+plt.ylabel('Google Stock Price')
+plt.legend()
+plt.show()
+\end{python}
+
+The resulting plot showed the predicted price (blue) tracking the general \textbf{trend} of the real price (red) reasonably well, but --- as is typical of this kind of simple LSTM regressor --- it lagged behind and smoothed out sharp short-term movements/spikes rather than capturing them precisely. This is a very common limitation worth remembering: plain LSTM point-forecasters tend to under-react to sudden volatility, which is exactly the gap that more advanced architectures (attention, Fusion Transformers, TFT --- see Sections 7--9) are designed to close.
+
+\section{Fusion Transformers --- Combining Multiple Data Sources}
+
+\subsection{Core Idea}
+
+A \textbf{Fusion Transformer} merges different sources or types of data (e.g., text, images, audio, or --- in a financial setting --- multiple correlated time series and indicators) into a single unified model that can exploit the complementary information each source provides.
+
+\textbf{Mechanism}:
+\begin{enumerate}
+\item Each modality/source is processed \textbf{separately} through its own transformer layers/encoder.
+\item The separate outputs are then \textbf{fused} into a shared representation space --- typically via \textbf{cross-attention} (letting one modality's representation attend to another's) or simple \textbf{concatenation}.
+\item This fusion lets the model capture complex interactions and dependencies \emph{between} the different data types, not just within each one individually.
+
+\end{enumerate}
+
+\subsection{Applications to Time Series (and Finance Specifically)}
+
+{\small
+\begin{longtable}{@{}L{0.20\textwidth}L{0.34\textwidth}L{0.38\textwidth}@{}}
+\toprule
+Application & What it does & Financial example \\
+\midrule
+\textbf{Multi-Source Data Fusion} & Combines disparate but related data streams into one model. & In a manufacturing setting, combining temperature, vibration, and production-metric sensors to predict equipment failure. Financially, combining price series, order-book data, and macroeconomic indicators. \\
+\textbf{Multi-Scale Temporal Analysis} & Integrates information recorded at different time resolutions (e.g., minute-, hour-, and day-level) since different signal components behave differently across scales. & Combining intraday volatility patterns with daily/weekly trend signals. \\
+\textbf{Enhanced Forecasting} & Uses additional context from related series or external time-dependent factors to improve prediction accuracy. & Combining historical stock prices with macroeconomic indicators \emph{and} news sentiment to improve price forecasts. \\
+\textbf{Anomaly Detection} & Combines features from multiple sources/scales to better flag anomalies than any single source could alone. & Using both historical trading data \emph{and} news-sentiment analysis together to identify unusual/abnormal market behaviour --- i.e., catching volatility events that are driven by external news rather than pure price action alone. \\
+\bottomrule
+\end{longtable}
+}
+
+This is the conceptual bridge to why "handling volatility" in finance benefits from fusion-style architectures: volatility is rarely explained by price history alone --- it is often driven by a mix of scheduled events (which can be \emph{known in advance}, like holidays or earnings dates), external news/sentiment, and cross-asset or cross-market effects. A model that can only look at one univariate price series is blind to all of that context; a fusion/attention-based model is explicitly built to combine it.
+
+\section{The Temporal Fusion Transformer (TFT)}
+
+\emph{(Reference: Lim et al., Google Research --- "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting," arXiv:1912.09363)}
+
+\subsection{Motivation}
+
+Real-world multi-horizon forecasting problems typically involve a \textbf{complex mix of input types}, without prior knowledge of how those inputs interact with the target:
+
+\begin{itemize}
+\item \textbf{Static (time-invariant) covariates} --- attributes that never change across the series.
+\item \textbf{Known future inputs} --- variables whose future values are already known ahead of time (e.g., calendar effects, scheduled holidays).
+\item \textbf{Exogenous time series observed only in the past} --- variables that affect the target but whose future values are unknown at forecast time.
+
+\end{itemize}
+TFT is an \textbf{attention-based architecture} that combines high-performance multi-horizon forecasting with \textbf{interpretable insights} into the temporal dynamics driving the forecasts. It does this by:
+
+\begin{itemize}
+\item Using \textbf{recurrent layers} (LSTM-style) for \textbf{local} processing --- short-range, sequential patterns.
+\item Using \textbf{interpretable self-attention layers} for \textbf{long-term dependencies} --- capturing relationships across distant points in time.
+\item Using specialized \textbf{variable selection} components to automatically identify which input features are actually relevant.
+\item Using a series of \textbf{gating layers} to suppress components that turn out to be unnecessary for a given prediction.
+
+\end{itemize}
+
+\subsection{Types of Inputs TFT Can Handle}
+
+{\small
+\begin{longtable}{@{}L{0.20\textwidth}L{0.34\textwidth}L{0.38\textwidth}@{}}
+\toprule
+Covariate type & Description & Example (retail/finance-style) \\
+\midrule
+\textbf{Static covariates} & Do not change over the life of the series. & Country, store, product identity; or in finance, an asset's sector/exchange. \\
+\textbf{Time-varying, known in advance} & Their future values are already known at forecast time. & Day of week, month, whether a date is a holiday. \\
+\textbf{Time-varying, unknown in advance} & Only observed in the past; future values are not known ahead of time. & Stock level of a product (only known historically); analogously, realized trading volume or volatility itself. \\
+\bottomrule
+\end{longtable}
+}
+
+\subsection{Why This Architecture Suits Volatile Financial Series}
+
+Combining a \textbf{local recurrent component} (good at picking up short-term momentum/autocorrelation, similar to the LSTM/GRU units from Sections 4--6) with \textbf{long-range interpretable attention} (good at connecting a current volatility spike to a distant but relevant past event or a known future date like an earnings release) gives TFT strengths that neither a pure RNN nor a pure attention model has alone. The \textbf{variable selection and gating mechanism} additionally means the model can automatically learn to down-weight noisy/irrelevant inputs during calm periods and up-weight the inputs that matter during turbulent ones --- directly useful for "handling volatility," where the relevant driving variables can change over time.
+
+\subsection{Architecture (Conceptual Summary)}
+
+At a high level, TFT is composed of:
+\begin{enumerate}
+\item An \textbf{input/feature-transformation stage} that embeds static, known, and unknown covariates.
+\item \textbf{Variable selection networks}, which learn instance-wise weights for how much each input variable matters at each time step, giving interpretability into \emph{which} covariates drive a given forecast.
+\item An \textbf{LSTM-based encoder-decoder} ("sequence-to-sequence layer") for local temporal processing --- directly analogous to the encoder/decoder structure from Section 1.
+\item A \textbf{static enrichment layer}, which lets static covariates modulate temporal features.
+\item A \textbf{temporal self-attention block}, which learns long-range dependencies and produces interpretable attention weights (showing which past time points mattered most for a given forecast).
+\item \textbf{Gated Residual Networks (GRNs)} used throughout, which apply gating (similar in spirit to the LSTM/GRU gates from Section 4) to skip/suppress components that aren't useful for a particular input.
+\item A final \textbf{quantile output layer}, producing not just a point forecast but a distribution of plausible outcomes (multiple quantiles) at each future time step --- directly useful for expressing forecast \emph{uncertainty}, which is central to volatility-aware forecasting.
+
+\end{enumerate}
+
+\section{TFT Implementation Walkthrough (PyTorch / pytorch-forecasting)}
+
+\emph{(Based on a Kaggle notebook applying TFT to the "Tabular Playground Series -- Sep 2022" competition: forecasting daily book sales (\texttt{num\_sold}) across combinations of country, store, and product.)}
+
+This section shows what an end-to-end TFT project looks like in code using the \texttt{pytorch-forecasting} library, which wraps the low-level PyTorch/TFT implementation behind an interface similar to a \texttt{scikit-learn} estimator --- no manual \texttt{Dataset} class or attention-layer coding is required.
+
+\subsection{Setup and Imports}
+
+\begin{python}
+import pytorch_lightning as pl
+from pytorch_lightning.callbacks import EarlyStopping, LearningRateMonitor
+from pytorch_lightning.loggers import TensorBoardLogger
+import torch
+
+from pytorch_forecasting import Baseline, TemporalFusionTransformer, TimeSeriesDataSet
+from pytorch_forecasting.data import GroupNormalizer, NaNLabelEncoder
+from pytorch_forecasting.metrics import SMAPE, PoissonLoss, QuantileLoss
+from pytorch_forecasting.models.temporal_fusion_transformer.tuning import optimize_hyperparameters
+\end{python}
+
+Key libraries: \path{pytorch_lightning} (training loop and trainer abstraction),
+\path{pytorch_forecasting} (the TFT implementation and specialized time-series
+\texttt{Dataset} class), and the \texttt{holidays} package (used to engineer
+holiday-related features).
+
+\subsection{Data and Exploratory Data Analysis (EDA)}
+
+The dataset: daily sales counts (\texttt{num\_sold}) for combinations of \textbf{country, store, and product}, with \texttt{train} and \texttt{test} splits concatenated together for consistent preprocessing. Sanity checks confirm the data's structure:
+
+\begin{python}
+data = pd.concat([train, test], axis=0, ignore_index=True)
+
+# Every (country, store, product, date) combination is unique
+assert len(data.drop_duplicates(['country', 'store', 'product', 'date'])) == len(data)
+# Every (country, store, product) group has exactly one row per date
+assert len(data.drop_duplicates(['country', 'store', 'product'])) == len(data)//data['date'].nunique()
+\end{python}
+
+\textbf{EDA performed:}
+\begin{itemize}
+\item Count of missing values and unique values per column (comparing train vs. test --- \texttt{num\_sold} is naturally absent from test, since it's the prediction target).
+\item \textbf{KDE (density) plots} of \texttt{num\_sold}, separately grouped by country, by store, and by product --- to see how the sales distribution differs across each grouping.
+\item \textbf{Time series line plots} of total \texttt{num\_sold} over time, again broken out by country/store/product, to visually inspect trend and seasonality.
+\item A \textbf{correlation heatmap} across all individual (country \ensuremath{\times} store \ensuremath{\times} product) time series, to see which series move together (masking out weak correlations below 0.7 for readability).
+
+\end{itemize}
+
+\subsection{Feature Engineering}
+
+\begin{python}
+# A running integer time index required by TimeSeriesDataSet
+data = data.merge((data[['date']].drop_duplicates(ignore_index=True)
+                    .rename_axis('time_idx')).reset_index(), on=['date'])
+
+# Calendar features (as categoricals -- pytorch-forecasting requires string categories)
+data["day_of_week"] = data.date.dt.dayofweek.astype(str).astype("category")
+data["week_of_year"] = data.date.dt.weekofyear.astype(str).astype("category")
+data["month"] = data.date.dt.month.astype(str).astype("category")
+
+# A log-transformed target (helps stabilize variance for a sales-count target)
+data["log_num_sold"] = np.log(data.num_sold + 1e-8)
+
+# Group-level average volume features -- extra unknown-in-advance covariates
+data["avg_volume_by_country"] = data.groupby(["time_idx", "country"], observed=True).num_sold.transform("mean")
+data["avg_volume_by_store"] = data.groupby(["time_idx", "store"], observed=True).num_sold.transform("mean")
+data["avg_volume_by_product"] = data.groupby(["time_idx", "product"], observed=True).num_sold.transform("mean")
+\end{python}
+
+\textbf{Holiday features} --- not just "is today a holiday," but also holiday \emph{leads and lags} (is tomorrow/the day after a holiday, was yesterday/the day before a holiday). This is useful because sales patterns are often affected in the days surrounding a holiday, not just on the holiday itself:
+
+\begin{python}
+unique_dates_country['is_holiday'] = unique_dates_country.apply(
+    lambda x: x.date in holidays.country_holidays(x.country), axis=1).astype('category')
+unique_dates_country['is_holiday_lead_1'] = ...   # is (date + 1 day) a holiday
+unique_dates_country['is_holiday_lead_2'] = ...   # is (date + 2 days) a holiday
+unique_dates_country['is_holiday_lag_1']  = ...   # was (date - 1 day) a holiday
+unique_dates_country['is_holiday_lag_2']  = ...   # was (date - 2 days) a holiday
+\end{python}
+
+These leads/lags are a good general pattern for financial applications too --- e.g., flagging the days around a scheduled macro announcement or earnings release, not just the announcement day itself.
+
+\subsection{Building the TimeSeriesDataSet}
+
+This is the core object that tells TFT how to interpret every column in the data:
+
+\begin{python}
+max_prediction_length = 365          # forecast horizon: predict a full year ahead
+max_encoder_length = train.date.nunique()   # how much history the encoder can look back on
+training_cutoff = train["time_idx"].max() - max_prediction_length   # reserve the last year for validation
+
+training = TimeSeriesDataSet(
+    train[lambda x: x.time_idx <= training_cutoff].drop('row_id', axis=1),
+    time_idx="time_idx",
+    target="num_sold",
+    group_ids=["country", "store", "product"],        # defines what an individual "series" is
+    min_encoder_length=max_prediction_length,
+    max_encoder_length=max_encoder_length,
+    max_prediction_length=max_prediction_length,
+    static_categoricals=["country", "store", "product"],
+    time_varying_known_categoricals=[
+        "month", "week_of_year", "day_of_week", "is_holiday",
+        "is_holiday_lead_1", "is_holiday_lead_2",
+        "is_holiday_lag_1", "is_holiday_lag_2"
+    ],
+    time_varying_known_reals=["time_idx"],
+    time_varying_unknown_categoricals=[],
+    time_varying_unknown_reals=[
+        "num_sold", "log_num_sold", "avg_volume_by_country",
+        "avg_volume_by_store", "avg_volume_by_product"
+    ],
+    target_normalizer=GroupNormalizer(
+        groups=["country", "store", "product"], transformation="softplus"
+    ),
+    categorical_encoders={'week_of_year': NaNLabelEncoder(add_nan=True)},
+    lags={'num_sold': [7, 30, 365]},     # explicit lagged versions of the target as extra features
+    add_relative_time_idx=True,
+    add_target_scales=True,
+    add_encoder_length=True,
+)
+
+# Validation set: predict the held-out final `max_prediction_length` points for each series
+validation = TimeSeriesDataSet.from_dataset(training, train, predict=True, stop_randomization=True)
+
+train_dataloader = training.to_dataloader(train=True, batch_size=128, num_workers=0)
+val_dataloader = validation.to_dataloader(train=False, batch_size=1280, num_workers=0)
+\end{python}
+
+\textbf{Parameter-by-parameter meaning} (this maps directly back to the covariate taxonomy in Section 8.2):
+\begin{itemize}
+\item \texttt{group\_ids} --- defines what constitutes one individual time series (here, each unique country-store-product combination is its own series).
+\item \texttt{static\_categoricals} --- the "static covariates" from Section 8.2 (country, store, product identity --- never change within a series).
+\item \texttt{time\_varying\_known\_categoricals} / \texttt{time\_varying\_known\_reals} --- the "known in advance" covariates (calendar features, holidays, and the time index itself --- all knowable ahead of the forecast date).
+\item \texttt{time\_varying\_unknown\_reals} --- the "unknown in advance" covariates, including the target itself (\texttt{num\_sold}) and derived features like the group-average volumes, since their \emph{future} values are not available at prediction time.
+\item \path{target_normalizer=GroupNormalizer(..., transformation="softplus")} --- normalizes the target separately \emph{within each group} (since scale differs a lot across country/store/product) and applies a softplus transform (useful for strictly non-negative targets like sales counts).
+\item \texttt{lags} --- explicitly provides lagged copies of the target (7, 30, 365 days back) as additional input features, giving the model direct access to weekly/monthly/yearly seasonality signals.
+\item \texttt{add\_relative\_time\_idx}, \texttt{add\_target\_scales}, \texttt{add\_encoder\_length} --- convenience flags that add extra useful derived features automatically (position within the encoder window, the per-group target scale, and the actual encoder length used).
+
+\end{itemize}
+
+\subsection{Baseline Comparison}
+
+Before training the TFT, it's good practice to check how a trivial "naive" model performs, to have a reference point:
+
+\begin{python}
+actuals = torch.cat([y for x, (y, weight) in iter(val_dataloader)])
+baseline_predictions = Baseline().predict(val_dataloader)   # naive forecast (e.g., "last observed value")
+
+sm = SMAPE()
+print(sm.loss(actuals, baseline_predictions).mean(axis=1).median().item())
+\end{python}
+
+\texttt{SMAPE} (Symmetric Mean Absolute Percentage Error) is the evaluation metric used throughout --- a scale-independent error metric well suited to comparing forecast accuracy across series with very different magnitudes (exactly the situation here, with many country-store-product combinations of different sizes).
+
+\subsection{Model Instantiation and Training}
+
+\begin{python}
+tft = TemporalFusionTransformer.from_dataset(
+    training,
+    learning_rate=0.03,
+    lstm_layers=2,
+    hidden_size=16,
+    attention_head_size=2,
+    dropout=0.2,
+    hidden_continuous_size=8,
+    output_size=1,          # (7 quantiles by default when using QuantileLoss; here set for SMAPE's single output)
+    loss=SMAPE(),
+    reduce_on_plateau_patience=4,
+)
+
+early_stop_callback = EarlyStopping(monitor="train_loss", min_delta=1e-2, patience=30, mode="min")
+lr_logger = LearningRateMonitor()
+logger = TensorBoardLogger("lightning_logs")
+
+trainer = pl.Trainer(
+    max_epochs=120,
+    accelerator="gpu", devices=1,
+    gradient_clip_val=0.25,          # same gradient-clipping idea from Section 3.2, applied here too
+    callbacks=[lr_logger, early_stop_callback],
+    logger=logger,
+)
+
+trainer.fit(tft, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader)
+\end{python}
+
+Notice \texttt{lstm\_layers=2} --- confirming that TFT's "local processing" component (Section 8.4, point 3) is literally implemented as a stacked LSTM, directly built on everything covered in Sections 2 and 4. \texttt{gradient\_clip\_val=0.25} is the same gradient-clipping safeguard discussed in Section 3.2 for controlling exploding gradients.
+
+\textbf{Optional: automated hyperparameter tuning} via Optuna, searching over ranges for gradient clipping, hidden sizes, attention heads, learning rate, and dropout:
+
+\begin{python}
+study = optimize_hyperparameters(
+    train_dataloader, val_dataloader,
+    n_trials=50, max_epochs=50,
+    gradient_clip_val_range=(0.01, 1.0),
+    hidden_size_range=(8, 128),
+    hidden_continuous_size_range=(8, 128),
+    attention_head_size_range=(1, 4),
+    learning_rate_range=(0.001, 0.1),
+    dropout_range=(0.1, 0.3),
+)
+\end{python}
+
+\subsection{Evaluation and Interpretation}
+
+\begin{python}
+best_tft = TemporalFusionTransformer.load_from_checkpoint(trainer.checkpoint_callback.best_model_path)
+
+predictions = best_tft.predict(val_dataloader, mode="prediction")
+raw_predictions, x = best_tft.predict(val_dataloader, mode="raw", return_x=True)
+
+sm = SMAPE()
+print(sm.loss(actuals, predictions).mean(axis=1).median().item())
+
+# Plot individual predicted-vs-actual forecast paths
+for idx in range(raw_predictions.prediction.shape[0]):
+    best_tft.plot_prediction(x, raw_predictions, idx=idx, add_loss_to_title=True)
+
+# Plot prediction accuracy broken down by each input feature/variable --
+# this is where TFT's built-in *interpretability* shows up directly
+predictions_vs_actuals = best_tft.calculate_prediction_actual_by_variable(x, predictions)
+for feature in predictions_vs_actuals['support'].keys():
+    best_tft.plot_prediction_actual_by_variable(predictions_vs_actuals, name=feature)
+\end{python}
+
+The last step is worth highlighting: \texttt{calculate\_prediction\_actual\_by\_variable} / \texttt{plot\_prediction\_actual\_by\_variable} are exactly what makes TFT distinct from a plain LSTM forecaster (Section 6) --- instead of only outputting a prediction, it lets you inspect \textbf{how prediction accuracy varies across each input feature}, giving direct insight into which covariates the model is relying on. This interpretability is precisely what the TFT paper's abstract emphasizes as a key contribution (Section 8.1).
+
+\section{Summary --- Tying It Back to "Handling Volatility" in Finance}
+
+{\small
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}L{0.20\textwidth}L{0.22\textwidth}L{0.22\textwidth}L{0.30\textwidth}@{}}
+\toprule
+Model & Core mechanism & Strength & Limitation \\
+\midrule
+\textbf{Vanilla (tanh) RNN} & Full state overwrite each step & Simple, cheap & Vanishing gradients \ensuremath{\rightarrow} can't learn long-range dependencies; empirically the weakest of the three units tested \\
+\textbf{LSTM} & Additive memory cell + input/forget/output gates & Strong long-range memory; controlled state exposure & More parameters/gates than GRU; empirically close to GRU, sometimes better on longer/harder sequences (e.g., Ubisoft A) \\
+\textbf{GRU} & Additive hidden state + update/reset gates, no separate cell & Fewer parameters, often faster convergence & No independent control of state exposure; empirically close to LSTM, sometimes better (e.g., music data, Ubisoft B) \\
+\textbf{Seq2Seq (encoder-decoder, + attention)} & Compress input into context vector, decode into output sequence, optionally attend back over inputs & Handles variable-length input/output; supports forecasting, anomaly detection, and pattern recognition uniformly & A single fixed context vector is a bottleneck without attention \\
+\textbf{Fusion Transformer} & Separate per-modality encoders fused via cross-attention or concatenation & Combines heterogeneous data sources and time scales & More complex to design and train \\
+\textbf{Temporal Fusion Transformer (TFT)} & LSTM encoder-decoder (local) + interpretable self-attention (long-range) + variable selection/gating + quantile outputs & Handles static, known-future, and unknown covariates together; interpretable; produces uncertainty (quantiles), not just point forecasts & Most complex architecture; more moving parts to tune \\
+\bottomrule
+\end{longtable}
+}
+
+\textbf{The throughline for volatile financial series}: plain RNNs struggle with long dependencies (vanishing gradients) \ensuremath{\rightarrow} gated units (LSTM/GRU) fix that with additive, gated memory \ensuremath{\rightarrow} Seq2Seq lets these units handle full forecasting/anomaly-detection/pattern-recognition tasks with variable-length inputs and outputs \ensuremath{\rightarrow} Fusion Transformers extend this by combining multiple relevant data sources (price, sentiment, macro indicators, multi-scale time resolutions) rather than a single univariate series \ensuremath{\rightarrow} TFT packages all of this into one architecture, additionally providing \textbf{interpretability} (which variables/time points drove a given forecast) and \textbf{quantile-based uncertainty estimates} --- both of which are exactly what's needed to reason about, and "handle," volatility rather than just predict a single expected value and ignore the surrounding uncertainty.
+
+\section{References / Further Reading (mentioned in course materials)}
+
+\begin{itemize}
+\item Chung, J., Gulcehre, C., Cho, K., \& Bengio, Y. (2014). \emph{Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling.} arXiv:1412.3555.
+\item Lim, B. et al. (Google Research). \emph{Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting.} arXiv:1912.09363.
+\item Analytics Vidhya --- \emph{Time Series Analysis Recurrence Neural Network in Python!} (Amruta, updated Oct 2024).
+\item Kaggle notebook --- TFT applied to the "Tabular Playground Series -- Sep 2022" competition using \texttt{pytorch-forecasting}.
+\item \texttt{pytorch-forecasting} official documentation / Stallion tutorial (referenced as the template the notebook's implementation was based on).
+
+\end{itemize}
 
 \end{document}
