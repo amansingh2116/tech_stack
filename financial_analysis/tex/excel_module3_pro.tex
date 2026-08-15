@@ -1,0 +1,1592 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[expansion=false]{microtype}
+\usepackage{parskip}
+\usepackage[a4paper,margin=2.3cm,headheight=14pt]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, matrix, calc, shapes.geometric, fit}
+
+\graphicspath{{images/}}
+
+% Ragged-right paragraph columns avoid stretched spacing in narrow tables.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ============================================================
+% COLOR PALETTE
+% ============================================================
+\definecolor{excelgreen}{HTML}{217346}
+\definecolor{excelgreenlight}{HTML}{E9F3EE}
+\definecolor{pythonblue}{HTML}{1F5C8B}
+\definecolor{pythonbluelight}{HTML}{E8F1F8}
+\definecolor{pythonyellow}{HTML}{B8860B}
+\definecolor{sqlorange}{HTML}{B0521A}
+\definecolor{sqlorangelight}{HTML}{FBEEE4}
+\definecolor{keyblue}{HTML}{1B4F72}
+\definecolor{keybluelight}{HTML}{EAF2F8}
+\definecolor{tipgreen}{HTML}{1E7A46}
+\definecolor{tipgreenlight}{HTML}{EAF7EF}
+\definecolor{warnred}{HTML}{922B21}
+\definecolor{warnredlight}{HTML}{FDEDEC}
+\definecolor{codegray}{HTML}{F5F5F5}
+\definecolor{rulegray}{HTML}{888888}
+\definecolor{vbapurple}{HTML}{5C2D91}
+\definecolor{vbapurplelight}{HTML}{F2EEF8}
+
+% ============================================================
+% HEADER / FOOTER
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\textcolor{rulegray}{Excel for Finance --- The Professional Handbook}}
+\fancyhead[R]{\small\textcolor{rulegray}{Module 3: Excel Like a Pro}}
+\fancyfoot[C]{\small\thepage}
+
+% ============================================================
+% SECTION STYLING
+% ============================================================
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{excelgreen}}
+  {\thesection}{0.6em}{}[{\color{excelgreen}\titlerule}]
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{keyblue}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\color{black}}
+  {\thesubsubsection}{0.6em}{}
+
+% ============================================================
+% CODE LISTING STYLES
+% ============================================================
+\lstdefinestyle{pythonstyle}{
+  language=Python,
+  backgroundcolor=\color{pythonbluelight},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{pythonblue}\bfseries,
+  stringstyle=\color{tipgreen},
+  commentstyle=\color{rulegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{rulegray},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{pythonblue!40},
+  framerule=0.4pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  xleftmargin=2pt,
+  framexleftmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+\lstdefinestyle{sqlstyle}{
+  language=SQL,
+  backgroundcolor=\color{sqlorangelight},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{sqlorange}\bfseries,
+  stringstyle=\color{tipgreen},
+  commentstyle=\color{rulegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{rulegray},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{sqlorange!40},
+  framerule=0.4pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  xleftmargin=2pt,
+  framexleftmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+\lstdefinestyle{excelstyle}{
+  backgroundcolor=\color{excelgreenlight},
+  basicstyle=\ttfamily\small\color{black},
+  frame=single,
+  rulecolor=\color{excelgreen!50},
+  framerule=0.4pt,
+  breaklines=true,
+  showstringspaces=false,
+  xleftmargin=2pt,
+  framexleftmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+\lstdefinestyle{vbastyle}{
+  backgroundcolor=\color{vbapurplelight},
+  basicstyle=\ttfamily\small\color{black},
+  numbers=left,
+  numberstyle=\tiny\color{rulegray},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{vbapurple!50},
+  framerule=0.4pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  xleftmargin=2pt,
+  framexleftmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+% ============================================================
+% CALLOUT BOXES
+% ============================================================
+\newtcolorbox{keyconcept}[1][Key Concept]{
+  colback=keybluelight, colframe=keyblue, coltitle=white,
+  fonttitle=\bfseries, title={#1}, boxrule=0.8pt, arc=2pt,
+  before upper=\raggedright,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{financeapp}[1][Finance Application]{
+  colback=excelgreenlight, colframe=excelgreen, coltitle=white,
+  fonttitle=\bfseries, title={#1}, boxrule=0.8pt, arc=2pt,
+  before upper=\raggedright,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{protip}[1][Pro Tip]{
+  colback=tipgreenlight, colframe=tipgreen, coltitle=white,
+  fonttitle=\bfseries, title={#1}, boxrule=0.8pt, arc=2pt,
+  before upper=\raggedright,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{pitfall}[1][Common Pitfall]{
+  colback=warnredlight, colframe=warnred, coltitle=white,
+  fonttitle=\bfseries, title={#1}, boxrule=0.8pt, arc=2pt,
+  before upper=\raggedright,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{formulasyntax}[1][Formula Syntax]{
+  colback=white, colframe=excelgreen, coltitle=white,
+  fonttitle=\bfseries, title={#1}, boxrule=1pt, arc=2pt,
+  before upper=\raggedright,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+% shortcut key style
+\newcommand{\key}[1]{\texttt{\colorbox{black!8}{\textbf{#1}}}}
+
+% ============================================================
+% HYPERREF SETUP
+% ============================================================
+\hypersetup{
+  colorlinks=true,
+  linkcolor=keyblue,
+  citecolor=keyblue,
+  urlcolor=pythonblue,
+  pdftitle={Excel for Finance -- Module 3: Excel Like a Pro},
+  pdfauthor={Finance \& Analytics Study Notes},
+}
+
+\setlist[itemize]{leftmargin=1.4em}
+\setlist[enumerate]{leftmargin=1.6em}
+
+\captionsetup{font=small, labelfont={bf,color=excelgreen}, skip=6pt}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+\begin{document}
+\pagenumbering{roman}
+\hypersetup{pageanchor=false}
+
+% -------------------- TITLE PAGE --------------------
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\Huge\bfseries\color{excelgreen} Excel for Finance}\\[0.4cm]
+{\Large The Complete Professional Handbook}\\[1.0cm]
+{\huge\bfseries Module 3}\\[0.3cm]
+{\LARGE Excel Like a Pro}\\[0.15cm]
+{\large Conditional Formatting, Logical \& Lookup Functions, Conditional Aggregation,\\
+Error Handling, String Functions, What-If Analysis \& Core Financial Functions\\[0.1cm]
+--- with Python and SQL Equivalents}\\[1.6cm]
+
+\begin{tcolorbox}[colback=excelgreenlight, colframe=excelgreen, width=0.85\textwidth, arc=3pt, before upper=\raggedright]
+\textbf{Companion modules in this handbook:}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Module 1} --- Excel Foundations: Interface, Data \& Number Formatting, Formula Fundamentals, Shortcuts
+  \item \textbf{Module 2} --- Making Excel Professional: Optimisation, Macros, Absolute/Relative References, Named Ranges, Data Validation \& Custom Formatting
+  \item \textbf{Module 3} --- Excel Like a Pro: Conditional Formatting, Logical Functions, Conditional Aggregation, Error Handling, Lookup Functions (VLOOKUP/HLOOKUP/XLOOKUP/INDEX-MATCH), String Functions, What-If Analysis, and Core Financial Functions (PMT \& Dates) \textit{(this document)}
+  \item \textbf{Module 4} --- (upcoming) Accounting Fundamentals \& Financial Statements, or Charts/PivotTables, depending on which thread you want to pull next
+\end{itemize}
+\end{tcolorbox}
+
+\vfill
+{\small Compiled study notes covering the Excel curriculum end-to-end, extended with equivalent Python (\texttt{pandas}, \texttt{openpyxl}, \texttt{numpy\_financial}, \texttt{scipy}) and SQL implementations of every concept, for a tech-background learner building cross-tool fluency in financial analytics.}\\[0.3cm]
+{\small \today}
+\end{titlepage}
+
+\hypersetup{pageanchor=true}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% ==================================================================
+\section{How to Use This Module}
+% ==================================================================
+
+This module assumes you have completed Modules 1 and 2: you should be comfortable navigating the interface, formatting data, writing basic formulas with relative references, using absolute/mixed references, and building Named Ranges and Data Validation rules. Everything here builds directly on that foundation --- in particular, several pitfalls flagged in Module 2 (positional fragility, volatile functions slowing recalculation, the one-time nature of Text to Columns) get their proper fix in this module.
+
+\begin{pitfall}[A Note on Scope --- Why This Module Is Larger Than ``Excel Like a Pro'' Alone]
+The original course structure splits this material across two separate modules: \textit{Excel Be a Pro} (Find/Replace, Conditional Formatting, IF/IFS, the COUNTIF/SUMIF family, error handling, all four lookup functions, and string functions) and, later, \textit{Financial Functions} (What-If Analysis and PMT/date functions). This handbook document merges both into a single Module 3, because What-If Analysis and PMT/date calculations lean directly on the logical functions, lookup functions, and error-handling patterns taught earlier in this same module --- splitting them apart would mean re-explaining prerequisites twice. Module 4 will pick up where the original course's Module 7 begins: Accounting Fundamentals and the three financial statements.
+\end{pitfall}
+
+As in Modules 1 and 2, every topic is explained three times, in three dialects:
+
+\begin{itemize}
+  \item \textbf{Excel} --- the native implementation: menu paths, dialog boxes, formula syntax, and keyboard shortcuts, exactly as you would click and type them.
+  \item \textbf{Python} --- the equivalent using \texttt{pandas} (vectorised conditional logic, string methods, merges), \texttt{numpy\_financial} (time-value-of-money functions, since NumPy itself dropped its financial functions), and occasionally \texttt{scipy.optimize} (for Goal-Seek-style backward solving).
+  \item \textbf{SQL} --- the closest conceptual equivalent: \texttt{CASE WHEN} for logical branching, \texttt{GROUP BY} for conditional aggregation, and --- most importantly in this module --- \texttt{JOIN} as the real, set-based operation that \texttt{VLOOKUP} and \texttt{INDEX/MATCH} are Excel's row-by-row imitation of.
+\end{itemize}
+
+The same recurring boxes from Modules 1 and 2 appear throughout: \textbf{Key Concept} (blue), \textbf{Finance Application} (green), \textbf{Pro Tip} (green, lighter), \textbf{Common Pitfall} (red), and \textbf{Formula Syntax} (white, green border). Where a topic genuinely has no clean equivalent in one of the three tools --- and this happens more than once in this module, particularly for What-If Analysis in SQL --- that gap is stated plainly rather than papered over with a forced translation.
+
+% ==================================================================
+\section{From Formulas to Judgment: What This Module Adds}
+% ==================================================================
+
+Modules 1 and 2 were mostly about \emph{mechanics}: getting data into cells correctly, formatting it, and making formulas behave predictably when copied. Nothing so far has made a genuine \emph{decision}. A \texttt{SUM} adds; it does not judge. A named range labels a cell; it does not ask a question of the data.
+
+\begin{keyconcept}
+This module is where Excel starts doing the things people actually mean when they say ``analysis'': branching on a condition (\textbf{IF}), aggregating only the rows that meet a rule (\textbf{COUNTIF}/\textbf{SUMIF}), retrieving a specific fact by looking it up rather than by remembering where it sits (\textbf{VLOOKUP}/\textbf{INDEX-MATCH}), failing gracefully instead of propagating a broken value (\textbf{IFERROR}), reshaping messy text into usable data (string functions), and --- in the second half of the module --- systematically asking ``what happens if an assumption changes?'' (\textbf{What-If Analysis}) and computing the time-value-of-money mechanics (\textbf{PMT} and date functions) that almost every financial model needs on its very first tab.
+\end{keyconcept}
+
+It is also the module where the case for learning Python and SQL alongside Excel becomes most concrete rather than theoretical. A \texttt{VLOOKUP} is a manual, one-column-at-a-time simulation of something a database does natively and efficiently: a \texttt{JOIN}. A \texttt{SUMIFS} is a manual simulation of a \texttt{GROUP BY}. Seeing the Excel version first, and then its native equivalent, is the fastest way to understand \emph{why} those tools exist and what problem they were built to solve --- not just how to operate them.
+
+% ==================================================================
+\section{Find and Replace, and Conditional Formatting}
+% ==================================================================
+
+These two tools share a section because they answer related questions: Find and Replace \emph{locates and changes} specific values; Conditional Formatting \emph{locates and visually flags} values without changing them. Together they are the first line of defence for auditing and presenting a worksheet.
+
+\subsection{Find and Replace}
+\label{sec:findreplace}
+
+\begin{formulasyntax}[Find and Replace --- Access]
+\key{Ctrl+F} opens \textbf{Find}; \key{Ctrl+H} opens \textbf{Replace} (the same dialog, one tab further). Both live under \textbf{Home} $\rightarrow$ \textbf{Editing} $\rightarrow$ \textbf{Find \& Select} as well.
+\end{formulasyntax}
+
+Clicking \textbf{Options >>} inside the dialog reveals the settings that separate a casual search from an audit-grade one:
+
+\begin{center}
+\begin{tabular}{@{}L{3.2cm}L{9.6cm}@{}}
+\toprule
+\textbf{Option} & \textbf{What it controls} \\
+\midrule
+Within & \textbf{Sheet} (current tab only) vs. \textbf{Workbook} (every tab) --- easy to forget and search only one tab of a multi-tab model. \\
+Search & \textbf{By Rows} vs. \textbf{By Columns} --- changes the order results are stepped through with \textbf{Find Next}, not what is found. \\
+Look in & \textbf{Formulas} (default --- searches the underlying formula text, e.g. finds a cell containing \texttt{=VLOOKUP(...)} if you search \texttt{VLOOKUP}), \textbf{Values} (searches the \emph{displayed result}, e.g. finds a cell showing \texttt{10,623.52} regardless of what formula produced it), or \textbf{Comments}. \\
+Match case & Case-sensitive search --- off by default. \\
+Match entire cell contents & Only matches a cell whose \emph{entire} content equals the search term, not just a substring --- critical when searching for a short code like \texttt{"5"} that would otherwise also match \texttt{"250"}, \texttt{"5000"}, and every other cell containing that digit. \\
+Format\dots & Restricts the search to cells carrying specific \emph{formatting} (a fill colour, a number format, a font) --- independent of the cell's text content. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Wildcards} work inside both Find and Replace: \texttt{*} matches any run of characters, \texttt{?} matches exactly one character. Searching \texttt{Inv*2026} finds \texttt{Invoice-2026}, \texttt{Inv Final 2026}, and anything else starting with \texttt{Inv} and ending in \texttt{2026}.
+
+\begin{pitfall}[Searching for a Literal \texttt{*} or \texttt{?}]
+Because \texttt{*} and \texttt{?} are wildcard operators, searching for an actual asterisk or question mark in your data requires escaping it with a tilde: \texttt{\textasciitilde{}*} finds a literal \texttt{*}, \texttt{\textasciitilde{}?} finds a literal \texttt{?}. Forgetting this turns a search for a literal character into an unintentional wildcard search that matches almost everything.
+\end{pitfall}
+
+\begin{protip}[Find and Replace as an Audit Tool, Not Just an Editing Tool]
+\textbf{Find All} (in the Find tab) lists every match in a sortable grid at the bottom of the dialog, with sheet name, cell address, and value --- clicking a row jumps straight to that cell. This turns Find and Replace into a fast way to answer audit questions that have nothing to do with editing: ``does the hardcoded number \texttt{0.21} appear anywhere in this model outside the tax-rate assumption cell?'' Searching with \textbf{Look in: Formulas} and \textbf{Find All} surfaces every hardcoded instance in seconds --- exactly the kind of stray hardcoded input that a Named Range (Module 2, \S\,Named Ranges) is meant to prevent, and Find All is how you verify none slipped through.
+\end{protip}
+
+\begin{financeapp}
+A common real use: a fiscal year label (\texttt{"FY2025"}) is typed as literal text in dozens of report headers across a workbook instead of being built from a \texttt{YEAR()} formula. Replace All with \textbf{Within: Workbook} updates every tab in one pass when the year rolls over --- versus the alternative of manually hunting through every sheet.
+\end{financeapp}
+
+\subsection{Conditional Formatting}
+\label{sec:condformat}
+
+\begin{keyconcept}
+Conditional Formatting (CF) is a \emph{presentation layer}, not a data layer. It changes how a cell \emph{looks} based on a rule, but never changes the cell's actual value --- the opposite of Data Validation (Module 2), which restricts what value can be \emph{entered} in the first place. A cell can fail every CF rule in the workbook and still contain a perfectly valid number; CF only affects what the eye notices.
+\end{keyconcept}
+
+Access via \textbf{Home} $\rightarrow$ \textbf{Conditional Formatting}, with five built-in rule families plus a fully custom option:
+
+\begin{center}
+\begin{tabular}{@{}L{3.4cm}L{9.4cm}@{}}
+\toprule
+\textbf{Rule type} & \textbf{What it does} \\
+\midrule
+Highlight Cells Rules & Greater Than / Less Than / Between / Equal To / Text that Contains / Duplicate Values --- simple threshold or text-match flags with a preset colour fill. \\
+Top/Bottom Rules & Top 10 Items, Top 10\%, Above Average, Below Average --- flags based on the cell's rank or position relative to the rest of the selected range, recalculated live as data changes. \\
+Data Bars & An in-cell horizontal bar whose length is proportional to the value --- turns a column of numbers into an instant bar chart without leaving the cell. \\
+Colour Scales & A 2- or 3-colour gradient (e.g. red$\to$yellow$\to$green) mapped across the range's min/mid/max --- a heat-map view of magnitude. \\
+Icon Sets & Arrows, traffic lights, or flags assigned by value tier (e.g. green up-arrow / yellow flat-arrow / red down-arrow). \\
+New Rule $\rightarrow$ \textbf{Use a formula} & Fully custom: any formula that evaluates to \texttt{TRUE}/\texttt{FALSE} for the \emph{active cell} of the selected range triggers the format --- the most powerful and most commonly used option in real financial models. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{formulasyntax}[Formula-Based CF --- The Reference Convention]
+When you write a formula-based rule over a selected range (say \texttt{C5:C40}), the formula must be written \emph{relative to the top-left, active cell of that selection} (\texttt{C5}) --- exactly like typing a formula into \texttt{C5} and letting it fill down/across. Excel then applies the same relative-shift logic from Module 2 to every other cell in the range automatically. A rule like \texttt{=C5<0} applied to \texttt{C5:C40} flags every cell in that column that is individually negative; a rule like \texttt{=C\$4="Over Budget"} (row locked, column free) flags every cell in a range based on a single header-row lookup applying across all columns.
+\end{formulasyntax}
+
+\begin{pitfall}[The \#1 Cause of ``CF Applied to the Wrong Cells'']
+This relative-to-top-left-cell convention is the single most common source of confusion with formula-based CF: if the range was selected starting from \texttt{C10} instead of \texttt{C5}, but the formula was written as if \texttt{C5} were the anchor, every row's evaluation is silently offset by five rows. Always double-check \textbf{Applies to} (visible in \textbf{Manage Rules}) matches the range you actually intended, and write the formula referring to the \emph{first} cell of that exact range.
+\end{pitfall}
+
+\textbf{Manage Rules} (\textbf{Conditional Formatting} $\rightarrow$ \textbf{Manage Rules}) lists every rule on the sheet (or workbook), in priority order (top rule evaluated first), lets you edit, delete, and reorder them, and exposes \textbf{Stop If True} --- a checkbox that, when a higher-priority rule matches, prevents any lower-priority rule from also applying to that same cell (directly analogous to the ``first match wins'' behaviour of a nested \texttt{IF} chain, covered next in \S\ref{sec:iffunctions}).
+
+\begin{financeapp}
+Three CF patterns appear constantly in financial models: (1) a formula rule \texttt{=C5<0} with a red font, applied to every variance column, to make negative deviations from budget visually unmissable; (2) a Colour Scale over a correlation matrix or a sensitivity grid (exactly the two-way sensitivity table built with mixed references in Module 2's worked example) to turn a wall of numbers into an at-a-glance heat map; (3) a Data Bar over a single column of revenue-by-product figures, giving stakeholders a bar-chart impression without inserting an actual chart object.
+\end{financeapp}
+
+\subsection{Python and SQL Equivalents}
+
+\textbf{Python.} \texttt{openpyxl} can write real Conditional Formatting rules \emph{into} an \texttt{.xlsx} file (so the rule remains live and dynamic when the user opens it in Excel); \texttt{pandas}'s \texttt{DataFrame.style} applies the equivalent visual logic \emph{inside a Python/Jupyter session} for on-screen or exported-HTML review, without writing back to Excel's own rule engine.
+
+\begin{lstlisting}[style=pythonstyle, caption={Both flavours: a live openpyxl rule for the .xlsx file, and a one-off pandas.style view for analysis}]
+from openpyxl import Workbook
+from openpyxl.formatting.rule import CellIsRule, ColorScaleRule
+from openpyxl.styles import Font, PatternFill
+
+wb = Workbook(); ws = wb.active
+for i, v in enumerate([15000, -4200, 8300, -900], start=2):
+    ws.cell(row=i, column=3, value=v)
+
+# Highlight Cells Rules equivalent: red font for negatives
+red_font = Font(color="922B21")
+ws.conditional_formatting.add(
+    "C2:C5", CellIsRule(operator="lessThan", formula=["0"], font=red_font)
+)
+# Colour Scale equivalent
+ws.conditional_formatting.add(
+    "C2:C5",
+    ColorScaleRule(start_type="min", start_color="F8696B",
+                    end_type="max", end_color="63BE7B"),
+)
+wb.save("cf_demo.xlsx")
+
+# --- pandas: on-screen/report equivalent, not written back to Excel's rule engine ---
+import pandas as pd
+df = pd.DataFrame({"variance": [15000, -4200, 8300, -900]})
+styled = df.style.applymap(
+    lambda v: "color: #922B21; font-weight: bold" if v < 0 else ""
+)  # displays inline in Jupyter/exports to styled HTML
+\end{lstlisting}
+
+\textbf{SQL.} There is no visual layer in a database, so the honest equivalent of Conditional Formatting is computing the \emph{flag itself} as a column, using \texttt{CASE WHEN} --- the same construct that will reappear as the direct SQL equivalent of \texttt{IF} in \S\ref{sec:iffunctions}. Find and Replace's equivalent is a straightforward \texttt{UPDATE ... SET ... WHERE}.
+
+\begin{lstlisting}[style=sqlstyle, caption={Computing a CF-equivalent flag column, and a Find/Replace-equivalent UPDATE}]
+-- Conditional-Formatting equivalent: the "flag" becomes an explicit column
+SELECT
+    account_name,
+    variance,
+    CASE WHEN variance < 0 THEN 'Over Budget' ELSE 'On Track' END AS status_flag
+FROM budget_variance;
+
+-- Find and Replace equivalent: bulk-updating stored text
+UPDATE report_headers
+SET header_text = REPLACE(header_text, 'FY2025', 'FY2026')
+WHERE header_text LIKE '%FY2025%';
+\end{lstlisting}
+
+% ==================================================================
+\section{Logical Functions: IF, Nested IF, and IFS}
+\label{sec:iffunctions}
+% ==================================================================
+
+\begin{formulasyntax}[IF]
+\texttt{=IF(logical\_test, value\_if\_true, [value\_if\_false])} --- evaluates \texttt{logical\_test} (any expression that resolves to \texttt{TRUE} or \texttt{FALSE}), returning the second argument if true and the third if false. The third argument is optional; omitting it returns \texttt{FALSE} when the test fails, which is rarely what you want in a finance model, so it is treated as effectively required in practice.
+\end{formulasyntax}
+
+A single \texttt{IF} handles a two-way branch. Real decisions usually have more than two outcomes, which historically forced \textbf{nested IFs} --- an \texttt{IF} inside the \texttt{value\_if\_false} of another \texttt{IF}, chained as deep as needed:
+
+\begin{lstlisting}[style=excelstyle, caption={A three-tier bonus schedule, nested IF style}]
+=IF(C5>=1000000, "Platinum", IF(C5>=500000, "Gold", IF(C5>=100000, "Silver", "Bronze")))
+\end{lstlisting}
+
+\begin{keyconcept}
+Nested \texttt{IF} evaluates \textbf{top to bottom, and stops at the first \texttt{TRUE}}. This means condition order is not cosmetic --- it is logic. If the conditions above were written narrowest-first (\texttt{C5>=100000} before \texttt{C5>=1000000}), a sales figure of 1,200,000 would incorrectly return \texttt{"Silver"}, because the broad \texttt{>=100000} test is satisfied first and the formula never reaches the more specific, correct tier below it. This exact bug --- a broad condition unintentionally shadowing a narrower, more correct one placed after it --- is the single most common nested-IF error, and it produces no error message at all; the formula just silently returns the wrong tier.
+\end{keyconcept}
+
+\textbf{IFS} (Excel 2016+/365) replaces a nested-IF chain with a flat list of condition/result pairs, evaluated in the same top-to-bottom, first-match-wins order, but without the pyramid of closing parentheses:
+
+\begin{formulasyntax}[IFS]
+\texttt{=IFS(logical\_test1, value1, [logical\_test2, value2], \ldots)} --- same first-match-wins semantics as nested IF, read as a flat decision table. If no test matches and no catch-all is supplied, \texttt{IFS} returns \texttt{\#N/A} --- so a final \texttt{TRUE} condition (\texttt{TRUE, "Bronze"}) is the conventional way to write a default/else branch.
+\end{formulasyntax}
+
+\begin{lstlisting}[style=excelstyle, caption={The same bonus schedule, IFS style}]
+=IFS(C5>=1000000,"Platinum", C5>=500000,"Gold", C5>=100000,"Silver", TRUE,"Bronze")
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{@{}L{3.4cm}L{4.4cm}L{4.6cm}@{}}
+\toprule
+\textbf{} & \textbf{Nested IF} & \textbf{IFS} \\
+\midrule
+Readability past 3--4 tiers & Degrades fast --- a wall of closing parentheses & Stays flat and scannable regardless of tier count \\
+Excel version required & Every version & 2016+/365 only --- breaks in older files \\
+No-match behaviour & Falls through to the innermost \texttt{value\_if\_false} you wrote & Returns \texttt{\#N/A} unless a \texttt{TRUE} catch-all is added \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Compound conditions} inside either form use \texttt{AND()}, \texttt{OR()}, and \texttt{NOT()}, each taking any number of TRUE/FALSE arguments:
+
+\begin{lstlisting}[style=excelstyle, caption={Compound logical tests}]
+=IF(AND(C5>=500000, D5="Approved"), "Disburse", "Hold")
+=IF(OR(E5="Late", E5="Defaulted"), "Flag for Review", "Current")
+=IF(NOT(F5="Closed"), "Still Open", "Closed")
+\end{lstlisting}
+
+\begin{financeapp}
+Nested logic drives loan-approval flags (income threshold \emph{and} credit-score threshold \emph{and} debt-to-income below a cap, via \texttt{AND}), covenant pass/fail tests in a debt schedule, bonus-tier and commission-tier calculations, and simple three-statement flags like classifying a balance-sheet line as Current vs. Non-Current based on a maturity-date comparison.
+\end{financeapp}
+
+\begin{pitfall}[Deeply Nested IFs Are a Maintenance Trap, Not Just an Eyesore]
+Beyond about four or five nested levels, a formula becomes practically impossible to audit by eye, and a single misplaced parenthesis silently breaks the logic rather than throwing a clear error. Excel enforces a hard technical limit of 64 nested \texttt{IF} functions, but the \emph{practical} limit --- the point past which a human reviewer can no longer verify correctness --- is much lower. \texttt{IFS}, or a lookup-table approach (VLOOKUP/XLOOKUP against a tier table, \S\ref{sec:lookupfunctions}), is the standard fix once a nested-IF chain exceeds three or four branches.
+\end{pitfall}
+
+\subsection{Python and SQL Equivalents}
+
+\textbf{Python.} A scalar \texttt{if/elif/else} chain is the direct one-value-at-a-time equivalent. For an entire column at once, \texttt{pandas} offers two idiomatic, vectorised alternatives that map cleanly onto Excel's two tools: \texttt{np.where} for a single two-way branch (IF), and \texttt{np.select} or \texttt{pd.cut} for a multi-tier ladder (nested IF/IFS) --- notably \emph{faster} than a Python loop because they operate on the whole column in one vectorised pass rather than row by row.
+
+\begin{lstlisting}[style=pythonstyle, caption={IF and the tiered bonus schedule, three Python ways}]
+import numpy as np
+import pandas as pd
+
+df = pd.DataFrame({"sales": [1200000, 620000, 150000, 40000]})
+
+# --- np.where: the direct IF() equivalent ---
+df["disburse"] = np.where(df["sales"] >= 500000, "Disburse", "Hold")
+
+# --- np.select: the nested-IF / IFS equivalent, explicit conditions list ---
+conditions = [df["sales"] >= 1_000_000, df["sales"] >= 500_000, df["sales"] >= 100_000]
+choices    = ["Platinum", "Gold", "Silver"]
+df["tier"] = np.select(conditions, choices, default="Bronze")
+
+# --- pd.cut: purpose-built for tiering a continuous number into bins ---
+df["tier_v2"] = pd.cut(
+    df["sales"], bins=[-np.inf, 100_000, 500_000, 1_000_000, np.inf],
+    labels=["Bronze", "Silver", "Gold", "Platinum"]
+)
+\end{lstlisting}
+
+\begin{protip}[\texttt{np.select} Mirrors \texttt{IFS} Exactly --- Order Still Matters]
+\texttt{np.select} evaluates its \texttt{conditions} list top to bottom and, like \texttt{IFS}, uses the \emph{first} matching condition for each row --- so the same broad-before-narrow ordering bug from Excel can just as easily be written in Python. \texttt{pd.cut} sidesteps the ordering question entirely by requiring sorted bin edges, which is why it is often the more robust choice specifically for tiering a continuous numeric variable.
+\end{protip}
+
+\textbf{SQL.} \texttt{CASE WHEN} is SQL's native branching construct, and it is a closer match to \texttt{IFS} than to a single \texttt{IF} --- it was designed from the start as a flat, ordered, multi-branch expression.
+
+\begin{lstlisting}[style=sqlstyle, caption={The bonus schedule as a SQL CASE expression}]
+SELECT
+    customer_id,
+    sales,
+    CASE
+        WHEN sales >= 1000000 THEN 'Platinum'
+        WHEN sales >= 500000  THEN 'Gold'
+        WHEN sales >= 100000  THEN 'Silver'
+        ELSE 'Bronze'
+    END AS tier
+FROM customer_sales;
+\end{lstlisting}
+
+% ==================================================================
+\section{Conditional Aggregation Functions}
+\label{sec:condaggregation}
+% ==================================================================
+
+\begin{keyconcept}
+Every function in this family answers the same underlying question: ``aggregate this data, but only the rows that meet a rule.'' The rule --- called the \textbf{criteria} --- is where almost all of the subtlety lives; the aggregation itself (count, sum, average, max, min) is trivial once the criteria syntax is understood.
+\end{keyconcept}
+
+\subsection{Criteria Syntax --- The Part That Trips People Up}
+
+Criteria can be a literal number, a literal text string (in quotes), a comparison operator as a string, a wildcard pattern, or a reference built with concatenation:
+
+\begin{center}
+\begin{tabular}{@{}L{3.6cm}L{3.4cm}L{5.4cm}@{}}
+\toprule
+\textbf{Criteria written as} & \textbf{Matches} & \textbf{Notes} \\
+\midrule
+\texttt{100} & Exactly 100 & Numeric literal, no quotes \\
+\texttt{"Approved"} & Exactly the text \texttt{Approved} & Text literal, in quotes; not case-sensitive \\
+\texttt{">100"} & Any value greater than 100 & Operator \emph{and} number together inside one string \\
+\texttt{"<>Approved"} & Anything except \texttt{Approved} & \texttt{<>} is ``not equal to'' \\
+\texttt{"Inv*"} & Any text starting with \texttt{Inv} & Wildcard \texttt{*}, same rules as Find/Replace (\S\ref{sec:findreplace}) \\
+\texttt{">="\&A1} & Anything $\geq$ the value in \texttt{A1} & Concatenating an operator string with a cell reference --- the criteria becomes dynamic instead of hardcoded \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{COUNTIF / COUNTIFS}
+
+\begin{formulasyntax}[COUNTIF and COUNTIFS]
+\texttt{=COUNTIF(range, criteria)} --- counts cells in \texttt{range} meeting one criterion. \texttt{=COUNTIFS(criteria\_range1, criteria1, [criteria\_range2, criteria2], \ldots)} --- counts rows meeting \emph{all} criteria simultaneously (an implicit AND across every pair), across up to 127 range/criteria pairs.
+\end{formulasyntax}
+
+\subsection{AVERAGEIF / AVERAGEIFS}
+
+\begin{formulasyntax}[AVERAGEIF and AVERAGEIFS]
+\texttt{=AVERAGEIF(range, criteria, [average\_range])} and \texttt{=AVERAGEIFS(average\_range, criteria\_range1, criteria1, \ldots)} --- same criteria mechanics as COUNTIF/COUNTIFS, but averaging a specified range of values instead of counting matching cells.
+\end{formulasyntax}
+
+\begin{pitfall}[AVERAGEIF Silently Ignores Blanks but Not Zeros]
+Exactly as Module 1 flagged for plain \texttt{AVERAGE}: blank cells within the matched criteria are excluded from the average automatically, but cells containing an actual \texttt{0} are included and pull the average down. If a ``blank'' cell is actually a formula returning an empty string \texttt{""}, AVERAGEIF treats it as text, not blank, and it is silently skipped in a different way (text is never numeric) --- worth double-checking with \texttt{COUNTIFS} against the same criteria to confirm the denominator matches expectation.
+\end{pitfall}
+
+\subsection{SUMIF / SUMIFS}
+
+\begin{formulasyntax}[SUMIF]
+\texttt{=SUMIF(range, criteria, [sum\_range])} --- \texttt{range} is checked against \texttt{criteria}; \texttt{sum\_range} (optional --- defaults to \texttt{range} itself) is what actually gets added for matching rows.
+\end{formulasyntax}
+
+\begin{formulasyntax}[SUMIFS]
+\texttt{=SUMIFS(sum\_range, criteria\_range1, criteria1, [criteria\_range2, criteria2], \ldots)} --- note the \textbf{argument order is reversed} relative to SUMIF: the range being summed comes \emph{first} here, not last.
+\end{formulasyntax}
+
+\begin{pitfall}[The SUMIF/SUMIFS Argument-Order Trap]
+This is the single most common typing error in the whole conditional-aggregation family: \texttt{SUMIF} places the range to sum \emph{last} (and it's optional), while \texttt{SUMIFS} places it \emph{first} (and it's required). Muscle memory built on one function actively produces a broken formula in the other. Excel's Formula AutoComplete tooltip (visible while typing, shown live in the source lecture screenshot for this module) is the fastest way to double-check argument order before hitting Enter, rather than relying on memory.
+\end{pitfall}
+
+\begin{pitfall}[Mismatched Range Sizes]
+\texttt{criteria\_range} and \texttt{sum\_range} (or \texttt{average\_range}) must be the \emph{same size and shape} --- same number of rows and columns. If \texttt{sum\_range} is accidentally one row shorter or offset by a row from \texttt{criteria\_range} (a common result of a careless fill-down or an inserted row that only shifted one of the two ranges), Excel does not raise an error; it silently aligns them by relative position, producing a wrong total with no warning.
+\end{pitfall}
+
+\subsection{MAXIFS / MINIFS}
+
+\begin{formulasyntax}[MAXIFS and MINIFS]
+\texttt{=MAXIFS(max\_range, criteria\_range1, criteria1, \ldots)} and the equivalent \texttt{MINIFS} --- same criteria mechanics again, returning the largest/smallest value among matching rows instead of a count/sum/average. Available from Excel 2019/365 onward; older files need an array formula built from \texttt{MAX(IF(...))} entered with \key{Ctrl+Shift+Enter}, or a helper-column workaround.
+\end{formulasyntax}
+
+\begin{financeapp}
+\texttt{SUMIFS} is the workhorse of departmental expense reporting: rolling up every transaction row in a general-ledger export by cost centre \emph{and} month in a single formula, without a PivotTable. \texttt{COUNTIFS} is the natural companion to Module 2's Data-Validation-enforced category lists --- counting how many transactions fall in each validated category confirms the dropdown is actually preventing the typo-driven under-counting (\texttt{"Marketing"} vs. \texttt{"Marketting"}) that free-text entry would allow. \texttt{AVERAGEIFS} computes average deal size by region and quarter. \texttt{MAXIFS} finds the largest single transaction within a flagged category, useful for spot-checking outliers before they distort a SUMIFS total.
+\end{financeapp}
+
+\begin{protip}[This Whole Family Is Excel Simulating a GROUP BY, One Combination at a Time]
+Every SUMIFS/COUNTIFS formula answers ``for this one specific combination of category and period, what's the total?'' A real \texttt{GROUP BY} (see the SQL box below) answers that question for \emph{every} combination simultaneously, in one pass, without needing one formula per combination. Keep this framing in mind --- it is exactly why a PivotTable (a later module) usually replaces a grid of dozens of individually-typed SUMIFS formulas in practice.
+\end{protip}
+
+\subsection{Python and SQL Equivalents}
+
+\begin{lstlisting}[style=pythonstyle, caption={Boolean-mask aggregation (the direct SUMIF/COUNTIF equivalent) and groupby (the SUMIFS-at-scale equivalent)}]
+import pandas as pd
+
+df = pd.DataFrame({
+    "cost_center": ["Marketing", "Sales", "Marketing", "Ops", "Sales"],
+    "month":       ["Jan", "Jan", "Feb", "Jan", "Feb"],
+    "amount":      [15000, 22000, 9000, 4300, 18000],
+})
+
+# --- Direct SUMIF/COUNTIF/AVERAGEIF equivalent: a boolean mask ---
+mask = df["cost_center"] == "Marketing"
+sumif_result   = df.loc[mask, "amount"].sum()
+countif_result = mask.sum()
+avgif_result   = df.loc[mask, "amount"].mean()
+
+# --- SUMIFS equivalent: combine masks with & (AND) ---
+mask2 = (df["cost_center"] == "Marketing") & (df["month"] == "Feb")
+sumifs_result = df.loc[mask2, "amount"].sum()
+
+# --- The scalable version: every combination at once, no repeated formulas ---
+rollup = df.groupby(["cost_center", "month"])["amount"].agg(["sum", "count", "mean", "max"])
+\end{lstlisting}
+
+\begin{lstlisting}[style=sqlstyle, caption={The native version: WHERE for a single SUMIF, GROUP BY for every combination at once}]
+-- Direct SUMIFS equivalent: one specific combination
+SELECT SUM(amount)
+FROM transactions
+WHERE cost_center = 'Marketing' AND month = 'Feb';
+
+-- The scalable version: every cost_center x month combination in one query
+SELECT
+    cost_center,
+    month,
+    SUM(amount)   AS total,
+    COUNT(*)      AS txn_count,
+    AVG(amount)   AS avg_amount,
+    MAX(amount)   AS max_amount
+FROM transactions
+GROUP BY cost_center, month
+ORDER BY cost_center, month;
+\end{lstlisting}
+
+% ==================================================================
+\section{Error Handling}
+\label{sec:errorhandling}
+% ==================================================================
+
+\subsection{Reading Excel's Built-In Error Codes}
+
+Before suppressing an error, you need to know what it is actually telling you. Every Excel error code identifies a distinct category of problem:
+
+\begin{center}
+\begin{tabular}{@{}L{1.9cm}L{4.9cm}L{5.0cm}@{}}
+\toprule
+\textbf{Code} & \textbf{Typical cause} & \textbf{Typical fix} \\
+\midrule
+\texttt{\#DIV/0!} & Division where the denominator is zero or blank & Guard the denominator, e.g. \texttt{IFERROR} or an explicit \texttt{IF(denom=0,\ldots)} check \\
+\texttt{\#N/A} & A lookup (VLOOKUP/\allowbreak MATCH/\allowbreak XLOOKUP) found no matching value & Confirm the lookup value actually exists and both sides match in type/spelling; wrap with \texttt{IFNA} if ``not found'' is a valid, expected outcome \\
+\texttt{\#NAME?} & Excel doesn't recognise text in the formula --- usually a misspelled function name or a reference to a deleted Named Range & Re-check spelling; open Name Manager (Module 2) to see if a name was deleted \\
+\texttt{\#NULL!} & A range reference uses a space where a comma or colon was intended (Excel reads a space as ``intersection of two ranges'') & Fix the stray space/typo in the range reference \\
+\texttt{\#NUM!} & A numeric calculation is invalid (e.g. a negative number passed to \texttt{SQRT}, or an iterative function like \texttt{RATE} failing to converge) & Check the inputs feeding the function make mathematical sense \\
+\texttt{\#REF!} & A formula refers to a cell that no longer exists --- most often because a referenced row/column/named-range source was deleted (Module 2, \S\,Named Ranges) & Retrace what was deleted; re-point the formula or restore the reference \\
+\texttt{\#VALUE!} & A formula receives the wrong \emph{type} of input --- e.g. arithmetic on a cell that actually contains text & Check for numbers stored as text (Module 1/2) or a stray non-numeric character \\
+\texttt{\#SPILL!} (365) & A dynamic-array formula's results would overflow into cells that are already occupied & Clear the cells in the spill's path, or wrap in a function that trims the array \\
+\texttt{\#CALC!} (365) & A dynamic-array function returns something Excel's calc engine cannot represent (e.g. an empty array) & Adjust the formula logic so the array is never empty \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{IFERROR and IFNA}
+
+\begin{formulasyntax}[IFERROR]
+\texttt{=IFERROR(value, value\_if\_error)} --- evaluates \texttt{value}; if it returns \emph{any} error code (all nine above), returns \texttt{value\_if\_error} instead. Broad by design: it does not distinguish which error occurred.
+\end{formulasyntax}
+
+\begin{formulasyntax}[IFNA]
+\texttt{=IFNA(value, value\_if\_na)} --- narrower than \texttt{IFERROR}: catches \emph{only} \texttt{\#N/A}, letting every other error code (a genuine \texttt{\#DIV/0!} or \texttt{\#REF!} bug) surface visibly rather than being silently hidden.
+\end{formulasyntax}
+
+\begin{pitfall}[IFERROR Can Hide a Real Bug, Not Just an Expected ``No Result'']
+Wrapping an entire complex formula in \texttt{IFERROR(\ldots, 0)} or \texttt{IFERROR(\ldots, "")} is tempting because it makes error codes disappear from a report --- but it also silently swallows a genuine \texttt{\#REF!} from a broken reference or a \texttt{\#DIV/0!} from a real logic bug, replacing a visible red flag with a quiet, wrong-looking zero. This is a common way subtly incorrect financial models pass a superficial visual review. The safer pattern is to wrap only the specific sub-expression expected to fail for a \emph{known, acceptable} reason (e.g. only the denominator of a ratio, only a lookup that legitimately might not find a match), using \texttt{IFNA} instead of \texttt{IFERROR} whenever the only acceptable failure mode is ``not found.''
+\end{pitfall}
+
+\subsection{IS-Family Testing Functions}
+
+\texttt{ISERROR}, \texttt{ISNA}, \texttt{ISBLANK}, \texttt{ISNUMBER}, and \texttt{ISTEXT} each return a plain \texttt{TRUE}/\texttt{FALSE} test, useful when you need custom branching \emph{based on} an error rather than just replacing it:
+
+\begin{lstlisting}[style=excelstyle, caption={A custom error message using IF + ISERROR, versus the simpler IFERROR}]
+=IF(ISERROR(C5/D5), "Check denominator", C5/D5)
+=IFERROR(C5/D5, "Check denominator")   ' equivalent, more concise
+\end{lstlisting}
+
+\begin{financeapp}
+\texttt{IFNA} wrapped around a VLOOKUP/XLOOKUP against a rate table is the standard pattern for a pricing or tax-bracket lookup where ``value not found'' should display a clean message (\texttt{"Rate not set"}) rather than a raw \texttt{\#N/A} in a client-facing report --- while a genuine \texttt{\#REF!} elsewhere in the same model, from an accidentally-deleted row, still surfaces and gets caught during review.
+\end{financeapp}
+
+\subsection{Python and SQL Equivalents}
+
+\begin{lstlisting}[style=pythonstyle, caption={try/except as the direct IFERROR equivalent, plus the vectorised pandas idiom}]
+def safe_divide(numerator, denominator):
+    try:
+        return numerator / denominator
+    except ZeroDivisionError:
+        return "Check denominator"
+
+# Vectorised equivalent over a whole column, avoiding a Python-level loop
+import numpy as np
+import pandas as pd
+df = pd.DataFrame({"num": [10, 20, 30], "den": [2, 0, 5]})
+df["ratio"] = np.where(df["den"] == 0, np.nan, df["num"] / df["den"])
+# pandas also raises no error on 0-division for floats -- it returns inf/-inf/nan
+# directly, which is arguably closer to Excel's #DIV/0! than a Python exception is
+\end{lstlisting}
+
+\begin{lstlisting}[style=sqlstyle, caption={NULLIF and COALESCE: SQL's guard-the-denominator and default-value patterns}]
+-- NULLIF turns a 0 denominator into NULL, which makes the division return NULL
+-- instead of raising a divide-by-zero error -- the SQL equivalent of guarding first
+SELECT
+    numerator,
+    denominator,
+    numerator / NULLIF(denominator, 0) AS ratio
+FROM ratio_inputs;
+
+-- COALESCE is the IFERROR/IFNA equivalent: first non-NULL value in the list
+SELECT COALESCE(numerator / NULLIF(denominator, 0), 0) AS safe_ratio
+FROM ratio_inputs;
+\end{lstlisting}
+
+% ==================================================================
+\section{Lookup Functions: VLOOKUP, HLOOKUP, XLOOKUP, and INDEX/MATCH}
+\label{sec:lookupfunctions}
+% ==================================================================
+
+\begin{keyconcept}
+Every function in this section solves the same problem: given a value you know (a lookup key), retrieve a related value you don't --- from somewhere else in the workbook. This is the single most-used analytical operation in Excel, and it is Excel's row-by-row simulation of what a relational database does natively with a \texttt{JOIN} (see the SQL box at the end of this section).
+\end{keyconcept}
+
+\subsection{VLOOKUP}
+\label{sec:vlookup}
+
+\begin{formulasyntax}[VLOOKUP]
+\texttt{=VLOOKUP(lookup\_value, table\_array, col\_index\_num, [range\_lookup])}
+\begin{itemize}
+  \item \texttt{lookup\_value} --- the key you're searching for.
+  \item \texttt{table\_array} --- the range to search, with the lookup key in its \emph{first (leftmost) column}.
+  \item \texttt{col\_index\_num} --- which column of \texttt{table\_array} to return, counted from 1 starting at the leftmost column of the range (not the worksheet's actual column letter).
+  \item \texttt{range\_lookup} --- \texttt{FALSE}/\texttt{0} for an \textbf{exact match} (the overwhelming majority of finance use cases: looking up an account ID, an employee ID, a ticker); \texttt{TRUE}/\texttt{1} (or omitted) for an \textbf{approximate match}, which requires the first column of \texttt{table\_array} to be sorted ascending and returns the largest value \emph{less than or equal to} \texttt{lookup\_value} --- the correct mode for a tax-bracket or fee-tier lookup against sorted breakpoints.
+\end{itemize}
+\end{formulasyntax}
+
+\begin{pitfall}[The Silent Approximate-Match Trap]
+\texttt{range\_lookup} defaults to \texttt{TRUE} if omitted entirely. Leaving it out on what should have been an exact-match lookup (an account ID, an invoice number) does not error --- it silently returns the nearest \emph{smaller} match in an unsorted or wrongly-sorted table, producing a plausible-looking but wrong value with zero warning. \textbf{Always type \texttt{FALSE} explicitly} unless you have deliberately chosen approximate-match for a genuinely sorted breakpoint table.
+\end{pitfall}
+
+\begin{pitfall}[VLOOKUP Cannot Look Left]
+\texttt{table\_array}'s lookup key must be in its \emph{first} column, and \texttt{col\_index\_num} can only count \emph{rightward} from there. If the value you actually want to retrieve sits in a column to the \emph{left} of the lookup key in the source data, VLOOKUP simply cannot reach it --- the table must be restructured, or \S\ref{sec:indexmatch} / \S\ref{sec:xlookup} used instead. This is the single biggest structural limitation that motivated both INDEX/MATCH and XLOOKUP.
+\end{pitfall}
+
+\begin{pitfall}[col\_index\_num Breaks When Columns Are Inserted or Deleted]
+Because \texttt{col\_index\_num} is a hardcoded integer, it does not automatically adjust when a column is inserted into or deleted from the middle of \texttt{table\_array} --- exactly the positional-fragility problem flagged as a general theme back in Module 1 and Module 2's preview of this module. Inserting a new column between the lookup key and the target column silently shifts what \texttt{col\_index\_num} actually points at, without any error.
+\end{pitfall}
+
+\begin{protip}[Lock \texttt{table\_array} Before You Fill Down]
+\texttt{table\_array} should almost always be an absolute reference (\key{F4} once, Module 2, \S\,Absolute vs.\ Relative References) before filling a VLOOKUP down a column --- otherwise the lookup range itself drifts by one row for every row the formula is copied down, eventually searching a range that no longer contains the real table at all.
+\end{protip}
+
+\subsection{HLOOKUP}
+
+\begin{formulasyntax}[HLOOKUP]
+\texttt{=HLOOKUP(lookup\_value, table\_array, row\_index\_num, [range\_lookup])} --- the exact horizontal mirror of VLOOKUP: the lookup key sits in the \emph{first row} of \texttt{table\_array}, and \texttt{row\_index\_num} counts \emph{downward} to the row being retrieved. Used when source data is laid out with categories running across columns rather than down rows (e.g. monthly figures as column headers) --- comparatively rare in practice, since most tabular data (and every database export) is row-oriented, but it appears in transposed summary tables and pivoted time-series layouts.
+\end{formulasyntax}
+
+\subsection{XLOOKUP}
+\label{sec:xlookup}
+
+XLOOKUP (Excel 2021/365 only) was built specifically to eliminate VLOOKUP's structural weaknesses.
+
+\begin{formulasyntax}[XLOOKUP]
+\texttt{=XLOOKUP(lookup\_value, lookup\_array, return\_array, [if\_not\_found], [match\_mode], [search\_mode])}
+\begin{itemize}
+  \item \texttt{lookup\_array} and \texttt{return\_array} are \textbf{separate} ranges --- the return column can be anywhere relative to the lookup column, including to its \emph{left}, solving VLOOKUP's biggest limitation directly.
+  \item \texttt{if\_not\_found} --- an optional built-in replacement value for a failed match, making a separate \texttt{IFNA} wrapper unnecessary in most cases.
+  \item \texttt{match\_mode} --- \texttt{0} = exact match (\textbf{the default}, notably the opposite default from VLOOKUP's approximate-match default), \texttt{-1} = exact match or next \emph{smaller} item, \texttt{1} = exact match or next \emph{larger} item, \texttt{2} = wildcard match.
+  \item \texttt{search\_mode} --- controls search direction/algorithm (first-to-last, last-to-first, or binary search on sorted data); rarely changed from its default.
+\end{itemize}
+\end{formulasyntax}
+
+\begin{lstlisting}[style=excelstyle, caption={XLOOKUP solving VLOOKUP's left-lookup problem directly, with a built-in not-found message}]
+=XLOOKUP(B5, AccountTable[AccountID], AccountTable[AccountName], "Account Not Found")
+\end{lstlisting}
+
+\begin{keyconcept}
+Because \texttt{lookup\_array} and \texttt{return\_array} are independently specified ranges rather than one \texttt{table\_array} plus a column offset, inserting or deleting a column between them has \emph{no effect at all} on an XLOOKUP formula --- it is structurally immune to the exact fragility that breaks VLOOKUP's \texttt{col\_index\_num}.
+\end{keyconcept}
+
+\begin{pitfall}[XLOOKUP Is a Compatibility Trap in Shared or Legacy Files]
+XLOOKUP does not exist in Excel 2019 and earlier (non-365 licenses), and a workbook containing it will show \texttt{\#NAME?} errors for anyone opening it in an older version. In any environment where the file might be opened outside Microsoft 365 --- a common constraint at organisations still on perpetual-license Excel --- INDEX/MATCH remains the safer, universally-compatible choice despite XLOOKUP's cleaner syntax.
+\end{pitfall}
+
+\subsection{INDEX and MATCH}
+\label{sec:indexmatch}
+
+Used together, \texttt{INDEX} and \texttt{MATCH} predate XLOOKUP by decades and solve the exact same left-lookup and column-insertion problems, at the cost of needing two nested functions instead of one.
+
+\begin{formulasyntax}[INDEX and MATCH]
+\texttt{=INDEX(array, row\_num, [col\_num])} --- returns the value at position (\texttt{row\_num}, \texttt{col\_num}) within \texttt{array}, counting from 1 at the array's own top-left corner.\\[4pt]
+\texttt{=MATCH(lookup\_value, lookup\_array, [match\_type])} --- returns the \emph{position number} where \texttt{lookup\_value} is found within \texttt{lookup\_array} (not the value itself). \texttt{match\_type}: \texttt{0} = exact match, \texttt{1} = largest value $\leq$ lookup (ascending-sorted array), \texttt{-1} = smallest value $\geq$ lookup (descending-sorted array).\\[4pt]
+Combined: \texttt{=INDEX(return\_array, MATCH(lookup\_value, lookup\_array, 0))} --- \texttt{MATCH} finds the row position, and \texttt{INDEX} retrieves the value at that position from a completely independent range, exactly like XLOOKUP's two-array design.
+\end{formulasyntax}
+
+\begin{lstlisting}[style=excelstyle, caption={INDEX/MATCH performing the same left-lookup XLOOKUP did above}]
+=INDEX(AccountTable[AccountName], MATCH(B5, AccountTable[AccountID], 0))
+\end{lstlisting}
+
+\begin{protip}[Two-Dimensional INDEX/MATCH: Looking Up by Row \emph{and} Column]
+Nesting a second \texttt{MATCH} inside \texttt{INDEX}'s \texttt{col\_num} argument performs a true two-way lookup --- finding a value at the intersection of a row key \emph{and} a column key, exactly the shape of a rate table or a two-variable sensitivity grid (\S\ref{sec:datatables}):
+\begin{lstlisting}[style=excelstyle]
+=INDEX(RateGrid, MATCH(RowKey, RowHeaders, 0), MATCH(ColKey, ColHeaders, 0))
+\end{lstlisting}
+\end{protip}
+
+\subsection{Choosing the Right Lookup Function}
+
+\begin{center}
+\begin{tabular}{@{}L{2.5cm}L{2.5cm}L{2.5cm}L{2.5cm}L{3.5cm}@{}}
+\toprule
+\textbf{} & \textbf{VLOOKUP} & \textbf{HLOOKUP} & \textbf{XLOOKUP} & \textbf{INDEX/MATCH} \\
+\midrule
+Direction & Vertical only & Horizontal only & Either & Either \\
+Can look left/up & No & No & Yes & Yes \\
+Default match & Approximate (risky) & Approximate & Exact (safe) & Exact if \texttt{0} set \\
+Survives column insert & No & No & Yes & Yes \\
+Excel version & All & All & 2021/365 only & All \\
+Built-in not-found value & No & No & Yes & No (wrap in IFNA) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{financeapp}
+Approximate-match VLOOKUP against a sorted breakpoint table is the textbook way to implement a tax bracket or a fee-tier lookup (a small table of \texttt{[0, rate1], [threshold1, rate2], [threshold2, rate3]\ldots}). Exact-match lookups (VLOOKUP with \texttt{FALSE}, or XLOOKUP/INDEX-MATCH) pull GL account descriptions from a chart-of-accounts table, pull a customer's credit rating by ID, or --- with the two-dimensional INDEX/MATCH pattern above --- retrieve a specific historical stock price given a date and a ticker from a matrix layout.
+\end{financeapp}
+
+\begin{pitfall}[\#N/A From ``Identical-Looking'' Values --- Type and Whitespace Mismatches]
+An exact-match lookup that fails with \texttt{\#N/A} despite the value visibly appearing in the table is almost always one of: (1) a type mismatch --- the lookup key is text \texttt{"1024"} in one place and a genuine number \texttt{1024} in the other (a direct callback to the numbers-stored-as-text issue from Modules 1--2); (2) trailing/leading whitespace invisible to the eye but present in the underlying string; (3) a genuinely different Unicode character that renders identically (common when data is pasted from a PDF or web source). \texttt{TRIM()} (\S\ref{sec:stringfunctions}) and \texttt{VALUE()} are the standard first checks.
+\end{pitfall}
+
+\subsection{Python and SQL Equivalents}
+
+\begin{keyconcept}
+This is the section where the Python and SQL equivalents are not just ``similar tools'' but the \emph{actual, native operations} that all four Excel lookup functions are manually simulating. A \texttt{VLOOKUP} is, function for function, one column of a \texttt{LEFT JOIN}.
+\end{keyconcept}
+
+\begin{lstlisting}[style=pythonstyle, caption={pandas: .map() for a simple single-column lookup, merge() for the full VLOOKUP/INDEX-MATCH equivalent}]
+import pandas as pd
+
+accounts = pd.DataFrame({
+    "AccountID": [101, 102, 103],
+    "AccountName": ["Cash", "Accounts Receivable", "Inventory"],
+})
+transactions = pd.DataFrame({"AccountID": [102, 101, 103, 999]})
+
+# --- .map(): the simplest case, a dict-like single-column lookup ---
+lookup_dict = accounts.set_index("AccountID")["AccountName"]
+transactions["AccountName"] = transactions["AccountID"].map(lookup_dict)
+# Unmatched keys (999) become NaN automatically -- pandas's version of #N/A
+
+# --- merge(): the full VLOOKUP/XLOOKUP/INDEX-MATCH equivalent, join-based ---
+result = transactions.merge(accounts, on="AccountID", how="left")
+# how="left" keeps every transaction row even if no account match is found,
+# exactly mirroring VLOOKUP's behaviour of returning #N/A rather than dropping the row
+\end{lstlisting}
+
+\begin{lstlisting}[style=sqlstyle, caption={LEFT JOIN: the native, set-based version of every lookup function above, in one pass over the whole table}]
+SELECT
+    t.transaction_id,
+    t.account_id,
+    a.account_name          -- NULL here is SQL's #N/A: no match found
+FROM transactions AS t
+LEFT JOIN chart_of_accounts AS a
+    ON t.account_id = a.account_id;
+\end{lstlisting}
+
+\begin{protip}[Why This Comparison Matters for a Tech-Background Learner]
+A \texttt{VLOOKUP} runs its search logic once \emph{per formula, per row}, refetching and re-searching the table array every single time it's copied down a column of thousands of rows --- \texttt{JOIN} performs the equivalent match for every row in one optimised, indexable, set-based pass. This is precisely why a spreadsheet with thousands of VLOOKUP formulas against a large table becomes noticeably slow (tying back to Module 2's calculation-mode discussion), while the equivalent SQL \texttt{JOIN} or pandas \texttt{merge()} over the same data volume is close to instantaneous --- the lookup family is genuinely one of the strongest cases in this entire handbook for reaching for a database instead of a spreadsheet once row counts grow large.
+\end{protip}
+
+% ==================================================================
+\section{String Functions}
+\label{sec:stringfunctions}
+% ==================================================================
+
+Real-world data is rarely clean. String functions turn messy, glued-together text into structured, usable values --- as a \emph{live formula}, unlike Text to Columns (Module 2), which only acts once on a fixed selection.
+
+\subsection{Extracting Substrings by Position}
+
+\begin{formulasyntax}[LEFT, RIGHT, MID]
+\texttt{=LEFT(text, [num\_chars])} --- the first \texttt{num\_chars} characters.\\
+\texttt{=RIGHT(text, [num\_chars])} --- the last \texttt{num\_chars} characters.\\
+\texttt{=MID(text, start\_num, num\_chars)} --- \texttt{num\_chars} characters starting at position \texttt{start\_num}.
+\end{formulasyntax}
+
+\subsection{Finding a Position, and Extracting by It}
+
+\begin{formulasyntax}[FIND and SEARCH]
+\texttt{=FIND(find\_text, within\_text, [start\_num])} --- \textbf{case-sensitive}, no wildcards; returns the character position of the first match, or \texttt{\#VALUE!} if not found.\\
+\texttt{=SEARCH(find\_text, within\_text, [start\_num])} --- identical, but \textbf{case-insensitive} and \textbf{supports wildcards} (\texttt{*}, \texttt{?}).
+\end{formulasyntax}
+
+Combining \texttt{FIND}/\texttt{SEARCH} with \texttt{LEFT}/\texttt{MID} extracts a variable-length substring around a delimiter --- the exact live-formula version of what Text to Columns does once, statically:
+
+\begin{lstlisting}[style=excelstyle, caption={Extracting the year and the sequence number from "INV-2026-00451" without Text to Columns}]
+=MID(A2, FIND("-",A2)+1, 4)                      ' -> 2026
+=MID(A2, FIND("-",A2,FIND("-",A2)+1)+1, 5)        ' -> 00451
+\end{lstlisting}
+
+\begin{financeapp}
+This directly answers the weakness Module 2 identified in Text to Columns --- that it is a one-time operation that doesn't cover rows added later. A formula built with \texttt{FIND}/\texttt{MID} re-parses every new invoice number automatically as rows are appended below, with no need to ever re-run a wizard.
+\end{financeapp}
+
+\subsection{Cleaning Text}
+
+\begin{formulasyntax}[TRIM and CLEAN]
+\texttt{=TRIM(text)} --- removes leading/trailing spaces and collapses multiple internal spaces to one (does \emph{not} remove tabs or line breaks). \texttt{=CLEAN(text)} --- strips non-printable control characters, common in data pasted from a PDF or a legacy system export.
+\end{formulasyntax}
+
+\begin{pitfall}[TRIM Is the First Fix for the \#N/A Whitespace Trap]
+The invisible-whitespace lookup failure flagged in \S\ref{sec:lookupfunctions} is fixed precisely by wrapping the lookup key in \texttt{TRIM()} on both sides of the match --- one of the most common single-line fixes in real financial-data cleanup work.
+\end{pitfall}
+
+\subsection{Case Conversion}
+
+\texttt{=UPPER(text)}, \texttt{=LOWER(text)}, \texttt{=PROPER(text)} (capitalises the first letter of each word) --- used to standardise inconsistent capitalisation before an exact-match lookup or a duplicate check, since Excel's lookup functions are not case-sensitive by default but visually inconsistent casing still looks unprofessional in a report.
+
+\subsection{Joining Text}
+
+\begin{formulasyntax}[CONCATENATE, CONCAT, TEXTJOIN, and \&]
+\texttt{=A1\&" "\&B1} --- the \texttt{\&} operator, the simplest way to join text, available in every version.\\
+\texttt{=CONCATENATE(text1, text2, \ldots)} --- the original function form; Microsoft has marked it legacy in favour of \texttt{CONCAT}.\\
+\texttt{=CONCAT(text1, text2, \ldots)} --- its modern replacement; also accepts ranges directly.\\
+\texttt{=TEXTJOIN(delimiter, ignore\_empty, text1, [text2], \ldots)} --- joins a whole range with a chosen delimiter in one call, and can skip blank cells automatically --- meaningfully more capable than the other three for joining a variable-length list (e.g. a comma-separated list of active product codes) without manually chaining dozens of \texttt{\&} operators.
+\end{formulasyntax}
+
+\begin{financeapp}
+\texttt{TEXTJOIN} is the standard way to build a dynamic report title (\texttt{="Monthly P\&L --- "\&TEXT(EOMONTH(TODAY(),0),"mmmm yyyy")}, combining a text function with the \texttt{EOMONTH} date function from \S\ref{sec:datefunctions}) so the title updates itself every month instead of being retyped.
+\end{financeapp}
+
+\subsection{Replacing Text: SUBSTITUTE vs.\ REPLACE}
+
+\begin{formulasyntax}[SUBSTITUTE and REPLACE]
+\texttt{=SUBSTITUTE(text, old\_text, new\_text, [instance\_num])} --- replaces based on \emph{matching text content}; optionally target only the $n$-th occurrence.\\
+\texttt{=REPLACE(old\_text, start\_num, num\_chars, new\_text)} --- replaces based on \emph{fixed character position}, regardless of what text is actually there.
+\end{formulasyntax}
+
+Use \texttt{SUBSTITUTE} when you know \emph{what} to replace (e.g. every hyphen with a space); use \texttt{REPLACE} when you know \emph{where} to replace (e.g. always mask the first four digits of an account number, whatever those digits happen to be).
+
+\subsection{Number-Text Conversion: TEXT and VALUE}
+
+\begin{formulasyntax}[TEXT and VALUE]
+\texttt{=TEXT(value, format\_text)} --- converts a number/date into a formatted \emph{text string}, using the same format-code syntax as the Number Format dialog (Module 1). Essential for embedding a formatted number inside a joined text string, since \texttt{\&} otherwise displays the raw unformatted value.\\
+\texttt{=VALUE(text)} --- the reverse: converts numeric-looking text back into a genuine number, a formula-based alternative to Module 2's Text-to-Columns ``silent fix'' for numbers stored as text.
+\end{formulasyntax}
+
+\begin{pitfall}[FIND/SEARCH Return \#VALUE! When Nothing Is Found]
+Unlike a lookup function's \texttt{\#N/A}, a failed \texttt{FIND} or \texttt{SEARCH} returns \texttt{\#VALUE!} --- easy to mis-diagnose as a type error elsewhere in the formula rather than ``the delimiter wasn't present in this particular cell.'' Wrap in \texttt{IFERROR} (\S\ref{sec:errorhandling}) whenever the delimiter isn't guaranteed to exist in every row.
+\end{pitfall}
+
+\subsection{Python and SQL Equivalents}
+
+\begin{lstlisting}[style=pythonstyle, caption={String slicing and pandas' vectorised .str accessor}]
+s = "INV-2026-00451"
+year = s[4:8]          # LEFT/MID equivalent via slicing
+seq  = s[9:]            # RIGHT-style slice to the end
+
+import pandas as pd
+df = pd.DataFrame({"invoice": ["INV-2026-00451", "INV-2026-00452"]})
+df["year"] = df["invoice"].str.split("-").str[1]        # split-based extraction
+df["clean_name"] = df["invoice"].str.strip().str.upper()  # TRIM + UPPER equivalent
+df["joined"] = df["invoice"].str.cat(df["year"], sep=" | ")  # TEXTJOIN equivalent
+df["masked"] = df["invoice"].str.replace(r"^\w+", "XXX", regex=True)  # REPLACE-by-position idea
+\end{lstlisting}
+
+\begin{lstlisting}[style=sqlstyle, caption={The direct SQL string-function equivalents}]
+SELECT
+    invoice_number,
+    SUBSTRING(invoice_number FROM 5 FOR 4)      AS invoice_year,   -- MID equivalent
+    TRIM(invoice_number)                        AS trimmed,
+    UPPER(invoice_number)                       AS upper_form,
+    CONCAT(invoice_number, ' - ', status)       AS joined,
+    REPLACE(invoice_number, '-', ' ')           AS substitute_equiv
+FROM invoices;
+\end{lstlisting}
+
+% ==================================================================
+\section{What-If Analysis}
+\label{sec:whatif}
+% ==================================================================
+
+\subsection{The Core Idea}
+\label{sec:whatifintro}
+
+\begin{keyconcept}
+Every formula you have built so far answers a \emph{forward} question: given these inputs, compute this output. \textbf{What-If Analysis} is the family of tools built for the reverse and the exploratory questions that a single static formula cannot answer on its own: \emph{``If this input changes, what happens to that output?''} and \emph{``What input value do I need to hit a specific target output?''} Three built-in tools, all under \textbf{Data} tab $\rightarrow$ \textbf{Forecast} group $\rightarrow$ \textbf{What-If Analysis}, answer three distinct shapes of this question:
+\end{keyconcept}
+
+\begin{center}
+\begin{tabular}{@{}L{2.6cm}L{5.2cm}L{4.6cm}@{}}
+\toprule
+\textbf{Tool} & \textbf{Question it answers} & \textbf{Direction} \\
+\midrule
+\textbf{Data Table} & ``Show me the output across a whole range of one or two input values, all at once.'' & Forward: many inputs $\to$ many outputs, one formula \\
+\textbf{Scenario Manager} & ``Show me the output under a few named, curated combinations of several inputs at once.'' & Forward: several named input bundles $\to$ one output snapshot each \\
+\textbf{Goal Seek} & ``What single input value do I need, to make this output hit an exact target?'' & Backward: one target output $\to$ one solved input \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Data Tables}
+\label{sec:datatables}
+
+A \textbf{Data Table} recalculates a model's output formula repeatedly, once for every value in a test range, and lays the results out in a grid --- without you writing a separate formula for each test value.
+
+\subsubsection{One-Variable Data Table}
+
+\begin{formulasyntax}[Building a One-Variable Data Table]
+\begin{enumerate}
+  \item List the test values for the one input you want to vary, down a column (or across a row).
+  \item In the cell diagonally adjacent to the top of that list (one row up, one column over), enter a formula that references the model's output cell --- e.g. \texttt{=NetProfit}.
+  \item Select the entire block: the output-reference cell, the column of test values, and the empty column beside them where results will appear.
+  \item \textbf{Data} $\rightarrow$ \textbf{What-If Analysis} $\rightarrow$ \textbf{Data Table}. If your test values run \emph{down a column}, enter the model's real input cell in \textbf{Column Input Cell} and leave \textbf{Row Input Cell} blank (and vice versa if your test values run across a row).
+\end{enumerate}
+\end{formulasyntax}
+
+\begin{pitfall}[The Row/Column Input Cell Naming Is Backwards From What Most People Expect]
+The single most common Data Table mistake: the \textbf{Row Input Cell} box is for test values arranged \emph{across a row} (i.e. one row of values, tested by substituting each one into a single input cell), and \textbf{Column Input Cell} is for test values arranged \emph{down a column}. It is easy to instinctively reach for ``Row Input Cell'' because you're thinking about the model's input row, rather than about where your test values themselves are positioned --- the box you need is determined entirely by the \emph{orientation of your test-value list}, not by anything about the model.
+\end{pitfall}
+
+\subsubsection{Two-Variable Data Table}
+
+A two-variable table varies \emph{two} inputs simultaneously, one down the rows and one across the columns, tracking a single output at every intersection.
+
+\begin{figure}[h]
+\centering
+\begin{tcolorbox}[width=0.95\linewidth,colback=white,colframe=rulegray,boxrule=0.5pt,arc=1pt]
+\centering\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Net Profit} & \multicolumn{4}{c}{\textbf{Sales test values}} \\
+\cmidrule(l){2-5}
+\textbf{COGS} & \textbf{280,000} & \textbf{295,000} & \textbf{310,000} & \textbf{325,000} \\
+\midrule
+200,000 & 37,920 & 45,030 & 52,140 & 59,250 \\
+215,000 & 30,810 & 37,920 & 45,030 & 52,140 \\
+230,000 & 23,700 & 30,810 & 37,920 & 45,030 \\
+250,000 & 14,220 & 21,330 & 28,440 & 35,550 \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+\caption{A two-variable Data Table: Sales test values run across the top row, COGS test values run down the left column, and every interior cell is Net Profit recalculated for that Sales/COGS combination. In Excel, the top-left corner cell contains a live reference such as \texttt{=NetProfit}, not a text label, and must sit exactly at the top-left of the selected block.}
+\label{fig:datatable2var}
+\end{figure}
+
+\begin{formulasyntax}[Building a Two-Variable Data Table]
+\begin{enumerate}
+  \item Top-left corner cell of the block: a formula referencing the model's output (here, \texttt{=NetProfit}) --- \emph{not} a text label.
+  \item Across the top row, to the right of the corner cell: the test values for the input that will vary by column (Sales, in Figure~\ref{fig:datatable2var}).
+  \item Down the left column, below the corner cell: the test values for the input that will vary by row (COGS, in Figure~\ref{fig:datatable2var}).
+  \item Select the \emph{entire} block --- corner cell, top row of values, left column of values, and every empty cell in between.
+  \item \textbf{Data} $\rightarrow$ \textbf{What-If Analysis} $\rightarrow$ \textbf{Data Table}. \textbf{Row Input Cell} = the model's real Sales input cell (because Sales values run \emph{across the top row}); \textbf{Column Input Cell} = the model's real COGS input cell (because COGS values run \emph{down the left column}).
+\end{enumerate}
+Excel fills every interior cell with an array formula of the form \texttt{\{=TABLE(row\_input\_cell, column\_input\_cell)\}} --- you cannot see or edit this text directly the way you edit a normal formula, and you cannot delete just one cell of the result grid; the whole table must be cleared together.
+\end{formulasyntax}
+
+\begin{keyconcept}
+A Data Table is not a separate calculation engine --- it silently re-runs the \emph{entire real model}, once per grid cell, substituting each test-value pair into the actual input cells each time. This is exactly why a large two-variable Data Table (say, a 20$\times$20 grid) can make a heavy model noticeably sluggish: Excel is recalculating the whole workbook 400 times in the background. This directly connects to the calculation-mode discussion in Module 2 (\S\,Excel Options): \textbf{Automatic Except for Data Tables} is a calculation mode built specifically to let everything else in the workbook recalculate live while Data Tables only refresh on \key{F9}, precisely to prevent this slowdown.
+\end{keyconcept}
+
+\begin{financeapp}
+The Figure~\ref{fig:datatable2var} example --- Net Profit sensitivity to Sales and COGS --- is the textbook two-way sensitivity table used throughout equity research and LBO models. Notice that this achieves the identical \emph{visible result} as the manually-built, mixed-reference sensitivity grid constructed in Module 2's worked example (\S\,Worked Example, using \texttt{\$B7} and \texttt{C\$6}-style mixed references written by hand). The trade-off between the two approaches is real: a Data Table re-runs your \emph{actual} model logic exactly as built (no risk of the grid's formula drifting out of sync with the real model), but produces an opaque array formula that is harder to audit cell-by-cell; a manually-built mixed-reference grid is fully auditable and portable to another sheet, but requires you to correctly re-derive the model's formula inside the grid itself, with a real risk of that copy silently diverging from the real model over time.
+\end{financeapp}
+
+\begin{pitfall}[The Corner Cell Must Be a Formula, Not a Label]
+Typing a text label like \texttt{"Net Profit Sensitivity"} into the corner cell instead of an actual formula reference (\texttt{=NetProfit}) is a common early mistake --- Data Table needs a genuine live reference there to know what output to track through every recalculation.
+\end{pitfall}
+
+\subsection{Scenario Manager}
+\label{sec:scenariomanager}
+
+Where a Data Table exhaustively tests every combination across a continuous range of one or two inputs, \textbf{Scenario Manager} does the opposite: it lets \emph{many} inputs change together, but only for a small, deliberately curated, named set of combinations --- ``Best Case,'' ``Base Case,'' ``Worst Case,'' rather than every possible value.
+
+\begin{formulasyntax}[Creating and Adding Scenarios]
+\begin{enumerate}
+  \item \textbf{Data} $\rightarrow$ \textbf{What-If Analysis} $\rightarrow$ \textbf{Scenario Manager} $\rightarrow$ \textbf{Add}.
+  \item \textbf{Scenario name} --- a descriptive label (e.g. \texttt{"Best Case"}).
+  \item \textbf{Changing cells} --- select every input cell this scenario should control; hold \key{Ctrl} to select multiple non-adjacent cells (e.g. a growth-rate assumption \emph{and} a margin assumption \emph{and} an interest-rate assumption, all in one scenario).
+  \item \textbf{Comment} --- auto-populated with your name and the creation date; editable.
+  \item Click \textbf{OK}, then enter the specific value each changing cell should take \emph{under this scenario} in the next dialog.
+  \item To \textbf{add more scenarios}, click \textbf{Add} again from the main Scenario Manager dialog and repeat --- each new scenario reuses the \emph{same} set of changing cells (Excel remembers them after the first scenario is created) but stores a different value for each.
+\end{enumerate}
+\end{formulasyntax}
+
+Selecting a scenario from the list and clicking \textbf{Show} instantly overwrites every changing cell in the live worksheet with that scenario's stored values, letting you watch every dependent formula --- including charts --- update in real time.
+
+\subsubsection{Analysing Multiple Scenarios at Once: The Scenario Summary Report}
+
+Clicking \textbf{Show} one scenario at a time is fine for spot-checking, but comparing every scenario side by side needs the \textbf{Summary} button inside the Scenario Manager dialog.
+
+\begin{figure}[h]
+\centering
+\begin{tcolorbox}[width=0.78\linewidth,colback=white,colframe=rulegray,boxrule=0.5pt,arc=1pt]
+\centering\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \textbf{Current} & \textbf{Best Case} & \textbf{Base Case} & \textbf{Worst Case} \\
+\midrule
+\multicolumn{5}{@{}l}{\textbf{Changing Cells}} \\
+Sales & 300,000 & 340,000 & 300,000 & 260,000 \\
+COGS & 210,000 & 220,000 & 210,000 & 205,000 \\
+Margin & 20\% & 24\% & 20\% & 15\% \\
+\addlinespace
+\multicolumn{5}{@{}l}{\textbf{Result Cells}} \\
+Net Profit & 14,220 & 22,752 & 14,220 & 6,517 \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+\caption{A Scenario Summary report, generated automatically on a new worksheet. \textbf{Changing Cells} (here \texttt{\$C\$4} and \texttt{\$C\$3}) are shown first, shaded grey, with each scenario's stored input values in its own column; \textbf{Result Cells} (\texttt{\$C\$13}, the tracked output) follow below, showing what that output computes to under each scenario. The ``Current Values'' column is a frozen snapshot of the changing cells' values \emph{at the moment the report was generated} --- it does not represent any scenario you saved.}
+\label{fig:scenariosummary}
+\end{figure}
+
+\begin{formulasyntax}[Generating a Scenario Summary]
+Scenario Manager $\rightarrow$ \textbf{Summary} $\rightarrow$ choose \textbf{Scenario Summary} (a static outlined worksheet, as in Figure~\ref{fig:scenariosummary}) or \textbf{Scenario PivotTable} (the same comparison, but pivotable/filterable like a normal PivotTable) $\rightarrow$ select the \textbf{Result cells} you want tracked (the output cell(s) whose value should be shown for every scenario --- \texttt{\$C\$13} in the figure).
+\end{formulasyntax}
+
+\begin{keyconcept}
+This is Scenario Manager's core advantage over a Data Table: it can vary \textbf{several inputs simultaneously as one named bundle} (a growth rate \emph{and} a margin \emph{and} a tax rate together, all shifting at once for ``Recession''), which a Data Table --- capped at two varying inputs --- structurally cannot do. The cost is coverage: Scenario Manager only shows you the handful of specific combinations you explicitly defined, not every possible combination across a continuous range.
+\end{keyconcept}
+
+\begin{pitfall}[The Scenario Summary Report Is a Static Snapshot, Not a Live View]
+The worksheet generated by \textbf{Summary} is a frozen picture of the scenarios \emph{as they existed at the moment you clicked Summary}. If you later edit a scenario's stored values (Scenario Manager $\rightarrow$ \textbf{Edit}), the existing Scenario Summary sheet does \emph{not} update --- you must regenerate it. This is the opposite behaviour from a Data Table, which is always live. Always re-run Summary after editing any scenario before sharing a report built from it.
+\end{pitfall}
+
+\begin{pitfall}[Changing Cells Should Be Genuine Inputs, Not Formulas]
+Scenario Manager works by literally overwriting the stored value into each changing cell when you click \textbf{Show} --- it is designed for pure input/assumption cells, not formula cells. Selecting a formula cell as a ``changing cell'' means Show will overwrite that formula with a hardcoded number, silently breaking it.
+\end{pitfall}
+
+\begin{financeapp}
+Bull/Base/Bear equity-research cases, each bundling a revenue-growth assumption, a margin assumption, and a discount-rate assumption together under one named scenario, are the canonical Scenario Manager use case --- precisely matching Figure~\ref{fig:scenariosummary}'s pattern of naming and comparing distinct \texttt{Net profit} outcomes (labelled \texttt{Net profit} and \texttt{NP2} in the figure) side by side against a shared set of changing cells.
+\end{financeapp}
+
+\subsection{Goal Seek}
+\label{sec:goalseek}
+
+Goal Seek reverses the usual direction of a formula: instead of computing an output from inputs, you specify the \emph{output you want} and Goal Seek iteratively solves backward for the single input value that produces it.
+
+\begin{figure}[h]
+\centering
+\begin{tcolorbox}[width=0.72\linewidth,colback=black!2,colframe=rulegray,title={Goal Seek},coltitle=black,fonttitle=\bfseries,boxrule=0.6pt,arc=1pt]
+\small
+\begin{tabular}{@{}L{3.2cm}L{4.8cm}@{}}
+\textbf{Set cell:} & \texttt{\$G\$9} \\
+\textbf{To value:} & \texttt{15000} \\
+\textbf{By changing cell:} & \texttt{SalesInput} \\
+\end{tabular}
+\hfill\key{OK}\quad\key{Cancel}
+\end{tcolorbox}
+\caption{The Goal Seek dialog, mid-setup on an income-statement model. \textbf{Set cell} (\texttt{\$G\$9}) must contain a formula --- here, one of the income statement's subtotal cells. \textbf{To value} (\texttt{15000}) is the exact numeric target you want that formula to equal. \textbf{By changing cell} is left to be filled with the single input cell Goal Seek is allowed to adjust (typically an upstream driver such as Sales) to make \texttt{\$G\$9} hit \texttt{15000}.}
+\label{fig:goalseek}
+\end{figure}
+
+\begin{formulasyntax}[Using Goal Seek]
+\begin{enumerate}
+  \item \textbf{Data} $\rightarrow$ \textbf{What-If Analysis} $\rightarrow$ \textbf{Goal Seek}.
+  \item \textbf{Set cell} --- the cell containing the formula/output you want to hit a target (must be a formula, not a hardcoded value).
+  \item \textbf{To value} --- type the exact target number, hardcoded (not a cell reference).
+  \item \textbf{By changing cell} --- the \emph{single} input cell Goal Seek is allowed to vary; this cell must feed into \textbf{Set cell}'s formula chain, directly or indirectly.
+  \item Click \textbf{OK}. Excel runs an internal iterative search (conceptually similar to a numerical root-finding method) and reports a \textbf{Goal Seek Status} dialog.
+\end{enumerate}
+\end{formulasyntax}
+
+\subsubsection{Reading the Goal Seek Status Dialog}
+
+After solving, the status dialog reports either \textit{``Goal Seeking with Cell [X] found a solution''} or \textit{``Goal Seeking with Cell [X] may not have found a solution''}, alongside the \textbf{Target value} you asked for and the \textbf{Current value} it actually reached:
+
+\begin{itemize}
+  \item If \textbf{Target value} and \textbf{Current value} match (or are within Excel's internal convergence tolerance --- by default, up to 100 iterations or until the change between iterations falls below 0.001), the solve succeeded, and clicking \textbf{OK} commits the found value permanently into the changing cell.
+  \item If Excel reports it \emph{may not have} found a solution, the relationship between the changing cell and the target either isn't smooth/monotonic enough for the iterative search to converge, or the target is genuinely unreachable within the model's logic (e.g. asking for a Sales figure that would require a negative COGS elsewhere) --- in this state, do not trust the reported ``Current value''; treat it as a failed search rather than an approximate answer.
+\end{itemize}
+
+\begin{pitfall}[Goal Seek Has No Concept of Constraints]
+Goal Seek will happily report a ``solution'' that is a negative Sales figure, an interest rate above 100\%, or any other value that is mathematically consistent with the formula but practically nonsensical --- it has no built-in bounds or plausibility checks. Always sanity-check the solved value, not just whether Status reports success. The \textbf{Solver} add-in (not covered in this module, but worth knowing by name) extends this exact idea with actual constraints and multiple simultaneous changing cells --- the natural next tool once Goal Seek's one-input, one-target, no-constraints design becomes limiting.
+\end{pitfall}
+
+\begin{pitfall}[Goal Seek Permanently Overwrites the Changing Cell]
+Clicking \textbf{OK} on the Status dialog writes the solved value directly into \textbf{By changing cell}, overwriting whatever was there --- including a real planning assumption you may still need elsewhere. If you only want to \emph{see} whether a target is reachable without committing the change, click \textbf{Cancel} instead of \textbf{OK}; the sheet reverts to its pre-Goal-Seek state untouched. If you did click OK and need the original value back, \key{Ctrl+Z} immediately undoes it as a single step.
+\end{pitfall}
+
+\begin{financeapp}
+Classic Goal Seek questions: ``What Sales figure sets Net Profit exactly to break-even (zero)?''; ``What discount rate makes an investment's NPV exactly zero?'' (manually deriving what a dedicated \texttt{IRR} function, covered in a later module, computes directly); ``What Sales growth rate is required to satisfy an EBITDA-margin debt covenant?'' Figure~\ref{fig:goalseek}'s example --- solving for whatever upstream driver makes a subtotal hit \texttt{15000} --- is exactly this pattern.
+\end{financeapp}
+
+\subsection{Choosing the Right What-If Tool}
+
+\begin{center}
+\begin{tabular}{@{}L{2.5cm}L{2.9cm}L{2.3cm}L{2.2cm}L{2.6cm}@{}}
+\toprule
+\textbf{} & \textbf{Goal Seek} & \textbf{1-Var Table} & \textbf{2-Var Table} & \textbf{Scenario Mgr} \\
+\midrule
+Question direction & Backward & Forward & Forward & Forward \\
+Inputs varied & 1 & 1 & 2 & Any number \\
+Outputs tracked & 1 & Any number & 1 & Any number \\
+Coverage & 1 exact target & Full range & Full grid & A few named bundles \\
+Result form & Single value & Column/row & Grid & Comparison report \\
+Live or static & Live cell change & Live grid & Live grid & Static report \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Python and SQL Equivalents}
+
+\begin{keyconcept}
+This is the one place in the handbook so far where the three-way translation genuinely breaks down for one of the tools --- and it is worth stating honestly rather than forcing a strained equivalent. Data Tables and Scenario Manager translate naturally into Python (and, with real effort, into SQL); Goal Seek's backward, iterative-solving nature has no clean SQL equivalent at all, because SQL is not an iterative numerical solver.
+\end{keyconcept}
+
+\begin{lstlisting}[style=pythonstyle, caption={All three What-If tools in Python: this is dramatically less friction than in Excel, because a Python function already takes parameters}]
+import itertools
+import numpy as np
+import pandas as pd
+from scipy.optimize import brentq
+
+def net_profit(sales, cogs, tax_rate=0.21):
+    gross_profit = sales - cogs
+    ebt = gross_profit * 0.6          # simplified: SG&A/EBITDA/D&A/Interest folded in
+    return ebt * (1 - tax_rate)
+
+# --- Two-Variable Data Table equivalent: itertools.product + a comprehension ---
+sales_values = np.arange(280000, 330000, 5000)
+cogs_values  = np.arange(200000, 255000, 5000)
+grid = pd.DataFrame(
+    [[net_profit(s, c) for s in sales_values] for c in cogs_values],
+    index=cogs_values, columns=sales_values
+)  # a Data Table is really just a nested loop that Excel hides behind a dialog
+
+# --- Scenario Manager equivalent: a dict of named input bundles ---
+scenarios = {
+    "Best Case":  {"sales": 325000, "cogs": 200000},
+    "Base Case":  {"sales": 291550.5, "cogs": 228429.8},
+    "Worst Case": {"sales": 280000, "cogs": 250000},
+}
+summary = pd.Series({name: net_profit(**inputs) for name, inputs in scenarios.items()})
+
+# --- Goal Seek equivalent: scipy's root-finder solves backward for Sales ---
+target_profit = 15000
+solved_sales = brentq(lambda s: net_profit(s, 228429.8) - target_profit,
+                       a=0, b=10_000_000)
+\end{lstlisting}
+
+\begin{protip}[Why What-If Analysis Feels Clunky in Excel but Trivial in Python]
+A Python function inherently \emph{takes parameters} --- calling \texttt{net\_profit(325000, 200000)} a hundred times with different arguments is just a loop. An Excel formula, by contrast, is permanently wired to specific cell addresses; there is no native way to ``call the Net Profit formula with different inputs'' without physically changing what's in those cells first. Goal Seek, Data Tables, and Scenario Manager exist \emph{specifically} to work around that structural limitation --- they are Excel's compensating mechanisms for not having first-class functions with parameters, which is precisely why the equivalent operations require no special named tool at all in Python.
+\end{protip}
+
+\begin{lstlisting}[style=sqlstyle, caption={Data Table and Scenario Manager translate into SQL reasonably well via CROSS JOIN; Goal Seek genuinely does not}]
+-- Two-Variable Data Table equivalent: CROSS JOIN two input-value tables,
+-- the same pattern used in Module 2's worked-example sensitivity grid
+SELECT
+    sv.sales_test, cv.cogs_test,
+    (sv.sales_test - cv.cogs_test) * 0.6 * (1 - 0.21) AS net_profit
+FROM sales_test_values AS sv
+CROSS JOIN cogs_test_values AS cv;
+
+-- Scenario Manager equivalent: a table of named scenarios, one row each
+SELECT scenario_name,
+       (sales - cogs) * 0.6 * (1 - 0.21) AS net_profit
+FROM scenario_assumptions;
+
+-- Goal Seek: no honest native equivalent. Standard SQL has no iterative numerical
+-- solver; simulating one requires either a recursive CTE that manually re-implements
+-- an approximation algorithm, or -- more realistically -- pulling the data out to
+-- Python/scipy as above. This is a genuine capability gap, not a missing keyword.
+\end{lstlisting}
+
+% ==================================================================
+\section{Core Financial Functions: PMT and Date Functions}
+% ==================================================================
+
+\subsection{The PMT Function}
+\label{sec:pmtfunction}
+
+\begin{formulasyntax}[PMT]
+\texttt{=PMT(rate, nper, pv, [fv], [type])}
+\begin{itemize}
+  \item \texttt{rate} --- the \textbf{periodic} interest rate --- must be expressed in the \emph{same period} as \texttt{nper} (a monthly \texttt{nper} needs a monthly \texttt{rate}, i.e. the annual rate divided by 12).
+  \item \texttt{nper} --- the total number of payment periods over the life of the loan, in that same period unit.
+  \item \texttt{pv} --- present value, the loan principal (or investment amount).
+  \item \texttt{fv} --- future value (optional, defaults to \texttt{0} --- a loan fully paid off by the end of \texttt{nper}).
+  \item \texttt{type} --- \texttt{0} (default) for payments due at the \emph{end} of each period (an ordinary annuity --- the standard case for a loan), \texttt{1} for payments due at the \emph{start} of each period (an annuity due --- typical for a lease).
+\end{itemize}
+\end{formulasyntax}
+
+\begin{figure}[h]
+\centering
+\begin{tcolorbox}[width=0.62\linewidth,colback=excelgreenlight,colframe=excelgreen,boxrule=0.6pt,arc=1pt]
+\centering\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Input / calculation} & \textbf{Value} \\
+\midrule
+Loan principal & 500,000 \\
+Annual rate & 10\% \\
+Term & 5 years \\
+Monthly rate & \texttt{=10\%/12} \\
+Payment periods & \texttt{=5*12} \\
+\midrule
+Monthly payment & \textbf{10,623.52} \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+\caption{A worked PMT example: a Rs.\,500,000 loan at a 10\% annual rate over 5 years, paid monthly. The annual rate and year count are converted to a monthly rate (\texttt{r = 0.0083333}) and 60 payment periods before \texttt{=PMT(C7,C8,-500000)} returns Rs.\,10,623.52 per month.}
+\label{fig:pmt}
+\end{figure}
+
+\begin{keyconcept}[The Golden Rule of PMT --- Match the Period]
+The single most common PMT error is mixing an annual rate with a monthly \texttt{nper} (or vice versa). Figure~\ref{fig:pmt}'s example shows the correct conversion pattern explicitly, in two separate helper cells (\texttt{C7} = \texttt{rate/12}, \texttt{C8} = \texttt{years*12}) rather than trying to do the conversion inline inside the PMT call --- a strongly recommended habit, since it makes the period-matching step visible and auditable rather than buried inside a single dense formula.
+\end{keyconcept}
+
+\begin{keyconcept}[The Sign Convention]
+Excel's financial functions follow a strict \textbf{cash-flow sign convention}: money flowing \emph{out} of you is negative, money flowing \emph{in} is positive. In Figure~\ref{fig:pmt}, \texttt{pv} is entered as \texttt{-500000} (money you \emph{received} as the loan --- but written negative here specifically to make \texttt{PMT} return a \emph{positive} payment figure). Enter \texttt{pv} as positive instead, and \texttt{PMT} returns a negative number, representing the same payment as an outflow --- both are correct; the sign is a display choice, not a different calculation. What breaks the calculation is not choosing a sign convention, but being \emph{inconsistent} within it.
+\end{keyconcept}
+
+\begin{financeapp}
+PMT is the standard way to compute an EMI (equated monthly installment) for a mortgage, an auto loan, or a business term loan --- exactly as shown in Figure~\ref{fig:pmt}. Run in reverse (with \texttt{pv} set to \texttt{0} and \texttt{fv} set to a savings target instead), the same function computes the monthly contribution required to reach a future savings goal.
+\end{financeapp}
+
+\begin{protip}[The PMT Family --- One Function per Unknown]
+PMT is one member of a small family of time-value-of-money functions that all share the same \texttt{rate}/\texttt{nper}/\texttt{pv}/\texttt{fv}/\texttt{type} arguments and the same sign convention, differing only in which one variable each solves for:
+\begin{itemize}
+  \item \texttt{IPMT(rate, per, nper, pv, [fv], [type])} --- the \emph{interest} portion of a specific payment number (\texttt{per}).
+  \item \texttt{PPMT(rate, per, nper, pv, [fv], [type])} --- the \emph{principal} portion of that same payment; \texttt{IPMT + PPMT} for any given period always equals the total \texttt{PMT}.
+  \item \texttt{NPER(rate, pmt, pv, [fv], [type])} --- solves for the number of periods, given a fixed payment.
+  \item \texttt{RATE(nper, pmt, pv, [fv], [type])} --- solves for the periodic interest rate, given a fixed payment.
+  \item \texttt{PV} / \texttt{FV} --- solve for present or future value directly.
+\end{itemize}
+Before knowing any of these exist, Goal Seek (\S\ref{sec:goalseek}) is exactly how you would manually back into, say, an implied interest rate: set \texttt{Set cell} to a PMT-formula output, \texttt{To value} to the known payment, and \texttt{By changing cell} to the rate assumption --- Goal Seek and \texttt{RATE()} solve the identical problem, one iteratively and the other analytically.
+\end{protip}
+
+\begin{pitfall}[A Correct-Looking but Flipped-Sign Result]
+Getting a PMT result with the ``wrong'' sign (negative when a positive was expected, or vice versa) is not a calculation error --- it means \texttt{pv} was entered with the opposite sign from what was intended. The \emph{magnitude} is still correct; only the sign convention needs adjusting, either by negating \texttt{pv} or by wrapping the whole call in a unary minus.
+\end{pitfall}
+
+\subsection{Date Functions}
+\label{sec:datefunctions}
+
+\begin{figure}[h]
+\centering
+\begin{tcolorbox}[width=0.86\linewidth,colback=white,colframe=rulegray,boxrule=0.5pt,arc=1pt]
+\centering\small
+\begin{tabular}{@{}L{4.8cm}L{2.8cm}L{2.6cm}@{}}
+\toprule
+\textbf{Formula} & \textbf{Purpose} & \textbf{Example result} \\
+\midrule
+\texttt{=TODAY()} & Current date & 15-Aug-2026 \\
+\texttt{=TODAY()+10} & Ten days ahead & 25-Aug-2026 \\
+\texttt{=EOMONTH(TODAY(),0)} & Current month-end & 31-Aug-2026 \\
+\texttt{=DATEDIF(A2,\allowbreak TODAY(),\allowbreak"Y")} & Complete years elapsed & 36 \\
+\texttt{=YEAR(A2)} / \texttt{=MONTH(A2)} & Date components & 2026 / 8 \\
+\texttt{=DATE(2026,8,31)} & Construct a date & 31-Aug-2026 \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+\caption{Core date functions and their outputs: \texttt{TODAY()} for today's date, date arithmetic (\texttt{TODAY()+10}) for a future date, \texttt{EOMONTH()} for a month-end date, \texttt{DATEDIF()} for elapsed time (e.g. age from a birthdate), and \texttt{YEAR()}/\texttt{MONTH()}/\texttt{DAY()}/\texttt{DATE()} for extracting and reconstructing date components.}
+\label{fig:datefns}
+\end{figure}
+
+\begin{keyconcept}[Dates Are Just Numbers]
+Underneath the display formatting, every Excel date is stored as a \textbf{serial number} --- an integer count of days since a fixed reference point (day 1 = 1 January 1900, on Windows Excel). This is precisely why \texttt{TODAY()+10} in Figure~\ref{fig:datefns} works as plain addition: it is genuinely adding 10 to an integer, which Excel then re-displays using the cell's date format. It is also why two dates can be subtracted directly (\texttt{EndDate - StartDate}) to get a plain number of days.
+\end{keyconcept}
+
+\begin{formulasyntax}[TODAY and NOW]
+\texttt{=TODAY()} --- the current date, no time component, refreshed every time the workbook recalculates. \texttt{=NOW()} --- current date \emph{and} time, same refresh behaviour. Both take no arguments and are \textbf{volatile} --- exactly the category of function flagged in Module 2's calculation-mode discussion as a common cause of a large workbook recalculating (and slowing down) more often than necessary.
+\end{formulasyntax}
+
+\begin{formulasyntax}[EOMONTH]
+\texttt{=EOMONTH(start\_date, months)} --- the last day of the month, \texttt{months} away from \texttt{start\_date}. \texttt{months=0} gives the end of the \emph{current} month; negative values step backward, positive values step forward. \texttt{=EOMONTH(TODAY(),0)} is the standard formula for ``the end of this reporting period.''
+\end{formulasyntax}
+
+\begin{formulasyntax}[DATEDIF]
+\texttt{=DATEDIF(start\_date, end\_date, unit)} --- elapsed time between two dates. \texttt{unit}: \texttt{"Y"} (complete years), \texttt{"M"} (complete months), \texttt{"D"} (total days), \texttt{"YM"} (remaining months after whole years), \texttt{"MD"} (remaining days after whole months), \texttt{"YD"} (remaining days after whole years). Notably absent from the Formula AutoComplete dropdown and from Excel's own function documentation for years --- it still works perfectly when typed manually, and remains the standard way to compute an age or a tenure.
+\end{formulasyntax}
+
+\begin{formulasyntax}[YEAR, MONTH, DAY, and DATE]
+\texttt{=YEAR(date)}, \texttt{=MONTH(date)}, \texttt{=DAY(date)} --- extract the corresponding numeric component from a date. \texttt{=DATE(year, month, day)} --- the reverse: builds a genuine date value from three separate numbers. Combining extraction and reconstruction is the standard pattern for shifting a date by whole months while keeping it well-defined, e.g. \texttt{=DATE(YEAR(A2), MONTH(A2)+1, DAY(A2))} to roll a date forward exactly one month.
+\end{formulasyntax}
+
+\begin{protip}[Two More Date Functions Worth Knowing, Even Though Not Pictured Above]
+\texttt{EDATE(start\_date, months)} is EOMONTH's close cousin --- it also shifts by whole months, but keeps the \emph{same day-of-month} instead of jumping to month-end (the two are frequently confused: use EDATE when you want ``the same day next month,'' EOMONTH when you specifically want ``the last day of that month''). \texttt{WORKDAY(start\_date, days, [holidays])} and \texttt{NETWORKDAYS(start\_date, end\_date, [holidays])} are business-day-aware --- they skip weekends (and an optional supplied holiday list) automatically, and are the standard tools for a trade-settlement date (e.g. T+2) or a business-day-based deadline calculation.
+\end{protip}
+
+\begin{financeapp}
+\texttt{EOMONTH} generates correctly-spaced period-end dates for a loan amortisation schedule or a set of financial-statement column headers without manually typing each date. \texttt{DATEDIF} computes exact tenure for a depreciation schedule (age of an asset in years and months) or an employee's length of service. \texttt{DATE}/\texttt{YEAR}/\texttt{MONTH} together build a rolling trailing-12-month report header that updates itself every period instead of being retyped by hand --- directly reusable inside the \texttt{TEXTJOIN} report-title pattern from \S\ref{sec:stringfunctions}.
+\end{financeapp}
+
+\begin{pitfall}[Regional Date Formats Silently Misread on Import]
+A date typed or imported as \texttt{"03/04/2026"} means 3 April in a DD/MM/YYYY locale and 4 March in an MM/DD/YYYY locale --- Excel applies whatever its regional setting expects, silently, with no warning that the \emph{other} interpretation was possible. This is a classic and genuinely dangerous CSV-import problem, since a wrongly-parsed date often still looks like a perfectly plausible date. It directly connects back to Module 2's Text to Columns \textbf{Date} column-format option (which lets you specify the source's actual date order explicitly during import, rather than trusting Excel's regional guess), and to \texttt{DATEDIF}'s well-documented rounding quirks on its \texttt{"MD"} unit around certain month-boundary edge cases --- a known Microsoft limitation worth being aware of, not a sign you've made an error.
+\end{pitfall}
+
+\subsection{Python and SQL Equivalents}
+
+\begin{lstlisting}[style=pythonstyle, caption={PMT via numpy\_financial (NumPy itself dropped its financial functions), and the date-function family via pandas/datetime}]
+import numpy_financial as npf   # pip install numpy-financial --break-system-packages
+import pandas as pd
+from dateutil.relativedelta import relativedelta
+from datetime import date
+
+# --- PMT: same sign convention as Excel (negative pv -> positive payment) ---
+monthly_rate = 0.10 / 12
+n_months     = 5 * 12
+payment      = npf.pmt(monthly_rate, n_months, -500000)   # 10623.52...
+
+# --- Date functions ---
+today          = pd.Timestamp.today().normalize()          # TODAY()
+future_date    = today + pd.Timedelta(days=10)              # TODAY()+10
+end_of_month   = today + pd.offsets.MonthEnd(0)              # EOMONTH(TODAY(),0)
+next_month_same_day = today + relativedelta(months=1)        # EDATE(TODAY(),1)
+
+birthdate = pd.Timestamp("2000-01-01")
+age_years = relativedelta(today, birthdate).years            # DATEDIF(...,"Y")
+
+y, m, d = today.year, today.month, today.day                 # YEAR/MONTH/DAY
+reconstructed = pd.Timestamp(year=y, month=m, day=d)          # DATE(y,m,d)
+\end{lstlisting}
+
+\begin{lstlisting}[style=sqlstyle, caption={Date functions across common SQL dialects, and the honest gap for PMT}]
+-- Portable across most dialects (syntax varies slightly by vendor):
+SELECT
+    CURRENT_DATE                                    AS today_equiv,        -- TODAY()
+    CURRENT_DATE + INTERVAL '10 day'                 AS plus_ten_days,      -- TODAY()+10
+    DATEADD(month, DATEDIFF(month, 0, CURRENT_DATE) + 1, -1) AS eom,        -- EOMONTH (SQL Server idiom)
+    DATEDIFF(year, birth_date, CURRENT_DATE)         AS age_years_approx,   -- DATEDIF(...,"Y")
+    YEAR(CURRENT_DATE), MONTH(CURRENT_DATE), DAY(CURRENT_DATE)              -- YEAR/MONTH/DAY
+FROM employees;
+
+-- PMT: standard SQL has no built-in time-value-of-money functions at all.
+-- This is a genuine, honest gap -- financial calculations of this kind are
+-- normally done in the application layer (Python, Excel) and only the
+-- resulting numbers are stored/queried in the database.
+\end{lstlisting}
+
+% ==================================================================
+\section{Worked Example: A Loan Sensitivity Model, Three Ways}
+% ==================================================================
+
+This closing example combines nearly everything in this module into one small, realistic scenario: computing a loan's monthly payment, looking up a customer's approved interest rate by credit tier, guarding against a missing tier with error handling, building a two-way sensitivity table around the payment, and using Goal Seek to find the maximum loan a target payment can support.
+
+\subsection{Excel Implementation}
+
+\begin{enumerate}
+  \item \textbf{Inputs} (Named Ranges, Module 2): \texttt{LoanAmount} (\texttt{B2} = \texttt{500000}), \texttt{AnnualRate} (\texttt{B3}, looked up --- see next point), \texttt{TermYears} (\texttt{B4} = \texttt{5}), \texttt{CreditTier} (\texttt{B5}, a Data-Validation dropdown sourced from a named list, Module 2).
+  \item \textbf{Rate lookup with error handling}: \texttt{B3} uses
+  \par\smallskip
+  \texttt{=IFNA(XLOOKUP(B5, RateTable[Tier], RateTable[Rate]), "Tier not found")}
+  \par\smallskip
+  This combines \S\ref{sec:xlookup} and \S\ref{sec:errorhandling}.
+  \item \textbf{PMT calculation}, period-matched explicitly per \S\ref{sec:pmtfunction}: \texttt{B7} = \texttt{=B3/12} (monthly rate), \texttt{B8} = \texttt{=B4*12} (months), \texttt{B10} = \texttt{=PMT(B7,B8,-LoanAmount)}.
+  \item \textbf{Two-variable Data Table} (\S\ref{sec:datatables}): corner cell references \texttt{=B10}; loan amounts (Rs.\,400,000--Rs.\,600,000) run across the top row, annual rates (8\%--14\%) run down the left column; \textbf{Row Input Cell} = \texttt{LoanAmount}, \textbf{Column Input Cell} = the rate's source cell.
+  \item \textbf{Goal Seek} (\S\ref{sec:goalseek}): \textbf{Set cell} = \texttt{B10}, \textbf{To value} = the maximum affordable monthly payment (e.g. \texttt{12000}), \textbf{By changing cell} = \texttt{LoanAmount} --- answering ``what is the largest loan this payment can support, at the current rate?''
+\end{enumerate}
+
+\subsection{Python Implementation}
+
+\begin{lstlisting}[style=pythonstyle, caption={The same model end-to-end: lookup, PMT, a sensitivity grid, and a Goal-Seek-style solve}]
+import numpy_financial as npf
+import numpy as np
+import pandas as pd
+from scipy.optimize import brentq
+
+rate_table = pd.DataFrame({"tier": ["A", "B", "C"], "rate": [0.08, 0.10, 0.13]})
+
+def monthly_payment(loan_amount, annual_rate, term_years=5):
+    return -npf.pmt(annual_rate / 12, term_years * 12, loan_amount)
+
+# --- Rate lookup with error handling (XLOOKUP + IFNA equivalent) ---
+credit_tier = "B"
+matched = rate_table.loc[rate_table["tier"] == credit_tier, "rate"]
+annual_rate = matched.iloc[0] if not matched.empty else None
+if annual_rate is None:
+    raise ValueError("Tier not found")
+
+payment = monthly_payment(500_000, annual_rate)
+
+# --- Two-Variable Data Table equivalent ---
+loan_values = np.arange(400_000, 620_000, 20_000)
+rate_values = np.arange(0.08, 0.145, 0.01)
+grid = pd.DataFrame(
+    [[monthly_payment(l, r) for l in loan_values] for r in rate_values],
+    index=np.round(rate_values, 3), columns=loan_values
+)
+
+# --- Goal Seek equivalent: max loan supportable by a target payment ---
+target_payment = 12000
+max_loan = brentq(lambda l: monthly_payment(l, annual_rate) - target_payment,
+                   a=0, b=5_000_000)
+\end{lstlisting}
+
+\subsection{SQL Implementation}
+
+\begin{lstlisting}[style=sqlstyle, caption={The lookup and the sensitivity grid, expressed as governed tables and a CROSS JOIN}]
+CREATE TABLE rate_table (
+    tier VARCHAR(5) PRIMARY KEY,
+    annual_rate DECIMAL(5,4) NOT NULL
+);
+INSERT INTO rate_table VALUES ('A', 0.08), ('B', 0.10), ('C', 0.13);
+
+CREATE TABLE loan_test_values  (loan_amount DECIMAL(12,2));
+CREATE TABLE rate_test_values  (annual_rate DECIMAL(5,4));
+-- populate loan_test_values with 400000..600000 step 20000,
+-- and rate_test_values with 0.08..0.14 step 0.01 (omitted here for brevity)
+
+-- The rate lookup: exactly a LEFT JOIN, VLOOKUP/XLOOKUP's native equivalent
+SELECT c.customer_id, c.credit_tier, r.annual_rate
+FROM customers AS c
+LEFT JOIN rate_table AS r ON c.credit_tier = r.tier;
+
+-- The two-variable sensitivity grid: CROSS JOIN, same pattern as the Data Table
+-- equivalent earlier in this module and Module 2's worked example
+SELECT
+    lv.loan_amount, rv.annual_rate,
+    -- Standard SQL has no PMT() -- the payment formula itself must be spelled out
+    (lv.loan_amount * (rv.annual_rate/12)) /
+        (1 - POWER(1 + rv.annual_rate/12, -60)) AS monthly_payment
+FROM loan_test_values AS lv
+CROSS JOIN rate_test_values AS rv;
+-- Goal Seek's backward solve, again, has no native SQL equivalent.
+\end{lstlisting}
+
+% ==================================================================
+\section{Common Pitfalls \& Debugging Checklist}
+% ==================================================================
+
+\begin{center}
+\small
+\begin{tabular}{@{}L{3.8cm}L{8.2cm}@{}}
+\toprule
+\textbf{Symptom} & \textbf{Likely cause \& fix} \\
+\midrule
+A CF rule highlights the wrong cells entirely & The formula-based rule was written relative to the wrong anchor cell (\S\ref{sec:condformat}) --- rewrite it relative to the top-left cell of the actual selected range, and check \textbf{Applies to} in Manage Rules. \\
+A nested-IF or IFS formula returns a plausible but wrong tier & A broader condition sits before a narrower one and shadows it (\S\ref{sec:iffunctions}) --- reorder from most specific/narrow to most general, or switch to \texttt{IFS} with explicit tiers. \\
+SUMIFS returns \texttt{\#VALUE!} or a wildly wrong total & Argument order reversed with SUMIF (sum range comes first in SUMIFS, last in SUMIF), or \texttt{sum\_range}/\texttt{criteria\_range} are different sizes (\S\ref{sec:condaggregation}). \\
+A formula shows \texttt{\#REF!} after editing the sheet & A cell/row/column/named range the formula depended on was deleted (\S\ref{sec:errorhandling}, Module 2) --- open Name Manager or trace precedents to find and re-point the broken reference. \\
+IFERROR is hiding a result that looks suspiciously clean (a flat 0 or blank) & The wrapper is masking a genuine bug, not just an expected edge case (\S\ref{sec:errorhandling}) --- narrow the wrap to only the sub-expression expected to fail, or switch to \texttt{IFNA} if ``not found'' is the only acceptable failure. \\
+A VLOOKUP returns a value that's close but not exactly right & \texttt{range\_lookup} defaulted to approximate match (TRUE) on data that needed exact match (\S\ref{sec:vlookup}) --- add \texttt{FALSE} explicitly. \\
+A VLOOKUP/XLOOKUP returns \texttt{\#N/A} despite the value clearly being in the table & Type mismatch (text vs. number) or invisible whitespace in one side of the match (\S\ref{sec:lookupfunctions}) --- wrap both sides in \texttt{TRIM()}, or check with \texttt{ISNUMBER}/\texttt{ISTEXT}. \\
+A lookup formula breaks after inserting a new column in the source table & \texttt{col\_index\_num} in a VLOOKUP is a hardcoded position that didn't shift with the insert (\S\ref{sec:vlookup}) --- switch to XLOOKUP or INDEX/MATCH, both immune to this. \\
+A two-variable Data Table shows the same value repeated in every cell, or an error across the whole grid & Row Input Cell and Column Input Cell were swapped, or the corner cell is a text label instead of a live formula reference (\S\ref{sec:datatables}). \\
+A Scenario Summary report doesn't reflect a scenario you just edited & The Summary report is a static snapshot generated once (\S\ref{sec:scenariomanager}) --- regenerate it after any scenario edit. \\
+Goal Seek reports it ``may not have found a solution'' & The target is genuinely unreachable given the model's logic, or the relationship between changing cell and target isn't smooth enough to converge (\S\ref{sec:goalseek}) --- sanity-check whether the target is mathematically possible at all. \\
+A PMT result is off by roughly a factor of 12 (or is a wildly wrong sign) & \texttt{rate} and \texttt{nper} are in mismatched periods (annual rate with monthly nper), or \texttt{pv}'s sign wasn't set deliberately (\S\ref{sec:pmtfunction}). \\
+A date imported from CSV looks plausible but is actually the wrong day & Regional date-order mismatch (DD/MM vs. MM/DD) silently misread on import (\S\ref{sec:datefunctions}) --- re-import using Text to Columns' explicit Date column-format option (Module 2). \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ==================================================================
+\section{Chapter Summary \& Self-Check}
+% ==================================================================
+
+Before moving to Module 4, you should be able to, without looking anything up:
+
+\begin{itemize}
+  \item[$\square$] Use Find and Replace's Options (wildcards, Match entire cell contents, Look in Formulas vs. Values, format-based search) to answer an audit question, not just a simple text swap.
+  \item[$\square$] Build a formula-based Conditional Formatting rule, explain the top-left-cell anchoring convention, and use Stop If True correctly when rules conflict.
+  \item[$\square$] Write a nested-IF chain and the equivalent IFS formula for the same three-or-more-tier decision, and explain why condition order matters in both.
+  \item[$\square$] Correctly order the arguments of SUMIF vs. SUMIFS from memory, without checking the tooltip.
+  \item[$\square$] Read every one of Excel's nine built-in error codes and state its most likely cause, and choose correctly between IFERROR and IFNA for a given situation.
+  \item[$\square$] Explain why VLOOKUP cannot look left, and fix that limitation using either XLOOKUP or INDEX/MATCH.
+  \item[$\square$] Build a two-dimensional INDEX/MATCH lookup, retrieving a value at the intersection of a row key and a column key.
+  \item[$\square$] Use FIND/MID or SEARCH to extract a substring from delimited text as a live formula, and explain why this is more robust than a one-time Text to Columns split.
+  \item[$\square$] Build both a one-variable and a two-variable Data Table, correctly distinguishing Row Input Cell from Column Input Cell.
+  \item[$\square$] Create multiple Scenario Manager scenarios sharing the same changing cells, and generate (and correctly interpret) a Scenario Summary report.
+  \item[$\square$] Use Goal Seek, correctly read its Status dialog, and explain its single-input/single-target limitation versus Scenario Manager and Data Tables.
+  \item[$\square$] Build a PMT formula with correctly period-matched rate and nper, and explain the cash-flow sign convention.
+  \item[$\square$] Use TODAY, EOMONTH, DATEDIF, YEAR/MONTH/DAY, and DATE together to build a self-updating, formula-driven date label.
+  \item[$\square$] For each major topic in this module, name its closest Python and SQL equivalent --- and state plainly, for What-If Analysis's Goal Seek, where that equivalence genuinely breaks down.
+\end{itemize}
+
+% ==================================================================
+\section{What's Next: Module 4 Preview}
+% ==================================================================
+
+This module completed the ``Excel Like a Pro'' skill set --- decision logic, conditional aggregation, robust lookups, error handling, live text manipulation, systematic what-if analysis, and the first two core financial functions. Two directions naturally continue from here, matching the original course's own structure:
+
+\begin{itemize}
+  \item \textbf{Accounting Fundamentals \& Financial Statements} (the original course's Modules 7--9) --- what accounting actually is and why double-entry bookkeeping works the way it does, the accounting equation, the rules governing debits and credits, and then building the Income Statement, Balance Sheet, and Cash Flow Statement from scratch --- the direct next step toward the three-statement modelling and DCF work later in the course.
+  \item \textbf{Charts and PivotTables} (the original course's Module 10) --- turning the SUMIFS-style manual conditional aggregation from this module into automatic, drag-and-drop summarisation, plus the visualisation tools (column/bar/line charts, slicers, timelines) that sit on top of it.
+\end{itemize}
+
+Since your course outline lists Accounting Fundamentals immediately after Financial Functions, Module 4 defaults to that track unless you'd rather pull the Charts/PivotTables thread first --- let me know which, or send over your notes/screenshots from whichever lecture you'd like covered next, the same way you did for this module's What-If Analysis and PMT/date content.
+
+\end{document}

@@ -102,4 +102,8 @@ This is the culmination of the course: using the above concepts to build abstrac
 
 ---
 
-**Would you like me to create a practice problem for the Time Value of Money formula to test your understanding?**
+## 8. Documents & PDF Handbook
+
+- **LaTeX Source:** [`tex/introduction.tex`](tex/introduction.tex)
+- **Rendered PDF:** [`pdf/introduction.pdf`](pdf/introduction.pdf)
+- **Rendering & Compilation Guide:** See [`README.md`](README.md) for step-by-step local build and cleanup commands.

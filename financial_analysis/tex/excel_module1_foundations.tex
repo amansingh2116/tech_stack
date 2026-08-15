@@ -1,0 +1,1061 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[expansion=false]{microtype}
+\usepackage{parskip}
+\usepackage[a4paper,margin=2.3cm,headheight=14pt]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{hyperref}
+
+% ============================================================
+% COLOR PALETTE
+% ============================================================
+\definecolor{excelgreen}{HTML}{217346}
+\definecolor{excelgreenlight}{HTML}{E9F3EE}
+\definecolor{pythonblue}{HTML}{1F5C8B}
+\definecolor{pythonbluelight}{HTML}{E8F1F8}
+\definecolor{pythonyellow}{HTML}{B8860B}
+\definecolor{sqlorange}{HTML}{B0521A}
+\definecolor{sqlorangelight}{HTML}{FBEEE4}
+\definecolor{keyblue}{HTML}{1B4F72}
+\definecolor{keybluelight}{HTML}{EAF2F8}
+\definecolor{tipgreen}{HTML}{1E7A46}
+\definecolor{tipgreenlight}{HTML}{EAF7EF}
+\definecolor{warnred}{HTML}{922B21}
+\definecolor{warnredlight}{HTML}{FDEDEC}
+\definecolor{codegray}{HTML}{F5F5F5}
+\definecolor{rulegray}{HTML}{888888}
+
+% ============================================================
+% HEADER / FOOTER
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\textcolor{rulegray}{Excel for Finance --- The Professional Handbook}}
+\fancyhead[R]{\small\textcolor{rulegray}{Module 1: Excel Foundations}}
+\fancyfoot[C]{\small\thepage}
+
+% ============================================================
+% SECTION STYLING
+% ============================================================
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{excelgreen}}
+  {\thesection}{0.6em}{}[{\color{excelgreen}\titlerule}]
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{keyblue}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\color{black}}
+  {\thesubsubsection}{0.6em}{}
+
+% ============================================================
+% CODE LISTING STYLES
+% ============================================================
+\lstdefinestyle{pythonstyle}{
+  language=Python,
+  backgroundcolor=\color{pythonbluelight},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{pythonblue}\bfseries,
+  stringstyle=\color{tipgreen},
+  commentstyle=\color{rulegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{rulegray},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{pythonblue!40},
+  framerule=0.4pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  xleftmargin=2pt,
+  framexleftmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+\lstdefinestyle{sqlstyle}{
+  language=SQL,
+  backgroundcolor=\color{sqlorangelight},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{sqlorange}\bfseries,
+  stringstyle=\color{tipgreen},
+  commentstyle=\color{rulegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{rulegray},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{sqlorange!40},
+  framerule=0.4pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  xleftmargin=2pt,
+  framexleftmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+\lstdefinestyle{excelstyle}{
+  backgroundcolor=\color{excelgreenlight},
+  basicstyle=\ttfamily\small\color{black},
+  frame=single,
+  rulecolor=\color{excelgreen!50},
+  framerule=0.4pt,
+  breaklines=true,
+  showstringspaces=false,
+  xleftmargin=2pt,
+  framexleftmargin=6pt,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+% ============================================================
+% CALLOUT BOXES
+% ============================================================
+\newtcolorbox{keyconcept}[1][Key Concept]{
+  colback=keybluelight, colframe=keyblue, coltitle=white,
+  fonttitle=\bfseries, title=#1, boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{financeapp}[1][Finance Application]{
+  colback=excelgreenlight, colframe=excelgreen, coltitle=white,
+  fonttitle=\bfseries, title=#1, boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{protip}[1][Pro Tip]{
+  colback=tipgreenlight, colframe=tipgreen, coltitle=white,
+  fonttitle=\bfseries, title=#1, boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{pitfall}[1][Common Pitfall]{
+  colback=warnredlight, colframe=warnred, coltitle=white,
+  fonttitle=\bfseries, title=#1, boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{formulasyntax}[1][Formula Syntax]{
+  colback=white, colframe=excelgreen, coltitle=white,
+  fonttitle=\bfseries, title=#1, boxrule=1pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+% shortcut key style
+\newcommand{\key}[1]{\texttt{\colorbox{black!8}{\textbf{#1}}}}
+
+% ============================================================
+% HYPERREF SETUP
+% ============================================================
+\hypersetup{
+  colorlinks=true,
+  linkcolor=keyblue,
+  citecolor=keyblue,
+  urlcolor=pythonblue,
+  pdftitle={Excel for Finance -- Module 1: Excel Foundations},
+  pdfauthor={Finance \& Analytics Study Notes},
+}
+
+\setlist[itemize]{leftmargin=1.4em}
+\setlist[enumerate]{leftmargin=1.6em}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+\begin{document}
+
+% -------------------- TITLE PAGE --------------------
+\begin{titlepage}
+\centering
+\vspace*{1.5cm}
+{\Huge\bfseries\color{excelgreen} Excel for Finance}\\[0.4cm]
+{\Large The Complete Professional Handbook}\\[1.2cm]
+{\huge\bfseries Module 1}\\[0.3cm]
+{\LARGE Excel Foundations}\\[0.15cm]
+{\large Interface, Data \& Number Formatting, Formula Fundamentals,\\ Shortcuts --- with Python and SQL Equivalents}\\[2cm]
+
+\begin{tcolorbox}[colback=excelgreenlight, colframe=excelgreen, width=0.8\textwidth, arc=3pt]
+\textbf{Companion modules in this handbook:}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Module 1} --- Excel Foundations \textit{(this document)}
+  \item \textbf{Module 2} --- Making Excel Professional: Optimisation, Macros, Absolute/Relative References, Named Ranges, Data Validation \& Custom Formatting
+  \item \textbf{Module 3} --- Excel Like a Pro: Conditional Formatting, Logical Functions, Lookup Functions (VLOOKUP/HLOOKUP/XLOOKUP/INDEX-MATCH), Conditional Aggregation, Error Handling, String Functions
+\end{itemize}
+\end{tcolorbox}
+
+\vfill
+{\small Compiled study notes covering the Excel curriculum end-to-end, extended with equivalent Python (\texttt{pandas}, \texttt{openpyxl}) and SQL implementations of every concept, for a tech-background learner building cross-tool fluency in financial analytics.}\\[0.3cm]
+{\small \today}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ==================================================================
+\section{How to Use This Handbook}
+% ==================================================================
+
+This handbook is written for someone who already thinks like a programmer but needs to become fluent in Excel because it remains the lingua franca of the finance industry. Every topic is therefore explained three times, in three dialects:
+
+\begin{itemize}
+  \item \textbf{Excel} --- the native implementation, exactly as you would build it in a worksheet, including menu paths and keyboard shortcuts.
+  \item \textbf{Python} --- the equivalent using \texttt{pandas} (for tabular data manipulation) and \texttt{openpyxl} (for reading, writing, and formatting actual \texttt{.xlsx} files).
+  \item \textbf{SQL} --- the equivalent using standard SQL (schema design, \texttt{SELECT}/\texttt{INSERT} statements, and aggregate queries), since a worksheet is conceptually a table and a workbook is conceptually a small database.
+\end{itemize}
+
+Throughout the document you will see the following recurring boxes:
+
+\begin{keyconcept}
+A foundational idea you must internalise before moving on --- these are the "why", not just the "how".
+\end{keyconcept}
+
+\begin{financeapp}
+How the concept is specifically used in financial modeling, accounting, or investment analysis --- because a generic Excel tutorial and a \emph{finance} Excel tutorial diverge here.
+\end{financeapp}
+
+\begin{protip}
+A workflow habit that separates a fast, professional analyst from a slow, error-prone one.
+\end{protip}
+
+\begin{pitfall}
+A mistake that looks harmless but silently corrupts a financial model --- these are worth memorising even more than the formulas themselves.
+\end{pitfall}
+
+\begin{formulasyntax}
+The precise syntax of a function or feature, written the way Excel's own formula tooltip would write it.
+\end{formulasyntax}
+
+% ==================================================================
+\section{Why Excel Still Matters}
+% ==================================================================
+
+It is a reasonable instinct, coming from a technical background, to see Excel as a legacy tool that Python (\texttt{pandas}, \texttt{numpy}), SQL, and BI platforms like Power BI have functionally superseded. In pure data-processing terms, that instinct is often correct: Excel does not version-control well, struggles past a few hundred thousand rows, has no real automated testing story, and its formulas are far more error-prone at scale than equivalent code. Studies of real-world spreadsheets consistently find silent formula errors in a meaningful fraction of production financial models.
+
+However, Excel persists as the dominant interface of finance for structural reasons that have nothing to do with raw computational power:
+
+\begin{enumerate}
+  \item \textbf{It is the shared language of non-technical stakeholders.} A CFO, an investment committee, or a client will open a workbook, not a Jupyter notebook or a SQL client. The deliverable of financial analysis is very often \emph{the workbook itself}.
+  \item \textbf{It compresses the edit-see-verify loop to zero.} Changing an assumption and watching every downstream number recalculate instantly is a uniquely powerful mode of exploratory reasoning that scripted pipelines do not replicate as fluidly.
+  \item \textbf{It is auditable cell-by-cell.} Every number in a model can be traced to its exact formula and inputs by clicking on it (\S\ref{sec:formula-fund}), which matters enormously in regulated, audit-heavy environments.
+  \item \textbf{It is the interview and on-the-job standard.} Investment banking, equity research, FP\&A, and corporate finance roles test and expect Excel fluency directly, independent of whatever other tools a team may use internally.
+\end{enumerate}
+
+\begin{keyconcept}[The Right Mental Model]
+Excel, Python, and SQL are not competitors for the same job; they are three tools with different strengths that a modern finance professional moves between deliberately:
+\begin{itemize}
+  \item \textbf{SQL} owns \emph{storage and retrieval} --- pulling the right slice of data out of a large, governed source system (a general ledger, a market data warehouse, a trading system).
+  \item \textbf{Python} owns \emph{scale, automation, and repeatability} --- cleaning, transforming, and modeling data too large or too repetitive to do by hand, and building pipelines that must run unattended.
+  \item \textbf{Excel} owns \emph{presentation, exploration, and communication} --- the last mile where a human needs to see, sanity-check, adjust, and present the numbers.
+\end{itemize}
+A professional workflow frequently chains all three: SQL pulls data from a database $\rightarrow$ Python cleans and models it $\rightarrow$ Excel presents and lets a decision-maker interact with it. This handbook teaches Excel deeply while keeping that chain visible, so every Excel concept is anchored to its Python/SQL counterpart rather than learned in isolation.
+\end{keyconcept}
+
+% ==================================================================
+\section{The Excel Environment}
+% ==================================================================
+
+\subsection{Core Vocabulary}
+
+Before anything else, four terms need to be precise, because they map directly onto concepts you already know from databases and dataframes.
+
+\begin{center}
+\begin{tabular}{@{}p{2.6cm}p{5.6cm}p{2.4cm}p{2.4cm}@{}}
+\toprule
+\textbf{Excel term} & \textbf{Definition} & \textbf{pandas equiv.} & \textbf{SQL equiv.} \\
+\midrule
+Workbook & The entire \texttt{.xlsx} file; a container for one or more worksheets. & An Excel \texttt{.xlsx} file opened with several sheets (a "Book" in \texttt{openpyxl}) & A \textbf{database} \\
+Worksheet (Sheet) & A single grid within a workbook, referenced by a tab at the bottom. & A single \texttt{DataFrame} & A \textbf{table} \\
+Cell & The intersection of one column and one row; holds one value or formula. & One element of a DataFrame, \texttt{df.iloc[r, c]} & One \textbf{field} in one \textbf{row} \\
+Cell Address & The unique identifier of a cell: \textbf{Column letter} + \textbf{Row number}, e.g. \texttt{C18}. & \texttt{df.iloc[17, 2]} (0-indexed) & Not applicable --- rows are unordered by design \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{keyconcept}
+A cell address like \texttt{C18} is a \emph{positional} reference --- it says "third column, eighteenth row," not "the revenue cell." This is fundamentally different from a SQL column, which is always referenced by \emph{name} (\texttt{revenue}), never by position. This one difference explains why Excel formulas break when rows are inserted/deleted while SQL queries never do --- and it is the entire motivation for Named Ranges, covered in Module 2.
+\end{keyconcept}
+
+Other vocabulary you will see constantly:
+
+\begin{itemize}
+  \item \textbf{Range} --- a rectangular block of cells, written as \texttt{TopLeft:BottomRight}, e.g. \texttt{B4:B8} (a column of 5 cells) or \texttt{A1:D10} (a 4-column, 10-row block).
+  \item \textbf{Ribbon} --- the tabbed toolbar at the top of the window (\textbf{File, Home, Insert, Page Layout, Formulas, Data, Review, View}, plus the \textbf{Developer} tab once enabled for macros in Module 2).
+  \item \textbf{Formula Bar} --- the input line just below the Ribbon that shows the raw formula/content of the currently selected cell (as opposed to its displayed, formatted value).
+  \item \textbf{Name Box} --- the small field to the left of the Formula Bar showing the active cell's address (or its name, once Named Ranges are introduced).
+\end{itemize}
+
+\subsection{The File Tab (Backstage View)}
+
+The \textbf{File} tab is not part of the worksheet grid at all --- it is Excel's administrative control panel, equivalent to a file-system/session-management layer sitting outside your "data" layer.
+
+\begin{center}
+\begin{tabular}{@{}p{2.6cm}p{9.6cm}@{}}
+\toprule
+\textbf{Command} & \textbf{What it does} \\
+\midrule
+New & Create a \textbf{Blank Workbook}, or start from a \textbf{Template} (amortisation schedules, budget trackers, invoice templates, calendars) that ships pre-built formulas and formatting. \\
+Open & Load an existing workbook from local disk, a network drive, or cloud storage (OneDrive/SharePoint), via \textbf{Browse}. \\
+Save (\key{Ctrl+S}) & Overwrites the current file in place, in its current format, at its current path. \\
+Save As (\key{F12}) & Writes a \emph{new} file --- a different name, a different folder, and/or a different \textbf{format}. \\
+Print (\key{Ctrl+P}) & Opens the print preview \& setup pane (page orientation, scaling to fit, print area). \\
+Export & Converts the workbook to another format without a full "Save As" dialog, most commonly \textbf{PDF}. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{financeapp}[File Formats a Finance Analyst Actually Uses]
+\begin{itemize}
+  \item \texttt{.xlsx} --- the standard working format; formulas, formatting, and macros(-enabled variant \texttt{.xlsm}) are preserved.
+  \item \texttt{.xls} --- the legacy pre-2007 binary format; you will still meet this from older systems or bank exports.
+  \item \texttt{.csv} --- plain comma-separated \emph{values only}: no formulas, no formatting, no multiple sheets. This is almost always the format used to move data \emph{between} Excel, Python, and SQL, because every tool can read it.
+  \item \textbf{PDF export} --- used when \emph{sending} a finished model or report to someone who should see the numbers but not be able to edit formulas or see underlying assumptions (e.g., a distributed investor report).
+\end{itemize}
+\end{financeapp}
+
+\begin{pitfall}[Saving a Formula-Driven Model as CSV]
+CSV format stores only the currently \emph{displayed values}, not formulas, named ranges, formatting, or multiple sheets. Saving a multi-tab financial model as \texttt{.csv} silently destroys everything except one sheet's raw numbers. Always keep the working file as \texttt{.xlsx}, and only export to CSV as a final, disposable "data handoff" step.
+\end{pitfall}
+
+\subsection{The Home Tab}
+
+The Home tab holds the tools you touch most often: moving data around, and controlling how it looks.
+
+\subsubsection{Clipboard Operations}
+
+\begin{center}
+\begin{tabular}{@{}p{2.6cm}p{2.4cm}p{6.6cm}@{}}
+\toprule
+\textbf{Action} & \textbf{Shortcut} & \textbf{Behaviour} \\
+\midrule
+Cut & \key{Ctrl+X} & Removes the data from its original location once pasted elsewhere; any formula referencing that cell is automatically updated to point to the new location. \\
+Copy & \key{Ctrl+C} & Duplicates the data; the original is left untouched. \\
+Paste & \key{Ctrl+V} & Inserts the cut/copied content at the new location. \\
+Format Painter & (Home tab icon) & Copies \emph{only the visual formatting} of a cell (font, colour, borders, number format) --- not its value or formula --- and applies it elsewhere. Double-click the icon to keep it "on" and paint multiple ranges in a row. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{keyconcept}
+"Paste" in Excel is not one operation but a family of them, accessible via \key{Ctrl+Alt+V} (\textit{Paste Special}): \textbf{Paste Values} (numbers only, formulas discarded --- essential for "freezing" a calculation), \textbf{Paste Formulas}, \textbf{Paste Formats}, and \textbf{Transpose} (flip rows into columns). Financial analysts use Paste Values constantly to convert a formula-derived number into a static input before sharing or archiving a model.
+\end{keyconcept}
+
+\subsubsection{Font, Colour \& Alignment}
+
+\begin{itemize}
+  \item \textbf{Font/size} --- typeface (commonly \textit{Calibri} or \textit{Arial} in corporate templates) and size, changeable via dropdown or the Increase/Decrease Font Size buttons.
+  \item \textbf{Bold / Italic / Underline} --- standard emphasis, used in models to distinguish section headers, subtotal rows, and key outputs.
+  \item \textbf{Font Colour vs. Fill Colour} --- Font Colour changes the text hue; Fill Colour shades the entire cell background. In modeling, colour is not decorative --- it is a coding convention (see the box below).
+  \item \textbf{Alignment} --- horizontal (left/centre/right), vertical (top/middle/bottom, useful once row height is increased), and \textbf{Orientation} (rotate text diagonally/vertically, common for narrow date-column headers).
+  \item \textbf{Indentation} --- increases the gap between the cell border and the text; used heavily to create visual hierarchy in a chart of accounts (e.g., indenting sub-line-items under a "Total Revenue" header).
+\end{itemize}
+
+\begin{protip}[The Standard Financial-Modeling Colour Convention]
+Wall Street and most professional FP\&A teams follow an unwritten but near-universal rule:
+\begin{itemize}
+  \item \textbf{Blue font} = a hard-coded input (a number someone typed in directly, not calculated).
+  \item \textbf{Black font} = a formula that references \emph{other cells on the same sheet}.
+  \item \textbf{Green font} = a formula that pulls from \emph{another sheet or another workbook}.
+  \item \textbf{Red font} (or red parentheses via number formatting, \S\ref{sec:numformat}) = a negative value, especially outflows/losses.
+\end{itemize}
+This lets anyone open your model, glance at the colours, and instantly know which cells are safe to overwrite (blue) and which are load-bearing calculations (black/green) --- without reading a single formula. Adopt this from day one; it costs nothing and instantly signals professionalism.
+\end{protip}
+
+\subsubsection{Wrap Text and Merge \& Center}
+
+\textbf{Wrap Text} forces long text content to stay visually inside one cell by increasing the row's height and flowing the text onto multiple lines, instead of letting it overflow visually into the next cell.
+
+\textbf{Merge \& Center} combines several selected cells into a single larger cell and centers its content --- the classic use is creating a title banner across the top of a report (e.g., merging \texttt{A1:F1} for the title "Q3 2026 Income Statement").
+
+\begin{pitfall}[Merged Cells Break Everything Downstream]
+Merged cells are one of the most common sources of broken financial models. Specifically, they cause:
+\begin{itemize}
+  \item \textbf{Sorting failures} --- Excel cannot sort a range containing merged cells of inconsistent sizes.
+  \item \textbf{VLOOKUP/INDEX-MATCH errors} (Module 3) --- a lookup formula expects one value per row; a merged cell only holds its value in the \emph{top-left} cell of the merge, and every other cell in that merge reads as blank.
+  \item \textbf{Copy/paste and filter misalignment} --- filtering a table with merged header or body cells frequently shifts data unpredictably.
+\end{itemize}
+\textbf{Professional convention:} never merge cells inside a data table. Reserve merging strictly for standalone title banners above/outside the actual data range. To \emph{visually} center a title over several columns without merging, use \textbf{Format Cells $\rightarrow$ Alignment $\rightarrow$ Horizontal: Center Across Selection} instead --- it looks identical but keeps every underlying cell independently addressable.
+\end{pitfall}
+
+\subsection{The Insert Tab}
+
+The Insert tab adds elements that live \emph{on top of} the grid rather than inside individual cells.
+
+\begin{itemize}
+  \item \textbf{Illustrations} --- Shapes, Pictures, Icons, 3D Models, Screenshots --- used for annotating dashboards or building simple process diagrams directly on a sheet.
+  \item \textbf{Text Box} --- a floating box of text not tied to any cell; useful for callouts and commentary on a dashboard that must stay in a fixed position regardless of row/column resizing.
+  \item \textbf{Charts} --- converts a selected range into a visual. For a basic \textbf{2D Column/Bar Chart}, Excel maps the \textbf{X-axis} to categories (e.g., expense categories: Rent, Food, Transport) and the \textbf{Y-axis} to the numeric value (e.g., amount spent). Charting is covered in full depth in the Financial Functions/Charts module later in the course; here it is enough to recognise that a chart is simply a live \emph{view} over a range --- if the underlying cells change, the chart redraws automatically.
+\end{itemize}
+
+\subsection{The View Tab}
+
+\begin{itemize}
+  \item \textbf{Headings / Gridlines / Formula Bar toggles} --- hide or show the row/column labels, the light grey cell borders, and the formula input bar respectively; commonly turned off when preparing a clean, presentation-style dashboard.
+  \item \textbf{Zoom} --- scales the visual size of the sheet from a custom percentage, purely cosmetic and per-user (it does not affect print output unless separately configured).
+  \item \textbf{Freeze Panes} --- keeps specific rows/columns permanently visible while the rest of a large sheet scrolls underneath them. This is essential once a model or dataset exceeds one screen.
+\end{itemize}
+
+\begin{formulasyntax}[Freezing Panes --- Step by Step]
+\begin{enumerate}
+  \item Click the cell \emph{immediately below and to the right} of what you want frozen. (E.g., to freeze row 1 as a header and column A as labels, click cell \texttt{B2}.)
+  \item \textbf{View $\rightarrow$ Freeze Panes $\rightarrow$ Freeze Panes.}
+  \item Everything above and to the left of that cell now stays fixed as you scroll.
+  \item \textbf{View $\rightarrow$ Freeze Panes $\rightarrow$ Unfreeze Panes} reverses it.
+\end{enumerate}
+\end{formulasyntax}
+
+\begin{financeapp}
+Freeze Panes is used on almost every real financial dataset --- e.g., freezing the top row of an annual report's line-item labels and the leftmost column of account names, so that as you scroll right through 10 years of quarterly columns, you never lose track of \emph{which} account or \emph{which} period you are looking at.
+\end{financeapp}
+
+% ==================================================================
+\section{Data Types and Number Formatting}
+\label{sec:numformat}
+% ==================================================================
+
+This is the single most under-appreciated topic in introductory Excel courses, and arguably the most important one for finance specifically. A number's \emph{format} is entirely cosmetic --- it changes only how a value is \emph{displayed}, never the underlying value stored in the cell --- but in finance, presentation \emph{is} the deliverable, and misreading a formatted number (thousands vs. millions, or a positive read as negative) has real consequences.
+
+\begin{keyconcept}
+Formatting and value are two independent layers in Excel. The cell literally stores \texttt{1234.5}; the \emph{Number Format} property is a separate instruction telling Excel how to \emph{render} that stored value as text on screen (e.g., as \texttt{\$1,234.50}, as \texttt{1,234.5\%}, or as \texttt{Jan-15}). This is directly analogous to the separation in a database between a column's stored \texttt{DECIMAL} value and the application/BI layer's display formatting (\S\ref{sec:sql-mapping}) --- SQL never stores "\$1,234.50" as such, only the number \texttt{1234.50}.
+\end{keyconcept}
+
+\subsection{Built-in Number Formats}
+
+\begin{center}
+\begin{tabular}{@{}p{2.6cm}p{4.2cm}p{5.4cm}@{}}
+\toprule
+\textbf{Format} & \textbf{Example display} & \textbf{Typical use} \\
+\midrule
+General & \texttt{1234.5} & Default; no consistent decimal alignment or separators --- rarely acceptable in a finished model. \\
+Number & \texttt{1,234.50} & Plain numeric values with a fixed decimal count and optional thousands separator. \\
+Currency & \texttt{\$1,234.50} & Currency symbol immediately adjacent to the digits; symbol position moves with column width. \\
+Accounting & \texttt{\ \ \$\ \ 1,234.50} & Currency symbol \textbf{left-aligned} at the cell edge, value right-aligned, decimal points vertically aligned down an entire column --- the standard for financial statements. \\
+Percentage & \texttt{12.35\%} & Multiplies the stored value by 100 and appends \texttt{\%} for display only (stored value stays a decimal fraction, e.g. \texttt{0.1235}). \\
+Date/Time & \texttt{15-Aug-26} & Stored internally as a \textbf{serial number} (days since 1-Jan-1900) so dates can be added/subtracted arithmetically. \\
+Text & \texttt{00123} & Forces the cell to treat entries literally as characters, never as a calculable number --- used for IDs, account/routing numbers, phone numbers. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{pitfall}[Currency vs. Accounting Format --- They Are Not the Same]
+It is extremely common to confuse these two. \textbf{Currency} format glues the \texttt{\$} sign to the first digit, so it drifts left/right as the value's digit-count changes --- fine for a single number, ugly in a column. \textbf{Accounting} format pins the \texttt{\$} sign to the far-left edge of the cell and right-aligns the number, so every dollar sign in a column lines up in one vertical strip and every decimal point lines up in another. Financial statements (income statements, balance sheets) almost always use \textbf{Accounting} format for exactly this reason --- it is what makes a column of numbers scannable at a glance.
+\end{pitfall}
+
+\subsection{Custom Number Format Codes}
+\label{sec:customformat}
+
+Beyond the built-in presets, Excel lets you write your own format \emph{code}, accessed via \key{Ctrl+1} $\rightarrow$ \textbf{Number} $\rightarrow$ \textbf{Custom}. This is a small, dense syntax worth learning properly.
+
+\begin{formulasyntax}[Custom Format Code Structure]
+\begin{center}
+\texttt{POSITIVE\_FORMAT ; NEGATIVE\_FORMAT ; ZERO\_FORMAT ; TEXT\_FORMAT}
+\end{center}
+Up to four sections, separated by semicolons:
+\begin{itemize}
+  \item \textbf{One section} $\rightarrow$ applied to all values (positive, negative, zero, text alike).
+  \item \textbf{Two sections} $\rightarrow$ first applies to positive numbers \emph{and} zero, second to negative numbers.
+  \item \textbf{Three sections} $\rightarrow$ positive, negative, zero respectively (text falls back to General).
+  \item \textbf{Four sections} $\rightarrow$ positive, negative, zero, text --- full control over every case.
+\end{itemize}
+\end{formulasyntax}
+
+\textbf{The most common building-block codes:}
+
+\begin{center}
+\begin{tabular}{@{}p{2.2cm}p{9.8cm}@{}}
+\toprule
+\textbf{Code} & \textbf{Meaning} \\
+\midrule
+\texttt{0} & A digit placeholder that always shows, even as a padding zero (\texttt{0000} displays \texttt{5} as \texttt{0005}). \\
+\texttt{\#} & A digit placeholder that shows \emph{only if significant} (no forced padding zero). \\
+\texttt{,} & Thousands separator when placed between digit placeholders; when placed at the \emph{end} of the code, it scales the display down by one thousand per comma without changing the stored value. \\
+\texttt{.} & Decimal point. \\
+\texttt{\%} & Multiplies by 100 and appends a percent sign. \\
+\texttt{"text"} & Literal text inserted verbatim into the display. \\
+\texttt{[Red]}, \texttt{[Blue]}, \texttt{[Green]}, etc. & Colour tag placed at the start of a section --- one of eight named colours available without VBA. \\
+\texttt{@} & Placeholder for the original text entry (used only in the fourth, text, section). \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Worked examples, exactly as typed into the Custom Type box:}
+
+\begin{center}
+\begin{tabular}{@{}p{4.6cm}p{2.4cm}p{4.6cm}@{}}
+\toprule
+\textbf{Format code} & \textbf{Input value} & \textbf{Displayed as} \\
+\midrule
+\texttt{\#,\#\#0.00} & \texttt{1234.5} & \texttt{1,234.50} \\
+\texttt{\$\#,\#\#0.00;[Red](\$\#,\#\#0.00)} & \texttt{-1234.5} & \texttt{(\$1,234.50)} in red \\
+\texttt{\#,\#\#0.00;(\#,\#\#0.00);"--"} & \texttt{0} & \texttt{--} (a dash instead of \texttt{0.00}) \\
+\texttt{0.0,,"M"} & \texttt{5000000} & \texttt{5.0M} \\
+\texttt{0.0,"K"} & \texttt{45000} & \texttt{45.0K} \\
+\texttt{0.0\%} & \texttt{0.1235} & \texttt{12.3\%} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{financeapp}[Why This Matters in Modeling]
+Investment banking and equity research models near-universally use two custom conventions built from the codes above: (1) \textbf{negative numbers in red parentheses} rather than a minus sign, because a minus sign is easy to miss at a glance in a dense grid, and (2) \textbf{abbreviating large figures to K/M/Bn} (\texttt{0.0,,"M"}) so a model showing enterprise values in the billions doesn't force nine-digit numbers into every cell.
+\end{financeapp}
+
+\subsection{Text Numbers: A Silent Data-Quality Trap}
+
+\begin{pitfall}[Numbers Stored as Text]
+When a number is imported from a CSV, a bank statement export, or typed with a leading apostrophe, Excel may store it as a \emph{text string} that merely \emph{looks} like a number (left-aligned by default, versus right-aligned for true numbers, often flagged with a small green corner triangle). Such cells will silently \textbf{fail to be included} in a \texttt{SUM} or \texttt{AVERAGE} range, with no error message --- the total is simply, quietly wrong. Always check alignment (numbers right-align by default) when a total looks suspicious. The fastest fix: select the range, use \textbf{Data $\rightarrow$ Text to Columns $\rightarrow$ Finish} (this forces a re-parse of the values), or multiply by 1 via a helper formula, or use \textbf{Paste Special $\rightarrow$ Multiply} with a \texttt{1} pasted from any cell.
+\end{pitfall}
+
+% ==================================================================
+\section{Formula Fundamentals}
+\label{sec:formula-fund}
+% ==================================================================
+
+\subsection{Anatomy of a Formula}
+
+Every formula begins with \texttt{=} (a leading \texttt{+} is also silently accepted, a holdover from Lotus 1-2-3 compatibility). Everything after that is evaluated as an expression combining constants, cell references, operators, and functions.
+
+\begin{formulasyntax}[Arithmetic Operators]
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{Operator} & \textbf{Meaning} & \textbf{Operator} & \textbf{Meaning}\\
+\midrule
+\texttt{+} & Addition & \texttt{\^{}} & Exponentiation \\
+\texttt{-} & Subtraction & \texttt{\&} & Text concatenation \\
+\texttt{*} & Multiplication & \texttt{=, <>, >, <, >=, <=} & Comparison (returns \texttt{TRUE}/\texttt{FALSE}) \\
+\texttt{/} & Division & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{formulasyntax}
+
+\textbf{Order of operations} follows standard mathematical precedence (PEMDAS-equivalent): parentheses first, then exponentiation, then multiplication/division (left to right), then addition/subtraction (left to right). As in any programming language, \textbf{use parentheses liberally} rather than relying on memorised precedence rules --- it costs nothing and prevents an entire class of subtle model errors.
+
+\begin{center}
+\begin{tabular}{@{}p{4.2cm}p{2.4cm}p{5.8cm}@{}}
+\toprule
+\textbf{Formula} & \textbf{Result} & \textbf{Why} \\
+\midrule
+\texttt{=2+3*4} & \texttt{14} & Multiplication before addition \\
+\texttt{=(2+3)*4} & \texttt{20} & Parentheses override default precedence \\
+\texttt{=10/2\^{}2} & \texttt{2.5} & Exponentiation before division \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Cell References --- A First Look}
+
+A formula almost never contains raw constants only; it references other cells so that the calculation stays live. Typing \texttt{=B4+B5} in cell \texttt{B6} tells Excel "add whatever is currently in B4 to whatever is currently in B5." Change B4, and B6 recalculates instantly --- this reactive recalculation is the entire reason Excel is used for modeling instead of a plain calculator.
+
+\begin{keyconcept}
+By default every reference you type (e.g. \texttt{B4}) is a \textbf{relative reference}: if that formula is copied to another cell, Excel shifts the reference by the same offset as the copy. This is usually exactly what you want when copying a formula down a column of similar rows, and exactly what you \emph{don't} want when a formula must always point at one fixed cell (e.g., a tax rate assumption cell referenced by every row). The fix --- \textbf{absolute references} using the \texttt{\$} symbol (\texttt{\$B\$4}) --- is a full topic in its own right and is covered in depth in Module 2, since it interacts closely with Named Ranges. For now, just recognise that this distinction exists and watch for formulas that "break" in a subtly wrong way after being copied.
+\end{keyconcept}
+
+\subsection{Starter Functions Every Analyst Uses Daily}
+
+A \textbf{function} is a named, pre-built formula that takes \textbf{arguments} in parentheses, separated by commas, and returns a value: \texttt{=FUNCTION(argument1, argument2, ...)}.
+
+\begin{formulasyntax}[SUM]
+\texttt{=SUM(number1, [number2], ...)} --- adds every number in the given range(s). Ranges and individual cells can be mixed: \texttt{=SUM(B4:B8, D2)}.
+\end{formulasyntax}
+
+\begin{formulasyntax}[AVERAGE]
+\texttt{=AVERAGE(number1, [number2], ...)} --- the arithmetic mean of the given values, automatically ignoring blank cells (but \emph{not} ignoring zeros, which will pull the average down --- a frequent source of confusion versus \texttt{AVERAGEIF}, covered in Module 3).
+\end{formulasyntax}
+
+\begin{formulasyntax}[COUNT and COUNTA]
+\texttt{=COUNT(value1, ...)} counts only cells containing \textbf{numbers}. \texttt{=COUNTA(value1, ...)} counts \textbf{any non-blank} cell, numeric or text. Mixing these up is a common bug when counting how many transactions/entries exist in a column that includes text labels.
+\end{formulasyntax}
+
+\begin{formulasyntax}[MIN and MAX]
+\texttt{=MIN(number1, ...)} / \texttt{=MAX(number1, ...)} return the smallest/largest value in the range --- e.g., the lowest and highest daily closing price in a range of stock prices.
+\end{formulasyntax}
+
+\begin{formulasyntax}[TODAY and NOW]
+\texttt{=TODAY()} returns the current date (no time component); \texttt{=NOW()} returns current date \emph{and} time. Both take no arguments but the parentheses are still required. Both recalculate every time the workbook opens or recalculates --- useful for "as-of" labels on reports, but remember they are \emph{not static}: a model saved today will show a different \texttt{TODAY()} value if reopened next month.
+\end{formulasyntax}
+
+\begin{formulasyntax}[ROUND]
+\texttt{=ROUND(number, num\_digits)} rounds to a specified number of decimal places (\texttt{num\_digits} can be negative to round to tens/hundreds/thousands, e.g. \texttt{=ROUND(1234, -2)} returns \texttt{1200}). Note this is distinct from \emph{display} rounding via number formatting (\S\ref{sec:numformat}) --- \texttt{ROUND} changes the actual stored value, which matters when that value feeds into further calculations.
+\end{formulasyntax}
+
+\begin{protip}[AutoSum and the Fill Handle]
+\key{Alt+=} (AutoSum) automatically inserts a \texttt{SUM} formula guessing the adjacent range --- the fastest way to total a column. The \textbf{Fill Handle} (the small square at a selected cell's bottom-right corner) lets you drag a formula across adjacent cells, automatically adjusting relative references as it goes; double-clicking it auto-fills down to match the length of an adjacent populated column.
+\end{protip}
+
+\subsection{Seeing the Formulas, Not Just the Results}
+
+\key{Ctrl+`} (grave accent, top-left key) toggles \textbf{Show Formulas} mode, displaying every cell's underlying formula instead of its calculated result across the whole sheet at once --- indispensable for auditing someone else's model or debugging your own. \textbf{Formulas $\rightarrow$ Trace Precedents / Trace Dependents} draws arrows showing which cells feed into (precedents) or depend on (dependents) the selected cell, and \textbf{Formulas $\rightarrow$ Evaluate Formula} steps through a complex nested formula one calculation at a time, similar to a debugger's step-through execution.
+
+% ==================================================================
+\section{Keyboard Shortcuts for Speed}
+% ==================================================================
+
+Shortcuts are not a cosmetic convenience in Excel --- a fluent analyst who never touches the mouse can build and audit a model several times faster than one who doesn't, and it is a visible marker of proficiency in interviews and on the job. All shortcuts below are Windows; on macOS, substitute \key{Cmd} for \key{Ctrl} in most (not all) cases, noted where it differs.
+
+\subsection{Navigation}
+
+\begin{center}
+\begin{tabular}{@{}p{5.4cm}p{6.6cm}@{}}
+\toprule
+\textbf{Shortcut} & \textbf{Action} \\
+\midrule
+\key{Ctrl + Arrow key} & Jump to the edge of the current data region in that direction \\
+\key{Ctrl + Home} & Jump to cell \texttt{A1} \\
+\key{Ctrl + End} & Jump to the last used cell on the sheet \\
+\key{Page Up / Page Down} & Scroll one screen up/down \\
+\key{Alt + Page Up / Down} & Scroll one screen left/right \\
+\key{Ctrl + Page Up / Down} & Move to the previous/next worksheet tab \\
+\key{F5} or \key{Ctrl+G} & Open "Go To" --- jump directly to a typed cell address \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Selection}
+
+\begin{center}
+\begin{tabular}{@{}p{5.4cm}p{6.6cm}@{}}
+\toprule
+\textbf{Shortcut} & \textbf{Action} \\
+\midrule
+\key{Ctrl + Shift + Arrow key} & Extend selection to the edge of the current data region \\
+\key{Ctrl + A} & Select the entire current data region (press twice for the whole sheet) \\
+\key{Shift + Space} & Select the entire current row \\
+\key{Ctrl + Space} & Select the entire current column \\
+\key{Ctrl + Click} & Add a non-adjacent cell/range to the current selection \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Editing}
+
+\begin{center}
+\begin{tabular}{@{}p{5.4cm}p{6.6cm}@{}}
+\toprule
+\textbf{Shortcut} & \textbf{Action} \\
+\midrule
+\key{Ctrl + X / C / V} & Cut / Copy / Paste \\
+\key{Ctrl + Alt + V} & Paste Special (values only, formulas only, formats only, transpose, ...) \\
+\key{Ctrl + Z / Y} & Undo / Redo \\
+\key{Ctrl + D} & Fill down (copy the top cell of a selection into all cells below it) \\
+\key{Ctrl + R} & Fill right \\
+\key{F2} & Edit the active cell in place \\
+\key{Delete} & Clear cell contents (keeps formatting) \\
+\key{Ctrl + -\,} / \key{Ctrl + Shift + +} & Delete / Insert selected cells, rows, or columns \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Formatting}
+
+\begin{center}
+\begin{tabular}{@{}p{5.4cm}p{6.6cm}@{}}
+\toprule
+\textbf{Shortcut} & \textbf{Action} \\
+\midrule
+\key{Ctrl + 1} & Open Format Cells dialog (the single most useful formatting shortcut) \\
+\key{Ctrl + B / I / U} & Bold / Italic / Underline \\
+\key{Ctrl + Shift + \$} & Apply Currency format \\
+\key{Ctrl + Shift + \%} & Apply Percentage format \\
+\key{Ctrl + Shift + \#} & Apply Date format \\
+\key{Ctrl + Shift + 1} & Apply Number format (two decimals, thousands separator) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Formulas \& Calculation}
+
+\begin{center}
+\begin{tabular}{@{}p{5.4cm}p{6.6cm}@{}}
+\toprule
+\textbf{Shortcut} & \textbf{Action} \\
+\midrule
+\key{Alt + =} & AutoSum \\
+\key{F4} (while editing a reference) & Cycle a reference through relative/absolute combinations (see Module 2) \\
+\key{Ctrl + `} & Toggle Show Formulas view \\
+\key{F9} & Recalculate the entire workbook \\
+\key{Shift + F9} & Recalculate only the active sheet \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{File \& View}
+
+\begin{center}
+\begin{tabular}{@{}p{5.4cm}p{6.6cm}@{}}
+\toprule
+\textbf{Shortcut} & \textbf{Action} \\
+\midrule
+\key{Ctrl + N / O / S} & New / Open / Save \\
+\key{F12} & Save As \\
+\key{Ctrl + P} & Print \\
+\key{Ctrl + F / H} & Find / Replace (full depth in Module 3) \\
+\key{Alt + Tab} & Switch open windows/applications \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ==================================================================
+\section{Cross-Tool Translation: Python}
+\label{sec:python}
+% ==================================================================
+
+\subsection{Why Two Libraries, Not One}
+
+Python has no single "Excel library" because Excel actually does two separate jobs that Python keeps cleanly separated:
+
+\begin{itemize}
+  \item \textbf{\texttt{pandas}} --- for \emph{data}: loading, filtering, aggregating, and computing over tabular data efficiently, the equivalent of what a formula-filled range of cells \emph{does}.
+  \item \textbf{\texttt{openpyxl}} --- for the \emph{file}: reading and writing actual \texttt{.xlsx} files cell-by-cell, including fonts, fills, number formats, and even literal formula strings --- the equivalent of what the worksheet \emph{looks like}.
+\end{itemize}
+
+In practice, a typical script uses \texttt{pandas} to do the heavy numerical lifting and calls \texttt{openpyxl} (often via \texttt{pandas.to\_excel}, which uses \texttt{openpyxl} internally) only at the final step, to produce a polished, formatted \texttt{.xlsx} deliverable.
+
+\begin{lstlisting}[style=pythonstyle, caption={Environment setup}]
+pip install pandas openpyxl
+\end{lstlisting}
+
+\subsection{Workbook and Worksheet Equivalents (openpyxl)}
+
+\begin{lstlisting}[style=pythonstyle, caption={Creating a workbook, equivalent to File $\to$ New $\to$ Blank Workbook}]
+from openpyxl import Workbook
+
+wb = Workbook()                 # a new Workbook, like a blank .xlsx
+ws = wb.active                  # the first worksheet, like "Sheet1"
+ws.title = "Monthly Expenses"   # renaming the sheet tab
+
+# Writing to specific cells, exactly like typing into the grid
+ws["A1"] = "Category"
+ws["B1"] = "Amount"
+ws["A2"] = "Rent"
+ws["B2"] = 25000
+
+# Cell addresses work exactly as in Excel: column letter + row number
+print(ws["B2"].value)           # 25000
+
+wb.save("expenses.xlsx")        # equivalent of Ctrl+S
+\end{lstlisting}
+
+\begin{lstlisting}[style=pythonstyle, caption={Opening an existing workbook, equivalent to File $\to$ Open}]
+from openpyxl import load_workbook
+
+wb = load_workbook("expenses.xlsx")
+print(wb.sheetnames)            # list of worksheet tab names, like the tabs at the bottom
+ws = wb["Monthly Expenses"]     # select a sheet by its tab name
+\end{lstlisting}
+
+\subsection{Reading a Whole Sheet as a DataFrame (pandas)}
+
+Where \texttt{openpyxl} operates cell-by-cell, \texttt{pandas} treats a whole worksheet range as one table --- much closer to how you \emph{think} about a dataset in finance.
+
+\begin{lstlisting}[style=pythonstyle, caption={Reading an Excel sheet into pandas}]
+import pandas as pd
+
+df = pd.read_excel("expenses.xlsx", sheet_name="Monthly Expenses")
+print(df.head())
+
+#     Category  Amount
+# 0       Rent   25000
+# 1       Food    8000
+# 2  Transport    3000
+\end{lstlisting}
+
+\subsection{Number Formatting (openpyxl)}
+
+This is the single most direct Excel$\leftrightarrow$Python bridge in this whole module: \texttt{openpyxl} accepts \emph{the exact same custom format code strings} you would type into Excel's Format Cells dialog (\S\ref{sec:customformat}).
+
+\begin{lstlisting}[style=pythonstyle, caption={Applying Accounting/Currency format codes identical to Excel's}]
+from openpyxl.styles import Font, PatternFill, Alignment
+
+cell = ws["B2"]
+
+# Same custom format code as typed into Excel's Custom Type box
+cell.number_format = '$#,##0.00;[Red](#,##0.00)'
+
+# Font styling -- equivalent of Home tab Font group
+cell.font = Font(name="Calibri", size=11, bold=True, color="1F5C8B")
+
+# Fill colour -- equivalent of Home tab Fill Colour
+cell.fill = PatternFill(start_color="E9F3EE", end_color="E9F3EE", fill_type="solid")
+
+# Alignment -- equivalent of Home tab Alignment group
+cell.alignment = Alignment(horizontal="right", vertical="center", wrap_text=True)
+
+wb.save("expenses.xlsx")
+\end{lstlisting}
+
+\subsection{Aggregate Formulas: pandas vs. Writing Live Excel Formulas}
+
+There are two distinct ways Python can "do a SUM," and the difference matters:
+
+\begin{lstlisting}[style=pythonstyle, caption={Option A: compute the result in Python (a static number)}]
+total = df["Amount"].sum()          # equivalent of =SUM(), computed once in Python
+average = df["Amount"].mean()       # equivalent of =AVERAGE()
+count_rows = df["Amount"].count()   # equivalent of =COUNT() (numeric cells only)
+minimum = df["Amount"].min()        # equivalent of =MIN()
+maximum = df["Amount"].max()        # equivalent of =MAX()
+\end{lstlisting}
+
+\begin{lstlisting}[style=pythonstyle, caption={Option B: write an actual live Excel formula into the .xlsx file}]
+# openpyxl can write the formula STRING itself, so it stays "live"
+# and recalculates in Excel if the source cells later change
+ws["B10"] = "=SUM(B2:B9)"
+ws["B11"] = "=AVERAGE(B2:B9)"
+wb.save("expenses.xlsx")
+\end{lstlisting}
+
+\begin{keyconcept}
+Option A produces a \emph{frozen} number computed at script run-time --- fast and simple, but the value goes stale the moment the source data changes, exactly like a Paste-Values operation in Excel. Option B produces a \emph{live formula string} inside the \texttt{.xlsx} file that Excel itself will recalculate when opened --- slower to set up, but it preserves the "reactive" property that makes Excel useful in the first place. Choose Option B whenever the output workbook needs to remain editable and self-updating for a human user; choose Option A when Python is just generating a final static report.
+\end{keyconcept}
+
+\subsection{Saving and Exporting}
+
+\begin{lstlisting}[style=pythonstyle, caption={Common export paths, mirroring Excel's Save/Save As/Export}]
+wb.save("expenses.xlsx")                       # equivalent of Ctrl+S / Save As .xlsx
+df.to_excel("expenses_export.xlsx", index=False)   # pandas' own writer (uses openpyxl internally)
+df.to_csv("expenses.csv", index=False)         # equivalent of Save As -> CSV (values only)
+\end{lstlisting}
+
+% ==================================================================
+\section{Cross-Tool Translation: SQL}
+\label{sec:sql-mapping}
+% ==================================================================
+
+\subsection{The Mental Model}
+
+\begin{center}
+\begin{tabular}{@{}p{3.4cm}p{3.4cm}p{6.4cm}@{}}
+\toprule
+\textbf{Excel} & \textbf{SQL} & \textbf{Notes} \\
+\midrule
+Workbook & Database & A container for multiple tables/sheets. \\
+Worksheet & Table & A named grid of rows and columns. \\
+Column header & Column name & In SQL, a name is mandatory and fixed at table creation; in Excel a header is just a text cell you type. \\
+Row & Record/Row & A single entity's set of values. \\
+Cell & Field & One value at the intersection of a row and column. \\
+Number Format & (No direct equivalent) & SQL stores a value's raw \textbf{data type} (\texttt{DECIMAL}, \texttt{DATE}, etc.); \emph{how} it is displayed to a user is handled entirely outside the database, at the application/reporting layer --- exactly like the Excel principle from \S\ref{sec:numformat} that format is cosmetic and separate from stored value, just pushed one layer further away. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{keyconcept}
+The biggest conceptual shift moving from Excel to SQL is that a SQL table has \textbf{no inherent row order and no concept of a cell address}. There is no \texttt{C18} in SQL --- you always retrieve and identify rows by the \emph{values} in named columns (e.g., \texttt{WHERE category = 'Rent'}), never by position. This is the same relative/absolute-reference tension flagged in \S\ref{sec:formula-fund}: SQL sidesteps the whole problem by refusing to have positional references at all.
+\end{keyconcept}
+
+\subsection{Defining the Table (equivalent of setting up columns \& formats)}
+
+Declaring a SQL table's column \textbf{data types} is the closest SQL equivalent to choosing Excel's Number Format --- both are decisions about what kind of value a column is allowed to hold.
+
+\begin{lstlisting}[style=sqlstyle, caption={CREATE TABLE, equivalent to typing headers and setting column formats}]
+CREATE TABLE monthly_expenses (
+    expense_id   INT PRIMARY KEY,
+    category     VARCHAR(50)    NOT NULL,   -- like a Text-formatted column
+    amount       DECIMAL(12,2)  NOT NULL,   -- like a Currency/Accounting-formatted column
+    expense_date DATE           NOT NULL    -- like a Date-formatted column
+);
+\end{lstlisting}
+
+\begin{financeapp}
+\texttt{DECIMAL(12,2)} rather than a floating-point type is the standard choice for money columns in real financial systems: it stores an exact fixed-point value (12 total digits, 2 after the decimal), avoiding the tiny binary floating-point rounding errors that can silently accumulate across millions of transactions -- a class of bug Excel does not fully protect you from either, which is why \texttt{ROUND} (\S\ref{sec:formula-fund}) matters.
+\end{financeapp}
+
+\subsection{Inserting Data (equivalent of typing values into cells)}
+
+\begin{lstlisting}[style=sqlstyle, caption={INSERT, equivalent to typing rows of data into a worksheet}]
+INSERT INTO monthly_expenses (expense_id, category, amount, expense_date) VALUES
+    (1, 'Rent',        25000.00, '2026-08-01'),
+    (2, 'Food',          8000.00, '2026-08-03'),
+    (3, 'Transport',     3000.00, '2026-08-05'),
+    (4, 'Utilities',     4500.00, '2026-08-07'),
+    (5, 'Entertainment', 2000.00, '2026-08-10');
+\end{lstlisting}
+
+\subsection{Aggregate Queries (equivalent of SUM, AVERAGE, COUNT, MIN, MAX)}
+
+SQL's built-in aggregate functions map almost one-to-one onto the Excel functions from \S\ref{sec:formula-fund}.
+
+\begin{center}
+\begin{tabular}{@{}p{2.6cm}p{2.6cm}p{6.0cm}@{}}
+\toprule
+\textbf{Excel} & \textbf{SQL} & \textbf{Notes} \\
+\midrule
+\texttt{SUM} & \texttt{SUM()} & Identical concept. \\
+\texttt{AVERAGE} & \texttt{AVG()} & Identical concept. \\
+\texttt{COUNT} & \texttt{COUNT(column)} & Counts non-null values in a column, closer to Excel's \texttt{COUNT} (numeric-aware) than \texttt{COUNTA}. \\
+\texttt{COUNTA} & \texttt{COUNT(*)} & Counts every row regardless of null fields. \\
+\texttt{MIN / MAX} & \texttt{MIN() / MAX()} & Identical concept. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[style=sqlstyle, caption={Aggregate query, equivalent to a small block of SUM/AVERAGE/COUNT/MIN/MAX formulas}]
+SELECT
+    SUM(amount)                 AS total_expenses,   -- =SUM(B2:B6)
+    ROUND(AVG(amount), 2)       AS average_expense,   -- =AVERAGE(B2:B6)
+    COUNT(*)                    AS number_of_entries, -- =COUNTA(A2:A6)
+    MIN(amount)                 AS smallest_expense,  -- =MIN(B2:B6)
+    MAX(amount)                 AS largest_expense    -- =MAX(B2:B6)
+FROM monthly_expenses;
+\end{lstlisting}
+
+% ==================================================================
+\section{Worked Example: Monthly Expense Summary, Three Ways}
+% ==================================================================
+
+The same small dataset --- five expense categories --- built out identically in all three tools, to make the equivalence concrete rather than abstract.
+
+\subsection{The Data}
+
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Category} & \textbf{Amount (INR)} \\
+\midrule
+Rent & 25,000 \\
+Food & 8,000 \\
+Transport & 3,000 \\
+Utilities & 4,500 \\
+Entertainment & 2,000 \\
+\midrule
+\textbf{Total} & \textbf{42,500} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Excel Implementation}
+
+\begin{itemize}
+  \item Categories in \texttt{A2:A6}, amounts in \texttt{B2:B6}, both formatted with the \textbf{Accounting} number format (\S\ref{sec:numformat}).
+  \item \texttt{B7}: \texttt{=SUM(B2:B6)} $\rightarrow$ \texttt{42,500}, with a top border applied for a subtotal line (a formatting convention, not a formula).
+  \item \texttt{B8}: \texttt{=AVERAGE(B2:B6)} $\rightarrow$ \texttt{8,500}.
+  \item Column \texttt{A} header (\texttt{A1:B1}) is Bold, with Fill Colour applied, following the blue/black colour convention from \S\ref{sec:numformat} for the two hard-coded input columns.
+\end{itemize}
+
+\subsection{Python Implementation}
+
+\begin{lstlisting}[style=pythonstyle, caption={End-to-end: build the data, compute totals, write a formatted .xlsx}]
+import pandas as pd
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment, Border, Side
+
+data = {
+    "Category": ["Rent", "Food", "Transport", "Utilities", "Entertainment"],
+    "Amount":   [25000, 8000, 3000, 4500, 2000],
+}
+df = pd.DataFrame(data)
+
+total = df["Amount"].sum()          # 42500
+average = df["Amount"].mean()       # 8500.0
+
+wb = Workbook()
+ws = wb.active
+ws.title = "Expenses"
+ws.append(["Category", "Amount"])
+for _, row in df.iterrows():
+    ws.append([row["Category"], row["Amount"]])
+
+# Live formulas, matching the Excel version cell-for-cell
+ws["B7"] = "=SUM(B2:B6)"
+ws["B8"] = "=AVERAGE(B2:B6)"
+
+for row in ws["B2:B8"]:
+    for cell in row:
+        cell.number_format = '#,##0'
+
+ws["B7"].border = Border(top=Side(style="thin"))
+ws["A1"].font = ws["B1"].font = Font(bold=True)
+
+wb.save("expenses_summary.xlsx")
+\end{lstlisting}
+
+\subsection{SQL Implementation}
+
+\begin{lstlisting}[style=sqlstyle, caption={Same summary via schema + aggregate query}]
+CREATE TABLE monthly_expenses (
+    category VARCHAR(50) PRIMARY KEY,
+    amount   DECIMAL(10,2) NOT NULL
+);
+
+INSERT INTO monthly_expenses VALUES
+    ('Rent',          25000.00),
+    ('Food',           8000.00),
+    ('Transport',      3000.00),
+    ('Utilities',      4500.00),
+    ('Entertainment',  2000.00);
+
+SELECT
+    SUM(amount)           AS total,      -- 42500.00
+    ROUND(AVG(amount), 2) AS average     -- 8500.00
+FROM monthly_expenses;
+\end{lstlisting}
+
+% ==================================================================
+\section{Common Pitfalls \& Debugging Checklist}
+% ==================================================================
+
+\begin{center}
+\begin{tabular}{@{}p{3.6cm}p{8.4cm}@{}}
+\toprule
+\textbf{Symptom} & \textbf{Likely cause \& fix} \\
+\midrule
+Column shows \texttt{\#\#\#\#\#} & Column too narrow for the formatted value --- widen the column (double-click the column border to auto-fit); the underlying value is fine. \\
+\texttt{SUM} total looks too low & Some "numbers" in the range are actually text (\S\ref{sec:numformat}) --- check for left-aligned entries in an otherwise right-aligned numeric column. \\
+Sorting or filtering scrambles data & Merged cells somewhere in the range (\S 3.3.2) --- unmerge before sorting/filtering. \\
+Formula gives a wildly wrong result after copying & A reference that should have stayed fixed shifted because it was relative, not absolute --- revisit \S\ref{sec:formula-fund} and Module 2's \texttt{\$} notation. \\
+A formula references its own cell, directly or indirectly & \textbf{Circular reference} warning --- Excel will flag this explicitly; trace the chain with \textbf{Formulas $\rightarrow$ Error Checking $\rightarrow$ Circular References}. \\
+Numbers display differently for a colleague in another country & Regional settings differ: some locales use \texttt{,} as the decimal separator and \texttt{.} as the thousands separator (the reverse of the US/India convention used in this handbook) --- the stored value is identical, only the display convention differs. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ==================================================================
+\section{Chapter Summary \& Self-Check}
+% ==================================================================
+
+Before moving to Module 2 (Optimisation, Macros, Absolute/Relative References, Named Ranges, Data Validation \& Custom Formatting), you should be able to, without looking anything up:
+
+\begin{itemize}
+  \item[$\square$] Explain the difference between a workbook, a worksheet, and a cell, and give the pandas/SQL equivalent of each.
+  \item[$\square$] Navigate the File tab confidently: New vs. Open, Save vs. Save As, and when to export to PDF vs. CSV.
+  \item[$\square$] Explain \emph{why} merging cells inside a data table is dangerous, and what to use instead for a visually centered title.
+  \item[$\square$] State the difference between Currency and Accounting number formats, and write a custom format code that shows negative numbers in red parentheses.
+  \item[$\square$] Write \texttt{SUM}, \texttt{AVERAGE}, \texttt{COUNT}/\texttt{COUNTA}, \texttt{MIN}, \texttt{MAX}, \texttt{TODAY}, and \texttt{ROUND} from memory, including correct argument syntax.
+  \item[$\square$] Recognise the symptom of "numbers stored as text" and know at least one fix.
+  \item[$\square$] Freeze panes on a large sheet without looking up the steps.
+  \item[$\square$] Recall at least 10 keyboard shortcuts across navigation, editing, and formatting without a reference sheet.
+  \item[$\square$] Write the \texttt{openpyxl} code to create a workbook, write values, and apply a custom number format identical to an Excel one.
+  \item[$\square$] Write a \texttt{CREATE TABLE} statement choosing appropriate data types for a small financial dataset, and an aggregate \texttt{SELECT} equivalent to a block of Excel summary formulas.
+\end{itemize}
+
+% ==================================================================
+\section{What's Next: Module 2 Preview}
+% ==================================================================
+
+Module 2, \textit{Making Excel Professional}, builds directly on this foundation and covers:
+
+\begin{itemize}
+  \item \textbf{Optimisation} --- techniques for keeping large, formula-heavy workbooks fast and maintainable.
+  \item \textbf{Macros} --- recording and writing VBA to automate repetitive Excel tasks, with a comparison to automating the same tasks in Python.
+  \item \textbf{Absolute vs. Relative References} --- the full \texttt{\$} notation this module deliberately deferred, including mixed references and the \key{F4} cycling shortcut.
+  \item \textbf{Named Ranges} --- replacing fragile cell-address references (\texttt{B4}) with stable, self-documenting names (\texttt{TaxRate}), directly solving the positional-reference fragility flagged in \S 3.1.
+  \item \textbf{Data Validation \& Custom Formatting} --- constraining what a user is allowed to type into a cell, the closest Excel gets to a SQL \texttt{CHECK} constraint or a Python input-validation function.
+\end{itemize}
+
+\end{document}
