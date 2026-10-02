@@ -12,6 +12,40 @@ Financial analytics is the systematic use of data analysis techniques to evaluat
 * **Continuous Improvement:** Pinpointing inefficiencies in operations or capital allocation.
 * **Investor & Stakeholder Confidence:** Providing transparent, data-driven reports to build trust with external parties.
 
+### Course Roadmap: Topics to Be Learned
+
+This course is built around the following end-to-end financial learning journey:
+
+#### 1) Excel Mastery & Accounting Foundation
+- Excel essentials and productivity skills
+- Basic accounting concepts and financial reporting fundamentals
+- Building confidence in spreadsheet-based financial work
+
+#### 2) Advanced Accounting & Statements
+- Advanced accounting principles
+- Income statement, balance sheet, and cash flow analysis
+- Revenue recognition, cost recognition, and statement interpretation
+
+#### 3) Financial Dive & Analysis
+- Working capital and key operational metrics
+- Ratio analysis and financial statement deep dive
+- Trend analysis, comparative analysis, and business performance evaluation
+
+#### 4) Modeling & Decision-Making
+- 3-statement financial modeling
+- Forecasting and decision frameworks
+- Scenario evaluation and management decision support
+
+#### 5) Valuation & Strategy
+- DCF modeling and valuation techniques
+- Comparable company analysis
+- Capital budgeting and strategic financial planning
+
+#### 6) Innovation & Application
+- AI in finance and data-driven financial decision-making
+- Modern applications of analytics in business strategy
+- Translating financial knowledge into practical, real-world outcomes
+
 ### Tools of the Trade
 
 While several tools are prominent in the industry—including **Python** for automation, **Power BI**, and **Tableau** for data visualization—this course focuses exclusively on **MS Excel** due to its ubiquity and specialized financial functions.
