@@ -1,0 +1,125 @@
+\documentclass[11pt,oneside]{report}
+
+% ---------- PACKAGES ----------
+\usepackage[a4paper,margin=2.3cm,top=2.6cm,bottom=2.8cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning}
+
+% ---------- COLORS ----------
+\definecolor{inkblue}{HTML}{14213D}
+\definecolor{accent}{HTML}{0F766E}
+\definecolor{accent2}{HTML}{B45309}
+\definecolor{lightbg}{HTML}{F4F6F8}
+\definecolor{warnbg}{HTML}{FDF2F2}
+\definecolor{warnline}{HTML}{C0392B}
+\definecolor{goodbg}{HTML}{F0F9F6}
+\definecolor{goodline}{HTML}{0F766E}
+\definecolor{tmpl}{HTML}{EFF3FF}
+\definecolor{tmplline}{HTML}{3B5BA9}
+\definecolor{greytext}{HTML}{555555}
+
+% ---------- SECTION STYLE ----------
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{inkblue}}
+  {\Large\color{accent}PART \thechapter}
+  {8pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{inkblue}}{\thesection}{10pt}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{accent}}{\thesubsection}{8pt}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{accent2}}{\thesubsubsection}{6pt}{}
+
+% ---------- HEADER/FOOTER ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\color{greytext}\leftmark}
+\fancyhead[R]{\small\color{greytext}The Remote-Hire Playbook}
+\fancyfoot[C]{\small\thepage}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=tmplline,
+  citecolor=accent,
+  pdftitle={The Remote-Hire Playbook},
+  pdfauthor={Compiled for Aman Singh},
+  pdfsubject={Judgment, Production-Grade Projects, Personal Branding and Direct Outreach for Remote AI/ML Roles}
+}
+
+% ---------- CUSTOM BOXES ----------
+\newtcolorbox{keytakeaway}[1][]{
+  colback=goodbg, colframe=goodline, boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt,
+  coltitle=white, colbacktitle=goodline,
+  title={\textbf{Key Takeaway}}, fonttitle=\bfseries,
+  #1
+}
+\newtcolorbox{caution}[1][]{
+  colback=warnbg, colframe=warnline, boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt,
+  coltitle=white, colbacktitle=warnline,
+  title={\textbf{Reality Check}}, fonttitle=\bfseries,
+  #1
+}
+\newtcolorbox{template}[1][]{
+  colback=tmpl, colframe=tmplline, boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt,
+  fontupper=\small\ttfamily,
+  #1
+}
+\newtcolorbox{example}[1][]{
+  colback=lightbg, colframe=inkblue!60, boxrule=0.6pt, arc=2pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt,
+  #1
+}
+
+\newcommand{\good}{\textcolor{goodline}{\ding{51}}\ }
+\newcommand{\bad}{\textcolor{warnline}{\ding{55}}\ }
+
+\setlist[itemize]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.6em, itemsep=2pt, topsep=3pt}
+
+% ---------- DOCUMENT ----------
+\begin{document}
+
+\input{sections/00-titlepage}
+\input{sections/00-toc}
+\input{sections/01-foundations}
+\input{sections/02-outreach-engineering}
+\input{sections/03-production-projects-a}
+\input{sections/04-production-projects-b}
+\input{sections/05-production-projects-c}
+\input{sections/06-linkedin-branding}
+\input{sections/07-direct-outreach}
+\input{sections/08-beyond-job-postings}
+\input{sections/09-roadmap}
+\input{sections/10-evaluating-programs}
+\input{sections/11-checklists}
+\input{sections/12-appendix}
+
+\end{document}

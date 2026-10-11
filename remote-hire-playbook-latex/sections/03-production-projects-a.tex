@@ -1,0 +1,326 @@
+\chapter{Building Production-Grade Projects}
+\label{ch:projects}
+
+This is the proof-of-work layer --- the $S$ (Social Proof) term in the outreach equation from
+Chapter~\ref{ch:outreach-engineering}. Everything in this Part draws on two aligned sources: the project-related
+section of the remote-jobs playbook, and the dedicated guide \emph{The Complete Guide to Building Production-Grade
+ML Projects That Get You Hired}. Both make the same point from different angles: deployment alone does not make a
+project production-grade, and the gap between a tutorial project and a production one is what recruiters and
+founders are actually screening for.
+
+\section{Why Projects Get Rejected}
+
+\subsection{What Recruiters Actually See}
+
+\begin{example}
+\textbf{Your resume:} ``Built ML model for house price prediction achieving 95\% accuracy using Random Forest.''
+
+\textbf{Their reaction:} Skip. Next candidate.
+\end{example}
+
+Why? Because hundreds of other resumes say the exact same thing. That sentence signals: you followed a Kaggle
+tutorial, you don't understand production systems, you'll need months to become useful, and you think accuracy is
+what matters.
+
+\subsection{What Recruiters Want to See}
+
+Projects that answer four questions:
+
+\begin{itemize}
+  \item \textbf{Can you structure ambiguous problems?} Did you define success before building anything? Do you
+  understand the business context or just the ML part? Can you explain why this problem needs ML and not a SQL
+  query?
+  \item \textbf{Can you build systems that don't break?} Did you think about what happens when data changes? How
+  do you handle edge cases and failures? Is there a plan for when predictions are wrong?
+  \item \textbf{Can you make technical decisions?} Why this model and not the others you tried? What's the
+  trade-off between complexity and maintainability? Did you consider deployment constraints before choosing
+  tools?
+  \item \textbf{Can you communicate impact?} What business metric improved, and by how much? What does it cost
+  to run this system? How do you know it's working in production?
+\end{itemize}
+
+\subsection{Tutorial Projects vs.\ Production Projects}
+
+\begin{longtable}{p{0.47\textwidth} p{0.47\textwidth}}
+\toprule
+\textbf{Tutorial project} & \textbf{Production project} \\
+\midrule
+\endhead
+Clean data provided & Messy data you have to deal with \\
+Single metric to optimize & Multiple competing objectives \\
+Train model, get score, done & Ongoing iteration and improvement \\
+No consideration of deployment & Deployment is half the work \\
+Works on your laptop & Works reliably at scale \\
+\bottomrule
+\end{longtable}
+
+\begin{keytakeaway}
+The projects that get you hired are the ones that close this gap --- not the ones with the fanciest model.
+\end{keytakeaway}
+
+\section{What a Production-Grade Project Must Demonstrate}
+
+\begin{longtable}{p{0.24\textwidth} p{0.68\textwidth}}
+\toprule
+\textbf{Component} & \textbf{What you should demonstrate} \\
+\midrule
+\endhead
+Problem definition & You understand the actual user or business problem \\
+AI utilization & AI tools or agents accelerate appropriate parts of development \\
+Architecture & You personally understand and can justify the important design decisions \\
+Deployment & The system can be run and accessed outside your development environment \\
+Monitoring & You can observe failures, performance, and operational behaviour \\
+Testing & You can evaluate whether the system works correctly \\
+Failure handling & You understand how the system breaks and what happens when it does \\
+Debugging & You can reproduce, diagnose, and fix failures \\
+Documentation & You explain decisions, limitations, failures, and fixes \\
+Cost awareness & You understand the computational or inference cost where relevant \\
+\bottomrule
+\end{longtable}
+
+\subsection{How to Present the Project}
+
+Don't just publish the finished app --- document the engineering process: state the problem and why it matters;
+explain the architecture and the decisions you made; identify where AI was used and where you exercised
+independent judgment; describe a failure, unexpected result, or limitation; explain how you diagnosed and fixed
+it; show evidence the improved version works.
+
+\begin{example}
+\bad \textbf{Weak:} ``Built an AI-powered application using Python and machine learning.''
+
+\good \textbf{Stronger:} ``Built and deployed an AI-powered document-processing system, evaluated its failure
+cases, optimized its processing pipeline, and documented reliability and cost trade-offs.''
+
+An even stronger claim adds \emph{measured} results (reduced inference cost, improved latency) --- but only when
+those results were actually measured and can be demonstrated, never invented.
+\end{example}
+
+\section{Choosing Problems That Prove You Can Think}
+
+\subsection{The Problem Selection Framework}
+
+\textbf{Rule 1 --- real problems only.} Stop with Titanic, Iris, MNIST, and clean Kaggle datasets. A problem is
+``real'' when: the data has quality issues you must handle; there is clear business value you can articulate;
+there is a deployment scenario that constrains your choices; there are ongoing maintenance requirements; multiple
+stakeholders have different needs.
+
+\begin{example}
+\good \textbf{Good problem:} ``Predict restaurant demand to reduce food waste by 20\%, accounting for weather,
+events, and seasonal patterns, deployed as daily batch predictions reviewed by managers.''
+
+\bad \textbf{Bad problem:} ``Predict house prices on the Boston housing dataset.''
+\end{example}
+
+\textbf{Rule 2 --- production complexity required.} The project should force you to deal with missing data and
+outliers, class imbalance or distributional shift, feature engineering from raw data, model-selection trade-offs,
+serving-latency constraints, and monitoring/debugging needs. If the project doesn't force hard decisions, it
+won't impress anyone.
+
+\textbf{Rule 3 --- clear business context.} Answer before starting: What's the baseline (current solution --- a
+heuristic, manual process, competitor product)? If you can't beat a three-line SQL query, don't use ML. What's the
+success metric (translate ML metrics --- accuracy, F1 --- into business metrics: revenue, cost, time, retention)?
+What's the deployment scenario (batch, real-time API, streaming)? What's the failure mode and its cost (a missed
+diagnosis is catastrophic; a missed email is merely annoying)? What's the data refresh strategy (daily, weekly, or
+only on performance degradation)?
+
+\subsection{Project Categories That Work}
+
+\begin{description}
+  \item[Local business problems] A real business near you --- demand forecasting for restaurants, inventory
+  optimization for retail, churn prediction for gyms, no-show prediction for clinics. Real consequences, real
+  users to validate with, clear ROI.
+  \item[Personal pain points] A problem you actually face --- a job-application tracker with outcome prediction,
+  a reading-habit recommender, a study-schedule optimizer, expense categorization. You understand it deeply and
+  can iterate on real usage.
+  \item[Recreate real systems] Rebuild a feature from a major product --- YouTube thumbnail click prediction,
+  Spotify playlist generation, Netflix recommendations, Twitter trend detection, Amazon review-helpfulness
+  ranking. Well-understood problem space you can benchmark against.
+  \item[Domain-specific applications] Pick an industry you want to work in --- healthcare (readmission risk,
+  image analysis, drug-interaction detection), finance (credit default with fairness constraints, fraud
+  detection, sentiment analysis), e-commerce (cold-start recommendations, dynamic pricing, search ranking). Shows
+  domain interest and gets you interviews in that domain.
+\end{description}
+
+\subsection{Selection Criteria Checklist}
+
+Before committing to a project, verify: \textbf{data accessibility} (can you legally and ethically get this
+data?); \textbf{scope appropriateness} (finishable in 2--4 weeks --- not a day, not six months; one well-done
+project beats five half-finished ones); \textbf{demonstrability} (explainable to a recruiter in two minutes --- if
+it takes twenty, it's too complex); \textbf{learning value} (does it teach you something new?); \textbf{portfolio
+fit} (does it complement your other projects --- aim for one end-to-end pipeline, one deployment-focused build,
+one domain-specific build?).
+
+\section{The Production Mindset vs.\ the Student Mindset}
+
+\begin{keytakeaway}
+\textbf{Student mindset:} ``How do I get the highest accuracy on this test set?'' \\
+\textbf{Production mindset:} ``How do I build a system that reliably delivers business value over time?''
+\end{keytakeaway}
+
+\begin{longtable}{p{0.18\textwidth} p{0.38\textwidth} p{0.38\textwidth}}
+\toprule
+\textbf{Decision} & \textbf{Student mindset} & \textbf{Production mindset} \\
+\midrule
+\endhead
+Model selection & Pick the most complex model that gives the best test score & Pick the simplest model that meets
+business requirements --- easier to debug, explain, retrain, and more robust to shift \\
+Feature engineering & Create 100 features, let the model figure it out & Create interpretable features you can
+explain and monitor \\
+Evaluation & Single train--test split, report F1 & Time-based splits, multiple metrics, business-impact analysis
+\\
+Deployment & Model works on laptop, job done & Containerized, monitored, versioned, with a rollback plan \\
+Documentation & Comments in a notebook, if anything & README, API docs, deployment guide, monitoring playbook \\
+\bottomrule
+\end{longtable}
+
+\subsection{The Questions Production Systems Must Answer}
+
+For every component you build: \textbf{What happens when this breaks?} (Is there a fallback? How is the failure
+detected? What's the recovery process? Who gets alerted?) \textbf{How do you know it's working?} (What metrics
+indicate health? What's the monitoring strategy? What triggers investigation?) \textbf{How does this change over
+time?} (Will data distribution shift? Will requirements or scale grow? Is the system adaptable?) \textbf{What's
+the maintenance burden?} (How often does it need updating? What skills does maintaining it require? Is this
+sustainable?)
+
+\section{Phase 1 --- Problem Definition \& Business Context}
+
+\subsection{Step 1: Write a Project Brief}
+
+Before writing any code, document: \textbf{the business problem} (not ``predict X'' but ``reduce waste / increase
+revenue / save time by doing X''); \textbf{the current baseline} (manual process --- quantify the time spent;
+simple heuristic --- quantify its performance; competitor product --- understand its limitations; or, if
+unsolved, quantify the cost of that); \textbf{the success definition}, translating ML metrics into business
+metrics from day one (``5\% accuracy increase'' is meaningless; ``10\% cost reduction'' is a concrete dollar
+figure).
+
+\textbf{Constraints \& requirements} to pin down up front: time constraints (predictions needed daily at 6\,a.m.?
+real-time under 100\,ms? --- this determines the whole architecture); cost constraints (free-tier tools only?
+budget ceiling?); accuracy requirements (99\% for healthcare/finance vs.\ 80\% acceptable for recommendations);
+explainability requirements (regulated industries must explain every prediction); data constraints (privacy
+regulations such as GDPR/HIPAA, data availability, labeling resources).
+
+\subsection{Step 2: Define a Success-Metrics Hierarchy}
+
+\begin{description}
+  \item[Primary business metric] The one number stakeholders care about most --- revenue impact, cost savings,
+  time saved, user satisfaction.
+  \item[Secondary ML metrics] The metrics you optimize during development --- precision, recall, RMSE, MAE ---
+  chosen based on business context.
+  \item[Guardrail metrics] The metrics you cannot sacrifice --- fairness, privacy, latency, interpretability.
+\end{description}
+
+\begin{example}
+\textbf{Example hierarchy --- customer churn prediction for a subscription service:}
+Primary: monthly revenue retention (\$). Secondary: recall on churners (catch 80\%+), precision (limit false
+alarms). Guardrails: no demographic bias; predictions explainable to the customer-success team.
+
+This matters because when accuracy and fairness conflict, you now have a clear priority; when speed and precision
+conflict, you know what to optimize.
+\end{example}
+
+\subsection{Step 3: Identify Stakeholders \& Their Needs}
+
+\begin{itemize}
+  \item \textbf{End users} --- who receives predictions, in what format (API, dashboard, email), at what
+  frequency, and do they need explainability?
+  \item \textbf{Decision makers} --- who approves the project; they care about ROI justification, risk
+  assessment, resource requirements, and timeline.
+  \item \textbf{Maintainers} --- who keeps it running; they need documentation, monitoring dashboards, alert
+  systems, and deployment runbooks.
+  \item \textbf{Data providers} --- who owns the data; they care about privacy requirements, access patterns,
+  update frequency, and quality guarantees.
+\end{itemize}
+
+\subsection{Step 4: Risk Assessment}
+
+\begin{longtable}{p{0.22\textwidth} p{0.72\textwidth}}
+\toprule
+\textbf{Risk category} & \textbf{Examples} \\
+\midrule
+\endhead
+Data risks & Source becomes unavailable (vendor shutdown, API deprecated); quality degrades over time (logging
+errors, schema changes); distribution shifts (market or user-behaviour changes); privacy violations (accidentally
+logging PII) \\
+Model risks & Performance degrades silently (undetected drift); adversarial inputs (gaming the system); bias
+amplification; edge cases not covered in training \\
+System risks & Downtime during critical periods; scaling failures under load; dependency breakage; security
+vulnerabilities \\
+Business risks & Incorrect predictions drive bad decisions; over-reliance on automation; regulatory compliance
+issues; reputational damage from failures \\
+\bottomrule
+\end{longtable}
+
+For each risk, define its likelihood (low/medium/high), impact (minimal/moderate/severe), mitigation strategy, and
+monitoring approach. Recruiters routinely ask ``what could go wrong with this system?'' --- have the answer ready.
+
+\section{Phase 2 --- Data Strategy \& Pipeline Design}
+
+\begin{keytakeaway}
+Raw data is sacred --- never modify originals. Pipeline stages: Raw $\rightarrow$ Validated $\rightarrow$
+Processed $\rightarrow$ Features $\rightarrow$ Model-ready. Each stage is versioned, reproducible, and documented.
+\end{keytakeaway}
+
+\subsection{Step 1: Data Acquisition Strategy}
+
+\textbf{Primary sources} --- internal systems (databases, logs, APIs), external APIs (weather, market data, public
+datasets), web scraping (respect robots.txt, rate limits, terms of service), or manual collection (surveys,
+annotations). For each source, document its access method, update frequency, cost, reliability, and legal
+constraints. \textbf{Supplementary sources} enrich the primary data --- weather for demand forecasting, holidays
+for sales prediction, economic indicators for financial models, demographics for personalization.
+
+\begin{caution}
+\textbf{Data-collection ethics.} Before scraping or collecting data, verify: robots.txt allows it; the terms of
+service permit it; privacy laws don't prohibit it (GDPR, CCPA); rate limiting won't get you blocked; attribution
+and commercial-use restrictions are respected. If you can't answer these, don't use that data --- recruiters will
+ask about data ethics, and many candidates fail exactly here.
+\end{caution}
+
+\subsection{Step 2: Data Quality Framework}
+
+Build validation checks across five dimensions, not just ``check for nulls'': \textbf{completeness} (what
+percentage of missing values is acceptable; which fields are critical); \textbf{validity} (valid ranges, formats,
+consistency rules); \textbf{accuracy} (how you validate correctness and how often you audit); \textbf{consistency}
+(do related fields and units agree); \textbf{timeliness} (how fresh must the data be, and how do you detect
+staleness).
+
+\subsection{Step 3: Data Versioning Strategy}
+
+Version data for \textbf{reproducibility} (must reproduce any experiment exactly --- ``trained on March 15'' means
+nothing without a data version), \textbf{debugging} (know which data a failing production model was trained on),
+\textbf{auditability} (prove which data was used, for regulated industries), and \textbf{experimentation}
+(compare performance across data versions). Tools: DVC (industry standard), Git LFS (smaller datasets), or custom
+hashing for minimal setups. Version raw snapshots, processed outputs, feature outputs, train/validation/test
+splits, and the processing scripts themselves --- with metadata for collection timestamp, source, pipeline
+version, quality metrics, and known issues.
+
+\subsection{Step 4: Feature Engineering Strategy}
+
+\begin{example}
+\bad \textbf{Students:} create random features, hope something works.
+
+\good \textbf{Professionals:} create features based on explicit hypotheses about the problem.
+\end{example}
+
+Process: (1) understand the problem domain --- what do domain experts consider important (seasonality and
+promotions for sales; velocity and historical behaviour for fraud; user preferences and context for
+recommendations); (2) form a hypothesis (``day of week matters because weekend behaviour differs''); (3) create
+features that test the hypothesis; (4) validate feature importance --- did it help, by how much, was the
+hypothesis correct; (5) document the reasoning.
+
+Feature categories to consider: \textbf{temporal} (trends, seasonality, recency, frequency), \textbf{aggregations}
+(statistics over time windows, counts, ratios), \textbf{interactions} (non-linear combinations, e.g.\ price
+$\times$ quantity $=$ revenue), \textbf{encodings} (target/frequency encoding for categoricals, TF-IDF/embeddings
+for text, pretrained-model features for images). The key rule: every feature should be explainable and
+monitorable --- if you can't explain why it matters, don't include it; if you can't monitor it for drift, it's a
+risk.
+
+\subsection{Step 5: Data Pipeline Architecture}
+
+Design principles: \textbf{modularity} (preprocessing $\rightarrow$ validation $\rightarrow$ feature engineering
+$\rightarrow$ split, each independently testable); \textbf{reproducibility} (same input always produces the same
+output --- lock random seeds, version dependencies, save processing parameters); \textbf{observability} (log
+input/output shapes, statistics, timing, errors at each step); \textbf{error handling} (define behaviour for
+missing source data, validation failures, processing errors --- alert-and-fallback, stop-and-alert, or
+log-and-continue); \textbf{scalability} (batch for large datasets, streaming for real-time needs, caching for
+expensive operations). The pipeline should be automated, scheduled, monitored, and documented.
+

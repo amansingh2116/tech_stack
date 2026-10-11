@@ -1,0 +1,288 @@
+\chapter{From Experiment to Deployed, Monitored System}
+\label{ch:projects-b}
+
+\section{Phase 3 --- Experimentation Framework}
+
+\begin{keytakeaway}
+Random hyperparameter tuning is not experimentation. Real experimentation is: form a hypothesis
+$\rightarrow$ design an experiment to test it $\rightarrow$ run it $\rightarrow$ analyze results $\rightarrow$
+update your understanding $\rightarrow$ repeat.
+\end{keytakeaway}
+
+\subsection{Step 1: Establish a Baseline}
+
+Try simple baselines before anything complex: statistical (mean/median prediction, last value for time series,
+moving average, simple heuristic rules), business-rule baselines (the current manual process, expert-defined
+thresholds, an existing system), and simple ML baselines (linear/logistic regression, a default-parameter
+decision tree). If a complex neural network only beats linear regression by 2\%, question whether the complexity
+is worth it; if your model doesn't beat ``predict last week's value,'' you have a problem. Document baseline
+performance on \emph{all} your metrics, not just accuracy.
+
+\subsection{Step 2: Hypothesis-Driven Experimentation}
+
+Stop random searching. Use an explicit template for every experiment: \textbf{hypothesis} (``adding weather
+features will improve demand forecasting because customer behaviour changes with weather''); \textbf{prediction}
+(``RMSE should decrease by at least 10\% when weather features are included''); \textbf{design} (control: model
+without the feature; treatment: model with it; everything else held constant); \textbf{results} (did it improve,
+by how much, on which segments, any unexpected effects); \textbf{conclusion} (was the hypothesis supported, what
+did you learn, what's next).
+
+Experiment categories: feature experiments (adding/removing groups, encodings, interactions), model experiments
+(family comparison, complexity, ensembling), data experiments (more data vs.\ better features, split strategy,
+class balancing), hyperparameter experiments (impact, sensitivity, optimal ranges). Each experiment should answer
+one specific question.
+
+\subsection{Step 3: Experiment Tracking}
+
+Track, for every experiment: code version (git commit hash), data version (DVC hash/snapshot), full configuration
+(not just hyperparameters --- split parameters, feature choices, preprocessing, seeds), results (all metrics,
+per-segment breakdowns, confusion matrix, feature importance), computational cost (training time, memory, GPU/CPU
+count, inference latency), qualitative observations, and artifacts (model file, test predictions, visualizations,
+error analysis). Tools: MLflow, Weights \& Biases, Neptune, or a spreadsheet for simple tracking. The goal: six
+months later, you can reproduce any experiment exactly.
+
+\subsection{Step 4: Model Selection Criteria}
+
+Choose on performance (does it clear the business threshold, with confidence intervals considered --- not just
+``higher is better''), interpretability (regulated industries, debugging, stakeholder trust all depend on it),
+complexity (lines of code, dependencies, specialist knowledge, debugging difficulty), computational cost (training
+cadence, inference latency vs.\ SLA, infrastructure cost), robustness (sensitivity to shift, missing features,
+edge cases), and development speed (iteration and debugging speed).
+
+\begin{keytakeaway}
+The right model is the simplest one that meets requirements --- not the most accurate, not the most sophisticated.
+\end{keytakeaway}
+
+\subsection{Step 5: Error Analysis}
+
+Understanding failures is more valuable than celebrating successes. Identify failure patterns (where does the
+model perform worst; are errors random or systematic; do they cluster in segments); quantify their business cost
+and priority; investigate root causes (data quality, missing features, model capacity, wrong inductive bias);
+generate improvement hypotheses from the patterns found.
+
+\begin{example}
+\textbf{Worked example.} ``Model predicts demand poorly for new products (cold start). Possible solutions:
+category-level features instead of product-specific ones; content-based features from product attributes; a
+conservative default prediction for new items; a separate model for new vs.\ established products.'' This shows
+you don't just tune hyperparameters --- you think about problems.
+\end{example}
+
+\section{Phase 4 --- Model Development \& Validation}
+
+\subsection{Step 1: Train/Validation/Test Split Strategy}
+
+\textbf{Time-based splits for time series} --- never use random splits when temporal dependencies exist. Typical
+structure: training on the oldest 60\%, validation on the next 20\% (for tuning), test on the most recent 20\%
+(final evaluation only) --- because future data will look like the test set, not the training set.
+\textbf{Cross-validation for non-temporal data} --- k-fold for robust estimates, but consider stratified splits
+for imbalanced classes, group splits where data has clusters (same user, same location), and leave-one-out for
+very small datasets. The key rule: your validation strategy must simulate production reality --- validate on new
+users if production will see new users; validate across seasons if production has seasonal patterns.
+
+\subsection{Step 2: Evaluation Metrics Selection}
+
+\begin{longtable}{p{0.3\textwidth} p{0.64\textwidth}}
+\toprule
+\textbf{Problem type} & \textbf{Appropriate metrics} \\
+\midrule
+\endhead
+Classification, balanced, equal costs & Accuracy \\
+Classification, imbalanced & Precision/Recall/F1, AUC-ROC, Average Precision \\
+Classification, asymmetric costs & Cost-sensitive metrics, expected-value calculation \\
+Multi-class & Macro vs.\ micro F1, confusion-matrix analysis \\
+Regression, outliers matter & RMSE \\
+Regression, outliers less important & MAE \\
+Regression, percentage errors matter & MAPE \\
+Regression, direction matters & Directional accuracy \\
+Ranking & NDCG, MAP, MRR \\
+\bottomrule
+\end{longtable}
+
+Never rely on just one metric. Example suite: primary = business metric (revenue impact); secondary = ML metric
+(F1); monitoring = precision (limit false alarms) and recall (catch important cases); fairness = demographic
+parity (equal error rates across groups).
+
+\subsection{Step 3: Cross-Validation Strategy, Rigorously}
+
+Check variance across folds (wildly different scores signal an unstable model or heterogeneous data); identify
+and investigate the worst-performing fold; validate across relevant dimensions (temporal, spatial, demographic);
+confirm statistical significance of any improvement over baseline with bootstrap confidence intervals or a formal
+test. The goal is to convince yourself --- and recruiters --- that the model actually works, not that it got
+lucky on one split.
+
+\subsection{Step 4: Robustness Testing}
+
+Test how the model handles: \textbf{missing features} (drop each one and measure the impact; identify critical
+dependencies; build graceful degradation); \textbf{distributional shift} (different time periods, different
+segments, simulated shifts via resampling); \textbf{adversarial inputs} (deliberately crafted edge cases, boundary
+conditions, vulnerable features); \textbf{data-quality degradation} (injected noise, missingness, corrupted
+values). Production always reveals weaknesses you didn't test for --- the more you test beforehand, the fewer
+surprises later.
+
+\subsection{Step 5: Model Interpretation}
+
+Interpretation matters for debugging (understanding why a model failed), trust (stakeholders won't use
+predictions they don't understand), compliance (regulated industries require explainability), and improvement
+(you can't improve what you don't understand). \textbf{Global} methods: feature importance, partial-dependence
+plots, model summary statistics. \textbf{Local} methods: SHAP values, LIME, counterfactual explanations.
+\textbf{Model-specific}: coefficient analysis for linear models; split importance and tree visualization for tree
+models; attention weights and activation maps for neural networks. Document findings concretely --- e.g.\ ``model
+primarily relies on recency features (70\% of importance); day-of-week adds a 20\% bump on weekends; weather
+contributes only 5\%, possibly low signal or poor encoding.''
+
+\section{Phase 5 --- Deployment Architecture}
+
+\begin{keytakeaway}
+A model working in a Jupyter notebook means nothing. Production deployment requires reliability (graceful failure
+handling), scalability (works under load), maintainability (others can debug and update it), and observability
+(you know what's happening).
+\end{keytakeaway}
+
+\subsection{Step 1: Deployment Pattern Selection}
+
+\begin{longtable}{p{0.16\textwidth} p{0.2\textwidth} p{0.1\textwidth} p{0.1\textwidth} p{0.32\textwidth}}
+\toprule
+\textbf{Pattern} & \textbf{When} & \textbf{Latency} & \textbf{Cost} & \textbf{Typical use cases} \\
+\midrule
+\endhead
+Batch & Daily forecasts, weekly recs, monthly reports & Minutes--hours & Low & Demand forecasting, segmentation,
+risk scoring, content recs \\
+Real-time API & User-facing, instant response needed & $<$100\,ms & Medium & Fraud detection, personalization,
+search ranking, moderation \\
+Streaming & Event-driven, continuous processing & Seconds & High & Real-time analytics, anomaly detection, live
+recs \\
+Edge & Offline capability, privacy requirements & $<$10\,ms & Dev-heavy, low runtime & Mobile apps, IoT,
+privacy-sensitive apps \\
+\bottomrule
+\end{longtable}
+
+Most student projects should start with batch or a simple API --- don't overcomplicate without a real requirement.
+
+\subsection{Step 2: Serving Architecture Design}
+
+Components to consider: \textbf{model serving layer} (input validation, feature transformation, inference, output
+formatting); \textbf{feature store}, only if the same features feed multiple models, feature computation is
+expensive, or features must stay consistent across training/serving --- don't build one unless you actually need
+it; \textbf{caching layer} for repeated, deterministic, stable queries; \textbf{load balancer}, only needed at
+scale; \textbf{model registry} for version management, rollback, and A/B testing. Start simple (\texttt{User
+$\rightarrow$ API $\rightarrow$ validation $\rightarrow$ feature engineering $\rightarrow$ prediction
+$\rightarrow$ response}) and add complexity only when justified.
+
+\subsection{Step 3: API Design Best Practices}
+
+Define a clear input schema (required/optional fields, type/range/format validation) and output schema
+(prediction, confidence, explanation where possible, metadata such as model version and timestamp). Handle errors
+explicitly (400 for bad input, 500 for server errors, 429 for rate limiting, with helpful messages). Document
+endpoints, request/response examples, authentication, rate limits, and error codes. Version the API so multiple
+model versions can be supported during a transition. Add health-check and metrics endpoints. Apply basic security:
+authentication, input sanitization, rate limiting. Even student projects benefit from getting these details right
+--- it signals you understand production requirements.
+
+\subsection{Step 4: Containerization Strategy}
+
+Containerize for reproducibility (works on any machine with Docker), isolation (no dependency conflicts with the
+host), portability (deploy anywhere), and version control (images are versioned artifacts). Include application
+code, model artifacts, pinned dependencies, environment configuration, and a health-check script. Do \emph{not}
+include training data, development tools, or secrets (use environment variables instead).
+
+\subsection{Step 5: Deployment Checklist}
+
+\begin{multicols}{2}
+\begin{itemize}[nosep]
+  \item Input validation implemented
+  \item Error handling in place
+  \item Logging configured
+  \item Monitoring set up
+  \item Documentation complete
+  \item Rollback plan defined
+  \item Testing done (unit, integration, load)
+  \item Security reviewed
+  \item Cost estimated
+  \item Maintenance plan exists
+\end{itemize}
+\end{multicols}
+
+Deployment is not ``push to production and hope.'' It's systematic preparation for things going wrong.
+
+\section{Phase 6 --- Monitoring \& Maintenance Strategy}
+
+\begin{keytakeaway}
+If you can't measure it, you can't improve it. If you don't monitor it, it will break silently.
+\end{keytakeaway}
+
+\subsection{Step 1: What to Monitor}
+
+\begin{description}
+  \item[Business metrics] Revenue impact, cost savings, time saved, user satisfaction, conversion rates.
+  \item[Model performance metrics] Prediction accuracy, precision/recall, RMSE/MAE, AUC/F1.
+  \item[Data quality metrics] Missing-value rates, out-of-range values, feature distributions, schema violations.
+  \item[System health metrics] Request latency, error rates, throughput, resource utilization.
+\end{description}
+
+\subsection{Step 2: Data Drift Detection}
+
+\begin{longtable}{p{0.22\textwidth} p{0.38\textwidth} p{0.32\textwidth}}
+\toprule
+\textbf{Drift type} & \textbf{What changes} & \textbf{Detection} \\
+\midrule
+\endhead
+Covariate shift (feature drift) & Input distribution shifts, relationship stays the same (user behaviour, market
+conditions, seasonality) & Compare feature distributions, training vs.\ production \\
+Concept drift & The relationship between features and target changes (market dynamics, preference shifts) &
+Monitor prediction error rates over time \\
+Label shift & Target distribution changes, relationship stays the same (class balance shifts, rare events become
+common) & Track prediction-distribution changes \\
+\bottomrule
+\end{longtable}
+
+Monitoring approach: statistical tests (KS test, chi-square, population stability index); thresholds (alert if a
+feature mean shifts $>2\sigma$, prediction distribution shifts significantly, or error rate rises $>10\%$);
+visualization (distribution plots over time, control charts, drift dashboards). On detection: investigate the
+cause, retrain with recent data, adjust feature engineering, update the baseline. Don't just detect drift --- have
+a response plan.
+
+\subsection{Step 3: Performance Monitoring}
+
+Ground truth arrives via user feedback, business outcomes, or expert review --- often with a delay, so track
+prediction quality on a lag, use proxy metrics in the meantime, and watch which segments degrade first.
+Dashboards: real-time (requests/sec, latency, error rate, confidence distribution), daily (accuracy where
+available, feature-importance changes, drift scores, business-metric impact), weekly (performance trends, data
+quality trends, reliability, cost). Alerts: \textbf{critical} (error rate $>5\%$, latency $>500$\,ms for $>10\%$
+of requests, downtime, pipeline failure --- immediate action); \textbf{warning} (accuracy drop $>5\%$, drift
+detected, unusual patterns, resource spikes --- investigate soon); \textbf{informational} (retrain recommended,
+new data available, report ready --- review when convenient). The goal: know when something breaks before users
+complain.
+
+\subsection{Step 4: Retraining Strategy}
+
+\textbf{Scheduled retraining} (fixed cadence) suits data that updates regularly and degrades predictably.
+\textbf{Triggered retraining} (on degradation or drift) suits unpredictable data changes or expensive training. A
+\textbf{hybrid} combines a regular schedule with performance-triggered emergency retrains. Pipeline: collect new
+data $\rightarrow$ quality checks $\rightarrow$ feature engineering (same transforms) $\rightarrow$ train a
+candidate $\rightarrow$ evaluate against the current production model $\rightarrow$ staged rollout (small \% of
+traffic, monitor, ramp to 100\% if better; investigate, alert, and keep the current model if worse) $\rightarrow$
+rollback capability retained throughout. The retraining pipeline should be fully automated, with humans involved
+only for approval and monitoring.
+
+\subsection{Step 5: Incident Response Plan}
+
+\begin{longtable}{p{0.28\textwidth} p{0.64\textwidth}}
+\toprule
+\textbf{Incident type} & \textbf{Response} \\
+\midrule
+\endhead
+Data pipeline failure (source unavailable, quality-check failure, processing error) & Use cached/fallback data;
+alert the data team; document the issue \\
+Model performance degradation (sudden accuracy drop, drift, adversarial inputs) & Investigate the cause; trigger
+an emergency retrain; consider rollback \\
+System outage (API downtime, infrastructure failure, dependency breakage) & Activate the fallback system; alert
+the infrastructure team; run a post-mortem after resolution \\
+Security incident (unauthorized access, breach, malicious input) & Isolate the system; investigate scope;
+implement fixes; notify stakeholders \\
+\bottomrule
+\end{longtable}
+
+Post-incident, always perform a root-cause analysis, an impact assessment, define prevention measures, and
+document the incident and its learnings. Even student projects benefit from thinking through failure modes --- it
+signals maturity and production thinking.
+

@@ -1,0 +1,184 @@
+\chapter{Documentation and the Demo That Gets You Called Back}
+\label{ch:projects-c}
+
+\section{Documentation That Sells Your Skills}
+
+\begin{keytakeaway}
+Your README is your elevator pitch to recruiters. In two minutes of reading it should answer: What problem does
+this solve? Why should I care? What makes this impressive? Can you actually build production systems?
+\end{keytakeaway}
+
+\subsection{README Structure}
+
+\textbf{Section 1 --- Project overview (30 seconds to hook).} One sentence on what it is; the business problem and
+impact; headline result numbers.
+
+\begin{example}
+``Restaurant demand forecasting system that reduces food waste by 25\% through ML-powered daily predictions.
+Predicts demand for 50+ menu items with 15\% MAPE, deployed as automated daily reports used by 3 local
+restaurants. Handles seasonal patterns, weather impact, and special events using gradient boosting and custom
+feature engineering.''
+
+This tells a recruiter immediately: a real problem was solved, there's actual business impact, it's deployed and
+used, and the technical sophistication is appropriate.
+\end{example}
+
+\textbf{Section 2 --- Problem definition (1 minute to understand context).} Business context (who has the
+problem, what it costs); current solution and what's wrong with it; your proposed solution and approach; success
+metrics and what improvement actually matters.
+
+\textbf{Section 3 --- Technical approach (2 minutes to show depth), 2--3 paragraphs per sub-area.} Data pipeline
+(sources, quality challenges, preprocessing); feature engineering (what and why, engineering decisions,
+importance results); model development (baseline, models compared, final choice and why, tuning approach);
+deployment (architecture, serving approach, infrastructure); monitoring (metrics tracked, drift approach,
+retraining strategy).
+
+\textbf{Section 4 --- Results (1 minute to prove value).} Model performance on the test set vs.\ baseline, with
+error-analysis highlights; business impact (quantified value, adoption, cost/benefit); technical learnings
+(challenges overcome, surprising findings, what you'd do differently).
+
+\begin{example}
+``Final model achieves 15\% MAPE, beating the 30\% MAPE baseline by 50\%. Predictions are most accurate for
+high-volume items (10\% MAPE) but struggle with new menu items (25\% MAPE). Weather features provided an 8\%
+improvement; day-of-week patterns were critical for accuracy. Deployed to 3 restaurants, averaging 25\% waste
+reduction (\$12K/month savings per restaurant). The system runs daily at 6\,a.m., generating predictions by
+7\,a.m.\ for 10\,a.m.\ ordering. Key learning: the model benefits more from a region-specific holiday calendar
+than from generic weather data.''
+\end{example}
+
+\textbf{Section 5 --- How to run (30 seconds for easy testing).} Prerequisites, installation, configuration, a
+quick-start example. If a recruiter can't run it in five minutes, they won't try. \textbf{Section 6 --- Project
+structure.} A directory tree with explanations, showing organization and modularity. \textbf{Section 7 --- Future
+improvements.} What you'd add with more time (better features, alternative models, deployment enhancements,
+scaling) --- this demonstrates you know the project isn't perfect, you understand trade-offs, and you can
+prioritize.
+
+\subsection{Additional Documentation}
+
+Beyond the README: \textbf{API documentation} (endpoints, schemas, example calls, error codes, auth);
+\textbf{deployment guide} (infrastructure requirements, step-by-step deployment, configuration,
+troubleshooting); \textbf{model card} (intended use, training data, performance metrics, ethical considerations,
+limitations and biases --- the industry-standard format); \textbf{data documentation} (sources, collection
+methodology, quality issues and handling, privacy/ethics, update frequency); \textbf{experiment log} (hypotheses
+tested, results summary, key learnings, decision rationale).
+
+\subsection{Code Quality Standards}
+
+Your code is evaluated too: logical organization and clear naming; docstrings, comments for complex logic, type
+hints, a README per module; unit and integration tests that actually pass; graceful error handling with
+informative messages and logging; no hardcoded values (environment variables for secrets, config files for
+parameters); minimal, pinned dependencies with a clear requirements file; meaningful, logical commit history with
+no sensitive data committed. This signals maintainable code, awareness that others will read it, and solid
+software-engineering fundamentals --- critical for technical interviews.
+
+\subsection{Visual Documentation}
+
+Diagrams that help: system architecture (how components connect), data flow (how data moves through the
+pipeline), model architecture (if complex), and results visualizations (performance over time, feature
+importance, error analysis, business impact). Tools: draw.io for diagrams, Matplotlib/Seaborn for plots,
+Streamlit/Gradio for interactive demos. A picture is worth a thousand words in a README, especially for complex
+systems.
+
+\section{The Demo That Gets You Called Back}
+
+\begin{keytakeaway}
+Recruiters won't clone your repo and run setup scripts. They need a live demo they can test in a browser, two
+minutes to understand what you built, evidence of technical depth, and proof it actually works.
+\end{keytakeaway}
+
+\subsection{Interactive Demo Options}
+
+\begin{longtable}{p{0.22\textwidth} p{0.72\textwidth}}
+\toprule
+\textbf{Option} & \textbf{Best for} \\
+\midrule
+\endhead
+Web app (Streamlit) & Best for most projects --- quick to build, handles UI automatically, free hosting, perfect
+for ML demos. Include: an input form, prediction output with confidence, feature-importance view, performance
+metrics, an about page. \\
+API + Swagger docs & Technical audiences --- deploy to Heroku/Railway with auto-generated, interactive API docs.
+Shows production-ready deployment and API design. \\
+Jupyter Notebook + Voil\`a & Exploration-heavy projects --- converts a notebook to a web app with interactive
+widgets, no code visible. Use when visualizations matter more than serving predictions. \\
+Video demo (backup) & When a live demo isn't possible --- a 2--3 minute screen walkthrough showing key
+functionality and explaining decisions. Not as good as interactive, but better than nothing. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Demo Design Principles}
+
+Make it obvious what to do: clear instructions (``Enter restaurant capacity and date to get a demand forecast,''
+not ``Input data and click submit''); pre-filled example inputs; visual feedback (loading indicators,
+success/error states, clear results); input validation that prevents confusion. Show technical depth without
+overwhelming: a simple interface for predictions, expandable sections for technical details, optional deep dives.
+Highlight key features and confidence scores. Demonstrate robustness by handling edge cases gracefully with
+informative messages. Tell the story --- problem, impact, technical approach --- briefly, in the demo itself.
+
+\subsection{What to Show in the Demo}
+
+\textbf{Essential:} prediction capability working reliably; explanation of why (feature contributions,
+confidence); performance metrics (test-set results); data insights (feature importance, distributions).
+\textbf{Nice-to-have:} comparison to baseline; interactive error-analysis exploration; a simulated monitoring
+dashboard; an A/B-testing comparison framework.
+
+\subsection{Deployment Platforms}
+
+\begin{longtable}{p{0.28\textwidth} p{0.64\textwidth}}
+\toprule
+\textbf{Platform} & \textbf{Good for} \\
+\midrule
+\endhead
+Streamlit Cloud & Free tier, direct GitHub integration, auto-updates on push, custom URLs --- best for interactive
+predictions \\
+Heroku / Railway & Free/low-cost tiers for APIs, easy deployment, databases available, auto-scaling \\
+Hugging Face Spaces & ML demos specifically, free GPU tier, strong for CV/NLP, built-in community visibility \\
+Google Colab & Free compute, shareable link, interactive notebooks \\
+GitHub Pages & Free static hosting with a custom domain --- good for documentation sites \\
+\bottomrule
+\end{longtable}
+
+\subsection{Demo Checklist}
+
+\begin{multicols}{2}
+\begin{itemize}[nosep]
+  \item Works on mobile
+  \item Loads in under 5 seconds
+  \item Instructions clear on first use
+  \item No crashes on weird inputs
+  \item Error messages are actually helpful
+  \item Professional appearance, no placeholder text
+  \item Linked from resume/LinkedIn/GitHub
+  \item Uptime checked before interviews
+  \item A pre-filled example is provided
+  \item An about section gives context
+\end{itemize}
+\end{multicols}
+
+\begin{keytakeaway}
+A working demo is worth roughly ten times more than perfect code nobody can run.
+\end{keytakeaway}
+
+\section{Time Investment, Realistically}
+
+\begin{longtable}{p{0.5\textwidth} p{0.42\textwidth}}
+\toprule
+\textbf{Template} & \textbf{Time investment} \\
+\midrule
+\endhead
+Template 1: End-to-end prediction pipeline (full lifecycle) & 3--4 weeks \\
+Template 2: Real-time serving API (low-latency serving) & 2--3 weeks \\
+Template 3: Domain-specific application (industry specialization) & 3--4 weeks \\
+\bottomrule
+\end{longtable}
+
+\noindent (Full detail on these three templates, the 15 fatal mistakes that get projects rejected, and the
+interview questions a good project answers for you are consolidated in Appendix~\ref{app:mistakes}--\ref{app:interview} for quick reference.)
+
+\begin{keytakeaway}
+The formula: Real Problem + Messy Data + Full Pipeline + Actual Deployment + Clear Documentation = Interview
+Calls. Don't try to build three projects in a month --- build one properly in 3--4 weeks (Week 1: problem
+definition, data, exploration; Week 2: feature engineering, baseline, experimentation; Week 3: model development,
+validation, interpretation; Week 4: deployment, monitoring, documentation). Then build another. By the third
+project, you will know more about production ML than most people with the job title.
+\end{keytakeaway}
+
