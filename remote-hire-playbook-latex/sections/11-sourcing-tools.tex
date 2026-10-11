@@ -1,0 +1,159 @@
+\chapter{Sourcing Tools and AI-Assisted Search}
+\label{ch:sourcing-tools}
+
+Finding the right person and their contact details is a mechanical bottleneck in every outreach method this
+guide covers. This chapter is a directory of the specific tools cited across the source material, plus two
+AI-driven search workflows that automate parts of the job hunt itself.
+
+\section{Email and Contact-Finding Tools}
+
+\begin{longtable}{p{0.2\textwidth} p{0.76\textwidth}}
+\toprule
+\textbf{Tool} & \textbf{What it does, and caveats} \\
+\midrule
+\endhead
+RocketReach & Input a LinkedIn profile URL to fetch a professional work email. Reportedly does not consume
+credits when no contact information is found. \\
+ContactOut & Search by name, job title, and company; can surface work emails, personal emails, and phone
+numbers. \\
+Skrapp.io & Verifies email addresses by checking validity and server status before you send. \\
+Apollo.io & Browser extension — open a LinkedIn profile and click ``access email address'' to retrieve business
+emails and company phone numbers where available. Roughly a 50/50 success rate per profile, per the source. Also
+useful for exploring a company's professional email addresses and inferring its address format
+(\texttt{firstname.lastname@company.com}, etc.) — but a guessed address is not a verified one. \\
+Signal Hire & Browser extension for personal contact info when a professional email isn't available via other
+tools. Limited to roughly 10 credits/month on the cited plan. \\
+Hunter.io & Enter a company name to explore associated professional email addresses and infer the organization's
+common address format. Also has a Chrome extension for finding a name and email directly from a company
+website. \\
+Clearbit (Connect) & Another email-discovery option, used similarly to Hunter. \\
+Prospeo & Browser extension, used alongside Apollo for finding a recruiter's professional email from their
+LinkedIn profile. \\
+\bottomrule
+\end{longtable}
+
+\begin{caution}
+Before emailing anyone found this way: confirm the address is actually associated with the right person and
+company; prefer contact details clearly intended for business communication; never send mass unsolicited
+messages or repeatedly contact someone who has asked not to be contacted; and don't use personal contact details
+obtained through inappropriate means. The point of these tools is to make \emph{relevant} outreach possible, not
+to bypass someone's reasonable privacy expectations.
+\end{caution}
+
+\section{Scraping Techniques for Building Larger Lead Lists}
+
+Two manual scraping workflows cited, both built from free or low-cost tools chained together:
+
+\begin{description}
+  \item[YouTube description scraping] Use a Google advanced-search operator —
+  \texttt{site:youtube.com "[keyword]" "[location]" "gmail.com"} — to surface channels that list a contact
+  email in their description. Install an Email Extractor Chrome extension to automatically detect and collect
+  valid addresses from the resulting pages, then export the list to a spreadsheet.
+  \item[LinkedIn/Twitter scraping via Google search] Use a query-generation site (cited: \emph{Recruiting}) to
+  build a structured search string from a social network, job title, and location. Refine it in
+  \textbf{WordCounter.net} by adding a target email provider in quotes (\texttt{"gmail.com"}, \texttt{"yahoo.com"},
+  etc.) to narrow results to a specific domain. Run the search on Google, copy the full results page, and paste
+  it into \textbf{Email Extractor Lite} to strip everything down to a clean list of addresses. The source notes
+  roughly 30--40 minutes of work per batch for a meaningfully sized list, and suggests varying job titles,
+  locations, and email providers (AOL, Outlook, Hotmail) to widen coverage.
+\end{description}
+
+\begin{caution}
+These techniques surface publicly listed contact information at scale — the same etiquette rules from the
+contact-finding tools above apply even more strongly here: relevance first, respect opt-outs, and don't treat a
+large list as license to spam it indiscriminately.
+\end{caution}
+
+\section{Qualifying Leads and Running Infrastructure at Scale}
+
+Two tools cited for the operational side of larger campaigns (full workflow in
+Chapter~\ref{ch:case-study-emails}):
+
+\begin{description}
+  \item[Meta Ads Library] Search by keyword to find brands currently running paid social ads — active ad spend
+  is a plausible (not certain) signal that a company also has budget for other marketing services.
+  \item[Semrush] Check a prospect's apparent business age, search visibility, and branded search traffic to
+  separate plausibly-established businesses from very new or low-visibility ones before spending outreach effort
+  on them.
+  \item[Instantly] A cold-email platform for managing contact lists, scheduling multi-step sequences, tracking
+  opens, and coordinating multiple sending mailboxes across domains.
+\end{description}
+
+\section{AI Agents for Automated Job Search}
+
+Two distinct workflows use an AI assistant with browser/connector access to search job boards directly, rather
+than you searching manually.
+
+\subsection{Claude + Naukri: The ``Under 50 Applicants'' Strategy}
+
+The core idea: most roles on a crowded job portal are saturated within the first wave of applicants, so
+targeting \emph{recently posted, lightly applied-to} listings meaningfully improves your odds of being seen.
+Setup: install the Claude Chrome extension, keep your LinkedIn profile open as a reference, and enable the
+extension's permissions in Claude's settings.
+
+\begin{template}
+\textbf{Basic prompt}\\[4pt]
+Use my LinkedIn profile as a reference. Analyse my skills, experience, and certifications. Then go to Naukri
+portal and find job openings for [YOUR TARGET ROLE] in [YOUR TARGET CITY OR INDIA]. Make sure the roles match my
+LinkedIn skill set. Give me the direct Naukri links so I can apply for each one.
+\end{template}
+
+\begin{template}
+\textbf{Advanced prompt (with the under-50-applicants filter)}\\[4pt]
+Use my LinkedIn profile as a reference. Analyse my complete skill set, experience, and certifications. Then go
+to Naukri portal and find job openings for [Product Manager] in [INDIA] that: were posted in the last 24 hours
+only, and have fewer than 50 applicants at the time of search. Make sure each listing genuinely matches my
+LinkedIn profile keywords and skills. Return the direct Naukri application links for each matched role.
+\end{template}
+
+\subsection{Claude + Job-Board Connectors (Indeed and Others)}
+
+A second workflow uses Claude's free-tier connectors (an Indeed connector, specifically) to search and filter
+listings by tech stack, salary, and location, including a comparative view to help decide between matches. The
+same approach extends to freelance and contract roles, and to other connectors (ZipRecruiter, Workable, Dice) for
+broader coverage.
+
+\begin{template}
+\textbf{Remote job prompt}\\[4pt]
+Find high-quality full-time remote Frontend Engineer jobs on Indeed.\\[2pt]
+Focus on: React.js, Next.js, TypeScript, remote-first companies, companies hiring internationally.\\[2pt]
+Target country: [Country Name]. Industry: [Fintech / SaaS / E-commerce / AI / etc.]\\[2pt]
+Salary range — minimum: [\$30k+ / AED 15k+ / 10 Lakh etc.]\\[2pt]
+Prioritize: recently posted jobs, less than 100 applicants, product-based companies, good engineering culture.\\[2pt]
+Exclude: onsite roles, hybrid roles, staffing agencies.
+\end{template}
+
+\begin{template}
+\textbf{Freelancing prompt}\\[4pt]
+Find freelance, contract, or client-based frontend development opportunities on Indeed.\\[2pt]
+Focus on: React.js, Next.js, TypeScript, SaaS dashboards, web apps, landing pages.\\[2pt]
+Target country: [Country Name]. Industry: [Fintech / SaaS / E-commerce / AI / etc.]\\[2pt]
+Budget/contract preference: high-paying clients only, long-term contracts preferred.\\[2pt]
+Prioritize: startup founders hiring directly, remote freelance opportunities, fast-moving startups.\\[2pt]
+Exclude: low-budget gigs, cheap outsourcing agencies, non-remote opportunities.
+\end{template}
+
+\begin{keytakeaway}
+Both prompt templates are reusable: adapt the role, stack, country, industry, and salary line to your situation,
+and treat the ``exclude'' block as seriously as the ``focus'' block — it's what keeps the AI from burying good
+matches under a pile of irrelevant ones.
+\end{keytakeaway}
+
+\section{Choosing a Tool: Quick Reference}
+
+\begin{longtable}{p{0.34\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{You need to...} & \textbf{Reach for...} \\
+\midrule
+\endhead
+Find a specific person's email from their LinkedIn & Apollo.io, Prospeo, RocketReach, Hunter.io \\
+Verify an email before sending & Skrapp.io \\
+Find a personal email when the professional one is missing & Signal Hire \\
+Build a large lead list from public descriptions/profiles & Google search operators + Email Extractor
+(Chrome) \\
+Check whether a company has marketing budget/activity & Meta Ads Library, Semrush \\
+Run a multi-step outreach sequence at scale & Instantly \\
+Search a job board against your own profile automatically & Claude + Naukri or an Indeed/job-board connector \\
+\bottomrule
+\end{longtable}
+

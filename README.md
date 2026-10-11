@@ -361,19 +361,39 @@ Materials from formal university Python and DSA courses:
 
 ## 📝 LaTeX — The Remote-Hire Playbook
 
+<a id="-latex--the-remote-hire-playbook"></a>
 **Directory:** [`remote-hire-playbook-latex/`](remote-hire-playbook-latex/)
 
-A professionally typeset **55-page career guide** built entirely in LaTeX. This is a full field manual covering technical judgment, production-grade ML engineering, LinkedIn branding strategy, and direct outreach to US/European remote startups — compiled specifically for AI/ML professionals.
+A professionally typeset **88-page career guide & engineering playbook** built entirely in LaTeX. This is a publication-grade field manual covering technical judgment, production ML engineering, open-source proof-of-work, LinkedIn branding strategy, cold-email outreach engineering, a 1,200-email case study, and international contractor logistics (EOR, W-8BEN, GST) for landing high-paying remote US/European startup roles.
 
 | File | Contents |
 | :--- | :--- |
-| [`main.tex`](remote-hire-playbook-latex/main.tex) | Master LaTeX document — preamble, custom environments, section styles |
-| [`main.pdf`](remote-hire-playbook-latex/main.pdf) | Compiled 55-page PDF output |
-| [`sections/`](remote-hire-playbook-latex/sections/) | 14 modular chapter `.tex` files (Parts 1–12 + title + TOC) |
+| [`main.pdf`](remote-hire-playbook-latex/main.pdf) | **Compiled 88-page publication PDF** (~843 KB) |
+| [`main.tex`](remote-hire-playbook-latex/main.tex) | Master LaTeX document — preamble, fonts, custom callouts, section order |
+| [`sections/`](remote-hire-playbook-latex/sections/) | 20 modular chapter `.tex` files (Parts 1–18 + title + automated TOC) |
 | [`build.bat`](remote-hire-playbook-latex/build.bat) | One-click build script (Windows, uses `latexmk`) |
-| [`clean.bat`](remote-hire-playbook-latex/clean.bat) | One-click auxiliary file cleanup |
+| [`clean.bat`](remote-hire-playbook-latex/clean.bat) | One-click auxiliary file cleanup (`latexmk -c`) |
+| [`README.md`](remote-hire-playbook-latex/README.md) | Dedicated playbook documentation and complete 18-part syllabus |
 
-**Chapters:**  Foundations & Mindset → Outreach Engineering Equation → Production Projects (A/B/C) → LinkedIn Branding → Direct Outreach → Beyond Job Postings → 16-Week Roadmap → Evaluating Programs → Master Checklists → Appendix (15 Fatal ML Mistakes + Interview Bank)
+**18 Complete Chapters:**
+1. **The Mindset Shift** — AI-era technical judgment & overcoming 5 cultural gaps
+2. **Outreach Engineering Framework** — The Outreach Equation & 3 trust multipliers
+3. **Building Production Projects (Part A)** — Business problem framing & data pipelines
+4. **Deployed Systems (Part B)** — Experiment tracking, FastAPI, Docker & drift monitoring
+5. **Documentation & Demos (Part C)** — 5-second README hook & interactive web apps
+6. **Open-Source Proof-of-Work** — Repeatable units & getting merged in production repos
+7. **Personal Branding & LinkedIn** — Product positioning, headlines & 30-day calendar
+8. **Direct Outreach to Founders** — 4-step outreach model & 48h custom prototypes
+9. **Cold-Email Principles** — Technical deliverability, domain warmup & copy psychology
+10. **Cold-Email Templates** — Audience-specific scripts (Founders, CTOs, engineers, recruiters)
+11. **Sourcing Tools & AI Search** — Apollo, Clay, Crunchbase, Wellfound & Boolean queries
+12. **Case Study: 1,200+ Cold Emails** — Empirical funnel metrics, replies & conversion analysis
+13. **Beyond Job Postings** — Sourcing unadvertised roles & founder hiring signals
+14. **Getting Paid (Contracting & Tax)** — EOR vs Contracting, W-8BEN, Wise/SWIFT & GST LUT
+15. **16-Week Implementation Roadmap** — Phased execution timetable from builds to offers
+16. **Evaluating Paid Programs Critically** — ROI audit of paid cohorts vs free high-leverage tools
+17. **Final Checklists & Quick Reference** — Pre-flight audit & outreach pipeline dashboards
+18. **Appendix: Reference Material** — 15 fatal ML engineering mistakes & interview bank
 
 > 📖 See [`remote-hire-playbook-latex/README.md`](remote-hire-playbook-latex/README.md) for full build, watch-mode, and cleanup instructions.
 
@@ -507,7 +527,7 @@ tech_stack/
 ├── 📁 html and css/                     # HTML/CSS basics (Code With Harry)
 ├── 📁 jupyter notebook/                 # Jupyter Notebook tutorial + screenshots
 ├── 📁 hugo_blog/                        # Hugo static blog site
-├── 📁 remote-hire-playbook-latex/       # 55-page LaTeX career guide PDF
+├── 📁 remote-hire-playbook-latex/       # 88-page LaTeX career guide & engineering playbook (18 chapters)
 │
 ├── yt-dlp.md                            # yt-dlp video downloader guide
 ├── LATEX_tutorial.pdf                   # LaTeX learning reference

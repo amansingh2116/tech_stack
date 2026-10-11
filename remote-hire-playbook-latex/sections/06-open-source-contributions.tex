@@ -1,0 +1,282 @@
+\chapter{Open-Source Contributions as Proof-of-Work}
+\label{ch:open-source}
+
+Chapters~\ref{ch:projects}--\ref{ch:projects-c} built one form of proof: a production-grade project you own
+end to end. This chapter builds a second, complementary form: proof that you can work inside \emph{someone
+else's} codebase, collaborate with maintainers, and ship real, merged changes. The source material argues these
+two forms of evidence are stronger together than either alone, and that both matter more than a resume for a
+candidate without conventional employment history.
+
+\section{Why Open Source, Specifically}
+
+The starting problem: junior roles increasingly ask for a median of around two years of experience, and AI
+coding tools let experienced engineers absorb work that used to go to juniors. A resume claiming ``Python,
+machine learning, APIs, LLMs'' is easy to write and hard to verify. The proposed fix is to replace unsupported
+claims with publicly inspectable evidence: merged contributions to established repositories, a deployed
+application, tests and documentation, and a live demonstration of how you think.
+
+\begin{caution}
+The \$45,000--\$60,000/year (roughly INR 40--50 lakh) figure cited alongside this strategy is the
+source's own estimate for remote AI-engineering compensation, not a verified market-wide range or a guarantee.
+Actual pay depends on the company, experience, contract type, and location policy --- treat it the same way
+Chapter~\ref{ch:foundations} treats its own cited salary range.
+\end{caution}
+
+\section{Choosing the Right Repository: The Repeatable-Unit Principle}
+
+Generic ``contribute to open source'' advice fails for beginners because a huge repository with thousands of
+open issues and no clear process produces weeks of confusion. The fix is to look for projects built from a
+\textbf{repeatable unit} --- a small component you can implement by following an established pattern. Examples:
+an LLM evaluation framework with dozens of independent metrics; an LLM API gateway supporting many providers
+through a similar interface each time; a structured-output library with well-scoped modules and tests. Once you
+understand one unit, the next one follows the same shape --- this is what makes a second and third contribution
+dramatically faster than the first.
+
+\subsection{Repositories Cited as Examples}
+
+\begin{longtable}{p{0.18\textwidth} p{0.22\textwidth} p{0.52\textwidth}}
+\toprule
+\textbf{Repository} & \textbf{Focus} & \textbf{Why it was suggested} \\
+\midrule
+\endhead
+DeepEval & LLM evaluation and testing & A metrics directory of roughly 52 independent metrics, each in its own
+folder (e.g.\ answer relevancy, agent-loop detection) --- pick one, understand it, improve or extend it, write
+tests. \\
+LiteLLM & LLM API integrations & Roughly 138 provider integrations following a recurring pattern --- learn one,
+use its structure to implement or improve another. \\
+Instructor & Structured LLM outputs & Recommended for its focused scope and broad developer use --- look for a
+reproducible bug, a missing example, or a narrowly scoped feature. \\
+Agenta & Full-stack LLM tooling & A FastAPI backend plus React frontend --- useful if you want to demonstrate
+more than Python-only skills. \\
+DSPy & LLM programming frameworks & Cited for particularly clean documentation --- good for learning from a
+well-organized codebase. \\
+\bottomrule
+\end{longtable}
+
+\begin{caution}
+These are the source's examples, not a required list, and its star counts and descriptions are not independently
+verified here. Treat them as a starting point for applying the criteria below, not a checklist to complete.
+\end{caution}
+
+\subsection{Four Criteria for Choosing a Repository}
+
+\begin{longtable}{p{0.26\textwidth} p{0.3\textwidth} p{0.36\textwidth}}
+\toprule
+\textbf{Criterion} & \textbf{What to look for} & \textbf{Why it matters} \\
+\midrule
+\endhead
+Recent activity & Commits within the last week & Indicates active development \\
+Genuine beginner issues & A \texttt{good first issue} label maintainers still actually use & Suggests the
+project is open to new contributors \\
+Contribution documentation & A real \texttt{CONTRIBUTING.md} & Explains how to submit acceptable changes \\
+Manageable maintainer workload & A community that can realistically review your work & Improves the odds of
+feedback and a timely merge \\
+\bottomrule
+\end{longtable}
+
+As a rough heuristic on size: below $\sim$30{,}000 stars, maintainers tend to be more accessible; around
+$\sim$56{,}000 stars (LiteLLM is the cited example) is a reasonable middle ground where the pattern is clear but
+reviews take longer; above $\sim$100{,}000 stars (Dify, Open WebUI cited as examples), pull requests may sit in a
+large queue. These are rules of thumb, not statistical laws --- maintainer responsiveness depends on the project
+and the specific issue, not star count alone.
+
+\section{The Exact Process for Getting Contributions Merged}
+
+\begin{enumerate}
+  \item \textbf{Read CONTRIBUTING.md first.} Understand the dev setup, coding conventions, test requirements,
+  branch rules, and PR format. Many rejected PRs fail because contributors skip this, even when the code itself
+  is reasonable.
+  \item \textbf{Join the community before submitting code.} Discord or Slack if available --- introduce
+  yourself, ask focused questions, understand maintainer expectations, build a real connection before opening a
+  PR.
+  \item \textbf{Make the first contribution small and boring.} Fix documentation, add a missing example, address
+  a small bug with a clear reproduction. Don't attempt a massive feature to impress maintainers on your first
+  try --- the goal is to learn the workflow and demonstrate reliability.
+  \item \textbf{Repeat the same contribution pattern.} After your first change is accepted, implement another
+  unit of the same type (another provider integration, another metric). This shows your first success wasn't a
+  one-off.
+  \item \textbf{Aim for three merged PRs in one recognizable repository.} Three accepted contributions to one
+  project show sustained involvement and codebase familiarity, rather than scattered participation across
+  unrelated projects.
+\end{enumerate}
+
+\begin{keytakeaway}
+Plan for several weeks to get the \emph{first} PR merged --- you're learning the repo, the dev environment,
+review conventions, and maintainer expectations all at once. Later contributions are typically much faster. The
+important distinction is between \emph{submitting} a PR and \emph{getting it merged}: a submitted PR is not
+proof the project accepted your work. Merged contributions, especially ones with substantive code or testing
+changes, are the stronger evidence.
+\end{keytakeaway}
+
+\subsection{A Critical Warning About AI-Generated Contributions}
+
+Do not copy a GitHub issue into an LLM, accept the generated solution, and submit it without understanding the
+result. The risks are concrete: the proposed solution may not follow the project's architecture or conventions;
+the code may be incorrect, poorly tested, or needlessly complicated; you may be unable to explain your own
+implementation during review; maintainers may reject the contribution or lose confidence in you entirely.
+
+\begin{caution}
+This is not a caution about using AI --- it's a caution about using it to \emph{avoid} understanding your own
+contribution. Several major open-source projects (cited examples: Ghostty, Godot) now have explicit public
+policies on AI-generated PRs. Use AI instead to: explain unfamiliar modules and classes; help you understand
+existing tests and architecture; interpret an error or help design test cases. Then write and review the
+implementation yourself, run the relevant tests, and make sure you can explain and defend every important design
+decision. The goal is not to avoid AI — it's to demonstrate engineering judgment while using it.
+\end{caution}
+
+\section{Build One Complete Product, Too}
+
+Open-source contributions prove you can work inside someone else's project. You should also prove you can build
+something independently end to end — frontend, backend, a data/model layer where relevant, testing, real
+deployment, and ideally real users (the detailed how-to for this is Chapters~\ref{ch:projects}--\ref{ch:projects-c}).
+The reasoning cited for why founders specifically value this: AI coding tools make producing code less
+distinguishing, so what founders actually need to know is whether you can identify the right problem, make
+sensible trade-offs, connect components into a working system, debug things with no obvious solution, and ship
+without constant supervision. That combination — not raw code volume — is what ``judgment and ownership'' means
+in practice.
+
+\section{Open Source as a Networking Strategy}
+
+One claim cited in the source material: roughly 58\% of hires across a set of AI-startup founding-engineer
+searches came through founders' prior networks.
+
+\begin{caution}
+The source does not provide the underlying study, sample size, or methodology — treat this as a claim from one
+video, not a verified statistic for the AI job market generally.
+\end{caution}
+
+The mechanism proposed is still useful regardless of the exact percentage: open-source work creates visibility
+to maintainers (a merged contribution gives an experienced engineer a reason to recognize your name); it puts
+you inside relevant communities (Discord/Slack servers may include people working at AI startups); it creates a
+public artifact a founder can inspect instead of taking your resume at face value; and it builds a relationship
+\emph{before} you ask for anything. Networking, on this view, is not a separate activity that starts once your
+portfolio is finished — it emerges directly from the work itself.
+
+\section{Overcoming the Three Objections to Hiring Remotely from India}
+
+Even with the right skills, a founder may hesitate to hire remotely. Three specific objections, each with a
+concrete counter:
+
+\subsection{Objection 1: Time-Zone Overlap}
+
+India runs roughly 9.5--13.5 hours ahead of the US, depending on coast and daylight saving. Many companies claim
+to be asynchronous but still rely on synchronous collaboration in practice.
+
+\begin{template}
+I work from 2\,PM to 11\,PM IST, providing a consistent four-hour overlap with your team's morning.
+\end{template}
+
+Calculate the actual overlap for the specific company and season rather than copying this line blindly, and only
+promise hours you can genuinely sustain — demonstrate the commitment by actually showing up during that window
+throughout the hiring process.
+
+\subsection{Objection 2: Founders Can't Easily Assess Remote Candidates}
+
+Founders traditionally judge candidates through live, unscripted interviews — watching how someone reasons under
+uncertainty. In an environment where AI-assisted coding and interview assistance are common, that trust problem
+is sharper for remote candidates.
+
+\begin{template}
+I'd be happy to screen-share for 45 minutes and build something in front of you, without extensive preparation.
+\end{template}
+
+A strong session involves reading unfamiliar code, asking clarifying questions, designing a small feature,
+implementing it, writing a test, and explaining the trade-offs out loud. Agree on a reasonable scope up front,
+and don't let this turn into open-ended unpaid production work.
+
+\subsection{Objection 3: Hiring Risk and Uncertainty About Quality}
+
+A cheap hire becomes expensive fast if they need excessive supervision or produce code other engineers must
+rewrite. The founder's decision is about expected cost and risk, not just salary. The recommended counter is to
+combine all three pieces of evidence this chapter and Part~III build: three merged PRs in a recognizable
+repository, one genuinely deployed end-to-end application, and the willingness to demonstrate live. Each piece
+addresses a different uncertainty — collaboration ability, ownership, and real-time thinking, respectively. The
+underlying strategy: don't argue you're a good candidate — give the employer evidence that lets them reach that
+conclusion themselves.
+
+\section{Cold Emails, LinkedIn, and Job Boards — This Source's Numbers}
+
+The source quotes an average cold-email reply rate of roughly 3.4\% (as of 2026), lower than a cited historical
+figure, with LinkedIn messaging said to perform better without a clear comparable dataset.
+
+\begin{caution}
+Treat 3.4\% as directional, not predictive for you individually — response rates vary heavily with targeting,
+message quality, sender reputation, and whether the recipient is actually hiring. At a 3.4\% reply rate, emailing
+1,000 companies produces roughly 34 replies on average — not 34 interviews or offers, and likely fewer replies
+still for a candidate with no publicly verifiable work. This is one of three distinct quantitative models for
+outreach in this guide; see the footnote in Chapter~\ref{ch:checklists} for how it relates to the other two.
+\end{caution}
+
+The recommended sequence mirrors Chapter~\ref{ch:direct-outreach}'s structure but is tuned for this strategy
+specifically: identify a startup whose product and engineering needs match your skills $\rightarrow$ find a
+relevant open-source repository, maintainer, or engineer in that ecosystem $\rightarrow$ make your work easy to
+inspect by linking merged contributions and your deployed app $\rightarrow$ send a concise, personalized message
+explaining why you're contacting this person and what you've built $\rightarrow$ state your working-hour overlap
+and offer a live technical session if useful $\rightarrow$ follow up a limited number of times (three total
+touches is cited as capturing most of the replies an outreach sequence will get), then stop.
+
+Job boards specifically recommended alongside this strategy: \textbf{Work at a Startup}
+(\url{workatastartup.com}, YC's own board) and \textbf{Wellfound} (\url{wellfound.com}, formerly AngelList
+Talent) — used alongside public engineering work and targeted networking, not as a replacement for either.
+
+\section{The Six-Phase Roadmap}
+
+This roadmap runs in parallel to, not instead of, the 16-week roadmap in Chapter~\ref{ch:roadmap} — the two
+describe the same underlying effort (build proof, get visible, reach out) through slightly different lenses
+(project-first vs.\ open-source-first).
+
+\begin{longtable}{p{0.08\textwidth} p{0.24\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Phase} & \textbf{Timing} & \textbf{Focus} \\
+\midrule
+\endhead
+1 & Days 1--3 & Select your ecosystem: choose an AI domain (LLM apps, evaluation, API integrations); identify
+one active repo with a clear process; read its CONTRIBUTING.md and inspect recent merged PRs. \\
+2 & Week 1 onward & Make your first contribution: set up the repo and run its tests; join the community; choose
+a small, reproducible issue; submit and respond professionally to review feedback. \\
+3 & Following weeks & Establish a contribution record: get the first PR merged, then repeat the pattern; work
+toward three substantive merged PRs in the same repo; document what changed, why, and what you learned. \\
+4 & In parallel & Build your own product (Chapters~\ref{ch:projects}--\ref{ch:projects-c}): choose a problem a
+specific user type actually has; build, test, deploy; gather real feedback; prepare a short demo and a clear
+explanation of your architecture. \\
+5 & Once you have evidence & Become discoverable: update GitHub and LinkedIn with your strongest work; write a
+post about what you learned; build genuine relationships with maintainers; prepare a concise portfolio page
+linking PRs, code, tests, and the live app. \\
+6 & Ongoing & Apply and demonstrate: target relevant startups via careers pages, Work at a Startup, and
+Wellfound; send personalized outreach referencing the company's needs; state your real working-hour overlap;
+offer a live session; review the contract, payment arrangement, and tax obligations before accepting (see
+Chapter~\ref{ch:getting-paid}). \\
+\bottomrule
+\end{longtable}
+
+\section{What to Trust, and What to Treat Cautiously}
+
+\begin{longtable}{p{0.44\textwidth} p{0.5\textwidth}}
+\toprule
+\textbf{Claim or recommendation} & \textbf{How to interpret it} \\
+\midrule
+\endhead
+Remote AI roles can pay \$45,000--\$60,000 & A possible range, not a universal entry-level salary — verify
+individual roles and your own eligibility \\
+Three merged PRs make you a strong candidate & A useful initial portfolio target, not a hiring threshold —
+contribution quality and relevance matter more than the raw count \\
+Smaller repos provide better maintainer access & A reasonable heuristic, but community culture and reviewer
+activity are more informative than star count alone \\
+58\% of hires come through founders' networks & A claim about the searches described in the source material; it
+does not establish how representative this is more broadly \\
+Three outreach touches capture almost all replies & Not a universal recruiting rule — follow-up effectiveness
+depends on context, and repeated unsolicited messages can backfire \\
+Contractors can avoid US withholding using W-8BEN & Incomplete without examining the type of income, treaty
+eligibility, and documentation — see Chapter~\ref{ch:getting-paid} \\
+\bottomrule
+\end{longtable}
+
+\begin{keytakeaway}
+The entire strategy, compressed: pick one relevant, active open-source project; learn its architecture and
+contribution process; get three meaningful PRs merged, ideally in the same repo; build and deploy one
+end-to-end product; publish your work and build genuine relationships with engineers and maintainers; apply
+selectively, demonstrate live, and state your working-hour overlap clearly; understand the legal, payment, and
+tax implications before accepting an offer. The most important distinction in this whole chapter is between
+\emph{claiming} you can do the job and making it \emph{possible for a founder to verify} that you can.
+\end{keytakeaway}
+
